@@ -73,7 +73,7 @@ class PoppyDocCommand extends Command
 			case 'poppy':
 			case 'project':
 				$aimFolder = public_path('docs/poppy');
-				// root readme
+				// project readme
 				$this->getFile()->copy(base_path('README.md'), $aimFolder . '/README.md');
 
 				// framework docsify
