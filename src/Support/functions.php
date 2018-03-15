@@ -53,8 +53,8 @@ if (!function_exists('route_current')) {
 		if (in_array(\Route::currentRouteName(), (array) $route)) {
 			return $class;
 		}
-		 
-			return $else_class;
+
+		return $else_class;
 	}
 }
 
@@ -68,8 +68,8 @@ if (!function_exists('route_prefix')) {
 		if (!$route) {
 			return '';
 		}
-		 
-			return substr($route, 0, strpos($route, ':'));
+
+		return substr($route, 0, strpos($route, ':'));
 	}
 }
 
@@ -118,10 +118,10 @@ if (!function_exists('kv')) {
 		if ($check_key) {
 			return isset($desc[$key]) ? true : false;
 		}
-		 
-			return !is_null($key)
-				? isset($desc[$key]) ? $desc[$key] : ''
-				: $desc;
+
+		return !is_null($key)
+			? isset($desc[$key]) ? $desc[$key] : ''
+			: $desc;
 	}
 }
 
@@ -270,8 +270,8 @@ if (!function_exists('poppy_class')) {
 		if ($class) {
 			return "{$namespace}\\{$class}";
 		}
-		 
-			return "{$namespace}";
+
+		return "{$namespace}";
 	}
 }
 
@@ -283,6 +283,23 @@ if (!function_exists('is_production')) {
 	function is_production()
 	{
 		return env('APP_ENV', 'production') === 'production';
+	}
+}
+
+if (!function_exists('pf_path')) {
+	/**
+	 * poppy framework path
+	 * @param string $path
+	 * @return string
+	 */
+	function pf_path($path)
+	{
+		if (file_exists(base_path('framework/'))) {
+			return base_path('framework/' . $path);
+		}
+		else {
+			return base_path('vendor/poppy/framework/' . $path);
+		}
 	}
 }
 

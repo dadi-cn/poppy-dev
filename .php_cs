@@ -1,15 +1,26 @@
 <?php
-$baseDir = dirname(dirname(__DIR__));
-
-// 参考 Symfony\Component\Finder\Finder
-$finder = PhpCsFixer\Finder::create()
-    ->exclude('database')
-    ->in([
+$baseDir = dirname(__DIR__);
+if (file_exists($baseDir.'/framework/')) {
+    // for development
+    $folders = [
         $baseDir.'/config',
         $baseDir.'/framework',
         $baseDir.'/extensions',
         $baseDir.'/modules',
-    ]);
+    ];
+} else {
+    $baseDir = dirname(dirname(dirname(__DIR__)));
+    $folders = [
+        $baseDir.'/config',
+        $baseDir.'/extensions',
+        $baseDir.'/modules',
+    ];
+}
+
+// 参考 Symfony\Component\Finder\Finder
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('database')
+    ->in($folders);
 return PhpCsFixer\Config::create()
     ->setUsingCache(true)
     ->setCacheFile($baseDir . '/storage/app/.php_cs.cache')
