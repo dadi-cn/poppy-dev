@@ -30,8 +30,9 @@ class FrameworkServiceProvider extends ServiceProvider
 	{
 		// 注册 api 文档配置
 		$this->publishes([
-			__DIR__ . '/../config/poppy.php' => config_path('poppy.php'),
-		], 'config');
+			__DIR__ . '/../config/poppy.php'          => config_path('poppy.php'),
+			__DIR__ . '/../resources/config/sami.php' => storage_path('sami/config.php'),
+		], 'poppy');
 
 		$this->app['poppy']->register();
 
