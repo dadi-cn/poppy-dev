@@ -1,6 +1,5 @@
 <?php
-$baseDir = dirname(dirname(dirname(dirname(__DIR__))));
-
+$baseDir = dirname(dirname(__DIR__));
 
 // 参考 Symfony\Component\Finder\Finder
 $finder = PhpCsFixer\Finder::create()

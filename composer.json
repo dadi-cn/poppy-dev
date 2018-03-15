@@ -1,6 +1,7 @@
 {
 	"name": "poppy/framework",
 	"description": "A framework for laravel module development.",
+	"license": "Apache-2.0",
 	"authors": [
 		{
 			"name": "Mark Zhao",
@@ -20,6 +21,11 @@
 		"files": [
 			"src/Support/functions.php"
 		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Poppy\\Framework\\Tests\\": "tests/"
+		}
 	},
 	"config": {
 		"preferred-install": "dist"
