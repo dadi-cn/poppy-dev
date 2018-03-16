@@ -23,8 +23,6 @@ class PoppyDocCommand extends Command
 
 	/**
 	 * Execute the console command.
-	 *
-	 * @return mixed
 	 */
 	public function handle()
 	{
@@ -92,12 +90,15 @@ class PoppyDocCommand extends Command
 				$this->getFile()->copyDirectory(base_path('resources/docs'), $aimFolder);
 				$this->info('Publish Success!');
 				break;
+			case 'log';
+				$this->info('Please Run Command:' . "\n" .
+					'tail -20f storage/logs/laravel-`date +%F`.log'
+				);
+				break;
 			default:
 				$this->comment('Type is now allowed.');
 				break;
 		}
-
-
 	}
 
 	/**
