@@ -25,7 +25,7 @@ class PoppyMigrateResetCommand extends Command
 	protected $description = 'Rollback all database migrations for a specific or all modules';
 
 	/**
-	 * @var Modules
+	 * @var Poppy
 	 */
 	protected $poppy;
 
@@ -57,6 +57,7 @@ class PoppyMigrateResetCommand extends Command
 	/**
 	 * Execute the console command.
 	 * @return mixed
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	public function handle()
 	{
@@ -72,8 +73,8 @@ class PoppyMigrateResetCommand extends Command
 	 * Migrations should be reset in the reverse order that they were
 	 * migrated up as. This ensures the database is properly reversed
 	 * without conflict.
-	 * @param string $slug
 	 * @return mixed
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	protected function reset()
 	{
@@ -105,9 +106,8 @@ class PoppyMigrateResetCommand extends Command
 
 	/**
 	 * Run "down" a migration instance.
-	 * @param string $slug
+	 * @param string $file
 	 * @param object $migration
-	 * @param bool   $pretend
 	 */
 	protected function runDown($file, $migration)
 	{
@@ -124,6 +124,7 @@ class PoppyMigrateResetCommand extends Command
 	/**
 	 * Generate a list of all migration paths, given the arguments/operations supplied.
 	 * @return array
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	protected function getMigrationPaths()
 	{
@@ -157,7 +158,7 @@ class PoppyMigrateResetCommand extends Command
 
 	/**
 	 * Determine if a valid slug has been provided as an argument.
-	 * We will accept a slug as long as it is not empty and is enalbed (or force is passed).
+	 * We will accept a slug as long as it is not empty and is enabled (or force is passed).
 	 * @return bool
 	 */
 	protected function validSlugProvided()
@@ -181,6 +182,7 @@ class PoppyMigrateResetCommand extends Command
 	 * Get the console command parameters.
 	 * @param string $slug
 	 * @return array
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	protected function getParameters($slug)
 	{

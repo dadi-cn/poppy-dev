@@ -51,6 +51,7 @@ class PoppyMigrateRollbackCommand extends Command
 	/**
 	 * Execute the console command.
 	 * @return mixed
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	public function handle()
 	{

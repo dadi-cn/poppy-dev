@@ -25,7 +25,7 @@ class PoppyMigrateCommand extends Command
 	protected $description = 'Run the database migrations for a specific or all modules';
 
 	/**
-	 * @var Modules
+	 * @var Poppy
 	 */
 	protected $poppy;
 
@@ -49,7 +49,8 @@ class PoppyMigrateCommand extends Command
 
 	/**
 	 * Execute the console command.
-	 * @return mixed
+	 * @return null|void
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	public function handle()
 	{
@@ -59,31 +60,35 @@ class PoppyMigrateCommand extends Command
 			$module = $this->poppy->where('slug', $this->argument('slug'));
 
 			if ($this->poppy->isEnabled($module['slug'])) {
-				return $this->migrate($module['slug']);
+				$this->migrate($module['slug']);
+				return null;
 			}
 			elseif ($this->option('force')) {
-				return $this->migrate($module['slug']);
-			}
-			 
-				return $this->error('Nothing to migrate.');
-		}
-		 
-			if ($this->option('force')) {
-				$modules = $this->poppy->all();
-			}
-			else {
-				$modules = $this->poppy->enabled();
+				$this->migrate($module['slug']);
+				return null;
 			}
 
-			foreach ($modules as $module) {
-				$this->migrate($module['slug']);
-			}
+			$this->error('Nothing to migrate.');
+			return null;
+		}
+
+		if ($this->option('force')) {
+			$modules = $this->poppy->all();
+		}
+		else {
+			$modules = $this->poppy->enabled();
+		}
+
+		foreach ($modules as $module) {
+			$this->migrate($module['slug']);
+		}
 	}
 
 	/**
 	 * Run migrations for the specified module.
 	 * @param string $slug
-	 * @return mixed
+	 * @return null
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	protected function migrate($slug)
 	{
@@ -114,18 +119,21 @@ class PoppyMigrateCommand extends Command
 			}
 		}
 		else {
-			return $this->error('Module does not exist.');
+			$this->error('Module does not exist.');
+			return null;
 		}
+		return null;
 	}
 
 	/**
 	 * Get migration directory path.
 	 * @param string $slug
 	 * @return string
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	protected function getMigrationPath($slug)
 	{
-		return poppy_path($slug, 'Database/Migrations');
+		return poppy_path($slug, 'src/database/migrations');
 	}
 
 	/**

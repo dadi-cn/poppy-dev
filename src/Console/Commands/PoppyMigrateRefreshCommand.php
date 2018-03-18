@@ -77,6 +77,7 @@ class PoppyMigrateRefreshCommand extends Command
 	/**
 	 * Run the module seeder command.
 	 *
+	 * @param null   $slug
 	 * @param string $database
 	 */
 	protected function runSeeder($slug = null, $database = null)
