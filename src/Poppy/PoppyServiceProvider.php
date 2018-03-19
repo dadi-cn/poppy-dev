@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Poppy;
 
 use Illuminate\Support\ServiceProvider;
+use Poppy\Framework\Poppy\Commands\PoppyCheckCommand;
 use Poppy\Framework\Poppy\Commands\PoppyDocCommand;
 use Poppy\Framework\Poppy\Contracts\Repository;
 
@@ -31,6 +32,7 @@ class PoppyServiceProvider extends ServiceProvider
 
 		$this->commands([
 			PoppyDocCommand::class,
+			PoppyCheckCommand::class,
 		]);
 	}
 
