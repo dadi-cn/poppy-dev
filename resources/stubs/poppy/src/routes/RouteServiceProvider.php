@@ -1,4 +1,4 @@
-<?php namespace DummyNamespace\Request;
+<?php namespace DummyNamespace\Routes;
 
 /**
  * Copyright (C) Update For IDE
@@ -43,8 +43,8 @@ class RouteServiceProvider extends ServiceProvider
 	protected function mapWebRoutes()
 	{
 		\Route::group([
-			'middleware' => 'system',
-			'prefix'     => 'system',
+			'middleware' => 'DummyName',
+			'prefix'     => 'DummyName',
 		], function (Router $router) {
 		});
 	}
@@ -58,9 +58,9 @@ class RouteServiceProvider extends ServiceProvider
 	{
 		\Route::group([
 			// todo auth
-			// 'middleware' => 'system',
 			'prefix' => 'api/DummyName',
 		], function (Router $route) {
+			require_once poppy_path('DummyName', 'src/routes/web.php');
 		});
 	}
 }
