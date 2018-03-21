@@ -8,6 +8,15 @@
 $ php artisan poppy:doc cs
 ```
 
+### 规范检测
+
+使用命令来检查事件是否符合规范
+
+```
+php artisan poppy:check 
+```
+
+
 ### 使用的组件
 
 ```
