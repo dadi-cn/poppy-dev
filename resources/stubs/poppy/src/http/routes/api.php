@@ -1,15 +1,13 @@
 <?php
-/*/*
+/*
 |--------------------------------------------------------------------------
-| Util
+| Demo
 |--------------------------------------------------------------------------
 |
 */
 \Route::group([
 	'middleware' => ['cross'],
+	'namespace'  => 'DummyNamespace\Request\Api',
 ], function (Illuminate\Routing\Router $route) {
-	// 获取图像和地区代码
-	$route->get('/', function(){
-		return 'install success';
-	});
+	$route->get('/', 'DemoController@index');
 });

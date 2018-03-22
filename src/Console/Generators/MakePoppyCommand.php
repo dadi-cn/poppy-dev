@@ -61,6 +61,12 @@ class MakePoppyCommand extends Command
 	 */
 	public function handle()
 	{
+		$slug = str_slug($this->argument('slug'));
+		if (app('poppy')->exists($slug)) {
+			$this->error('Slug `' . $slug . '` exists');
+			return false;
+		}
+
 		$this->container['slug']        = str_slug($this->argument('slug'));
 		$this->container['name']        = snake_case($this->container['slug']);
 		$this->container['version']     = '1.0';

@@ -6,7 +6,7 @@ use Poppy\Framework\Poppy\Commands\PoppyDocCommand;
 use Poppy\Framework\Poppy\Contracts\Repository;
 
 /**
- * module manager
+ * Module manager
  */
 class PoppyServiceProvider extends ServiceProvider
 {
