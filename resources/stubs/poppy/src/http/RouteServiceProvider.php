@@ -44,7 +44,7 @@ class RouteServiceProvider extends ServiceProvider
 	{
 		\Route::group([
 			// todo auth
-			'prefix' => 'api/DummySlug',
+			'prefix' => 'DummySlug',
 		], function (Router $route) {
 			require_once poppy_path('DummySlug', 'src/http/routes/web.php');
 		});
