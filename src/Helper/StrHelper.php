@@ -70,8 +70,8 @@ class StrHelper extends Str
 			if ($preserveAmpersand) {
 				return str_replace('&amp;', '&', htmlspecialchars($input, ENT_QUOTES));
 			}
-			 
-				return htmlspecialchars($input, ENT_QUOTES);
+
+			return htmlspecialchars($input, ENT_QUOTES);
 		}
 		if (is_array($input)) {
 			foreach ($input as $key => $val) {
@@ -94,20 +94,20 @@ class StrHelper extends Str
 		if (is_array($input)) {
 			return array_map([__CLASS__, __FUNCTION__], $input);
 		}
-		 
-			if (strlen($input) < 20) return $input;
-			$match   = [
-				'/&#([a-z0-9]+)([;]*)/i',
-				"/(j[\s\r\n\t]*a[\s\r\n\t]*v[\s\r\n\t]*a[\s\r\n\t]*s[\s\r\n\t]*c[\s\r\n\t]*r[\s\r\n\t]*i[\s\r\n\t]*p[\s\r\n\t]*t|jscript|js|vbscript|vbs|about|expression|script|frame|link|import)/i",
-				'/on(mouse|exit|error|click|dblclick|key|load|unload|change|move|submit|reset|cut|copy|select|start|stop)/i',
-			];
-			$replace = [
-				'',
-				'<d>\\1</d>',
-				"on\n\\1",
-			];
 
-			return preg_replace($match, $replace, $input);
+		if (strlen($input) < 20) return $input;
+		$match   = [
+			'/&#([a-z0-9]+)([;]*)/i',
+			"/(j[\s\r\n\t]*a[\s\r\n\t]*v[\s\r\n\t]*a[\s\r\n\t]*s[\s\r\n\t]*c[\s\r\n\t]*r[\s\r\n\t]*i[\s\r\n\t]*p[\s\r\n\t]*t|jscript|js|vbscript|vbs|about|expression|script|frame|link|import)/i",
+			'/on(mouse|exit|error|click|dblclick|key|load|unload|change|move|submit|reset|cut|copy|select|start|stop)/i',
+		];
+		$replace = [
+			'',
+			'<d>\\1</d>',
+			"on\n\\1",
+		];
+
+		return preg_replace($match, $replace, $input);
 	}
 
 	/**
@@ -165,27 +165,27 @@ class StrHelper extends Str
 				}
 				elseif (194 <= $t && $t <= 223) {
 					$tn  = 2;
-					$n += 2;
+					$n   += 2;
 					$noc += 2;
 				}
 				elseif (224 <= $t && $t <= 239) {
 					$tn  = 3;
-					$n += 3;
+					$n   += 3;
 					$noc += 2;
 				}
 				elseif (240 <= $t && $t <= 247) {
 					$tn  = 4;
-					$n += 4;
+					$n   += 4;
 					$noc += 2;
 				}
 				elseif (248 <= $t && $t <= 251) {
 					$tn  = 5;
-					$n += 5;
+					$n   += 5;
 					$noc += 2;
 				}
 				elseif ($t == 252 || $t == 253) {
 					$tn  = 6;
-					$n += 6;
+					$n   += 6;
 					$noc += 2;
 				}
 				else {
@@ -310,8 +310,8 @@ class StrHelper extends Str
 
 				return $tmp;
 			}
-			 
-				return iconv($fromCharset, $toCharset . '//IGNORE', $str);
+
+			return iconv($fromCharset, $toCharset . '//IGNORE', $str);
 		}
 		elseif (function_exists('mb_convert_encoding')) {
 			if (is_array($str)) {
@@ -321,11 +321,11 @@ class StrHelper extends Str
 
 				return $tmp;
 			}
-			 
-				return mb_convert_encoding($str, $toCharset, $fromCharset);
+
+			return mb_convert_encoding($str, $toCharset, $fromCharset);
 		}
-		 
-			return self::_convert($str, $toCharset, $fromCharset);
+
+		return self::_convert($str, $toCharset, $fromCharset);
 	}
 
 	/**
@@ -395,8 +395,8 @@ class StrHelper extends Str
 		if (!$length) {
 			return implode('', $pinyin);
 		}
-		 
-			return substr(implode('', $pinyin), 0, $length);
+
+		return substr(implode('', $pinyin), 0, $length);
 	}
 
 	/**
@@ -517,8 +517,8 @@ class StrHelper extends Str
 
 			return implode('&#1161;', $mb);
 		}
-		 
-			return $str;
+
+		return $str;
 	}
 
 	/**
@@ -636,8 +636,8 @@ class StrHelper extends Str
 		if (preg_match("/{$char}([a-z ]{1,15})/is", $str, $match)) {
 			return $match[1];
 		}
-		 
-			return false;
+
+		return false;
 	}
 
 	/**
@@ -684,13 +684,13 @@ class StrHelper extends Str
 					case 13:
 						$char2 = ord(substr($str, $i++, 1));
 						$char3 = $table[(($c & 0x1F) << 6) | ($char2 & 0x3F)];
-						$cStr .= self::fromHex(dechex($char3 + 0x8080));
+						$cStr  .= self::fromHex(dechex($char3 + 0x8080));
 						break;
 					case 14:
 						$char2 = ord(substr($str, $i++, 1));
 						$char3 = ord(substr($str, $i++, 1));
 						$char4 = $table[(($c & 0x0F) << 12) | (($char2 & 0x3F) << 6) | (($char3 & 0x3F) << 0)];
-						$cStr .= self::fromHex(dechex($char4 + 0x8080));
+						$cStr  .= self::fromHex(dechex($char4 + 0x8080));
 						break;
 				}
 			}
@@ -738,15 +738,15 @@ class StrHelper extends Str
 			foreach ($arr as $v) {
 				if ($v && strpos($v, '|') !== false) {
 					list($key, $value) = explode('|', $v);
-					$key               = trim($key);
-					$return[$key]      = trim($value);
+					$key          = trim($key);
+					$return[$key] = trim($value);
 				}
 			}
 
 			return $return;
 		}
-		 
-			return $arr;
+
+		return $arr;
 	}
 
 	/**
@@ -777,11 +777,11 @@ class StrHelper extends Str
 			if (strpos($ids, '_,_') !== false) {
 				return explode('_,_', $ids);
 			}
-			 
-				return [];
+
+			return [];
 		}
-		 
-			return str_replace('_,_', ',', $ids);
+
+		return str_replace('_,_', ',', $ids);
 	}
 
 	/**
@@ -794,8 +794,8 @@ class StrHelper extends Str
 		if ($input) {
 			return substr_replace($input, '****', 3, -4);
 		}
-		 
-			return '';
+
+		return '';
 	}
 
 	/**
@@ -808,8 +808,8 @@ class StrHelper extends Str
 		if ($input) {
 			return substr_replace($input, '****', 3, strpos($input, '@') - 3);
 		}
-		 
-			return '';
+
+		return '';
 	}
 
 	/**
@@ -932,7 +932,29 @@ class StrHelper extends Str
 
 			return nl2br(self::cut($intro, $length, '...'));
 		}
-		 
-			return '';
+
+		return '';
+	}
+
+	/**
+	 * 返回唯一的值
+	 * @param string $current
+	 * @param string $str
+	 * @param string $delimiter
+	 * @param bool   $remove
+	 * @return mixed
+	 */
+	public static function unique($current, $str, $delimiter = ',', $remove = false)
+	{
+		if (!$remove) {
+			// 追加
+			$current .= $delimiter . $str;
+		}
+
+		// 去重
+		$arr = explode($delimiter, $current);
+		return collect($arr)->unique()->filter(function ($item) use ($remove, $str) {
+			return $remove ? ($item && $item != $str) : $item;
+		})->implode($delimiter);
 	}
 }
