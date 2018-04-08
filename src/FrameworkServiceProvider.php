@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework;
 
 use Illuminate\Support\ServiceProvider;
+use Poppy\Framework\Agamotto\AgamottoServiceProvider;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Console\ConsoleServiceProvider;
 use Poppy\Framework\Console\GeneratorServiceProvider;
@@ -54,6 +55,7 @@ class FrameworkServiceProvider extends ServiceProvider
 			'poppy'
 		);
 
+		$this->app->register(AgamottoServiceProvider::class);
 		$this->app->register(ConsoleServiceProvider::class);
 		$this->app->register(GeneratorServiceProvider::class);
 		$this->app->register(BladeServiceProvider::class);

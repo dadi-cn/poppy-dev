@@ -25,21 +25,13 @@ class AgamottoServiceProvider extends L5ServiceProvider
 	}
 
 	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-	}
-
-	/**
 	 * Sets the locale using the correct load order.
 	 * 使用指定的加载顺序设置本地化
 	 * @param $locale
 	 */
 	private function setAgamottoLocale($locale)
 	{
+
 		Agamotto::setFallbackLocale($this->getFallbackLocale($locale));
 		Agamotto::setLocale($locale);
 	}
