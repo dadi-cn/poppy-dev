@@ -1,7 +1,7 @@
 <?php namespace Poppy\Framework\Agamotto;
 
 use Illuminate\Support\ServiceProvider as L5ServiceProvider;
-use Poppy\Framework\Agamotto\Events\LocaleChanged;
+use Poppy\Framework\Events\LocaleChanged;
 
 /**
  * 加载器

@@ -66,15 +66,6 @@ class FrameworkServiceProvider extends ServiceProvider
 		$this->app->register(GraphQLServiceProvider::class);
 	}
 
-	/**
-	 * Get the services provided by the provider.
-	 * @return array
-	 */
-	public function provides()
-	{
-		// return ['duoli.form'];
-		return [];
-	}
 
 	/**
 	 * @return array
@@ -131,4 +122,14 @@ class FrameworkServiceProvider extends ServiceProvider
 		return array_map('realpath', $files);
 	}
 	*/
+
+	/**
+	 * Get the services provided by the provider.
+	 * @return array
+	 */
+	public function provides()
+	{
+		// return ['duoli.form'];
+		return [];
+	}
 }

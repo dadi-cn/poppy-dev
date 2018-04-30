@@ -1,4 +1,4 @@
-<?php namespace Poppy\Framework\Agamotto\Events;
+<?php namespace Poppy\Framework\Events;
 
 use Poppy\Framework\Application\Event;
 
