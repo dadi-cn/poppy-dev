@@ -2,7 +2,7 @@
 [![Join the chat at https://gitter.im/poppy-framework/Lobby](https://badges.gitter.im/poppy-framework/Lobby.svg)](https://gitter.im/poppy-framework/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ### Agamotto
-Agamotto(阿戈摩托之眼/Eye Of Agamotto) 组件作为时间翻译的组件, 继承自 `jenssegers/date` - 继承自 Carbon 的多语言时间支持
+Agamotto(阿戈摩托之眼/Eye Of Agamotto) 组件作为时间翻译的组件, 继承自 `jenssegers/date` - 继承自 Carbon 的多语言时间支持, 支持 `Carbon` 的所有语法
 
 并支持事件类更换Locale
 ```
