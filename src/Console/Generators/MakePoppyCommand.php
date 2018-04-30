@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
+use Poppy\Framework\Events\PoppyMake;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -142,7 +143,7 @@ class MakePoppyCommand extends Command
 
 		$progress->finish();
 
-		event($this->container['slug'] . '.poppy.made');
+		event(new PoppyMake($this->container['slug']));
 
 		$this->info("\nPoppy Module generated successfully.");
 	}

@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Poppy\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Finder\SplFileInfo;
 
 class PoppyCheckCommand extends Command
 {
@@ -33,7 +34,6 @@ class PoppyCheckCommand extends Command
 			->name('*.php')
 			->in($folders);
 		foreach ($iterator as $file) {
-
 			$this->check($file);
 		}
 		$this->table([
@@ -42,7 +42,7 @@ class PoppyCheckCommand extends Command
 
 	}
 
-	protected function check($file)
+	protected function check(SplFileInfo $file)
 	{
 		$pathName = $file->getPathName();
 		$fileName = $file->getFileName();

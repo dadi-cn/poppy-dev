@@ -68,8 +68,7 @@ class PoppyDocCommand extends Command
 					);
 				}
 				break;
-			case 'poppy':
-			case 'project':
+			case 'app':
 				$aimFolder = public_path('docs/poppy');
 				// project readme
 				$this->getFile()->copy(base_path('README.md'), $aimFolder . '/README.md');
