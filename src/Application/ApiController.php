@@ -2,6 +2,9 @@
 
 use Illuminate\Container\Container;
 
+/**
+ * Api Controller
+ */
 class ApiController extends Controller
 {
 	public function __construct()

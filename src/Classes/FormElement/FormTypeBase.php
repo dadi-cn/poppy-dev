@@ -57,7 +57,7 @@ class FormTypeBase
 						$validator['required'] = true;
 						break;
 					case strpos($rule, 'digits_between') !== false:
-						list($min, $max)             = explode(',', str_replace('digits_between:', '', $rule));
+						list($min, $max) = explode(',', str_replace('digits_between:', '', $rule));
 						$validator['digits_between'] = [
 							'min' => intval($min),
 							'max' => intval($max),
@@ -82,7 +82,8 @@ class FormTypeBase
 		}
 		if (isset($this->validator['required']) && $this->validator['required']) {
 			$this->label_options['class'] .= ' validation';
-		} else {
+		}
+		else {
 			$this->label_options['class'] .= ' place';
 		}
 	}
@@ -114,6 +115,6 @@ class FormTypeBase
 			return \Form::tip($this->setting['desc']);
 		}
 
-			return '';
+		return '';
 	}
 }

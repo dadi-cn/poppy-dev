@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Agamotto;
 
 use Illuminate\Support\ServiceProvider as L5ServiceProvider;
+use Poppy\Framework\Agamotto\Events\LocaleChanged;
 
 /**
  * 加载器
@@ -8,6 +9,9 @@ use Illuminate\Support\ServiceProvider as L5ServiceProvider;
  */
 class AgamottoServiceProvider extends L5ServiceProvider
 {
+
+	protected $defer = false;
+
 	/**
 	 * Bootstrap the application events.
 	 *
@@ -15,12 +19,11 @@ class AgamottoServiceProvider extends L5ServiceProvider
 	 */
 	public function boot()
 	{
-		$locale = $this->app['translator']->getLocale();
-
+		$locale = app('translator')->getLocale();
 		$this->setAgamottoLocale($locale);
 
-		$this->app['events']->listen('locale.changed', function ($locale) {
-			$this->setAgamottoLocale($locale);
+		app('events')->listen(LocaleChanged::class, function (LocaleChanged $event) {
+			$this->setAgamottoLocale($event->locale);
 		});
 	}
 
@@ -52,6 +55,6 @@ class AgamottoServiceProvider extends L5ServiceProvider
 			}
 		}
 
-		return $this->app['config']->get('app.fallback_locale');
+		return config('app.fallback_locale');
 	}
 }

@@ -38,10 +38,11 @@ abstract class Controller extends BaseController
 		]);
 
 		// pagesize
-		$this->pagesize = config('poppy.pagesize', 15);
+		$this->pagesize = config('poppy.pages.default_size', 15);
+		$maxPagesize    = config('poppy.pages.max_size');
 		if (\Input::get('pagesize')) {
 			$pagesize = abs(intval(\Input::get('pagesize')));
-			$pagesize = $pagesize < 3001 ? $pagesize : 3000;
+			$pagesize = ($pagesize <= $maxPagesize) ? $pagesize : $maxPagesize;
 			if ($pagesize > 0) {
 				$this->pagesize = $pagesize;
 			}
@@ -59,8 +60,9 @@ abstract class Controller extends BaseController
 		// 自动计算seo
 		// 根据路由名称来转换 seo key
 		// slt:nav.index  => slt::seo.nav_index
-		$seoKey = str_replace([':', '.'], ['::', '_'], $this->route);
-		if ($seoKey) {
+		$seoKey    = str_replace([':', '.'], ['::', '_'], $this->route);
+		$enableSeo = config('poppy.seo_enable');
+		if ($enableSeo && $seoKey) {
 			$seoKey = str_replace('::', '::seo.', $seoKey);
 			$this->seo(trans($seoKey));
 		}

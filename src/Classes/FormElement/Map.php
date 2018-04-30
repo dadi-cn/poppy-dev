@@ -1,6 +1,6 @@
 <?php namespace Poppy\Framework\Classes\FormElement;
 
-use Poppy\Framework\Contracts\FormElement as FormElementContract;
+use Poppy\Framework\Classes\Contracts\FormElement as FormElementContract;
 
 class Map extends FormTypeBase implements FormElementContract
 {

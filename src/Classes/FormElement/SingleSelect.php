@@ -1,6 +1,6 @@
 <?php namespace Poppy\Framework\Classes\FormElement;
 
-use Poppy\Framework\Contracts\FormElement as FormElementContract;
+use Poppy\Framework\Classes\Contracts\FormElement as FormElementContract;
 use Poppy\Framework\Helper\StrHelper;
 
 class SingleSelect extends FormTypeBase implements FormElementContract
@@ -12,8 +12,8 @@ class SingleSelect extends FormTypeBase implements FormElementContract
 		self::PC_TYPE_RADIO  => '单选(Radio)',
 		self::PC_TYPE_SELECT => '选择框(Select)',
 	];
-	protected $pcType;
-	protected $singleOptions;
+	protected        $pcType;
+	protected        $singleOptions;
 
 	public function __construct($name, $setting, $value = null)
 	{
@@ -39,11 +39,12 @@ class SingleSelect extends FormTypeBase implements FormElementContract
 		$value = $this->value == null ? $this->defaultValue : $this->value;
 		if ($this->pcType == self::PC_TYPE_RADIO) {
 			return \Form::radios($this->name, $this->singleOptions, $value, $this->form_options);
-		} elseif ($this->pcType == self::PC_TYPE_SELECT) {
+		}
+		elseif ($this->pcType == self::PC_TYPE_SELECT) {
 			return \Form::select($this->name, $this->singleOptions, $value, $this->form_options);
 		}
 
-			return '';
+		return '';
 	}
 
 	public static function pcTypeLinear()

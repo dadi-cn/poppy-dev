@@ -6,6 +6,7 @@ trait MigrationTrait
 	 * Require (once) all migration files for the supplied module.
 	 *
 	 * @param string $module
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	protected function requireMigrations($module)
 	{
@@ -24,6 +25,7 @@ trait MigrationTrait
 	 * @param string $module
 	 *
 	 * @return string
+	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
 	protected function getMigrationPath($module)
 	{
