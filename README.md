@@ -87,12 +87,14 @@ Use phplint check code errors.
 $ php artisan poppy:doc {phplint/lint} 
 ```
 
-Use sami generate php document.
+
+Use sami generate php document. Finder Can find all php files under `modules` folder
 ```
 $ php artisan poppy:doc {sami/php} 
 ```
 
-Use docsify generate project document.
+Use docsify generate project document. All `*.md` files under `modules/{slug}/resources/docs` are generate to `public/docs/poppy` folder. You can visit it pass `{url_site}docs/poppy/`
+
 ```
 $ php artisan poppy:doc {app} 
 ```
@@ -182,4 +184,11 @@ Support Xml,Ini,Yaml
 // You Can check if module is exist and enabled.
 @endpoppy
 ```
-@
+
+## Thanks To
+
+- [Docsify](https://docsify.js.org/#/zh-cn/) 
+- [Yaml](http://nodeca.github.io/js-yaml/)
+- [EloquentFilter](https://github.com/Tucker-Eric/EloquentFilter)
+- [laravel-graphql](https://github.com/Folkloreatelier/laravel-graphql)
+- [Sami](https://github.com/FriendsOfPHP/Sami) 
