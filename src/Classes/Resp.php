@@ -4,11 +4,9 @@ use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\MessageBag;
 use Poppy\Framework\Helper\StrHelper;
-use System\Classes\Traits\SystemTrait;
 
 class Resp
 {
-	use SystemTrait;
 
 	const SUCCESS       = 0;
 	const ERROR         = 1;
@@ -152,16 +150,16 @@ class Resp
 		if ($isJson) {
 			return self::webSplash($resp, $arrAppend, $input);
 		}
-		 
-			if (!$isForget) {
-				\Session::flash('end.message', $resp->getMessage());
-				\Session::flash('end.level', $resp->getCode());
-			}
-			if (isset($arrAppend['reload'])) {
-				$location = \Session::previousUrl();
-			}
 
-			return self::webView($time, $location, $input);
+		if (!$isForget) {
+			\Session::flash('end.message', $resp->getMessage());
+			\Session::flash('end.level', $resp->getCode());
+		}
+		if (isset($arrAppend['reload'])) {
+			$location = \Session::previousUrl();
+		}
+
+		return self::webView($time, $location, $input);
 	}
 
 	public static function data($type, $msg)
@@ -181,8 +179,8 @@ class Resp
 		if (is_array($this->message)) {
 			return implode("\n", $this->message);
 		}
-		 
-			return $this->message;
+
+		return $this->message;
 	}
 
 	public function toArray()
@@ -260,10 +258,10 @@ class Resp
 				'time'     => isset($time) ? $time : 0,
 			]);
 		}
-		 
-			$re = ($location && $location != 'back') ? \Redirect::to($location) : \Redirect::back();
 
-			return $input ? $re->withInput($input) : $re;
+		$re = ($location && $location != 'back') ? \Redirect::to($location) : \Redirect::back();
+
+		return $input ? $re->withInput($input) : $re;
 	}
 
 	/**
