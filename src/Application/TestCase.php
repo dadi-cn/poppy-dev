@@ -19,9 +19,20 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
 			$app = require_once $fileInVendor;
 		}
 
-		if (isset($app)) {
-			$app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
+		if ($app !== null) {
+			$app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 			return $app;
 		}
+	}
+
+	/**
+	 * Run Vendor Test
+	 * @param array $vendors Test here is must class.
+	 */
+	public function poppyTestVendor(array $vendors = [])
+	{
+		collect($vendors)->each(function ($class, $package) {
+			$this->assertTrue(class_exists($class), "Class `{$class}` is not exist, run `composer require {$package}` to install");
+		});
 	}
 }
