@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Console\Commands;
 
 use Illuminate\Console\Command;
+use Poppy\Framework\Helper\StrHelper;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -57,17 +58,17 @@ class PoppySeedCommand extends Command
 
 			return;
 		}
-		 
-			if ($this->option('force')) {
-				$modules = $this->poppy->all();
-			}
-			else {
-				$modules = $this->poppy->enabled();
-			}
 
-			foreach ($modules as $module) {
-				$this->seed($module['slug']);
-			}
+		if ($this->option('force')) {
+			$modules = $this->poppy->all();
+		}
+		else {
+			$modules = $this->poppy->enabled();
+		}
+
+		foreach ($modules as $module) {
+			$this->seed($module['slug']);
+		}
 	}
 
 	/**
@@ -79,8 +80,9 @@ class PoppySeedCommand extends Command
 		$module        = $this->poppy->where('slug', $slug);
 		$params        = [];
 		$namespacePath = $this->poppy->getNamespace();
-		$rootSeeder    = $module['basename'] . 'DatabaseSeeder';
-		$fullPath      = $namespacePath . '\\' . $module['basename'] . '\Database\Seeds\\' . $rootSeeder;
+
+		$rootSeeder = ucfirst(camel_case($module['basename'])) . 'DatabaseSeeder';
+		$fullPath   = ucfirst(camel_case($namespacePath)) . '\\' . ucfirst(camel_case($module['basename'])) . '\Database\Seeds\\' . $rootSeeder;
 
 		if (class_exists($fullPath)) {
 			if ($this->option('class')) {

@@ -33,30 +33,15 @@ class MakeSeederCommand extends GeneratorCommand
 		return __DIR__ . '/stubs/seeder.stub';
 	}
 
+
 	/**
-	 * Get the destination class path.
-	 * @param string $name
+	 * Get the default namespace for the class.
+	 * @param string $rootNamespace
 	 * @return string
 	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
 	 */
-	protected function getPath($name)
+	protected function getDefaultNamespace($rootNamespace)
 	{
-		return poppy_path($this->argument('slug'), 'src/database/seeds/' . $name . '.php');
-	}
-
-	/**
-	 * Replace namespace in seeder stub.
-	 * @param string $name
-	 * @return string
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
-	 */
-	protected function getNamespace($name)
-	{
-		return poppy_class($this->argument('slug'), 'Database\Seeds');
-	}
-
-	protected function rootNamespace()
-	{
-		return '';
+		return poppy_class($this->argument('slug'), 'Database\\Seeds');
 	}
 }
