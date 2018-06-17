@@ -58,6 +58,7 @@ class FrameworkServiceProvider extends ServiceProvider
 		$this->app->register(ParseServiceProvider::class);
 		$this->app->register(TranslationServiceProvider::class);
 		$this->app->register(GraphQLServiceProvider::class);
+		$this->app->register(Update\UpdateServiceProvider::class);
 	}
 
 

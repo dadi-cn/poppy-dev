@@ -63,7 +63,8 @@ class PoppyMigrateCommand extends Command
 				$this->migrate($module['slug']);
 				return null;
 			}
-			elseif ($this->option('force')) {
+
+			if ($this->option('force')) {
 				$this->migrate($module['slug']);
 				return null;
 			}
