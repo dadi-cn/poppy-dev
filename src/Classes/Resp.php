@@ -31,9 +31,9 @@ class Resp
 			$code = self::SUCCESS;
 		}
 
-		$this->code = intval($code);
+		$this->code = (int) $code;
 
-		if (is_string($message) && !empty($message)) {
+		if (\is_string($message) && !empty($message)) {
 			$this->message = $message;
 		}
 
@@ -97,7 +97,7 @@ class Resp
 	{
 		$env = !is_production() ? '[开发]' : '';
 
-		return $env . (is_string($this->message) ? $this->message : implode(',', $this->message));
+		return $env . (\is_string($this->message) ? $this->message : implode(',', $this->message));
 	}
 
 	/**
@@ -144,17 +144,19 @@ class Resp
 			unset($arrAppend['forget']);
 		}
 
-		$location = isset($arrAppend['location']) ? $arrAppend['location'] : '';
-		$time     = isset($arrAppend['time']) ? $arrAppend['time'] : 0;
+		$location = $arrAppend['location'] ?? '';
+		$time     = $arrAppend['time'] ?? 0;
+
+		if (!$isForget || \Request::ajax()) {
+			\Session::flash('end.message', $resp->getMessage());
+			\Session::flash('end.level', $resp->getCode());
+		}
 
 		if ($isJson) {
 			return self::webSplash($resp, $arrAppend, $input);
 		}
 
-		if (!$isForget) {
-			\Session::flash('end.message', $resp->getMessage());
-			\Session::flash('end.level', $resp->getCode());
-		}
+
 		if (isset($arrAppend['reload'])) {
 			$location = \Session::previousUrl();
 		}
@@ -176,14 +178,14 @@ class Resp
 
 	public function __toString()
 	{
-		if (is_array($this->message)) {
+		if (\is_array($this->message)) {
 			return implode("\n", $this->message);
 		}
 
 		return $this->message;
 	}
 
-	public function toArray()
+	public function toArray(): array
 	{
 		return [
 			'status'  => $this->getCode(),
@@ -196,7 +198,7 @@ class Resp
 	 * @param $message
 	 * @return array
 	 */
-	public static function success($message)
+	public static function success($message): array
 	{
 		return (new self(self::SUCCESS, $message))->toArray();
 	}
@@ -206,7 +208,7 @@ class Resp
 	 * @param $message
 	 * @return array
 	 */
-	public static function error($message)
+	public static function error($message): array
 	{
 		return (new self(self::ERROR, $message))->toArray();
 	}
@@ -231,7 +233,7 @@ class Resp
 	 */
 	private static function webView($time, $location, $input)
 	{
-		if ($time || $location == 'back' || $location == 'message' || !$location) {
+		if ($time || $location === 'back' || $location === 'message' || !$location) {
 			$re         = $location ?: 'back';
 			$messageTpl = config('poppy.message_template');
 			$view       = '';
@@ -255,11 +257,11 @@ class Resp
 			return response()->view($view, [
 				'location' => $re,
 				'input'    => $input,
-				'time'     => isset($time) ? $time : 0,
+				'time'     => $time ?? 0,
 			]);
 		}
 
-		$re = ($location && $location != 'back') ? \Redirect::to($location) : \Redirect::back();
+		$re = ($location && $location !== 'back') ? \Redirect::to($location) : \Redirect::back();
 
 		return $input ? $re->withInput($input) : $re;
 	}
@@ -267,9 +269,9 @@ class Resp
 	/**
 	 * 不支持 location
 	 * splash 不支持 location | back (Mark Zhao)
-	 * @param Resp   $resp
-	 * @param string $append
-	 * @param array  $input
+	 * @param Resp         $resp
+	 * @param string|array $append
+	 * @param array        $input
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	private static function webSplash($resp, $append = '', $input = [])
@@ -280,17 +282,17 @@ class Resp
 		];
 
 		$data = [];
-		if (!is_null($append)) {
+		if (!\is_null($append)) {
 			if ($append instanceof Arrayable) {
 				$data = $append->toArray();
 			}
-			elseif (is_string($append)) {
+			elseif (\is_string($append)) {
 				$data = StrHelper::parseKey($append);
 			}
-			elseif (is_array($append)) {
+			elseif (\is_array($append)) {
 				$data = $append;
 			}
-			if (isset($data['location']) && $data['location'] == 'back') {
+			if (isset($data['location']) && $data['location'] === 'back') {
 				unset($data['location']);
 			}
 		}
@@ -298,11 +300,10 @@ class Resp
 			$return['data'] = (array) $data;
 		}
 
-		if (is_array($input) && $input) {
+		if (\is_array($input) && $input) {
 			\Session::flashInput($input);
 		}
 
 		return \Response::json($return, 200, [], JSON_UNESCAPED_UNICODE);
 	}
 }
-
