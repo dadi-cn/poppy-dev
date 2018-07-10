@@ -38,8 +38,8 @@ class ArrayHelper extends Arr
 
 			return rtrim($str, ';');
 		}
-		 
-			return '';
+
+		return '';
 	}
 
 	/**
@@ -81,28 +81,29 @@ class ArrayHelper extends Arr
 
 	/**
 	 * 返回kv结构字串
-	 * @param $array
+	 * @param array  $array
+	 * @param string $join
 	 * @return string
 	 */
-	public static function toKvStr($array)
+	public static function toKvStr($array, $join = ','): string
 	{
 		$return = '';
 
-		if (is_array($array)) {
+		if (\is_array($array)) {
 			foreach ($array as $key => $value) {
-				if (is_array($value)) {
-					$return .= $key . '=' . self::toKvStr($value) . ',';
+				if (\is_array($value)) {
+					$return .= $key . '=' . self::toKvStr($value) . $join;
 				}
 				else {
-					$return .= $key . '=' . $value . ',';
+					$return .= $key . '=' . $value . $join;
 				}
 			}
 		}
 		else {
-			$return .= $array . ',';
+			$return .= $array . $join;
 		}
 
-		return rtrim($return, ',');
+		return rtrim($return, $join);
 	}
 
 	/**
