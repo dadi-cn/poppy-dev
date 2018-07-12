@@ -37,8 +37,8 @@ class UtilHelper
 		elseif (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/(Spider|Bot|Crawl|Slurp|lycos|robozilla)/i', $_SERVER['HTTP_USER_AGENT'])) {
 			return true;
 		}
-		 
-			return false;
+
+		return false;
 	}
 
 	/**
@@ -122,8 +122,8 @@ class UtilHelper
 
 			return self::idcardChecksum18($id_card);
 		}
-		 
-			return false;
+
+		return false;
 	}
 
 	/**
@@ -183,7 +183,7 @@ class UtilHelper
 	 */
 	public static function formatDecimal($input, $sprinft = true, $precision = 2)
 	{
-		$var               = round(floatval($input), $precision);
+		$var = round(floatval($input), $precision);
 		if ($sprinft) $var = sprintf('%.' . $precision . 'f', $var);
 
 		return $var;
@@ -235,15 +235,15 @@ class UtilHelper
 		if (strlen($idcard) != 15) {
 			return false;
 		}
-		 
-			// 如果身份证顺序码是996 997 998 999，这些是为百岁以上老人的特殊编码
-			if (array_search(substr($idcard, 12, 3), ['996', '997', '998', '999']) !== false) {
-				$idcard = substr($idcard, 0, 6) . '18' . substr($idcard, 6, 9);
-			}
-			else {
-				$idcard = substr($idcard, 0, 6) . '19' . substr($idcard, 6, 9);
-			}
-		
+
+		// 如果身份证顺序码是996 997 998 999，这些是为百岁以上老人的特殊编码
+		if (array_search(substr($idcard, 12, 3), ['996', '997', '998', '999']) !== false) {
+			$idcard = substr($idcard, 0, 6) . '18' . substr($idcard, 6, 9);
+		}
+		else {
+			$idcard = substr($idcard, 0, 6) . '19' . substr($idcard, 6, 9);
+		}
+
 		$idcard = $idcard . self::idcardVerify($idcard);
 
 		return $idcard;
@@ -263,8 +263,8 @@ class UtilHelper
 		if (self::idcardVerify($idcard_base) != strtoupper(substr($idcard, 17, 1))) {
 			return false;
 		}
-		 
-			return true;
+
+		return true;
 	}
 
 	/**
@@ -497,42 +497,6 @@ class UtilHelper
 		return preg_match("/\d\.\d\..+/", $version);
 	}
 
-	private static function _isUtf8($filename)
-	{
-		$info     = '<span style="color:red;">NOT UTF8 file</span>';
-		$contents = file_get_contents($filename);
-		if ($contents === mb_convert_encoding(mb_convert_encoding($contents, 'UTF-32', 'UTF-8'), 'UTF-8', 'UTF-32')) {
-			$info = '<span>IS UTF8 file</span>';
-		}
-
-		return $info;
-	}
-
-	/**
-	 * @param            $file_name
-	 * @param bool|false $remove_bom
-	 * @return string
-	 */
-	private static function _checkFileBom($file_name, $remove_bom = false)
-	{
-		$info       = '<span>BOM Not Found</span>';
-		$contents   = file_get_contents($file_name);
-		$charset[1] = substr($contents, 0, 1);
-		$charset[2] = substr($contents, 1, 1);
-		$charset[3] = substr($contents, 2, 1);
-		if (ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
-			if ($remove_bom) {
-				$rest = substr($contents, 3);
-				file_put_contents($file_name, $rest);
-				$info = '<span style="color:red;">BOM found, automatically removed..</span>';
-			}
-			else {
-				$info = '<span style="color:red;">BOM found.</span>';
-			}
-		}
-
-		return $info;
-	}
 
 	/**
 	 *计算某个经纬度的周围某段距离的正方形的四个点
@@ -541,7 +505,7 @@ class UtilHelper
 	 * @param float $distance 该点所在圆的半径，该圆与此正方形内切，默认值为0.5千米
 	 * @return array 正方形的四个点的经纬度坐标
 	 */
-	public function squarePoint($lng, $lat, $distance = 0.5)
+	public function squarePoint($lng, $lat, $distance = 0.5): array
 	{
 		//地球半径，平均半径为6371km
 		$EARTH_RADIUS = 6371;
@@ -561,17 +525,6 @@ class UtilHelper
 		];
 	}
 
-	public function gainNearby($longitude = '', $latitude = '')
-	{
-		$EARTH_RADIUS = 6378.138;
-		$sql          = "SELECT *,ROUND($EARTH_RADIUS*2*ASIN(SQRT(POW(SIN(( ? * PI()/180-latitude*PI()/180)/2),2)+COS( ? *PI()/180)*COS(latitude*PI()/180)*POW(SIN(( ? * PI()/180-longitude*PI()/180)/2),2)))*1000) AS juli FROM map WHERE longitude between ? - 0.5 and ? + 0.5  AND latitude between ? - 0.5 and ? + 0.5";
-
-		$query = $this->db->query($sql, [$latitude, $latitude, $longitude, $longitude, $longitude, $latitude, $latitude]);
-
-		$result = $query->result_array();
-
-		return $result;
-	}
 
 	/**
 	 * 根据两点间的经纬度计算距离
@@ -579,9 +532,9 @@ class UtilHelper
 	 * @param $lat1
 	 * @param $lng2
 	 * @param $lat2
-	 * @return int
+	 * @return string
 	 */
-	public static function getDistance($lng1, $lat1, $lng2, $lat2)
+	public static function getDistance($lng1, $lat1, $lng2, $lat2): string
 	{
 		//将角度转为狐度
 		$radLat1 = deg2rad($lat1);//deg2rad()函数将角度转换为弧度
@@ -592,30 +545,30 @@ class UtilHelper
 		$b       = $radLng1 - $radLng2;
 		$s       = 2 * asin(sqrt(pow(sin($a / 2), 2) + cos($radLat1) * cos($radLat2) * pow(sin($b / 2), 2))) * 6378.137;
 
-		return round(floatval($s), 2) . 'km';
+		return round($s, 2) . 'km';
 	}
 
 	/**
 	 * guid 生成函数
 	 * @return string
 	 */
-	public static function guid()
+	public static function guid(): string
 	{
-		if (function_exists('com_create_guid')) {
+		if (\function_exists('com_create_guid')) {
 			return com_create_guid();
 		}
-		 
-			mt_srand((float) microtime() * 10000); //optional for php 4.2.0 and up.
-			$charid = strtoupper(md5(uniqid(rand(), true)));
-			$hyphen = chr(45); // "-"
-			$uuid   = chr(123) // "{"
-				. substr($charid, 0, 8) . $hyphen
-				. substr($charid, 8, 4) . $hyphen
-				. substr($charid, 12, 4) . $hyphen
-				. substr($charid, 16, 4) . $hyphen
-				. substr($charid, 20, 12)
-				. chr(125); // "}"
-			return $uuid;
+
+		mt_srand((float) microtime() * 10000); //optional for php 4.2.0 and up.
+		$charid = strtoupper(md5(uniqid(mt_rand(), true)));
+		$hyphen = \chr(45); // "-"
+		$uuid   = \chr(123) // "{"
+			. substr($charid, 0, 8) . $hyphen
+			. substr($charid, 8, 4) . $hyphen
+			. substr($charid, 12, 4) . $hyphen
+			. substr($charid, 16, 4) . $hyphen
+			. substr($charid, 20, 12)
+			. \chr(125); // "}"
+		return $uuid;
 	}
 
 	/**
@@ -623,11 +576,11 @@ class UtilHelper
 	 * @param $string
 	 * @return bool
 	 */
-	public static function isJson($string)
+	public static function isJson($string): bool
 	{
 		json_decode($string);
 
-		return json_last_error() == JSON_ERROR_NONE;
+		return json_last_error() === JSON_ERROR_NONE;
 	}
 
 	/**
@@ -635,7 +588,7 @@ class UtilHelper
 	 * @param $string
 	 * @return bool
 	 */
-	public static function isDate($string)
+	public static function isDate($string): bool
 	{
 		list($year, $month, $day) = explode('-', $string);
 
@@ -647,10 +600,10 @@ class UtilHelper
 	 * @param string $pwd
 	 * @return bool
 	 */
-	public static function isPwd($pwd)
+	public static function isPwd($pwd): bool
 	{
 		if (preg_match('/([0-9a-zA-Z_\*\.\[\]\-!@#\$%\^&\(\)\~]+)/i', $pwd, $match)) {
-			return $match[0] == $pwd;
+			return $match[0] === $pwd;
 		}
 
 		return false;
@@ -661,12 +614,50 @@ class UtilHelper
 	 * @param string $str
 	 * @return bool
 	 */
-	public static function isComma($str)
+	public static function isComma($str): bool
 	{
 		if (preg_match('/^(\d+\,)+\d+$|^\d+$/i', $str)) {
 			return true;
 		}
 
 		return false;
+	}
+
+	private static function _isUtf8($filename): string
+	{
+		$info     = '<span style="color:red;">NOT UTF8 file</span>';
+		$contents = file_get_contents($filename);
+		if ($contents === mb_convert_encoding(mb_convert_encoding($contents, 'UTF-32', 'UTF-8'), 'UTF-8', 'UTF-32')) {
+			$info = '<span>IS UTF8 file</span>';
+		}
+
+		return $info;
+	}
+
+
+	/**
+	 * @param            $file_name
+	 * @param bool|false $remove_bom
+	 * @return string
+	 */
+	private static function _checkFileBom($file_name, $remove_bom = false)
+	{
+		$info       = '<span>BOM Not Found</span>';
+		$contents   = file_get_contents($file_name);
+		$charset[1] = $contents[0];
+		$charset[2] = $contents[1];
+		$charset[3] = $contents[2];
+		if (\ord($charset[1]) === 239 && \ord($charset[2]) === 187 && \ord($charset[3]) === 191) {
+			if ($remove_bom) {
+				$rest = substr($contents, 3);
+				file_put_contents($file_name, $rest);
+				$info = '<span style="color:red;">BOM found, automatically removed..</span>';
+			}
+			else {
+				$info = '<span style="color:red;">BOM found.</span>';
+			}
+		}
+
+		return $info;
 	}
 }

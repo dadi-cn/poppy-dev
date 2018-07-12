@@ -32,11 +32,11 @@ trait KeyParserTrait
 	 */
 	public function keyParserMatch($key)
 	{
-		if (preg_match('/[^0-9]?[a-z_]{1,}::[^0-9]?[a-z_\/]{1,}\.[^0-9]?[a-z]{1,}/', $key)) {
+		if (preg_match('/[^0-9]?[a-z_\-0-9]{1,}::[^0-9]?[a-z_\/\-0-9]{1,}\.[^0-9]?[a-z\-0-9]{1,}/', $key)) {
 			return true;
 		}
-		 
-			return false;
+
+		return false;
 	}
 
 	/**
@@ -84,10 +84,10 @@ trait KeyParserTrait
 		}
 		// 如果这个组中有不止一个段，这意味着我们将从组中提取一个特定的项
 		// 并且需要返回这个项目名称和组，这样我们就知道要从数组中提取哪些项了。
-		 
-			$item = implode('.', array_slice($segments, 1));
 
-			return [null, $group, $item];
+		$item = implode('.', array_slice($segments, 1));
+
+		return [null, $group, $item];
 	}
 
 	/**
