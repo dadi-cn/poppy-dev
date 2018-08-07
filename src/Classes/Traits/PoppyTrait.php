@@ -171,15 +171,14 @@ trait PoppyTrait
 
 	/**
 	 * @param string $tag
-	 * @return \Illuminate\Cache\CacheManager
+	 * @return mixed
 	 */
-	protected function getCache($tag = ''): CacheManager
+	protected function getCache($tag = '')
 	{
 		$cache = $this->getContainer()->make('cache');
 		if ($tag && $cache->getStore() instanceof TaggableStore) {
-			$cache->tags($tag);
+			return $cache->tags($tag);
 		}
-
 		return $cache;
 	}
 
