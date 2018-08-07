@@ -3,6 +3,7 @@
 use Illuminate\Auth\AuthManager;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Cache\TaggableStore;
+use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -13,12 +14,10 @@ use Illuminate\Mail\Mailer;
 use Illuminate\Redis\RedisManager;
 use Illuminate\Routing\Redirector;
 use Illuminate\Session\SessionManager;
-use Illuminate\Validation\Validator;
 use Illuminate\View\Factory;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\MountManager;
-use Poppy\Framework\Config\Repository;
 use Poppy\Framework\Foundation\Application;
 use Poppy\Framework\Poppy\Poppy;
 use Poppy\Framework\Translation\Translator;
@@ -177,7 +176,7 @@ trait PoppyTrait
 	protected function getCache($tag = ''): CacheManager
 	{
 		$cache = $this->getContainer()->make('cache');
-		if ($cache instanceof TaggableStore && $tag) {
+		if ($tag && $cache->getStore() instanceof TaggableStore) {
 			$cache->tags($tag);
 		}
 
