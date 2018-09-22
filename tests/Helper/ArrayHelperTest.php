@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Poppy\Framework\Helper\ArrayHelper;
 use Poppy\Framework\Helper\UtilHelper;
 
-class ArrHelperTest extends TestCase
+class ArrayHelperTest extends TestCase
 {
 	public function testCombine()
 	{
@@ -35,5 +35,13 @@ class ArrHelperTest extends TestCase
 		$str = '221,22,12';
 		$res = UtilHelper::isComma($str);
 		dd($res);
+	}
+
+	public function testNext()
+	{
+		$array = [
+			'a', 'b', 'd', 'f'
+		];
+		$this->assertEquals('d', ArrayHelper::next($array, 'b'));
 	}
 }

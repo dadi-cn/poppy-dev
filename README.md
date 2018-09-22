@@ -112,6 +112,8 @@ poppy:migrate:refresh   Reset and re-run all migrations for a specific or all mo
 poppy:migrate:reset     Rollback all database migrations for a specific or all modules
 poppy:migrate:rollback  Rollback the last database migrations for a specific or all modules
 poppy:migration {slug}  Create a new module migration file
+poppy:migration {slug} CreateDemoTable
+                        Create a table for module migration
 ```
 
 ### Check Event Named 

@@ -188,4 +188,22 @@ class ArrayHelper extends Arr
 
 		return $return;
 	}
+
+	/**
+	 * 根据当前值, 获取下一个值
+	 * @param array      $array 请求的数组
+	 * @param string|int $value 匹配的值
+	 * @return mixed
+	 */
+	public static function next($array, $value)
+	{
+		reset($array);
+		while ($_val = current($array)) {
+			if ($_val === $value) {
+				break;
+			}
+			next($array);
+		}
+		return next($array);
+	}
 }
