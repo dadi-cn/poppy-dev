@@ -48,3 +48,5 @@ class HtmlHelper
 		return $result;
 	}
 }
+
+

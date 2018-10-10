@@ -1,17 +1,8 @@
 <?php namespace Poppy\Framework;
 
 use Illuminate\Support\ServiceProvider;
-use Poppy\Framework\Agamotto\AgamottoServiceProvider;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
-use Poppy\Framework\Console\ConsoleServiceProvider;
-use Poppy\Framework\Console\GeneratorServiceProvider;
-use Poppy\Framework\GraphQL\GraphQLServiceProvider;
 use Poppy\Framework\Helper\UtilHelper;
-use Poppy\Framework\Parse\ParseServiceProvider;
-use Poppy\Framework\Poppy\PoppyServiceProvider;
-use Poppy\Framework\Providers\BladeServiceProvider;
-use Poppy\Framework\Support\HelperServiceProvider;
-use Poppy\Framework\Translation\TranslationServiceProvider;
 
 class FrameworkServiceProvider extends ServiceProvider
 {
@@ -26,8 +17,7 @@ class FrameworkServiceProvider extends ServiceProvider
 		// 注册 api 文档配置
 		$this->publishes([
 			__DIR__ . '/../config/poppy.php'          => config_path('poppy.php'),
-			__DIR__ . '/../resources/config/sami.php' => storage_path('sami/config.php'),
-		], 'poppy');
+		], 'poppy-framework');
 
 		$this->app['poppy']->register();
 
@@ -49,15 +39,13 @@ class FrameworkServiceProvider extends ServiceProvider
 			'poppy'
 		);
 
-		$this->app->register(AgamottoServiceProvider::class);
-		$this->app->register(ConsoleServiceProvider::class);
-		$this->app->register(GeneratorServiceProvider::class);
-		$this->app->register(BladeServiceProvider::class);
-		$this->app->register(HelperServiceProvider::class);
-		$this->app->register(PoppyServiceProvider::class);
-		$this->app->register(ParseServiceProvider::class);
-		$this->app->register(TranslationServiceProvider::class);
-		$this->app->register(GraphQLServiceProvider::class);
+		$this->app->register(Agamotto\AgamottoServiceProvider::class);
+		$this->app->register(Console\ConsoleServiceProvider::class);
+		$this->app->register(Console\GeneratorServiceProvider::class);
+		$this->app->register(Providers\BladeServiceProvider::class);
+		$this->app->register(Poppy\PoppyServiceProvider::class);
+		$this->app->register(Parse\ParseServiceProvider::class);
+		$this->app->register(Translation\TranslationServiceProvider::class);
 		$this->app->register(Update\UpdateServiceProvider::class);
 	}
 
@@ -66,7 +54,7 @@ class FrameworkServiceProvider extends ServiceProvider
 	 * @return array
 	 * @throws Exceptions\ModuleNotFoundException
 	 */
-	protected function providerFiles()
+	protected function providerFiles(): array
 	{
 		$modules = app()->make('poppy')->all();
 		$files   = [];
@@ -100,31 +88,12 @@ class FrameworkServiceProvider extends ServiceProvider
 		});
 	}
 
-	/*
-	public static function compiles()
-	{
-		$modules = app()->make('poppy')->all();
-		$files   = [];
-
-		foreach ($modules as $module) {
-			$serviceProvider = poppy_module_class($module['slug'], 'Providers\\ModuleServiceProvider');
-			var_dump($serviceProvider);
-			if (class_exists($serviceProvider)) {
-				$files = array_merge($files, forward_static_call([$serviceProvider, 'compiles']));
-			}
-		}
-
-		return array_map('realpath', $files);
-	}
-	*/
-
 	/**
 	 * Get the services provided by the provider.
 	 * @return array
 	 */
 	public function provides()
 	{
-		// return ['duoli.form'];
 		return [];
 	}
 }

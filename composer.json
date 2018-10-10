@@ -1,33 +1,35 @@
 {
-	"name": "poppy/framework",
-	"description": "A framework for laravel module development.",
-	"license": "Apache-2.0",
-	"authors": [
+	"name" : "poppy/framework",
+	"description" : "A framework for laravel module development.",
+	"license" : "Apache-2.0",
+	"authors" : [
 		{
-			"name": "Mark Zhao",
-			"email": "zhaody901@126.com"
+			"name" : "Mark Zhao",
+			"email" : "zhaody901@126.com"
 		}
 	],
-	"require": {
-		"php": ">=5.4.0",
-		"jenssegers/date": "^3.3",
-		"webonyx/graphql-php": "0.11.*"
+	"require" : {
+		"php" : ">=7.0.0",
+		"jenssegers/date" : "^3.3"
 	},
-	"autoload": {
-		"psr-4": {
-			"Poppy\\Framework\\": "src/",
-			"Poppy\\Tests\\": "tests/"
+	"require-dev" : {
+		"roave/security-advisories" : "dev-master"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Poppy\\Framework\\" : "src/",
+			"Poppy\\Framework\\Tests\\" : "tests/"
 		},
-		"files": [
+		"files" : [
 			"src/Support/functions.php"
 		]
 	},
-	"autoload-dev": {
-		"psr-4": {
+	"autoload-dev" : {
+		"psr-4" : {
 		}
 	},
-	"config": {
-		"preferred-install": "dist"
+	"config" : {
+		"preferred-install" : "dist"
 	},
-	"minimum-stability": "dev"
+	"minimum-stability" : "dev"
 }

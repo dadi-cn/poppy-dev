@@ -1,5 +1,6 @@
 <?php namespace Poppy\Framework\Support;
 
+
 use Illuminate\Support\ServiceProvider as ServiceProviderBase;
 use Poppy\Framework\Agamotto\Agamotto;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;

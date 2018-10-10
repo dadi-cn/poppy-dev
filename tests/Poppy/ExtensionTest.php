@@ -1,4 +1,4 @@
-<?php namespace Poppy\Tests\Poppy;
+<?php namespace Poppy\Framework\Tests\Poppy;
 
 use Poppy\Framework\Application\TestCase;
 

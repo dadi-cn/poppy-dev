@@ -1,6 +1,5 @@
 <?php
 
-
 if (!function_exists('route_url')) {
 	/**
 	 * 自定义可以传值的路由写法
@@ -100,7 +99,7 @@ if (!function_exists('cache_name')) {
 	 */
 	function cache_name($class, $suffix = '')
 	{
-		return \Poppy\Framework\Helper\CacheHelper::name($class, $suffix);
+		return \Poppy\Framework\Helper\UtilHelper::cacheName($class, $suffix);
 	}
 }
 

@@ -13,17 +13,19 @@
 class FileHelper
 {
 	/**
-	 * @param $filename
+	 * 获取文件的扩展名
+	 * @param string $filename 文件名
 	 * @return string   获取文件名扩展
 	 */
-	public static function ext($filename)
+	public static function ext($filename): string
 	{
 		return strtolower(trim(substr(strrchr($filename, '.'), 1)));
 	}
 
 	/**
 	 * 返回文件纠正的名称, 替换掉特殊字符
-	 * @param $name
+	 * 返回合法的文件名
+	 * @param string $name 可能不合法的文件名称
 	 * @return mixed
 	 */
 	public static function vname($name)
@@ -43,10 +45,12 @@ class FileHelper
 	 */
 	public static function down($file, $filename = '', $data = '')
 	{
-		if (!$data && !is_file($file)) exit;
-		$filename = $filename ? $filename : basename($file);
-		$filetype = self::ext($filename);
-		$filesize = $data ? strlen($data) : filesize($file);
+		if (!$data && !is_file($file)) {
+			exit;
+		}
+		$filename = $filename ?: basename($file);
+		$fileType = self::ext($filename);
+		$fileSize = $data ? \strlen($data) : filesize($file);
 		ob_end_clean();
 		@set_time_limit(0);
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false) {
@@ -58,9 +62,9 @@ class FileHelper
 		}
 		header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 		header('Content-Encoding: none');
-		header('Content-Length: ' . $filesize);
+		header('Content-Length: ' . $fileSize);
 		header('Content-Disposition: attachment; filename=' . $filename);
-		header('Content-Type: ' . $filetype);
+		header('Content-Type: ' . $fileType);
 		if ($data) {
 			echo $data;
 		}
@@ -72,14 +76,16 @@ class FileHelper
 
 	/**
 	 * 文件列表
-	 * @param       $dir
-	 * @param array $fs
+	 * @param string $dir 文件夹名称
+	 * @param array  $fs
 	 * @return array
 	 */
-	public static function listAll($dir, $fs = [])
+	public static function listAll($dir, array $fs = []): array
 	{
 		$files = glob($dir . '/*');
-		if (!is_array($files)) return $fs;
+		if (!\is_array($files)) {
+			return $fs;
+		}
 		foreach ($files as $file) {
 			if (is_dir($file)) {
 				$fs = self::listAll($file, $fs);
@@ -97,15 +103,17 @@ class FileHelper
 	 * @param $dir
 	 * @return array
 	 */
-	public static function subFile($dir)
+	public static function subFile($dir): array
 	{
 		if (EnvHelper::isWindows()) {
 			$dir = StrHelper::convert($dir, 'utf-8', 'gbk');
 		}
 		$dir    = self::path($dir, false);
-		$files  = scandir($dir);
+		$files  = scandir($dir, SCANDIR_SORT_NONE);
 		$return = [];
-		if (!is_array($files)) return $return;
+		if (!\is_array($files)) {
+			return $return;
+		}
 		foreach ($files as $file) {
 			if (strpos($file, '.') !== 0 && !is_dir($dir . '/' . $file)) {
 				$return[] = $dir . '/' . $file;
@@ -123,7 +131,7 @@ class FileHelper
 	 * @param $dir
 	 * @return array
 	 */
-	public static function listDir($dir)
+	public static function listDir($dir): array
 	{
 		if (EnvHelper::isWindows()) {
 			$dir = StrHelper::batchConvert($dir, 'utf-8', 'gbk');
@@ -131,7 +139,9 @@ class FileHelper
 		$dir    = self::path($dir, false);
 		$subDir = self::subDir($dir);
 		$dirs   = $subDir;
-		if (!is_array($dirs)) return $dirs;
+		if (!\is_array($dirs)) {
+			return $dirs;
+		}
 		foreach ($subDir as $file) {
 			$childDir = self::listDir($file);
 			$dirs     = array_merge($dirs, $childDir);
@@ -150,7 +160,7 @@ class FileHelper
 	 */
 	public static function append($file, $str)
 	{
-		$fh = fopen($file, 'a');
+		$fh = fopen($file, 'ab');
 		flock($fh, LOCK_EX);
 		fwrite($fh, $str . PHP_EOL);
 		fclose($fh);
@@ -161,14 +171,16 @@ class FileHelper
 	 * @param $dir
 	 * @return array
 	 */
-	public static function subDir($dir)
+	public static function subDir($dir): array
 	{
 		if (EnvHelper::isWindows()) {
 			$dir = StrHelper::convert($dir, 'utf-8', 'gbk');
 		}
-		$files   = scandir($dir);
+		$files   = scandir($dir, SCANDIR_SORT_NONE);
 		$folders = [];
-		if (!is_array($files)) return $folders;
+		if (!\is_array($files)) {
+			return $folders;
+		}
 		foreach ($files as $file) {
 			if (strpos($file, '.') === 0 || !is_dir($dir . '/' . $file)) {
 				continue;
@@ -190,7 +202,7 @@ class FileHelper
 	 */
 	public static function put($filename, $data)
 	{
-		self::mkdir(dirname($filename));
+		self::mkdir(\dirname($filename));
 		if (@$fp = fopen($filename, 'wb')) {
 			flock($fp, LOCK_EX);
 			$len = fwrite($fp, $data);
@@ -199,10 +211,17 @@ class FileHelper
 
 			return $len;
 		}
-		 
-			return false;
+
+		return false;
 	}
 
+	/**
+	 * 使用 url 方式来获取内容
+	 * @param string $url
+	 * @param string $local
+	 * @param string $refer
+	 * @return bool|int
+	 */
 	public static function curlGet($url, $local, $refer = '')
 	{
 		if (!$refer) {
@@ -213,8 +232,13 @@ class FileHelper
 			$ref = $refer;
 		}
 
-		$ch      = curl_init();
-		$falseIP = rand(1, 255) . '.' . rand(1, 255) . '.' . rand(1, 255) . '.' . rand(1, 255);
+		$ch = curl_init();
+		try {
+			$falseIP = random_int(1, 255) . '.' . random_int(1, 255) . '.' . random_int(1, 255) . '.' . random_int(1, 255);
+		} catch (\Throwable $e) {
+			$falseIP = '111.111.111.111';
+		}
+
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-FORWARDED-FOR:' . $falseIP, 'CLIENT-IP:' . $falseIP]);
 		curl_setopt($ch, CURLOPT_REFERER, $ref);
@@ -223,8 +247,8 @@ class FileHelper
 		$content = curl_exec($ch);
 		$path    = preg_replace("/[\w]*_.*.jpg/i", '', $local);
 		$path    = substr($path, 0, -1);
-		if (!file_exists($path)) {
-			mkdir($path, 0777, true);
+		if (!file_exists($path) && !mkdir($path, 0777, true) && !is_dir($path)) {
+			throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
 		}
 		touch($local);
 
@@ -271,8 +295,8 @@ class FileHelper
 		if (file_exists($filename)) {
 			return include $filename;
 		}
-		 
-			return '';
+
+		return '';
 	}
 
 	/**
@@ -291,7 +315,7 @@ class FileHelper
 	 */
 	public static function dirPath($dirpath)
 	{
-		$dirpath                                  = str_replace('\\', '/', $dirpath);
+		$dirpath = str_replace('\\', '/', $dirpath);
 		if (substr($dirpath, -1) != '/') $dirpath = $dirpath . '/';
 
 		return $dirpath;
@@ -350,8 +374,8 @@ class FileHelper
 		if (!$require) $require = substr($dir, -1) == '*' ? 2 : 0;
 		if ($require) {
 			if ($require == 2) $dir = substr($dir, 0, -1);
-			$dir                    = self::dirPath($dir);
-			$list                   = glob($dir . '*');
+			$dir  = self::dirPath($dir);
+			$list = glob($dir . '*');
 			foreach ($list as $v) {
 				if (is_dir($v)) {
 					self::dirChmod($v, $mode, 1);
@@ -438,8 +462,8 @@ class FileHelper
 		if ($format) {
 			return UtilHelper::formatBytes($fileSize, $precision);
 		}
-		 
-			return $fileSize;
+
+		return $fileSize;
 	}
 
 	/**
@@ -465,8 +489,8 @@ class FileHelper
 		if (!$require) $require = substr($dir, -1) == '*' ? 2 : 0;
 		if ($require) {
 			if ($require == 2) $dir = substr($dir, 0, -1);
-			$dir                    = self::path($dir);
-			$list                   = glob($dir . '*');
+			$dir  = self::path($dir);
+			$list = glob($dir . '*');
 			foreach ($list as $v) {
 				if (is_dir($v)) {
 					self::chmod($v, $mode, 1);
@@ -513,7 +537,7 @@ class FileHelper
 	 */
 	public static function path($dir_path, $suffix = true)
 	{
-		$dir_path                                   = str_replace(['\\', '//'], '/', $dir_path);
+		$dir_path = str_replace(['\\', '//'], '/', $dir_path);
 		if (substr($dir_path, -1) != '/') $dir_path = $dir_path . '/';
 		if (!$suffix) {
 			$dir_path = rtrim($dir_path, '/');
@@ -601,7 +625,7 @@ class FileHelper
 	{
 		global $id;
 		if ($parent_id == 0) $id = 0;
-		$list                    = glob($dir . '*');
+		$list = glob($dir . '*');
 		foreach ($list as $v) {
 			if (is_dir($v)) {
 				$id++;
@@ -646,8 +670,8 @@ class FileHelper
 		if (file_exists($directory) && is_dir($directory)) {
 			return true;
 		}
-		 
-			return false;
+
+		return false;
 	}
 
 	/**
@@ -659,6 +683,6 @@ class FileHelper
 	{
 		$ext = self::ext($file);
 
-		return substr($file, 0, (strlen($file) - (strlen($ext) + 1)));
+		return substr($file, 0, \strlen($file) - (\strlen($ext) + 1));
 	}
 }

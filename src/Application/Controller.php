@@ -11,6 +11,11 @@ abstract class Controller extends BaseController
 	use DispatchesJobs, ValidatesRequests;
 
 	/**
+	 * @var string 权限(中间件中可以读取, 使用 public 模式)
+	 */
+	public static $permission;
+
+	/**
 	 * @var int
 	 */
 	protected $pagesize = 15;

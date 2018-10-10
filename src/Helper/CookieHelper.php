@@ -1,6 +1,6 @@
 <?php namespace Poppy\Framework\Helper;
 
-class RawCookieHelper
+class CookieHelper
 {
 	/**
 	 * 判断Cookie是否存在

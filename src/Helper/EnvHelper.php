@@ -1,43 +1,45 @@
 <?php namespace Poppy\Framework\Helper;
 
-/*
-| This is NOT a Free software.
-| When U have some Question or Advice can contact Me.
-| @author     Mark <zhaody901@126.com>
-| @copyright  Copyright (c) 2013-2017 Sour Lemon Team
-*/
-
 /**
  * 环境获取
  */
 class EnvHelper
 {
 	/**
+	 * 返回 IP 信息
 	 * @return string 返回IP
 	 */
-	public static function ip()
+	public static function ip(): string
 	{
-		isset($_SERVER['HTTP_X_FORWARDED_FOR']) or $_SERVER['HTTP_X_FORWARDED_FOR'] = '';
-		isset($_SERVER['REMOTE_ADDR']) or $_SERVER['REMOTE_ADDR']                   = '';
-		isset($_SERVER['HTTP_CLIENT_IP']) or $_SERVER['HTTP_CLIENT_IP']             = '';
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
+		$_SERVER['REMOTE_ADDR']          = $_SERVER['REMOTE_ADDR'] ?? '';
+		$_SERVER['HTTP_CLIENT_IP']       = $_SERVER['HTTP_CLIENT_IP'] ?? '';
+
 		if ($_SERVER['HTTP_X_FORWARDED_FOR'] && $_SERVER['REMOTE_ADDR']) {
 			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 			if (strpos($ip, ',') !== false) {
 				$tmp = explode(',', $ip);
 				$ip  = trim(end($tmp));
 			}
-			if (UtilHelper::isIp($ip)) return $ip;
+			if (UtilHelper::isIp($ip)) {
+				return $ip;
+			}
 		}
-		if (UtilHelper::isIp($_SERVER['HTTP_CLIENT_IP'])) return $_SERVER['HTTP_CLIENT_IP'];
-		if (UtilHelper::isIp($_SERVER['REMOTE_ADDR'])) return $_SERVER['REMOTE_ADDR'];
+		if (UtilHelper::isIp($_SERVER['HTTP_CLIENT_IP'])) {
+			return $_SERVER['HTTP_CLIENT_IP'];
+		}
+		if (UtilHelper::isIp($_SERVER['REMOTE_ADDR'])) {
+			return $_SERVER['REMOTE_ADDR'];
+		}
 
 		return 'unknown';
 	}
 
 	/**
+	 * 当前执行的脚本文件的名称
 	 * @return string 当前文件的名称
 	 */
-	public static function self()
+	public static function self(): string
 	{
 		return $_SERVER['PHP_SELF']
 			?? $_SERVER['SCRIPT_NAME']
@@ -45,17 +47,19 @@ class EnvHelper
 	}
 
 	/**
+	 * 来源地址
 	 * @return string 来源地址
 	 */
-	public static function referer()
+	public static function referer(): string
 	{
 		return $_SERVER['HTTP_REFERER'] ?? '';
 	}
 
 	/**
+	 * 返回服务器的名称
 	 * @return string 返回服务器名称
 	 */
-	public static function domain()
+	public static function domain(): string
 	{
 		return $_SERVER['SERVER_NAME'];
 	}
@@ -63,31 +67,31 @@ class EnvHelper
 	/**
 	 * @return string 协议名称
 	 */
-	public static function scheme()
+	public static function scheme(): string
 	{
 		if (!isset($_SERVER['SERVER_PORT'])) {
 			return 'http://';
 		}
 
-		return $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
+		return (string) $_SERVER['SERVER_PORT'] === '443' ? 'https://' : 'http://';
 	}
 
 	/**
 	 * @return string 返回端口号
 	 */
-	public static function port()
+	public static function port(): string
 	{
 		if (!isset($_SERVER['SERVER_PORT'])) {
 			return '';
 		}
 
-		return $_SERVER['SERVER_PORT'] == '80' ? '' : ':' . $_SERVER['SERVER_PORT'];
+		return (int) $_SERVER['SERVER_PORT'] === '80' ? '' : ':' . $_SERVER['SERVER_PORT'];
 	}
 
 	/**
 	 * @return string 完整的地址
 	 */
-	public static function uri()
+	public static function uri(): string
 	{
 		if (isset($_SERVER['REQUEST_URI'])) {
 			$uri = $_SERVER['REQUEST_URI'];
@@ -95,7 +99,9 @@ class EnvHelper
 		else {
 			$uri = $_SERVER['PHP_SELF'];
 			if (isset($_SERVER['argv'])) {
-				if (isset($_SERVER['argv'][0])) $uri .= '?' . $_SERVER['argv'][0];
+				if (isset($_SERVER['argv'][0])) {
+					$uri .= '?' . $_SERVER['argv'][0];
+				}
 			}
 			else {
 				$uri .= '?' . $_SERVER['QUERY_STRING'];
@@ -110,15 +116,15 @@ class EnvHelper
 	 * 获取主机
 	 * @return string
 	 */
-	public static function host()
+	public static function host(): string
 	{
-		return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+		return $_SERVER['HTTP_HOST'] ?? '';
 	}
 
 	/**
 	 * @return string   没有查询的完整的URL地址, 基于当前页面
 	 */
-	public static function nquri()
+	public static function nqUrl(): string
 	{
 		return self::scheme() . self::host() . (strpos(self::host(), ':') === false ? self::port() : '') . self::self();
 	}
@@ -127,25 +133,25 @@ class EnvHelper
 	 * 请求的unix 时间戳
 	 * @return int
 	 */
-	public static function time()
+	public static function time(): int
 	{
-		return $_SERVER['REQUEST_TIME'];
+		return (int) $_SERVER['REQUEST_TIME'];
 	}
 
 	/**
 	 * 浏览器头部
-	 * @return mixed
+	 * @return string
 	 */
-	public static function agent()
+	public static function agent(): string
 	{
-		return $_SERVER['HTTP_USER_AGENT'];
+		return $_SERVER['HTTP_USER_AGENT'] ?? '';
 	}
 
 	/**
 	 * 是否是代理
 	 * @return bool
 	 */
-	public static function isProxy()
+	public static function isProxy(): bool
 	{
 		return
 			(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) ||
@@ -159,13 +165,13 @@ class EnvHelper
 	 * 是否win 服务器
 	 * @return bool
 	 */
-	public static function isWindows()
+	public static function isWindows(): bool
 	{
-		if (strtoupper(PHP_OS) == 'DARWIN') {
+		if ('DARWIN' === strtoupper(PHP_OS)) {
 			return false;
 		}
 
-		return strpos(strtoupper(PHP_OS), 'WIN') !== false ? true : false;
+		return stripos(PHP_OS, 'WIN') !== false;
 	}
 
 	/**
@@ -175,16 +181,16 @@ class EnvHelper
 	public static function os()
 	{
 		$agent = self::agent();
-		if (preg_match('/win/i', $agent)) {
+		if (false !== stripos($agent, 'win')) {
 			$os = 'windows';
 		}
-		elseif (preg_match('/linux/i', $agent)) {
+		elseif (false !== stripos($agent, 'linux')) {
 			$os = 'linux';
 		}
-		elseif (preg_match('/unix/i', $agent)) {
+		elseif (false !== stripos($agent, 'unix')) {
 			$os = 'unix';
 		}
-		elseif (preg_match('/mac/i', $agent)) {
+		elseif (false !== stripos($agent, 'mac')) {
 			$os = 'Macintosh';
 		}
 		else {

@@ -31,4 +31,3 @@ class BladeServiceProvider extends ServiceProvider
 		});
 	}
 }
-

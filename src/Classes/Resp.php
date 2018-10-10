@@ -21,7 +21,7 @@ class Resp
 	const WEB_SUCCESS = 'success';
 	const WEB_ERROR   = 'error';
 
-	private $code    = 1;
+	private $code;
 	private $message = '操作出错了';
 
 	public function __construct($code, $message = '')
@@ -153,7 +153,7 @@ class Resp
 		}
 
 		if ($isJson) {
-			return self::webSplash($resp, $arrAppend, $input);
+			return self::webSplash($resp, is_null($append) ? $append : $arrAppend, $input);
 		}
 
 
@@ -281,7 +281,7 @@ class Resp
 			'message' => $resp->getMessage(),
 		];
 
-		$data = [];
+		$data = null;
 		if (!\is_null($append)) {
 			if ($append instanceof Arrayable) {
 				$data = $append->toArray();
@@ -296,7 +296,7 @@ class Resp
 				unset($data['location']);
 			}
 		}
-		if ($data) {
+		if (!is_null($data)) {
 			$return['data'] = (array) $data;
 		}
 

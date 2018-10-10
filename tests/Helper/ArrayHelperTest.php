@@ -1,8 +1,7 @@
-<?php namespace Poppy\Tests\Helper;
+<?php namespace Poppy\Framework\Tests\Helper;
 
 use PHPUnit\Framework\TestCase;
 use Poppy\Framework\Helper\ArrayHelper;
-use Poppy\Framework\Helper\UtilHelper;
 
 class ArrayHelperTest extends TestCase
 {
@@ -30,17 +29,33 @@ class ArrayHelperTest extends TestCase
 		$this->assertEquals('', ArrayHelper::genKey([]));
 	}
 
-	public function testIsComma()
+
+	public function testToKvStr()
 	{
-		$str = '221,22,12';
-		$res = UtilHelper::isComma($str);
-		dd($res);
+		$array1 = ['a' => 'b'];
+
+		$this->assertEquals('a=b', ArrayHelper::toKvStr($array1));
+
+		$array2 = [
+			'a' => '1',
+			'b' => '2',
+		];
+		$this->assertEquals('a=1,b=2', ArrayHelper::toKvStr($array2, ','));
+
+		$array3 = [
+			'a' => [
+				'd', 'e',
+			],
+			'b' => '2',
+		];
+		$this->assertEquals('a=["d","e"],b=2', ArrayHelper::toKvStr($array3, ','));
 	}
+
 
 	public function testNext()
 	{
 		$array = [
-			'a', 'b', 'd', 'f'
+			'a', 'b', 'd', 'f',
 		];
 		$this->assertEquals('d', ArrayHelper::next($array, 'b'));
 	}

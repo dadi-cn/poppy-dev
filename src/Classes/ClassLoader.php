@@ -81,7 +81,9 @@ class ClassLoader
 			return true;
 		}
 
+
 		list($lowerPath, $upperClass) = static::normalizeClass($class);
+
 
 		foreach ($this->directories as $directory) {
 			if ($this->isRealFilePath($path = $directory . DIRECTORY_SEPARATOR . $lowerPath)) {
@@ -235,7 +237,6 @@ class ClassLoader
 		$lowerPath  = strtolower($poppyName) . DIRECTORY_SEPARATOR .
 			'src' . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . $file . '.php';
 		$upperClass = $directory . DIRECTORY_SEPARATOR . $file . '.php';
-
 		return [$lowerPath, $upperClass];
 	}
 
@@ -255,8 +256,6 @@ class ClassLoader
 				if (!is_array($this->manifest)) {
 					$this->manifest = [];
 				}
-			} catch (Exception $ex) {
-				$this->manifest = [];
 			} catch (Throwable $ex) {
 				$this->manifest = [];
 			}

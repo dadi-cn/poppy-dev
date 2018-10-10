@@ -623,6 +623,20 @@ class UtilHelper
 		return false;
 	}
 
+	/**
+	 * 缓存 key 生成, 根据类名
+	 * @param string $class  类名
+	 * @param string $suffix 后缀
+	 * @return string
+	 */
+	public static function cacheName($class, $suffix = ''): string
+	{
+		$snake = str_replace('\\', '', snake_case(lcfirst($class)));
+
+		return $suffix ? $snake . '_' . $suffix : $snake;
+	}
+
+
 	private static function _isUtf8($filename): string
 	{
 		$info     = '<span style="color:red;">NOT UTF8 file</span>';

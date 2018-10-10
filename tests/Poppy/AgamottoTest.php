@@ -1,4 +1,4 @@
-<?php namespace Poppy\Tests\Agamotto;
+<?php namespace Poppy\Framework\Tests\Agamotto;
 
 use Poppy\Framework\Agamotto\Agamotto;
 use Poppy\Framework\Agamotto\Events\LocaleChanged;
