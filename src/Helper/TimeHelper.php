@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use DateTime as PhpDateTime;
+use Poppy\Framework\Exceptions\ApplicationException;
 
 class TimeHelper
 {
@@ -10,7 +11,7 @@ class TimeHelper
 	 * 获得当前格林威治时间的时间戳
 	 * @return int
 	 */
-	public static function gmTime()
+	public static function gmTime(): int
 	{
 		return time() - date('Z');
 	}
@@ -20,12 +21,16 @@ class TimeHelper
 	 * @param string $sep
 	 * @return bool 检测是否是标准时间
 	 */
-	public static function isDate($date, $sep = '-')
+	public static function isDate($date, $sep = '-'): bool
 	{
 		// 时间为空
-		if (empty($date)) return false;
+		if (empty($date)) {
+			return false;
+		}
 		// 长度大于 10
-		if (strlen($date) > 10) return false;
+		if (\strlen($date) > 10) {
+			return false;
+		}
 		list($year, $month, $day) = explode($sep, $date);
 
 		return checkdate($month, $day, $year);
@@ -39,7 +44,16 @@ class TimeHelper
 	 */
 	public static function datetime($time = 0, $format = '3-3')
 	{
-		$time = !empty($time) ? (is_numeric($time) ? $time : strtotime($time)) : EnvHelper::time();//strotime强制将代入进来的时间格式都转成Unix时间戳
+		if (!empty($time)) {
+			if (!is_numeric($time)) {
+				// strotime强制将代入进来的时间格式都转成Unix时间戳
+				$time = strtotime($time);
+			}
+		}
+		else {
+			$time = EnvHelper::time();
+
+		}
 		switch ($format) {
 			case '3-2':
 				$df = 'Y-m-d H:i';
@@ -102,11 +116,11 @@ class TimeHelper
 	 */
 	public static function serverTimezone()
 	{
-		if (function_exists('date_default_timezone_get')) {
+		if (\function_exists('date_default_timezone_get')) {
 			return date_default_timezone_get();
 		}
 
-			return date('Z') / 3600;
+		return date('Z') / 3600;
 	}
 
 	/**
@@ -162,7 +176,7 @@ class TimeHelper
 			return true;
 		}
 
-			return false;
+		return false;
 	}
 
 	/**
@@ -196,7 +210,7 @@ class TimeHelper
 			return $Carbon->timestamp;
 		}
 
-			return $Carbon->toDateTimeString();
+		return $Carbon->toDateTimeString();
 	}
 
 	/**
@@ -211,7 +225,7 @@ class TimeHelper
 			return $Carbon->timestamp;
 		}
 
-			return $Carbon->toDateTimeString();
+		return $Carbon->toDateTimeString();
 	}
 
 	/*
@@ -229,19 +243,25 @@ class TimeHelper
 
 		if ($time < 60) {
 			$str = '刚刚';
-		} elseif ($time < 60 * 60) {
+		}
+		elseif ($time < 60 * 60) {
 			$min = floor($time / 60);
 			$str = $min . '分钟前';
-		} elseif ($time < 60 * 60 * 24) {
+		}
+		elseif ($time < 60 * 60 * 24) {
 			$h   = floor($time / (60 * 60));
 			$str = $h . '小时前 ' . $htime;
-		} elseif ($time < 60 * 60 * 24 * 3) {
+		}
+		elseif ($time < 60 * 60 * 24 * 3) {
 			$d = floor($time / (60 * 60 * 24));
-			if ($d == 1)
+			if ($d == 1) {
 				$str = '昨天 ' . $rtime;
-			else
+			}
+			else {
 				$str = '前天 ' . $rtime;
-		} else {
+			}
+		}
+		else {
 			$str = $rtime;
 		}
 
@@ -276,9 +296,11 @@ class TimeHelper
 
 		if ($datetime->isToday()) {
 			$date = 'Today';
-		} elseif ($datetime->isYesterday()) {
+		}
+		elseif ($datetime->isYesterday()) {
 			$date = 'Yesterday';
-		} elseif ($datetime->isTomorrow()) {
+		}
+		elseif ($datetime->isTomorrow()) {
 			$date = 'Tomorrow';
 		}
 
@@ -288,33 +310,28 @@ class TimeHelper
 	/**
 	 * Converts mixed inputs to a Carbon object.
 	 *
-	 * @param      $value
-	 * @param bool $throwException
-	 * @return Carbon
-	 * @throws \Exception
+	 * @param Carbon|PhpDateTime|mixed $value
+	 * @param bool                     $throwException
+	 * @return Carbon|null
 	 */
 	public static function makeCarbon($value, $throwException = true)
 	{
-		if ($value instanceof Carbon) {
-			// Do nothing
-		} elseif ($value instanceof PhpDateTime) {
+
+		if ($value instanceof PhpDateTime) {
 			$value = Carbon::instance($value);
-		} elseif (is_numeric($value)) {
+		}
+		if (is_numeric($value)) {
 			$value = Carbon::createFromTimestamp($value);
-		} elseif (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value)) {
+		}
+		if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value)) {
 			$value = Carbon::createFromFormat('Y-m-d', $value)->startOfDay();
-		} else {
-			try {
-				$value = Carbon::parse($value);
-			} catch (\Exception $ex) {
-			}
 		}
 
-		if (!$value instanceof Carbon && $throwException) {
-			throw new \Exception('Invalid date value supplied to DateTime helper.');
+		try {
+			return Carbon::parse($value);
+		} catch (\Exception $ex) {
+			return null;
 		}
-
-		return $value;
 	}
 
 	/**
@@ -386,19 +403,20 @@ class TimeHelper
 
 	/**
 	 * 通过 Carbon 对象来获取格式化的时间
-	 * @param Carbon|null $carbon
-	 * @param string      $format
+	 * @param Carbon|null|string $carbon
+	 * @param string             $format
 	 * @return string
 	 */
-	public static function fetchFormat($carbon, $format = 'Y-m-d H:i:s')
+	public static function fetchFormat($carbon, $format = 'Y-m-d H:i:s'): string
 	{
 		if ($carbon instanceof Carbon) {
 			return $carbon->format($format);
 		}
-		elseif (is_string($carbon)) {
+
+		if (\is_string($carbon)) {
 			return $carbon;
 		}
-		 
-			return '';
+
+		return '';
 	}
 }

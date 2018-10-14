@@ -128,6 +128,8 @@ class Resp
 
 		$arrAppend = StrHelper::parseKey($append);
 
+		$arrAppend = self::append($arrAppend);
+
 		// is json
 		if (isset($arrAppend['json']) ||
 			\Request::ajax() ||
@@ -195,22 +197,26 @@ class Resp
 
 	/**
 	 * 返回成功输入
-	 * @param $message
-	 * @return array
+	 * @param string|array|MessageBag $msg    提示消息
+	 * @param string                  $append 追加的信息
+	 * @param string                  $input  保留输入的数据
+	 * @return array|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
 	 */
-	public static function success($message): array
+	public static function success($msg, $append = null, $input = null)
 	{
-		return (new self(self::SUCCESS, $message))->toArray();
+		return self::web(self::SUCCESS, $msg, $append, $input);
 	}
 
 	/**
 	 * 返回错误数组
-	 * @param $message
-	 * @return array
+	 * @param string|array|MessageBag $msg    提示消息
+	 * @param string                  $append 追加的信息
+	 * @param string                  $input  保留输入的数据
+	 * @return array|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
 	 */
-	public static function error($message): array
+	public static function error($msg, $append = null, $input = null)
 	{
-		return (new self(self::ERROR, $message))->toArray();
+		return self::web(self::ERROR, $msg, $append, $input);
 	}
 
 	/**
@@ -305,5 +311,19 @@ class Resp
 		}
 
 		return \Response::json($return, 200, [], JSON_UNESCAPED_UNICODE);
+	}
+
+	/**
+	 * 数据分析最佳
+	 * @param array $append
+	 * @return array
+	 */
+	private static function append($append): array
+	{
+		if (input('_update')) {
+			$append['_update']  = input('_update');
+			$append['_content'] = $append['_content'] ?? '';
+		}
+		return $append;
 	}
 }
