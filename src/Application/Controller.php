@@ -46,7 +46,7 @@ abstract class Controller extends BaseController
 		$this->pagesize = config('poppy.pages.default_size', 15);
 		$maxPagesize    = config('poppy.pages.max_size');
 		if (\Input::get('pagesize')) {
-			$pagesize = abs(intval(\Input::get('pagesize')));
+			$pagesize = abs((int) input('pagesize'));
 			$pagesize = ($pagesize <= $maxPagesize) ? $pagesize : $maxPagesize;
 			if ($pagesize > 0) {
 				$this->pagesize = $pagesize;
@@ -77,18 +77,18 @@ abstract class Controller extends BaseController
 	{
 		$title       = '';
 		$description = '';
-		if (func_num_args() == 1) {
+		if (\func_num_args() === 1) {
 			$arg = func_get_arg(0);
-			if (is_array($arg)) {
+			if (\is_array($arg)) {
 				$title       = $arg['title'] ?? '';
 				$description = $arg['description'] ?? '';
 			}
-			if (is_string(func_get_arg(0))) {
+			if (\is_string(func_get_arg(0))) {
 				$title       = $arg;
 				$description = '';
 			}
 		}
-		elseif (func_num_args() == 2) {
+		elseif (\func_num_args() === 2) {
 			$title       = func_get_arg(0);
 			$description = func_get_arg(1);
 		}

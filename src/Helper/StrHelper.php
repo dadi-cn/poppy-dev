@@ -414,7 +414,7 @@ class StrHelper extends Str
 			if (!$py) {
 				$py = self::_slowChar2py($char);
 			}
-			$pinyin[] = $firstLetter ? substr($py, 0, 1) : $py;
+			$pinyin[] = $firstLetter ? $py[0] : $py;
 		}
 
 		return $pinyin;
