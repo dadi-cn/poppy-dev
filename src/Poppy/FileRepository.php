@@ -1,7 +1,9 @@
 <?php namespace Poppy\Framework\Poppy;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Collection;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
+use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Poppy\Abstracts\Repository;
 use Poppy\Framework\Poppy\Events\PoppyOptimized;
 
@@ -12,7 +14,7 @@ class FileRepository extends Repository
 	/**
 	 * Get all modules.
 	 * @return Collection
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function all()
 	{
@@ -22,7 +24,7 @@ class FileRepository extends Repository
 	/**
 	 * Get all module slugs.
 	 * @return Collection
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function slugs()
 	{
@@ -40,7 +42,7 @@ class FileRepository extends Repository
 	 * @param string $key
 	 * @param mixed  $value
 	 * @return Collection
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function where($key, $value)
 	{
@@ -51,7 +53,7 @@ class FileRepository extends Repository
 	 * Sort modules by given key in ascending order.
 	 * @param string $key
 	 * @return Collection
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function sortBy($key)
 	{
@@ -64,7 +66,7 @@ class FileRepository extends Repository
 	 * Sort modules by given key in ascending order.
 	 * @param string $key
 	 * @return Collection
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function sortByDesc($key)
 	{
@@ -77,7 +79,7 @@ class FileRepository extends Repository
 	 * Determines if the given module exists.
 	 * @param string $slug
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function exists($slug)
 	{
@@ -87,7 +89,7 @@ class FileRepository extends Repository
 	/**
 	 * Returns count of all modules.
 	 * @return int
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function count()
 	{
@@ -99,7 +101,7 @@ class FileRepository extends Repository
 	 * @param string $property
 	 * @param mixed  $default
 	 * @return mixed
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function get($property, $default = null)
 	{
@@ -115,7 +117,7 @@ class FileRepository extends Repository
 	 * @param string $property
 	 * @param mixed  $value
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function set($property, $value)
 	{
@@ -142,7 +144,7 @@ class FileRepository extends Repository
 	/**
 	 * Get all enabled modules.
 	 * @return Collection
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function enabled()
 	{
@@ -152,7 +154,7 @@ class FileRepository extends Repository
 	/**
 	 * Get all disabled modules.
 	 * @return Collection
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function disabled()
 	{
@@ -163,7 +165,7 @@ class FileRepository extends Repository
 	 * Check if specified module is enabled.
 	 * @param string $slug
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function isEnabled($slug)
 	{
@@ -176,7 +178,7 @@ class FileRepository extends Repository
 	 * Check if specified module is disabled.
 	 * @param string $slug
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function isDisabled($slug)
 	{
@@ -188,7 +190,7 @@ class FileRepository extends Repository
 	/**
 	 * @param $slug
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function isInstalled($slug)
 	{
@@ -200,7 +202,7 @@ class FileRepository extends Repository
 	/**
 	 * @param $slug
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function install($slug)
 	{
@@ -210,7 +212,7 @@ class FileRepository extends Repository
 	/**
 	 * @param $slug
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function uninstall($slug)
 	{
@@ -221,7 +223,7 @@ class FileRepository extends Repository
 	 * Enables the specified module.
 	 * @param string $slug
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function enable($slug)
 	{
@@ -232,7 +234,7 @@ class FileRepository extends Repository
 	 * Disables the specified module.
 	 * @param string $slug
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	public function disable($slug)
 	{
@@ -249,7 +251,8 @@ class FileRepository extends Repository
 	/**
 	 * Update cached repository of module information.
 	 * @return bool
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
 	public function optimize()
 	{
@@ -265,7 +268,8 @@ class FileRepository extends Repository
 			$modules->put($module, $manifest);
 		});
 
-		$modules->each(function (Collection $module) {
+		$depends = '';
+		$modules->each(function (Collection $module) use (&$depends) {
 			$module->put('id', crc32($module->get('slug')));
 
 			if (!$module->has('enabled')) {
@@ -276,8 +280,23 @@ class FileRepository extends Repository
 				$module->put('order', 9001);
 			}
 
+			$dependencies = (array) $module->get('dependencies');
+
+			if (\count($dependencies)) {
+				foreach ($dependencies as $dependency) {
+					$class = $dependency['class'];
+					if (!class_exists($class)) {
+						$depends .=
+							'You need to install `' . $dependency['package'] . '` (' . $dependency['description'] . ')';
+					}
+				}
+			}
 			return $module;
 		});
+
+		if ($depends) {
+			throw new ApplicationException($depends);
+		}
 
 		$content = json_encode($modules->all(), JSON_PRETTY_PRINT);
 
@@ -291,7 +310,7 @@ class FileRepository extends Repository
 	/**
 	 * Get the contents of the cache file.
 	 * @return Collection
-	 * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+	 * @throws FileNotFoundException
 	 */
 	private function getCache()
 	{

@@ -48,6 +48,12 @@ class RouteServiceProvider extends ServiceProvider
 		], function (Router $route) {
 			require_once poppy_path('DummySlug', 'src/http/routes/web.php');
 		});
+
+		\Route::group([
+			'prefix' => 'DummySlug',
+		], function (Router $route) {
+			require_once poppy_path('DummySlug', 'src/http/routes/backend.php');
+		});
 	}
 
 	/**
