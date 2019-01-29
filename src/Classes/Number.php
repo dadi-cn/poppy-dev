@@ -20,6 +20,7 @@
  * @copyright 2013 Moontoast, Inc.
  * @license   http://alphabase.moontoast.com/licenses/apache-2.0.txt Apache 2.0
  */
+
 use Poppy\Framework\Exceptions\ArithmeticException;
 
 /**
@@ -72,6 +73,7 @@ class Number
 	}
 
 	/**
+	 * 将当前数字设置为自身的绝对值
 	 * Sets the current number to the absolute value of itself
 	 */
 	public function abs()
@@ -86,6 +88,7 @@ class Number
 	}
 
 	/**
+	 * 加法运算
 	 * Adds the given number to the current number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -105,6 +108,7 @@ class Number
 	}
 
 	/**
+	 * 通过重新排列当前数字来查找下一个最高整型值
 	 * Finds the next highest integer value by rounding up the current number
 	 * if necessary
 	 *
@@ -128,6 +132,7 @@ class Number
 	}
 
 	/**
+	 * 比较数据
 	 * Compares the current number with the given number
 	 *
 	 * Returns 0 if the two operands are equal, 1 if the current number is
@@ -148,6 +153,7 @@ class Number
 	}
 
 	/**
+	 * 进制转换, 转换成任意进制
 	 * Returns the current value converted to an arbitrary base
 	 *
 	 * @param int $base The base to convert the current number to
@@ -159,6 +165,7 @@ class Number
 	}
 
 	/**
+	 * 将当前数字的值减一
 	 * Decreases the value of the current number by one
 	 */
 	public function decrement()
@@ -167,6 +174,7 @@ class Number
 	}
 
 	/**
+	 * 除法运算
 	 * Divides the current number by the given number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -193,6 +201,7 @@ class Number
 	}
 
 	/**
+	 * 通过舍入当前数字找到下一个最低整数值
 	 * Finds the next lowest integer value by rounding down the current number
 	 * if necessary
 	 *
@@ -216,6 +225,7 @@ class Number
 	}
 
 	/**
+	 * 返回小数位数
 	 * Returns the scale used for this BigNumber
 	 *
 	 * If no scale was set, this will default to the value of bcmath.scale
@@ -233,6 +243,7 @@ class Number
 	}
 
 	/**
+	 * 获取字串值
 	 * Returns the current raw value of this BigNumber
 	 *
 	 * @return string String representation of the number in base 10
@@ -243,6 +254,7 @@ class Number
 	}
 
 	/**
+	 * 增加
 	 * Increases the value of the current number by one
 	 *
 	 */
@@ -252,6 +264,7 @@ class Number
 	}
 
 	/**
+	 * 检测是否相等
 	 * Returns true if the current number equals the given number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -264,6 +277,7 @@ class Number
 	}
 
 	/**
+	 * 检测是否大于
 	 * Returns true if the current number is greater than the given number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -276,6 +290,7 @@ class Number
 	}
 
 	/**
+	 * 检测大于等于
 	 * Returns true if the current number is greater than or equal to the given number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -288,6 +303,7 @@ class Number
 	}
 
 	/**
+	 * 检测小与
 	 * Returns true if the current number is less than the given number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -300,6 +316,7 @@ class Number
 	}
 
 	/**
+	 * 检测小与等于
 	 * Returns true if the current number is less than or equal to the given number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -312,6 +329,7 @@ class Number
 	}
 
 	/**
+	 * 是否是负数
 	 * Returns true if the current number is a negative number
 	 *
 	 * @return bool
@@ -322,6 +340,7 @@ class Number
 	}
 
 	/**
+	 * 是否是正数
 	 * Returns true if the current number is a positive number
 	 *
 	 * @return bool
@@ -332,6 +351,7 @@ class Number
 	}
 
 	/**
+	 * 取余数
 	 * Finds the modulus of the current number divided by the given number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -357,6 +377,7 @@ class Number
 	}
 
 	/**
+	 * 乘法
 	 * Multiplies the current number by the given number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -376,6 +397,7 @@ class Number
 	}
 
 	/**
+	 * 返回负数
 	 * Sets the current number to the negative value of itself
 	 */
 	public function negate()
@@ -384,6 +406,7 @@ class Number
 	}
 
 	/**
+	 * 幂运算
 	 * Raises current number to the given number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -403,6 +426,7 @@ class Number
 	}
 
 	/**
+	 * 指定次数的幂运算
 	 * Raises the current number to the $pow, then divides by the $mod
 	 * to find the modulus
 	 *
@@ -428,7 +452,7 @@ class Number
 	{
 		$mod = $this->filterNumber($mod);
 
-		if ($mod == '0') {
+		if ($mod === '0') {
 			throw new ArithmeticException('Division by zero');
 		}
 
@@ -443,6 +467,7 @@ class Number
 	}
 
 	/**
+	 * 四舍五入
 	 * Rounds the current number to the nearest integer
 	 *
 	 * @todo Implement precision digits
@@ -455,20 +480,21 @@ class Number
 
 		if ($this->isNegative()) {
 			$roundedDiff = round($diff, 0, PHP_ROUND_HALF_DOWN);
-		} else {
+		}
+		else {
 			$roundedDiff = round($diff);
 		}
 
 		$this->numberValue = bcadd(
 			$floored,
-			$roundedDiff,
-			0
+			$roundedDiff
 		);
 
 		return $this;
 	}
 
 	/**
+	 * 设置小数位数
 	 * Sets the scale of this BigNumber
 	 *
 	 * @param int $scale Specifies the default number of digits after the decimal
@@ -483,6 +509,7 @@ class Number
 	}
 
 	/**
+	 * 设置为一个新值
 	 * Sets the value of this BigNumber to a new value
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -504,6 +531,7 @@ class Number
 	}
 
 	/**
+	 * 位向左移动
 	 * Shifts the current number $bits to the left
 	 *
 	 * @param int $bits
@@ -520,6 +548,7 @@ class Number
 	}
 
 	/**
+	 * 位向右移动
 	 * Shifts the current number $bits to the right
 	 *
 	 * @param int $bits
@@ -536,6 +565,7 @@ class Number
 	}
 
 	/**
+	 * 前数字的符号
 	 * Returns the sign (signum) of the current number
 	 *
 	 * @return int -1, 0 or 1 as the value of this BigNumber is negative, zero or positive
@@ -544,7 +574,8 @@ class Number
 	{
 		if ($this->isGreaterThan(0)) {
 			return 1;
-		} elseif ($this->isLessThan(0)) {
+		}
+		if ($this->isLessThan(0)) {
 			return -1;
 		}
 
@@ -552,6 +583,7 @@ class Number
 	}
 
 	/**
+	 * 求平方根
 	 * Finds the square root of the current number
 	 *
 	 * @link http://www.php.net/bcsqrt
@@ -567,6 +599,7 @@ class Number
 	}
 
 	/**
+	 * 减法
 	 * Subtracts the given number from the current number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
@@ -586,12 +619,13 @@ class Number
 	}
 
 	/**
+	 * 转换成 String 类型
 	 * Filters a number, converting it to a string value
 	 *
 	 * @param mixed $number
 	 * @return string
 	 */
-	protected function filterNumber($number)
+	protected function filterNumber($number): string
 	{
 		return filter_var(
 			$number,
@@ -601,6 +635,7 @@ class Number
 	}
 
 	/**
+	 * 进制转换
 	 * Converts a number between arbitrary bases (from 2 to 36)
 	 *
 	 * @param string|int $number   The number to convert
@@ -616,6 +651,7 @@ class Number
 	}
 
 	/**
+	 * 转换 10 进制到其他进制
 	 * Converts a base-10 number to an arbitrary base (from 2 to 36)
 	 *
 	 * @param string|int $number The number to convert
@@ -650,6 +686,7 @@ class Number
 	}
 
 	/**
+	 * 转换成 10 进制
 	 * Converts a number from an arbitrary base (from 2 to 36) to base 10
 	 *
 	 * @param string|int $number   The number to convert
@@ -672,11 +709,14 @@ class Number
 
 			if ($c >= ord('0') && $c <= ord('9')) {
 				$c -= ord('0');
-			} elseif ($c >= ord('A') && $c <= ord('Z')) {
+			}
+			elseif ($c >= ord('A') && $c <= ord('Z')) {
 				$c -= ord('A') - 10;
-			} elseif ($c >= ord('a') && $c <= ord('z')) {
+			}
+			elseif ($c >= ord('a') && $c <= ord('z')) {
 				$c -= ord('a') - 10;
-			} else {
+			}
+			else {
 				continue;
 			}
 
@@ -691,6 +731,7 @@ class Number
 	}
 
 	/**
+	 * 设置默认小数位数
 	 * Changes the default scale used by all Binary Calculator functions
 	 *
 	 * @param int $scale

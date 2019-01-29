@@ -10,6 +10,7 @@
 	],
 	"require" : {
 		"php" : ">=7.0.0",
+		"ext-bcmath" : "*",
 		"jenssegers/date" : "^3.3"
 	},
 	"require-dev" : {
