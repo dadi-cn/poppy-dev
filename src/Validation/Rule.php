@@ -62,15 +62,15 @@ class Rule extends IlluminateRule
 		return 'size:' . $length;
 	}
 
-    /**
-     * max
-     * @param $length
-     * @return string
-     */
-    public static function max($length)
-    {
-        return 'max:' . $length;
-    }
+	/**
+	 * max
+	 * @param $length
+	 * @return string
+	 */
+	public static function max($length)
+	{
+		return 'max:' . $length;
+	}
 
 	/**
 	 * @return string

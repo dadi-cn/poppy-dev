@@ -21,13 +21,14 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
 
 		if ($app !== null) {
 			$app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+
 			return $app;
 		}
 	}
 
 	/**
 	 * Run Vendor Test
-	 * @param array $vendors Test here is must class.
+	 * @param array $vendors test here is must class
 	 */
 	public function poppyTestVendor(array $vendors = [])
 	{

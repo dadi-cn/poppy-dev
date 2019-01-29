@@ -1,7 +1,6 @@
 <?php namespace Poppy\Framework\Console\Commands;
 
 use Illuminate\Console\Command;
-use Poppy\Framework\Helper\StrHelper;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;

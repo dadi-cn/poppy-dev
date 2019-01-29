@@ -56,9 +56,11 @@ class Migrator
 	 * @param                                    $db
 	 * @param  \Illuminate\Filesystem\Filesystem $files
 	 */
-	public function __construct(MigrationRepositoryInterface $repository,
-	                            $db,
-	                            Filesystem $files)
+	public function __construct(
+		MigrationRepositoryInterface $repository,
+								$db,
+								Filesystem $files
+	)
 	{
 		$this->files      = $files;
 		$this->resolver   = $db;
@@ -82,7 +84,8 @@ class Migrator
 		$files = $this->getMigrationFiles($paths);
 
 		$this->requireFiles($migrations = $this->pendingMigrations(
-			$files, $this->repository->getRan()
+			$files,
+			$this->repository->getRan()
 		));
 
 		// Once we have all these migrations that are outstanding we are ready to run
@@ -180,7 +183,6 @@ class Migrator
 		$this->note("<info>Migrated:</info>  {$name}");
 	}
 
-
 	/**
 	 * Run a migration inside a transaction if the database supports it.
 	 *
@@ -190,7 +192,6 @@ class Migrator
 	 */
 	protected function runMigration($migration, $method)
 	{
-
 		$callback = function () use ($migration, $method) {
 			if (method_exists($migration, $method)) {
 				$migration->{$method}();
@@ -248,7 +249,7 @@ class Migrator
 	{
 		$class = Str::studly(implode('_', array_slice(explode('_', $file), 4)));
 
-		return new $class;
+		return new $class();
 	}
 
 	/**
@@ -341,7 +342,6 @@ class Migrator
 		return $this->resolver->connection($connection ?: $this->connection);
 	}
 
-
 	/**
 	 * Rollback the last migration operation.
 	 *
@@ -396,14 +396,14 @@ class Migrator
 			$rolledBack[] = $file;
 
 			$this->runDown(
-				$file, $migration,
+				$file,
+				$migration,
 				$options['pretend'] ?? false
 			);
 		}
 
 		return $rolledBack;
 	}
-
 
 	/**
 	 * Run "down" a migration instance.
@@ -449,6 +449,7 @@ class Migrator
 		if (($steps = $options['step'] ?? 0) > 0) {
 			return $this->repository->getMigrations($steps);
 		}
+
 		return $this->repository->getLast();
 	}
 

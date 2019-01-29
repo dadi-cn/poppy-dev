@@ -49,7 +49,6 @@ class FrameworkServiceProvider extends ServiceProvider
 		$this->app->register(Update\UpdateServiceProvider::class);
 	}
 
-
 	/**
 	 * @return array
 	 * @throws Exceptions\ModuleNotFoundException

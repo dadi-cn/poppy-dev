@@ -2,7 +2,6 @@
 
 use Carbon\Carbon;
 use DateTime as PhpDateTime;
-use Poppy\Framework\Exceptions\ApplicationException;
 
 class TimeHelper
 {
@@ -52,7 +51,6 @@ class TimeHelper
 		}
 		else {
 			$time = EnvHelper::time();
-
 		}
 		switch ($format) {
 			case '3-2':
@@ -316,7 +314,6 @@ class TimeHelper
 	 */
 	public static function makeCarbon($value, $throwException = true)
 	{
-
 		if ($value instanceof PhpDateTime) {
 			$value = Carbon::instance($value);
 		}

@@ -29,7 +29,6 @@ class ArrayHelperTest extends TestCase
 		$this->assertEquals('', ArrayHelper::genKey([]));
 	}
 
-
 	public function testToKvStr()
 	{
 		$array1 = ['a' => 'b'];
@@ -50,7 +49,6 @@ class ArrayHelperTest extends TestCase
 		];
 		$this->assertEquals('a=["d","e"],b=2', ArrayHelper::toKvStr($array3, ','));
 	}
-
 
 	public function testNext()
 	{

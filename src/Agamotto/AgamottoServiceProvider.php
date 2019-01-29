@@ -9,7 +9,6 @@ use Poppy\Framework\Events\LocaleChanged;
  */
 class AgamottoServiceProvider extends L5ServiceProvider
 {
-
 	protected $defer = false;
 
 	/**
@@ -34,7 +33,6 @@ class AgamottoServiceProvider extends L5ServiceProvider
 	 */
 	private function setAgamottoLocale($locale)
 	{
-
 		Agamotto::setFallbackLocale($this->getFallbackLocale($locale));
 		Agamotto::setLocale($locale);
 	}

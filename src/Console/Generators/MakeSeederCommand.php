@@ -33,7 +33,6 @@ class MakeSeederCommand extends GeneratorCommand
 		return __DIR__ . '/stubs/seeder.stub';
 	}
 
-
 	/**
 	 * Get the default namespace for the class.
 	 * @param string $rootNamespace

@@ -18,10 +18,11 @@ class Migrator extends BaseMigrator
 	 * @param \Illuminate\Database\ConnectionResolverInterface             $resolver
 	 * @param \Illuminate\Filesystem\Filesystem                            $files
 	 */
-	public function __construct($table,
-	                            MigrationRepositoryInterface $repository,
-	                            Resolver $resolver,
-	                            Filesystem $files
+	public function __construct(
+		$table,
+								MigrationRepositoryInterface $repository,
+								Resolver $resolver,
+								Filesystem $files
 	)
 	{
 		$this->table = $table;

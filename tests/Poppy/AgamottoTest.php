@@ -25,11 +25,10 @@ class AgamottoTest extends TestCase
 		$this->assertTrue($weekdayZh === $weekdayTrans);
 	}
 
-
 	public function testLocaleChanged()
 	{
 		Agamotto::setLocale('en');
-		$weekday = strtolower(Agamotto::now()->format('l'));
+		$weekday   = strtolower(Agamotto::now()->format('l'));
 		$format    = [
 			'monday'    => '星期一',
 			'tuesday'   => '星期二',

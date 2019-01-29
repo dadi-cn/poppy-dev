@@ -26,7 +26,6 @@ class PoppyCheckCommand extends Command
 	 */
 	public function handle()
 	{
-
 		$baseDir  = base_path();
 		$folders  = glob($baseDir . '/{modules}/*/src/{events,listeners}', GLOB_BRACE);
 		$iterator = \Symfony\Component\Finder\Finder::create()
@@ -39,7 +38,6 @@ class PoppyCheckCommand extends Command
 		$this->table([
 			'module' => 'Module', 'file' => 'FileName', 'path' => 'Path',
 		], $this->rules);
-
 	}
 
 	protected function check(SplFileInfo $file)
@@ -70,5 +68,4 @@ class PoppyCheckCommand extends Command
 			}
 		}
 	}
-
 }

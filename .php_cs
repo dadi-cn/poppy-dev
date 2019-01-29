@@ -1,17 +1,25 @@
 <?php
 $baseDir = dirname(__DIR__);
-if (file_exists($baseDir.'/framework/')) {
+echo <<<COMMENT
+/*
+|--------------------------------------------------------------------------
+| Poppy Framework cs Fixer
+|--------------------------------------------------------------------------
+| Document Url : https://github.com/FriendsOfPHP/PHP-CS-Fixer
+| Current Dir  : {$baseDir}
+*/\n
+COMMENT;
+if (strpos($baseDir, 'vendor/poppy') !== false) {
+    $baseDir = dirname(dirname(dirname(__DIR__)));
+    $folders = [
+        $baseDir.'/config',
+        $baseDir.'/modules',
+    ];
+} else {
     // for development
     $folders = [
         $baseDir.'/config',
         $baseDir.'/framework',
-        $baseDir.'/extensions',
-        $baseDir.'/modules',
-    ];
-} else {
-    $baseDir = dirname(dirname(dirname(__DIR__)));
-    $folders = [
-        $baseDir.'/config',
         $baseDir.'/extensions',
         $baseDir.'/modules',
     ];
@@ -31,8 +39,16 @@ return PhpCsFixer\Config::create()
             'syntax' => 'short',
         ],
         'binary_operator_spaces' => [
-            'align_double_arrow' => true,
-            'align_equals' => true,
+            'operators' => [
+                '=>' => 'align_single_space',
+                '.=' => 'align_single_space',
+                '/=' => 'align_single_space',
+                '+=' => 'align_single_space',
+                '*=' => 'align_single_space',
+                '-=' => 'align_single_space',
+                '&=' => 'align_single_space',
+                '='  => 'align_single_space',
+            ],
         ],
         'blank_line_before_return' => true,
         'braces' => false,
@@ -49,7 +65,9 @@ return PhpCsFixer\Config::create()
         'indentation_type' => true,
         'linebreak_after_opening_tag' => false,
         'lowercase_cast' => true,
-        'method_separation' => true,
+        'class_attributes_separation' => [
+            'elements' => ['method', 'property'],
+        ],
         'native_function_casing' => true,
         'new_with_braces' => true,
         'no_alias_functions' => true,
@@ -95,7 +113,11 @@ return PhpCsFixer\Config::create()
         'normalize_index_brace' => true,
         'ordered_imports' => true,
         'phpdoc_indent' => true,
-        'phpdoc_scalar' => true,
+        'phpdoc_scalar' => [
+            'types' => [
+                'boolean', 'double', 'integer', 'str'
+            ],
+        ],
         'phpdoc_types' => true,
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_annotation_without_dot' => true,

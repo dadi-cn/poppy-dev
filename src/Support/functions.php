@@ -296,9 +296,8 @@ if (!function_exists('pf_path')) {
 		if (file_exists(base_path('framework/'))) {
 			return base_path('framework/' . $path);
 		}
-		else {
+		 
 			return base_path('vendor/poppy/framework/' . $path);
-		}
 	}
 }
 

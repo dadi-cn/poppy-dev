@@ -6,7 +6,6 @@ use Poppy\Framework\Update\Migration\MigrationCreator;
 use Poppy\Framework\Update\Migration\MigrationRepositoryInterface;
 use Poppy\Framework\Update\Migration\Migrator;
 
-
 class UpdateServiceProvider extends ServiceProvider
 {
 	/**

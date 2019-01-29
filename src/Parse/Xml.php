@@ -16,12 +16,19 @@
 class Xml
 {
 	private $_parser;
+
 	private $_document;
+
 	private $_stack;
+
 	private $_data;
+
 	private $_last_opened_tag;
+
 	private $isNormal;
+
 	private $_attrs  = [];
+
 	private $_failed = false;
 
 	public function __construct()

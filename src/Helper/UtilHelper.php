@@ -183,7 +183,7 @@ class UtilHelper
 	 */
 	public static function formatDecimal($input, $sprinft = true, $precision = 2)
 	{
-		$var = round(floatval($input), $precision);
+		$var               = round(floatval($input), $precision);
 		if ($sprinft) $var = sprintf('%.' . $precision . 'f', $var);
 
 		return $var;
@@ -497,7 +497,6 @@ class UtilHelper
 		return preg_match("/\d\.\d\..+/", $version);
 	}
 
-
 	/**
 	 *计算某个经纬度的周围某段距离的正方形的四个点
 	 * @param float $lng      经度
@@ -524,7 +523,6 @@ class UtilHelper
 			'right-bottom' => ['lat' => $lat - $dlat, 'lng' => $lng + $dlng],
 		];
 	}
-
 
 	/**
 	 * 根据两点间的经纬度计算距离
@@ -636,7 +634,6 @@ class UtilHelper
 		return $suffix ? $snake . '_' . $suffix : $snake;
 	}
 
-
 	private static function _isUtf8($filename): string
 	{
 		$info     = '<span style="color:red;">NOT UTF8 file</span>';
@@ -647,7 +644,6 @@ class UtilHelper
 
 		return $info;
 	}
-
 
 	/**
 	 * @param            $file_name

@@ -315,7 +315,7 @@ class FileHelper
 	 */
 	public static function dirPath($dirpath)
 	{
-		$dirpath = str_replace('\\', '/', $dirpath);
+		$dirpath                                  = str_replace('\\', '/', $dirpath);
 		if (substr($dirpath, -1) != '/') $dirpath = $dirpath . '/';
 
 		return $dirpath;
@@ -374,8 +374,8 @@ class FileHelper
 		if (!$require) $require = substr($dir, -1) == '*' ? 2 : 0;
 		if ($require) {
 			if ($require == 2) $dir = substr($dir, 0, -1);
-			$dir  = self::dirPath($dir);
-			$list = glob($dir . '*');
+			$dir                    = self::dirPath($dir);
+			$list                   = glob($dir . '*');
 			foreach ($list as $v) {
 				if (is_dir($v)) {
 					self::dirChmod($v, $mode, 1);
@@ -489,8 +489,8 @@ class FileHelper
 		if (!$require) $require = substr($dir, -1) == '*' ? 2 : 0;
 		if ($require) {
 			if ($require == 2) $dir = substr($dir, 0, -1);
-			$dir  = self::path($dir);
-			$list = glob($dir . '*');
+			$dir                    = self::path($dir);
+			$list                   = glob($dir . '*');
 			foreach ($list as $v) {
 				if (is_dir($v)) {
 					self::chmod($v, $mode, 1);
@@ -537,7 +537,7 @@ class FileHelper
 	 */
 	public static function path($dir_path, $suffix = true)
 	{
-		$dir_path = str_replace(['\\', '//'], '/', $dir_path);
+		$dir_path                                   = str_replace(['\\', '//'], '/', $dir_path);
 		if (substr($dir_path, -1) != '/') $dir_path = $dir_path . '/';
 		if (!$suffix) {
 			$dir_path = rtrim($dir_path, '/');
@@ -625,7 +625,7 @@ class FileHelper
 	{
 		global $id;
 		if ($parent_id == 0) $id = 0;
-		$list = glob($dir . '*');
+		$list                    = glob($dir . '*');
 		foreach ($list as $v) {
 			if (is_dir($v)) {
 				$id++;

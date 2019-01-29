@@ -1,9 +1,9 @@
 <?php namespace Poppy\Framework\Update\Migration;
 
 use Closure;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Illuminate\Filesystem\Filesystem;
 
 class MigrationCreator
 {
@@ -115,7 +115,9 @@ class MigrationCreator
 		$stub      = str_replace(
 			['DummyClass'],
 			[$className],
-			$stub);
+			$stub
+		);
+
 		return $stub;
 	}
 
@@ -142,6 +144,7 @@ class MigrationCreator
 	protected function getPath($slug, $name): string
 	{
 		$className = str_replace('\\', '', $this->getClassName($slug, $name));
+
 		return poppy_path($slug, 'src/update/' . $this->getDatePrefix() . '_' . Str::snake($className) . '.php');
 	}
 

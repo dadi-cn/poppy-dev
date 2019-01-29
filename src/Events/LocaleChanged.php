@@ -9,7 +9,6 @@ class LocaleChanged extends Event
 	 */
 	public $locale;
 
-
 	public function __construct($locale)
 	{
 		$this->locale = $locale;

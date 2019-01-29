@@ -291,6 +291,7 @@ class FileRepository extends Repository
 					}
 				}
 			}
+
 			return $module;
 		});
 
@@ -348,5 +349,4 @@ class FileRepository extends Repository
 		return storage_path('app/poppy.json');
 	}
 }
-
 

@@ -9,5 +9,4 @@ class EnvHelperTest extends TestCase
 	{
 		$this->assertEquals('unknown', EnvHelper::ip());
 	}
-
 }

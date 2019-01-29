@@ -28,8 +28,8 @@ class PoppyDocCommand extends Command
 	{
 		$type = $this->argument('type');
 		switch ($type) {
-			case 'phpcs';
-			case 'cs';
+			case 'phpcs':
+			case 'cs':
 				$this->info(
 					'Please Run Command:' . "\n" .
 					'php-cs-fixer fix --config=' . pf_path('.php_cs') . ' --diff --dry-run --verbose --diff-format=udiff'
@@ -39,7 +39,8 @@ class PoppyDocCommand extends Command
 			case 'lint':
 				$lintFile = base_path('vendor/bin/phplint');
 				if (file_exists($lintFile)) {
-					$this->info('Please Run Command:' . "\n" .
+					$this->info(
+						'Please Run Command:' . "\n" .
 						'./vendor/bin/phplint -c ' . pf_path('.phplint.yml')
 					);
 				}
@@ -52,18 +53,22 @@ class PoppyDocCommand extends Command
 				$sami       = storage_path('sami/sami.phar');
 				$samiConfig = storage_path('sami/config.php');
 				if (!file_exists($samiConfig)) {
-					$this->warn('Please Run Command To Publish Config:' . "\n" .
+					$this->warn(
+						'Please Run Command To Publish Config:' . "\n" .
 						'php artisan vendor:publish '
 					);
+
 					return;
 				}
 				if (file_exists($sami)) {
-					$this->info('Please Run Command:' . "\n" .
+					$this->info(
+						'Please Run Command:' . "\n" .
 						'php ' . $sami . ' update ' . $samiConfig
 					);
 				}
 				else {
-					$this->warn('Please Run Command To Install Sami.phar:' . "\n" .
+					$this->warn(
+						'Please Run Command To Install Sami.phar:' . "\n" .
 						'curl http://get.sensiolabs.org/sami.phar --output ' . $sami
 					);
 				}
@@ -89,8 +94,9 @@ class PoppyDocCommand extends Command
 				$this->getFile()->copyDirectory(base_path('resources/docs'), $aimFolder);
 				$this->info('Publish Success!');
 				break;
-			case 'log';
-				$this->info('Please Run Command:' . "\n" .
+			case 'log':
+				$this->info(
+					'Please Run Command:' . "\n" .
 					'tail -20f storage/logs/laravel-`date +%F`.log'
 				);
 				break;
@@ -111,7 +117,6 @@ class PoppyDocCommand extends Command
 			['type', InputArgument::REQUIRED, ' Support Type [phpcs,cs|php-cs-fixer].'],
 		];
 	}
-
 
 	private function modulesDoc()
 	{
@@ -187,7 +192,6 @@ class PoppyDocCommand extends Command
 			}
 		}
 	}
-
 
 	/**
 	 * @return Filesystem

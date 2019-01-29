@@ -62,21 +62,23 @@ class MigrateCommand extends BaseCommand
 
 		$this->prepareDatabase();
 
-
 		if (!empty($this->argument('slug'))) {
 			$module = $this->poppy->where('slug', $this->argument('slug'));
 
 			if ($this->poppy->isEnabled($module['slug'])) {
 				$this->migrate($module['slug']);
+
 				return;
 			}
 
 			if ($this->option('force')) {
 				$this->migrate($module['slug']);
+
 				return;
 			}
 
 			$this->error('Nothing to migrate.');
+
 			return;
 		}
 
@@ -90,7 +92,6 @@ class MigrateCommand extends BaseCommand
 		foreach ($modules as $module) {
 			$this->migrate($module['slug']);
 		}
-
 	}
 
 	/**
@@ -100,7 +101,6 @@ class MigrateCommand extends BaseCommand
 	 */
 	protected function prepareDatabase()
 	{
-
 		if (!$this->migrator->repositoryExists()) {
 			$this->call(
 				'poppy:update:install'
@@ -132,8 +132,10 @@ class MigrateCommand extends BaseCommand
 		}
 		else {
 			$this->error('Module does not exist.');
+
 			return null;
 		}
+
 		return null;
 	}
 }

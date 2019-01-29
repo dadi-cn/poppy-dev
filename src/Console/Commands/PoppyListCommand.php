@@ -49,6 +49,7 @@ class PoppyListCommand extends Command
 
 		if (count($modules) == 0) {
 			$this->error("Your application doesn't have any modules.");
+
 			return null;
 		}
 

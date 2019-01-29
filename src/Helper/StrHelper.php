@@ -738,8 +738,8 @@ class StrHelper extends Str
 			foreach ($arr as $v) {
 				if ($v && strpos($v, '|') !== false) {
 					list($key, $value) = explode('|', $v);
-					$key          = trim($key);
-					$return[$key] = trim($value);
+					$key               = trim($key);
+					$return[$key]      = trim($value);
 				}
 			}
 
@@ -953,11 +953,11 @@ class StrHelper extends Str
 
 		// 去重
 		$arr = explode($delimiter, $current);
+
 		return collect($arr)->unique()->filter(function ($item) use ($remove, $str) {
 			return $remove ? ($item && $item != $str) : $item;
 		})->implode($delimiter);
 	}
-
 
 	/**
 	 * 获取 markdown 索引

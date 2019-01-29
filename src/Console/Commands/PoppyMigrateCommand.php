@@ -61,15 +61,18 @@ class PoppyMigrateCommand extends Command
 
 			if ($this->poppy->isEnabled($module['slug'])) {
 				$this->migrate($module['slug']);
+
 				return null;
 			}
 
 			if ($this->option('force')) {
 				$this->migrate($module['slug']);
+
 				return null;
 			}
 
 			$this->error('Nothing to migrate.');
+
 			return null;
 		}
 
@@ -121,8 +124,10 @@ class PoppyMigrateCommand extends Command
 		}
 		else {
 			$this->error('Module does not exist.');
+
 			return null;
 		}
+
 		return null;
 	}
 

@@ -69,6 +69,7 @@ class MigrateMakeCommand extends Command
 
 		if (!app('poppy')->exists($this->slug)) {
 			$this->error('Slug `' . $this->slug . '` not exist!');
+
 			return;
 		}
 
@@ -76,7 +77,6 @@ class MigrateMakeCommand extends Command
 		// schema operation. The developer may also specify if this table needs
 		// to be freshly created so we can create the appropriate migrations.
 		$this->updateName = Str::snake(trim($this->input->getArgument('name')));
-
 
 		// Now we are ready to write the migration out to disk. Once we've written
 		// the migration out, we will dump-autoload for the entire framework to
@@ -97,7 +97,8 @@ class MigrateMakeCommand extends Command
 	protected function writeMigration($slug, $name)
 	{
 		$file = pathinfo($this->creator->create(
-			$slug, $name
+			$slug,
+			$name
 		), PATHINFO_FILENAME);
 
 		$this->line("<info>Created Update Migration:</info> {$file}");

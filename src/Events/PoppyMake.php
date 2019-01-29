@@ -9,7 +9,6 @@ class PoppyMake extends Event
 	 */
 	public $slug;
 
-
 	public function __construct($slug)
 	{
 		$this->slug = $slug;

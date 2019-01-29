@@ -7,7 +7,6 @@ use Poppy\Framework\Helper\StrHelper;
 
 class Resp
 {
-
 	const SUCCESS       = 0;
 	const ERROR         = 1;
 	const TOKEN_MISS    = 2;
@@ -22,6 +21,7 @@ class Resp
 	const WEB_ERROR   = 'error';
 
 	private $code;
+
 	private $message = '操作出错了';
 
 	public function __construct($code, $message = '')
@@ -157,7 +157,6 @@ class Resp
 		if ($isJson) {
 			return self::webSplash($resp, is_null($append) ? $append : $arrAppend, $input);
 		}
-
 
 		if (isset($arrAppend['reload'])) {
 			$location = \Session::previousUrl();
@@ -324,6 +323,7 @@ class Resp
 			$append['_update']  = input('_update');
 			$append['_content'] = $append['_content'] ?? '';
 		}
+
 		return $append;
 	}
 }

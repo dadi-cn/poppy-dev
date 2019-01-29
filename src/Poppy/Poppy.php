@@ -27,6 +27,7 @@ use Poppy\Framework\Poppy\Contracts\Repository;
 class Poppy
 {
 	use PoppyTrait;
+
 	/**
 	 * @var Application
 	 */

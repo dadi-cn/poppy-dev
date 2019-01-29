@@ -16,6 +16,7 @@ class ArrayHelper extends Arr
 	public static function combine(array $array, $join = ','): string
 	{
 		$arr = self::flatten($array);
+
 		return implode($join, $arr);
 	}
 
@@ -73,7 +74,6 @@ class ArrayHelper extends Arr
 		return rtrim($return, $join);
 	}
 
-
 	/**
 	 * 根据当前值, 获取下一个值
 	 * @param array      $array 请求的数组
@@ -89,6 +89,7 @@ class ArrayHelper extends Arr
 			}
 			next($array);
 		}
+
 		return next($array);
 	}
 }

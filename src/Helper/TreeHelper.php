@@ -10,15 +10,21 @@ class TreeHelper
 	 * @var array
 	 */
 	public $arr  = [];
+
 	public $tree = [];
+
 	private $key_id;
+
 	private $key_pid;
+
 	private $key_title;
+
 	/**
 	 * 生成树型结构所需修饰符号，可以换成图片
 	 * @var array
 	 */
 	public $icon  = ['&nbsp;│', '&nbsp;├', '&nbsp;└'];
+
 	public $space = '&nbsp;';
 
 	/**

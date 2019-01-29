@@ -75,11 +75,11 @@ class ImageHelper
 		$palette_size = $offset - 54;
 		$ncolor       = $palette_size / 4;
 		$gd_header    = '';
-		$gd_header .= ($palette_size == 0) ? "\xFF\xFE" : "\xFF\xFF";
-		$gd_header .= pack('n2', $width, $height);
-		$gd_header .= ($palette_size == 0) ? "\x01" : "\x00";
+		$gd_header                    .= ($palette_size == 0) ? "\xFF\xFE" : "\xFF\xFF";
+		$gd_header                    .= pack('n2', $width, $height);
+		$gd_header                    .= ($palette_size == 0) ? "\x01" : "\x00";
 		if ($palette_size) $gd_header .= pack('n', $ncolor);
-		$gd_header .= "\xFF\xFF\xFF\xFF";
+		$gd_header                    .= "\xFF\xFF\xFF\xFF";
 		fwrite($dest_f, $gd_header);
 		if ($palette_size) {
 			$palette    = fread($src_f, $palette_size);

@@ -46,9 +46,9 @@ class StatusCommand extends BaseCommand
 	 */
 	public function handle()
 	{
-
 		if (!$this->migrator->repositoryExists()) {
 			$this->error('No migrations found.');
+
 			return;
 		}
 
@@ -91,5 +91,4 @@ class StatusCommand extends BaseCommand
 			$this->getMigrationPaths()
 		);
 	}
-
 }

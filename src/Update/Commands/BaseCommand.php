@@ -12,6 +12,7 @@ class BaseCommand extends Command
 	protected function getMigrationPaths(): array
 	{
 		$slugs = app('poppy')->slugs();
+
 		return collect($slugs)->map(function ($slug) {
 			return poppy_path($slug, 'src/update/');
 		})->all();

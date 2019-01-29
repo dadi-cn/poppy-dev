@@ -1,7 +1,6 @@
 <?php namespace Poppy\Framework\Classes\Traits;
 
 use Illuminate\Auth\AuthManager;
-use Illuminate\Cache\CacheManager;
 use Illuminate\Cache\TaggableStore;
 use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
@@ -179,6 +178,7 @@ trait PoppyTrait
 		if ($tag && $cache->getStore() instanceof TaggableStore) {
 			return $cache->tags($tag);
 		}
+
 		return $cache;
 	}
 
