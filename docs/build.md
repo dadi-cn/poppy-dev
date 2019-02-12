@@ -7,6 +7,6 @@
 - 完善单元测试
 - 删除和 laravel 相同功能的函数
 - 遵循注释规范
-- sami 移除到 modules/system 模块
+- [√]sami 移除到 modules/system 模块
 - 更新版权信息
 - 分离拼音组件

@@ -32,7 +32,6 @@ class PoppyServiceProvider extends ServiceProvider
 
 		$this->commands([
 			PoppyDocCommand::class,
-			PoppyCheckCommand::class,
 		]);
 	}
 

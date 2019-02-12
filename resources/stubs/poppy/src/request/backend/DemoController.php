@@ -1,6 +1,6 @@
 <?php namespace DummyNamespace\Request\Backend;
 
-use System\Request\Backend\InitController;
+use System\Http\Request\Backend\InitController;
 
 class DemoController extends InitController
 {

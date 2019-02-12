@@ -1,6 +1,9 @@
 
 [![Join the chat at https://gitter.im/poppy-framework/Lobby](https://badges.gitter.im/poppy-framework/Lobby.svg)](https://gitter.im/poppy-framework/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+中文文档查看[这里](./docs/README_Zh-cn.md);
+Build Document [Click Here](./docs/build.md);
+
 ## Agamotto
 
 Agamotto is a simple PHP API extension for DateTime, and is the cousin of Carbon. 
@@ -29,8 +32,7 @@ The file tree lists:
 ├── resources             
 │   ├── lang              # lang file
 │   │   └── zh            # language folder
-│   ├── mixes             # vue modules
-│   └── views             # blade template
+│   └── views             # view template
 └── src
     ├── classes
     ├── database
@@ -39,13 +41,13 @@ The file tree lists:
     │   └── seeds
     ├── events
     ├── http
+    │   ├── request
+    │   │   ├── api
+    │   │   ├── backend
+    │   │   └── web
     │   └── routes
     ├── listeners
-    ├── models
-    └── request
-        ├── api
-        ├── backend
-        └── web
+    └── models
 ```
 ### List Modules
 
@@ -93,12 +95,6 @@ Use sami generate php document. Finder Can find all php files under `modules` fo
 $ php artisan poppy:doc {sami/php} 
 ```
 
-Use docsify generate project document. All `*.md` files under `modules/{slug}/resources/docs` are generate to `public/docs/poppy` folder. You can visit it pass `{url_site}docs/poppy/`
-
-```
-$ php artisan poppy:doc {app} 
-```
-
 Display current tail log command.
 ```
 $ php artisan poppy:doc {log} 
@@ -114,13 +110,6 @@ poppy:migrate:rollback  Rollback the last database migrations for a specific or 
 poppy:migration {slug}  Create a new module migration file
 poppy:migration {slug} CreateDemoTable
                         Create a table for module migration
-```
-
-### Check Event Named 
-
-Check Event/Listeners is in rule.
-```
-php artisan poppy:check
 ```
 
 ## Poppy Generators
@@ -151,9 +140,6 @@ Events\LocaleChanged($locale)
 Events\PoppyMake($slug)
 ```
 
-## GraphQl Support
-
-// todo
 
 ## Helpers
 
@@ -165,7 +151,7 @@ EnvHelper
 FileHelper
 HtmlHelper
 ImageHelper
-RawCookieHelper
+CookieHelper
 RouterHelper
 SearchHelper
 StrHelper
@@ -189,8 +175,6 @@ Support Xml,Ini,Yaml
 
 ## Thanks To
 
-- [Docsify](https://docsify.js.org/#/zh-cn/) 
 - [Yaml](http://nodeca.github.io/js-yaml/)
 - [EloquentFilter](https://github.com/Tucker-Eric/EloquentFilter)
-- [laravel-graphql](https://github.com/Folkloreatelier/laravel-graphql)
 - [Sami](https://github.com/FriendsOfPHP/Sami) 

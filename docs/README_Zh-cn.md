@@ -1,6 +1,9 @@
 
 [![Join the chat at https://gitter.im/poppy-framework/Lobby](https://badges.gitter.im/poppy-framework/Lobby.svg)](https://gitter.im/poppy-framework/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+中文文档查看[这里](../docs/README_Zh-cn.md);
+Build Document [Click Here](../docs/build.md);
+
 ## Agamotto
 
 Agamotto是DateTime的一个简单的PHP API扩展，是Carbon的亲戚, 这个库的目标是创建一个显示本地化日期的解决方案
@@ -29,7 +32,6 @@ $ php artisan poppy:make {slug} [-Q|--quick]
 ├── resources             
 │   ├── lang              # 语言文件
 │   │   └── zh            # 语言文件夹
-│   ├── mixes             # vue 模块
 │   └── views             # blade 模板
 └── src
     ├── classes
@@ -39,13 +41,13 @@ $ php artisan poppy:make {slug} [-Q|--quick]
     │   └── seeds
     ├── events
     ├── http
+    │   ├── request
+    │   │   ├── api
+    │   │   ├── backend
+    │   │   └── web
     │   └── routes
     ├── listeners
-    ├── models
-    └── request
-        ├── api
-        ├── backend
-        └── web
+    └── models
 ```
 ### 列出 Modules
 
@@ -95,13 +97,6 @@ $ php artisan poppy:doc {phplint/lint}
 $ php artisan poppy:doc {sami/php} 
 ```
 
-使用 docsify 生成项目文档, 所有在 `modules/{slug}/resources/docs` 下的 `md` 文件生成到  `public/docs/poppy` 文件夹, 可以通过 `{url_site}docs/poppy/` 文件夹访问. 
-
-
-```
-$ php artisan poppy:doc {app} 
-```
-
 显示当前 tail 日志命令
 
 ```
@@ -116,13 +111,6 @@ poppy:migrate:refresh   Reset and re-run all migrations for a specific or all mo
 poppy:migrate:reset     Rollback all database migrations for a specific or all modules
 poppy:migrate:rollback  Rollback the last database migrations for a specific or all modules
 poppy:migration {slug}  Create a new module migration file
-```
-
-### 检查事件命名
-
-检查 Event/Listeners 是否按照规范来进行命名. 
-```
-php artisan poppy:check
 ```
 
 ## Poppy 生成器
@@ -153,10 +141,6 @@ Events\LocaleChanged($locale)
 Events\PoppyMake($slug)
 ```
 
-## GraphQl 支持
-
-// todo
-
 ## Helpers
 
 ```
@@ -167,7 +151,7 @@ EnvHelper
 FileHelper
 HtmlHelper
 ImageHelper
-RawCookieHelper
+CookieHelper
 RouterHelper
 SearchHelper
 StrHelper
@@ -191,8 +175,6 @@ WebHelper
 
 ## 鸣谢
 
-- [Docsify](https://docsify.js.org/#/zh-cn/) 
 - [Yaml](http://nodeca.github.io/js-yaml/)
 - [EloquentFilter](https://github.com/Tucker-Eric/EloquentFilter)
-- [laravel-graphql](https://github.com/Folkloreatelier/laravel-graphql)
 - [Sami](https://github.com/FriendsOfPHP/Sami) 
