@@ -1,8 +1,8 @@
 
 [![Join the chat at https://gitter.im/poppy-framework/Lobby](https://badges.gitter.im/poppy-framework/Lobby.svg)](https://gitter.im/poppy-framework/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-中文文档查看[这里](../docs/README_Zh-cn.md);
-Build Document [Click Here](../docs/build.md);
+English Document[Click Here](../README.md);
+Build 文档 [点击这里](../docs/build.md);
 
 ## Agamotto
 
