@@ -1,8 +1,6 @@
 <?php namespace Poppy\Framework\Poppy;
 
 use Illuminate\Support\ServiceProvider;
-use Poppy\Framework\Poppy\Commands\PoppyCheckCommand;
-use Poppy\Framework\Poppy\Commands\PoppyDocCommand;
 use Poppy\Framework\Poppy\Contracts\Repository;
 
 /**
@@ -29,10 +27,6 @@ class PoppyServiceProvider extends ServiceProvider
 
 			return new Poppy($app, $repository);
 		});
-
-		$this->commands([
-			PoppyDocCommand::class,
-		]);
 	}
 
 	/**
@@ -41,7 +35,6 @@ class PoppyServiceProvider extends ServiceProvider
 	 */
 	public function provides()
 	{
-		// return ['duoli.form'];
 		return ['poppy'];
 	}
 }
