@@ -118,7 +118,7 @@ class StrHelper extends Str
 	 */
 	public static function trimEOL($string, $js = false)
 	{
-		$string = str_replace([chr(10), chr(13)], ['', ''], $string);
+		$string = str_replace([chr(10), chr(13)], '', $string);
 
 		return $js ? str_replace("'", "\'", $string) : $string;
 	}
@@ -130,7 +130,7 @@ class StrHelper extends Str
 	 */
 	public static function trimSpace($string)
 	{
-		$string = str_replace([chr(13), chr(10), "\n", "\r", "\t", '  '], ['', '', '', '', '', ''], $string);
+		$string = str_replace([chr(13), chr(10), "\n", "\r", "\t", '  '], '', $string);
 
 		return $string;
 	}
