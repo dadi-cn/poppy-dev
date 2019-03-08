@@ -5,10 +5,14 @@ use Poppy\Framework\Classes\Resp;
 
 trait AppTrait
 {
-	/** @var Resp */
+	/**
+	 * @var Resp
+	 */
 	protected $error;
 
-	/** @var Resp */
+	/**
+	 * @var Resp
+	 */
 	protected $success;
 
 	/**
@@ -38,12 +42,24 @@ trait AppTrait
 	}
 
 	/**
+	 * @param Resp|string $success 设置的成功信息
+	 */
+	public function setSuccess($success)
+	{
+		if ($success instanceof Resp) {
+			$this->success = $success;
+		}
+		else {
+			$this->success = new Resp(Resp::ERROR, $success);
+		}
+	}
+
+	/**
 	 * Get success messages;
-	 * @param string $message
 	 * @return Resp
 	 */
-	public function getSuccess($message = '')
+	public function getSuccess()
 	{
-		return new Resp(Resp::SUCCESS, $message);
+		return $this->success;
 	}
 }
