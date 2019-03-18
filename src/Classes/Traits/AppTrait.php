@@ -43,8 +43,9 @@ trait AppTrait
 
 	/**
 	 * @param Resp|string $success 设置的成功信息
+	 * @return bool
 	 */
-	public function setSuccess($success)
+	public function setSuccess($success): bool
 	{
 		if ($success instanceof Resp) {
 			$this->success = $success;
@@ -52,6 +53,7 @@ trait AppTrait
 		else {
 			$this->success = new Resp(Resp::ERROR, $success);
 		}
+		return true;
 	}
 
 	/**
