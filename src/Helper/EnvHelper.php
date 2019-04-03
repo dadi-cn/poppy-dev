@@ -61,7 +61,7 @@ class EnvHelper
 	 */
 	public static function domain(): string
 	{
-		return $_SERVER['SERVER_NAME'];
+		return $_SERVER['SERVER_NAME'] ?? '';
 	}
 
 	/**
