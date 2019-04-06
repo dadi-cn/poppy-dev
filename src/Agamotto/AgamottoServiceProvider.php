@@ -9,7 +9,7 @@ use Poppy\Framework\Events\LocaleChanged;
  */
 class AgamottoServiceProvider extends L5ServiceProvider
 {
-	protected $defer = false;
+
 
 	/**
 	 * Bootstrap the application events.

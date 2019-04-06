@@ -1,4 +1,4 @@
-<?php namespace DummyNamespace\Request\Backend;
+<?php namespace DummyNamespace\Http\Request\Backend;
 
 use System\Http\Request\Backend\InitController;
 

@@ -1,5 +1,6 @@
 <?php namespace Poppy\Framework\Classes\Traits;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 
 /**
@@ -15,7 +16,7 @@ trait ViewTrait
 	 */
 	protected function share($key, $value = null)
 	{
-		$this->getView()->share($key, $value);
+		app('view')->share($key, $value);
 	}
 
 	/**
@@ -25,14 +26,14 @@ trait ViewTrait
 	 * @param array $data
 	 * @param array $mergeData
 	 *
-	 * @return \Illuminate\Contracts\View\View
+	 * @return View
 	 */
 	protected function view($template, array $data = [], $mergeData = [])
 	{
 		if (Str::contains($template, '::')) {
-			return $this->getView()->make($template, $data, $mergeData);
+			return app('view')->make($template, $data, $mergeData);
 		}
-		 
-			return $this->getView()->make('theme::' . $template, $data, $mergeData);
+
+		return app('view')->make('theme::' . $template, $data, $mergeData);
 	}
 }

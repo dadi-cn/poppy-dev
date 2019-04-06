@@ -1,4 +1,4 @@
-<?php namespace DummyNamespace\Request\Api;
+<?php namespace DummyNamespace\Http\Request\Api;
 
 use Poppy\Framework\Application\ApiController;
 

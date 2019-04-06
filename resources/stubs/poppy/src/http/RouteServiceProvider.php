@@ -3,6 +3,7 @@
 /**
  * Copyright (C) Update For IDE
  */
+
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 
@@ -13,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
 	 * In addition, it is set as the URL generator's root namespace.
 	 * @var string
 	 */
-	protected $namespace = 'DummyNamespace\Request';
+	protected $namespace = 'DummyNamespace\Http\Request';
 
 	/**
 	 * Define your route model bindings, pattern filters, etc.

@@ -7,7 +7,7 @@
 */
 \Route::group([
 	'middleware' => ['cross'],
-	'namespace'  => 'DummyNamespace\Request\Api',
+	'namespace'  => 'DummyNamespace\Http\Request\Api',
 ], function (Illuminate\Routing\Router $route) {
 	$route->get('/', 'DemoController@index');
 });

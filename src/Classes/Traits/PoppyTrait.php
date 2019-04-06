@@ -8,16 +8,19 @@ use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailer;
 use Illuminate\Redis\RedisManager;
 use Illuminate\Routing\Redirector;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Session\SessionManager;
 use Illuminate\View\Factory;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\MountManager;
 use Poppy\Framework\Foundation\Application;
+use Poppy\Framework\GraphQL\GraphQL;
 use Poppy\Framework\Poppy\Poppy;
 use Poppy\Framework\Translation\Translator;
 use Psr\Log\LoggerInterface;
@@ -59,7 +62,7 @@ trait PoppyTrait
 
 	/**
 	 * Get console instance.
-	 * @return \Illuminate\Contracts\Console\Kernel
+	 * @return Kernel
 	 */
 	protected function getConsole()
 	{
@@ -71,7 +74,7 @@ trait PoppyTrait
 
 	/**
 	 * Get IoC Container.
-	 * @return \Illuminate\Container\Container | Application
+	 * @return Container | Application
 	 */
 	protected function getContainer(): Container
 	{
@@ -121,7 +124,7 @@ trait PoppyTrait
 	}
 
 	/**
-	 * @return \Illuminate\Events\Dispatcher
+	 * @return Dispatcher
 	 */
 	protected function getEvent(): Dispatcher
 	{
@@ -129,7 +132,7 @@ trait PoppyTrait
 	}
 
 	/**
-	 * @return \Psr\Log\LoggerInterface
+	 * @return LoggerInterface
 	 */
 	protected function getLogger(): LoggerInterface
 	{
@@ -137,7 +140,7 @@ trait PoppyTrait
 	}
 
 	/**
-	 * @return \Illuminate\Contracts\Routing\ResponseFactory
+	 * @return ResponseFactory
 	 */
 	protected function getResponse()
 	{
@@ -145,7 +148,7 @@ trait PoppyTrait
 	}
 
 	/**
-	 * @return \Illuminate\Filesystem\Filesystem
+	 * @return Filesystem
 	 */
 	protected function getFile()
 	{
@@ -153,19 +156,11 @@ trait PoppyTrait
 	}
 
 	/**
-	 * @return \Illuminate\Routing\UrlGenerator
+	 * @return UrlGenerator
 	 */
 	protected function getUrl()
 	{
 		return $this->getContainer()->make('url');
-	}
-
-	/**
-	 * @return mixed|\Poppy\Framework\GraphQL\GraphQL
-	 */
-	protected function getGraphQL()
-	{
-		return $this->getContainer()->make('graphql');
 	}
 
 	/**
@@ -183,7 +178,7 @@ trait PoppyTrait
 	}
 
 	/**
-	 * @return \Illuminate\Redis\RedisManager
+	 * @return RedisManager
 	 */
 	protected function getRedis(): RedisManager
 	{
@@ -199,7 +194,7 @@ trait PoppyTrait
 	}
 
 	/**
-	 * @return \Illuminate\View\Factory
+	 * @return Factory
 	 */
 	protected function getView(): Factory
 	{

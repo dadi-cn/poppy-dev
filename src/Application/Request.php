@@ -21,6 +21,6 @@ abstract class Request extends FormRequest
 	{
 		$error = implode(',', $errors);
 
-		return Resp::web(Resp::ERROR, $error, null, $this->request->all());
+		return Resp::error($error, null, $this->request->all());
 	}
 }

@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 class EnableCrossRequest
 {
 	/**
-	 * @var \Illuminate\Contracts\Routing\ResponseFactory
+	 * @var ResponseFactory
 	 */
 	protected $response;
 
 	/**
 	 * EnableCrossRequest constructor.
-	 * @param \Illuminate\Contracts\Routing\ResponseFactory $response
+	 * @param ResponseFactory $response
 	 */
 	public function __construct(ResponseFactory $response)
 	{
@@ -26,8 +26,8 @@ class EnableCrossRequest
 
 	/**
 	 * Middleware handler.
-	 * @param \Illuminate\Http\Request $request
-	 * @param \Closure                 $next
+	 * @param Request $request
+	 * @param Closure $next
 	 * @return mixed
 	 */
 	public function handle(Request $request, Closure $next)
