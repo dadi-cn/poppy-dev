@@ -5,10 +5,6 @@ use Poppy\Framework\Helper\ArrayHelper;
 
 class PoppyTest extends TestCase
 {
-	public function testAll()
-	{
-		dd(app('poppy')->all());
-	}
 
 	public function testGenKey()
 	{
@@ -25,11 +21,6 @@ class PoppyTest extends TestCase
 		$this->assertEquals('', ArrayHelper::genKey([]));
 	}
 
-	public function testModule()
-	{
-		$module = app('module')->repository()->get('system');
-		dd($module);
-	}
 
 	public function testPath()
 	{

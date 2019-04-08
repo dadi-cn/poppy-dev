@@ -1,8 +1,8 @@
 <?php namespace Poppy\Framework\Tests\Agamotto;
 
 use Poppy\Framework\Agamotto\Agamotto;
-use Poppy\Framework\Agamotto\Events\LocaleChanged;
 use Poppy\Framework\Application\TestCase;
+use Poppy\Framework\Events\LocaleChanged;
 
 class AgamottoTest extends TestCase
 {
