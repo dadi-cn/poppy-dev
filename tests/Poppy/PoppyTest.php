@@ -6,7 +6,7 @@ use Poppy\Framework\Helper\ArrayHelper;
 class PoppyTest extends TestCase
 {
 
-	public function testGenKey()
+	public function testGenKey(): void
 	{
 		$arr    = [
 			'location' => 'http://www.baidu.com',
@@ -22,7 +22,7 @@ class PoppyTest extends TestCase
 	}
 
 
-	public function testPath()
+	public function testPath(): void
 	{
 		$this->assertEquals(base_path('framework'), app('path.framework'));
 		$this->assertEquals(base_path('modules'), app('path.module'));

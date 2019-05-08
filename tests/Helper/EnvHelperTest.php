@@ -1,6 +1,6 @@
 <?php namespace Poppy\Framework\Tests\Helper;
 
-use PHPUnit\Framework\TestCase;
+use Poppy\Framework\Application\TestCase;
 use Poppy\Framework\Helper\EnvHelper;
 
 class EnvHelperTest extends TestCase

@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use DateTime as PhpDateTime;
+use Exception;
 
 class TimeHelper
 {
@@ -27,7 +28,7 @@ class TimeHelper
 			return false;
 		}
 		// 长度大于 10
-		if (\strlen($date) > 10) {
+		if (strlen($date) > 10) {
 			return false;
 		}
 		list($year, $month, $day) = explode($sep, $date);
@@ -114,7 +115,7 @@ class TimeHelper
 	 */
 	public static function serverTimezone()
 	{
-		if (\function_exists('date_default_timezone_get')) {
+		if (function_exists('date_default_timezone_get')) {
 			return date_default_timezone_get();
 		}
 
@@ -326,7 +327,7 @@ class TimeHelper
 
 		try {
 			return Carbon::parse($value);
-		} catch (\Exception $ex) {
+		} catch (Exception $ex) {
 			return null;
 		}
 	}
@@ -410,7 +411,7 @@ class TimeHelper
 			return $carbon->format($format);
 		}
 
-		if (\is_string($carbon)) {
+		if (is_string($carbon)) {
 			return $carbon;
 		}
 

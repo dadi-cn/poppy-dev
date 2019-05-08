@@ -6,7 +6,7 @@ use Poppy\Framework\Events\LocaleChanged;
 
 class AgamottoTest extends TestCase
 {
-	public function testTranslation()
+	public function testTranslation(): void
 	{
 		Agamotto::setLocale('en');
 		$weekday = strtolower(Agamotto::now()->format('l'));
@@ -22,10 +22,10 @@ class AgamottoTest extends TestCase
 		Agamotto::setLocale('zh');
 		$weekdayZh    = $format[$weekday];
 		$weekdayTrans = Agamotto::now()->format('l');
-		$this->assertTrue($weekdayZh === $weekdayTrans);
+		$this->assertSame($weekdayZh, $weekdayTrans);
 	}
 
-	public function testLocaleChanged()
+	public function testLocaleChanged(): void
 	{
 		Agamotto::setLocale('en');
 		$weekday   = strtolower(Agamotto::now()->format('l'));
@@ -41,6 +41,6 @@ class AgamottoTest extends TestCase
 		$weekdayZh = $format[$weekday];
 		event(new LocaleChanged('zh'));
 		$weekdayTrans = Agamotto::now()->format('l');
-		$this->assertTrue($weekdayZh === $weekdayTrans);
+		$this->assertSame($weekdayZh, $weekdayTrans);
 	}
 }

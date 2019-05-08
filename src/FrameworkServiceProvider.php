@@ -1,5 +1,6 @@
 <?php namespace Poppy\Framework;
 
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Helper\UtilHelper;
@@ -16,7 +17,7 @@ class FrameworkServiceProvider extends ServiceProvider
 	{
 		// 注册 api 文档配置
 		$this->publishes([
-			__DIR__ . '/../config/poppy.php'          => config_path('poppy.php'),
+			__DIR__ . '/../config/poppy.php' => config_path('poppy.php'),
 		], 'poppy-framework');
 
 		$this->app['poppy']->register();
@@ -26,6 +27,9 @@ class FrameworkServiceProvider extends ServiceProvider
 		$this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'poppy');
 
 		$this->bootValidation();
+
+		// Carbon
+		Carbon::setLocale(config('app.locale'));
 	}
 
 	/**
