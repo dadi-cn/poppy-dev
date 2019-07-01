@@ -470,26 +470,27 @@ class Number
 	 * 四舍五入
 	 * Rounds the current number to the nearest integer
 	 *
-	 * @todo Implement precision digits
+	 * @param int $precision
+	 * @return Number
 	 */
-	public function round()
+	public function round($precision = 0): self
 	{
 		$original = $this->getValue();
 		$floored  = $this->floor()->getValue();
 		$diff     = bcsub($original, $floored, 20);
-
 		if ($this->isNegative()) {
-			$roundedDiff = round($diff, 0, PHP_ROUND_HALF_DOWN);
+			$roundedDiff = round($diff, $precision, PHP_ROUND_HALF_DOWN);
 		}
 		else {
-			$roundedDiff = round($diff);
+			$roundedDiff = round($diff, $precision);
 		}
+
 
 		$this->numberValue = bcadd(
 			$floored,
-			$roundedDiff
+			$roundedDiff,
+			$precision
 		);
-
 		return $this;
 	}
 
