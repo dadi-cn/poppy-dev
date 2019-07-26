@@ -1,8 +1,8 @@
 <?php namespace DummyNamespace\Http\Request\Web;
 
-use Poppy\Framework\Application\ApiController;
+use Poppy\Framework\Application\Controller;
 
-class DemoController extends ApiController
+class DemoController extends Controller
 {
 	public function index()
 	{
