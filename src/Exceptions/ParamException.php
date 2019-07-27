@@ -1,5 +1,5 @@
 <?php namespace Poppy\Framework\Exceptions;
 
-class ParamException extends \Exception
+class ParamException extends BaseException
 {
 }

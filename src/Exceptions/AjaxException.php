@@ -1,6 +1,6 @@
 <?php namespace Poppy\Framework\Exceptions;
 
-class AjaxException extends \Exception
+class AjaxException extends BaseException
 {
 	/**
 	 * @var array collection response contents

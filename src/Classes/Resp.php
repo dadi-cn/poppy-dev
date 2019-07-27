@@ -1,9 +1,21 @@
 <?php namespace Poppy\Framework\Classes;
 
+use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\MessageBag;
+use Input;
 use Poppy\Framework\Helper\StrHelper;
+use Redirect;
+use Request;
+use Response;
+use Session;
+use function is_array;
+use function is_null;
+use function is_string;
 
 class Resp
 {
@@ -33,7 +45,7 @@ class Resp
 
 		$this->code = (int) $code;
 
-		if (\is_string($message) && !empty($message)) {
+		if (is_string($message) && !empty($message)) {
 			$this->message = $message;
 		}
 
@@ -97,7 +109,7 @@ class Resp
 	{
 		$env = !is_production() ? '[开发]' : '';
 
-		return $env . (\is_string($this->message) ? $this->message : implode(',', $this->message));
+		return $env . (is_string($this->message) ? $this->message : implode(',', $this->message));
 	}
 
 	/**
@@ -112,12 +124,15 @@ class Resp
 	 *                  time   : 刷新或者重定向的时间(毫秒), 如果不填写, 默认为立即刷新或者重定向
 	 *                  reload_opener : 刷新母窗口
 	 * @param $input    array 表单提交的数据, 是否连带返回
-	 * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+	 * @return JsonResponse|RedirectResponse|\Illuminate\Http\Response|Redirector
 	 */
 	public static function web($type, $msg, $append = null, $input = null)
 	{
 		if (!($msg instanceof self)) {
 			$resp = new self($type, $msg);
+		}
+		elseif ($msg instanceof Exception) {
+			$resp = new self($msg->getCode(), $msg->getMessage());
 		}
 		else {
 			$resp = $msg;
@@ -132,8 +147,8 @@ class Resp
 
 		// is json
 		if (isset($arrAppend['json']) ||
-			\Request::ajax() ||
-			(strtolower(substr(\Input::header('Authorization'), 0, 6)) === 'bearer') ||
+			Request::ajax() ||
+			(strtolower(substr(Input::header('Authorization'), 0, 6)) === 'bearer') ||
 			Container::getInstance()->isRunningIn('api')
 		) {
 			$isJson = true;
@@ -149,9 +164,9 @@ class Resp
 		$location = $arrAppend['location'] ?? '';
 		$time     = $arrAppend['time'] ?? 0;
 
-		if (!$isForget || \Request::ajax()) {
-			\Session::flash('end.message', $resp->getMessage());
-			\Session::flash('end.level', $resp->getCode());
+		if (!$isForget || Request::ajax()) {
+			Session::flash('end.message', $resp->getMessage());
+			Session::flash('end.level', $resp->getCode());
 		}
 
 		if ($isJson) {
@@ -159,7 +174,7 @@ class Resp
 		}
 
 		if (isset($arrAppend['reload'])) {
-			$location = \Session::previousUrl();
+			$location = Session::previousUrl();
 		}
 
 		return self::webView($time, $location, $input);
@@ -179,7 +194,7 @@ class Resp
 
 	public function __toString()
 	{
-		if (\is_array($this->message)) {
+		if (is_array($this->message)) {
 			return implode("\n", $this->message);
 		}
 
@@ -199,7 +214,7 @@ class Resp
 	 * @param string|array|MessageBag $msg    提示消息
 	 * @param string                  $append 追加的信息
 	 * @param string                  $input  保留输入的数据
-	 * @return array|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+	 * @return array|JsonResponse|RedirectResponse|\Illuminate\Http\Response|Redirector
 	 */
 	public static function success($msg, $append = null, $input = null)
 	{
@@ -211,7 +226,7 @@ class Resp
 	 * @param string|array|MessageBag $msg    提示消息
 	 * @param string                  $append 追加的信息
 	 * @param string                  $input  保留输入的数据
-	 * @return array|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+	 * @return array|JsonResponse|RedirectResponse|\Illuminate\Http\Response|Redirector
 	 */
 	public static function error($msg, $append = null, $input = null)
 	{
@@ -234,7 +249,7 @@ class Resp
 	 * @param $time
 	 * @param $location
 	 * @param $input
-	 * @return \Illuminate\Http\RedirectResponse|Resp
+	 * @return RedirectResponse|Resp
 	 */
 	private static function webView($time, $location, $input)
 	{
@@ -266,7 +281,7 @@ class Resp
 			]);
 		}
 
-		$re = ($location && $location !== 'back') ? \Redirect::to($location) : \Redirect::back();
+		$re = ($location && $location !== 'back') ? Redirect::to($location) : Redirect::back();
 
 		return $input ? $re->withInput($input) : $re;
 	}
@@ -277,7 +292,7 @@ class Resp
 	 * @param Resp         $resp
 	 * @param string|array $append
 	 * @param array        $input
-	 * @return \Illuminate\Http\JsonResponse
+	 * @return JsonResponse
 	 */
 	private static function webSplash($resp, $append = '', $input = [])
 	{
@@ -287,14 +302,14 @@ class Resp
 		];
 
 		$data = null;
-		if (!\is_null($append)) {
+		if (!is_null($append)) {
 			if ($append instanceof Arrayable) {
 				$data = $append->toArray();
 			}
-			elseif (\is_string($append)) {
+			elseif (is_string($append)) {
 				$data = StrHelper::parseKey($append);
 			}
-			elseif (\is_array($append)) {
+			elseif (is_array($append)) {
 				$data = $append;
 			}
 			if (isset($data['location']) && $data['location'] === 'back') {
@@ -305,11 +320,11 @@ class Resp
 			$return['data'] = (array) $data;
 		}
 
-		if (\is_array($input) && $input) {
-			\Session::flashInput($input);
+		if (is_array($input) && $input) {
+			Session::flashInput($input);
 		}
 
-		return \Response::json($return, 200, [], JSON_UNESCAPED_UNICODE);
+		return Response::json($return, 200, [], JSON_UNESCAPED_UNICODE);
 	}
 
 	/**

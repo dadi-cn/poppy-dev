@@ -1,5 +1,6 @@
 <?php namespace Poppy\Framework\Classes\Traits;
 
+use Exception;
 use Illuminate\Support\MessageBag;
 use Poppy\Framework\Classes\Resp;
 
@@ -20,10 +21,13 @@ trait AppTrait
 	 * @param string|MessageBag $error
 	 * @return bool
 	 */
-	public function setError($error)
+	public function setError($error): bool
 	{
 		if ($error instanceof Resp) {
 			$this->error = $error;
+		}
+		elseif ($error instanceof Exception) {
+			$this->error = new Resp($error->getCode(), $error->getMessage());
 		}
 		else {
 			$this->error = new Resp(Resp::ERROR, $error);

@@ -1,5 +1,6 @@
 <?php namespace Poppy\Framework\Exceptions;
 
-class TransactionException extends \Exception
+class TransactionException extends BaseException
 {
+
 }
