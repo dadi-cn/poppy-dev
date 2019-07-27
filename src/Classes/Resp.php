@@ -107,9 +107,12 @@ class Resp
 	 */
 	public function getMessage()
 	{
-		$env = !is_production() ? '[开发]' : '';
-
-		return $env . (is_string($this->message) ? $this->message : implode(',', $this->message));
+		$env     = !is_production() ? '[开发]' : '';
+		$message = (is_string($this->message) ? $this->message : implode(',', $this->message));
+		if (str_contains($message, '[开发]')) {
+			return str_replace('[开发]', '[开发].', $message);
+		}
+		return $env . $message;
 	}
 
 	/**
