@@ -50,7 +50,6 @@ class FrameworkServiceProvider extends ServiceProvider
 		$this->app->register(Poppy\PoppyServiceProvider::class);
 		$this->app->register(Parse\ParseServiceProvider::class);
 		$this->app->register(Translation\TranslationServiceProvider::class);
-		$this->app->register(Update\UpdateServiceProvider::class);
 	}
 
 	/**
