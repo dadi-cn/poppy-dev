@@ -13,7 +13,7 @@ class RegisterClassLoader
 	 * 注册 Loader
 	 * @param Application $app
 	 */
-	public function bootstrap(Application $app)
+	public function bootstrap(Application $app): void
 	{
 		$loader = new ClassLoader(
 			new Filesystem(),

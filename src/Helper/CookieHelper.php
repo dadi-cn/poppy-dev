@@ -1,5 +1,8 @@
 <?php namespace Poppy\Framework\Helper;
 
+/**
+ * Cookie Helper file
+ */
 class CookieHelper
 {
 	/**
@@ -7,7 +10,7 @@ class CookieHelper
 	 * @param $name
 	 * @return bool
 	 */
-	public static function has($name)
+	public static function has($name): bool
 	{
 		return isset($_COOKIE[$name]);
 	}
@@ -17,15 +20,21 @@ class CookieHelper
 	 * @param $name
 	 * @return string
 	 */
-	public static function get($name)
+	public static function get($name): string
 	{
-		$value = isset($_COOKIE[$name]) ? $_COOKIE[$name] : '';
-
-		return $value;
+		return $_COOKIE[$name] ?? '';
 	}
 
-	// 设置某个Cookie值
-	public static function set($name, $value, $expire = 0, $path = '', $domain = '')
+	/**
+	 * 设置某个 Cookie 的值
+	 * @param string $name   cookie name
+	 * @param string $value  cookie value
+	 * @param int    $expire expired time
+	 * @param string $path   path
+	 * @param string $domain domain
+	 * @return bool
+	 */
+	public static function set($name, $value, $expire = 0, $path = '', $domain = ''): bool
 	{
 		if (empty($path)) {
 			$path = '/';
@@ -43,7 +52,7 @@ class CookieHelper
 	 * 删除某个Cookie值
 	 * @param $name
 	 */
-	public static function remove($name)
+	public static function remove($name): void
 	{
 		self::set($name, '', time() - 3600);
 		unset($_COOKIE[$name]);
@@ -52,7 +61,7 @@ class CookieHelper
 	/**
 	 * 清空所有Cookie值
 	 */
-	public static function clear()
+	public static function clear(): void
 	{
 		unset($_COOKIE);
 	}

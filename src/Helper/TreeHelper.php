@@ -9,7 +9,7 @@ class TreeHelper
 	 * 生成树型结构所需要的2维数组
 	 * @var array
 	 */
-	public $arr  = [];
+	public $arr = [];
 
 	public $tree = [];
 
@@ -23,7 +23,7 @@ class TreeHelper
 	 * 生成树型结构所需修饰符号，可以换成图片
 	 * @var array
 	 */
-	public $icon  = ['&nbsp;│', '&nbsp;├', '&nbsp;└'];
+	public $icon = ['&nbsp;│', '&nbsp;├', '&nbsp;└'];
 
 	public $space = '&nbsp;';
 
@@ -139,7 +139,7 @@ class TreeHelper
 	 * @param string $str_group
 	 * @return string
 	 */
-	public function getTree($myid, $str, $selected_id = 0, $adds = '', $str_group = '')
+	public function getTree($myid, $str, $selected_id = 0, $adds = '', $str_group = ''): string
 	{
 		$number   = 1;
 		$children = $this->getChild($myid);
@@ -200,16 +200,16 @@ class TreeHelper
 		if ($type == 'default') {
 			return $this->tree;
 		}
-		 
-			$tree = [];
-			foreach ($this->tree as $key => $value) {
-				$tree[] = [
-					'key'   => $key,
-					'value' => $value,
-				];
-			}
 
-			return $tree;
+		$tree = [];
+		foreach ($this->tree as $key => $value) {
+			$tree[] = [
+				'key'   => $key,
+				'value' => $value,
+			];
+		}
+
+		return $tree;
 	}
 
 	/**
@@ -251,11 +251,11 @@ class TreeHelper
 	}
 
 	/**
-	 * @param   int    $myid 要查询的ID
-	 * @param   string $str  第一种HTML代码方式
-	 * @param  string  $str2 第二种HTML代码方式
-	 * @param int      $sid  默认选中
-	 * @param string   $adds 前缀
+	 * @param int    $myid 要查询的ID
+	 * @param string $str  第一种HTML代码方式
+	 * @param string $str2 第二种HTML代码方式
+	 * @param int    $sid  默认选中
+	 * @param string $adds 前缀
 	 * @return string
 	 */
 	public function getTreeCategory($myid, $str, $str2, $sid = 0, $adds = '')
@@ -328,8 +328,8 @@ class TreeHelper
 		foreach ($child as $id => $a) {
 			@extract($a);
 			if ($showlevel > 0 && $showlevel == $currentlevel && $this->getChild($id)) $folder = 'hasChildren'; //如设置显示层级模式@2011.07.01
-			$floder_status                                                                     = isset($folder) ? ' class="' . $folder . '"' : '';
-			$this->ret .= $recursion ? '<ul><li' . $floder_status . ' id=\'' . $id . '\'>' : '<li' . $floder_status . ' id=\'' . $id . '\'>';
+			$floder_status = isset($folder) ? ' class="' . $folder . '"' : '';
+			$this->ret     .= $recursion ? '<ul><li' . $floder_status . ' id=\'' . $id . '\'>' : '<li' . $floder_status . ' id=\'' . $id . '\'>';
 			$recursion     = false;
 			$nstr          = '';
 			if ($this->getChild($id)) {
