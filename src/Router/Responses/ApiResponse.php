@@ -15,9 +15,9 @@ class ApiResponse
 
 	/**
 	 * Generate a api response to http response.
-	 * @param \Psr\Http\Message\ResponseInterface|null $response
-	 * @param array                                    $params
-	 * @return ApiResponse|\Psr\Http\Message\ResponseInterface
+	 * @param ResponseInterface|null $response
+	 * @param array                  $params
+	 * @return ApiResponse|ResponseInterface
 	 */
 	public function generateHttpResponse(ResponseInterface $response = null, $params = [])
 	{

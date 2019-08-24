@@ -31,7 +31,7 @@ class TimeHelper
 		if (strlen($date) > 10) {
 			return false;
 		}
-		list($year, $month, $day) = explode($sep, $date);
+		[$year, $month, $day] = explode($sep, $date);
 
 		return checkdate($month, $day, $year);
 	}
@@ -394,7 +394,7 @@ class TimeHelper
 	 */
 	public static function micro()
 	{
-		list($micro, $second) = explode(' ', microtime());
+		[$micro, $second] = explode(' ', microtime());
 
 		return sprintf("%'.03d", $micro * 1000);
 	}

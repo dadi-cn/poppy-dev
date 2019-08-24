@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Migrations\Migrator;
 use Poppy\Framework\Classes\Traits\MigrationTrait;
+use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,7 +27,7 @@ class PoppyMigrateRollbackCommand extends Command
 
 	/**
 	 * The migrator instance.
-	 * @var \Illuminate\Database\Migrations\Migrator
+	 * @var Migrator
 	 */
 	protected $migrator;
 
@@ -51,7 +52,7 @@ class PoppyMigrateRollbackCommand extends Command
 	/**
 	 * Execute the console command.
 	 * @return mixed
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	public function handle()
 	{
@@ -98,7 +99,7 @@ class PoppyMigrateRollbackCommand extends Command
 	/**
 	 * Get all of the migration paths.
 	 * @return array
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	protected function getMigrationPaths()
 	{

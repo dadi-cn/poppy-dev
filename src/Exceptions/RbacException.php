@@ -1,5 +1,7 @@
 <?php namespace Poppy\Framework\Exceptions;
 
-class RbacException extends \Exception
+use Exception;
+
+class RbacException extends Exception
 {
 }

@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Console\Generators;
 
 use Poppy\Framework\Console\GeneratorCommand;
+use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
 class MakeRequestCommand extends GeneratorCommand
 {
@@ -37,7 +38,7 @@ class MakeRequestCommand extends GeneratorCommand
 	 * Get the default namespace for the class.
 	 * @param string $rootNamespace
 	 * @return string
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	protected function getDefaultNamespace($rootNamespace)
 	{

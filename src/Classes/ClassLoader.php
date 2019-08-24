@@ -81,7 +81,7 @@ class ClassLoader
 			return true;
 		}
 
-		list($lowerPath, $upperClass) = static::normalizeClass($class);
+		[$lowerPath, $upperClass] = static::normalizeClass($class);
 
 		foreach ($this->directories as $directory) {
 			if ($this->isRealFilePath($path = $directory . DIRECTORY_SEPARATOR . $lowerPath)) {
@@ -267,7 +267,7 @@ class ClassLoader
 	/**
 	 * 清单写入在磁盘
 	 * @param  array $manifest
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function write(array $manifest)
 	{

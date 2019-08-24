@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Helper;
 
 use Illuminate\Support\Arr;
+use function is_array;
 
 /**
  * 数组相关操作
@@ -56,9 +57,9 @@ class ArrayHelper extends Arr
 	{
 		$return = '';
 
-		if (\is_array($array)) {
+		if (is_array($array)) {
 			foreach ($array as $key => $value) {
-				if (\is_array($value)) {
+				if (is_array($value)) {
 					ksort($value);
 					$return .= $key . '=' . json_encode($value) . $join;
 				}

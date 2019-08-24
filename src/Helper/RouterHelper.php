@@ -1,5 +1,7 @@
 <?php namespace Poppy\Framework\Helper;
 
+use stdClass;
+
 /**
  * Methods that may be useful for processing routing activity
  *
@@ -70,7 +72,7 @@ class RouterHelper
 	/**
 	 * Replaces :column_name with it's object value. Example: /some/link/:id/:name -> /some/link/1/Joe
 	 *
-	 * @param \stdClass $object  Object containing the data
+	 * @param stdClass $object  Object containing the data
 	 * @param array     $columns Expected key names to parse
 	 * @param string    $string  URL template
 	 * @return string Built string

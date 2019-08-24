@@ -1,5 +1,7 @@
 <?php namespace Poppy\Framework\Support;
 
+use Event;
+use Gate;
 use Illuminate\Support\ServiceProvider as ServiceProviderBase;
 use Poppy\Framework\Agamotto\Agamotto;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
@@ -85,7 +87,7 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 	protected function bootPolicies()
 	{
 		foreach ($this->policies as $key => $value) {
-			\Gate::policy($key, $value);
+			Gate::policy($key, $value);
 		}
 	}
 
@@ -96,7 +98,7 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 	{
 		foreach ($this->listens as $event => $listeners) {
 			foreach ($listeners as $listener) {
-				\Event::listen($event, $listener);
+				Event::listen($event, $listener);
 			}
 		}
 	}

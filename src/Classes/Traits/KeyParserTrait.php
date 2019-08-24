@@ -97,7 +97,7 @@ trait KeyParserTrait
 	 */
 	protected function keyParserParseSegments($key)
 	{
-		list($namespace, $item) = explode('::', $key);
+		[$namespace, $item] = explode('::', $key);
 
 		// 我们将首先拆解第一个部分，以获得命名空间和组
 		// 一旦我们有了这两部分数据，我们就可以继续解析这个项目的值

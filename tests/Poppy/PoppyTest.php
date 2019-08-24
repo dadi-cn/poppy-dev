@@ -5,7 +5,6 @@ use Poppy\Framework\Helper\ArrayHelper;
 
 class PoppyTest extends TestCase
 {
-
 	public function testGenKey(): void
 	{
 		$arr    = [
@@ -20,7 +19,6 @@ class PoppyTest extends TestCase
 		// 组合空
 		$this->assertEquals('', ArrayHelper::genKey([]));
 	}
-
 
 	public function testPath(): void
 	{

@@ -64,10 +64,14 @@ return PhpCsFixer\Config::create()
         'hash_to_slash_comment' => true,
         'indentation_type' => true,
         'linebreak_after_opening_tag' => false,
+        'list_syntax' => [
+            'syntax' => 'short'
+        ],
         'lowercase_cast' => true,
         'class_attributes_separation' => [
             'elements' => ['method', 'property'],
         ],
+        'modernize_types_casting' => true,
         'native_function_casing' => true,
         'new_with_braces' => true,
         'no_alias_functions' => true,

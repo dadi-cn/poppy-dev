@@ -1,5 +1,9 @@
 <?php namespace Poppy\Framework\Helper;
 
+use function chr;
+use function function_exists;
+use function ord;
+
 /**
  * 功能函数类
  */
@@ -183,8 +187,10 @@ class UtilHelper
 	 */
 	public static function formatDecimal($input, $sprinft = true, $precision = 2)
 	{
-		$var               = round(floatval($input), $precision);
-		if ($sprinft) $var = sprintf('%.' . $precision . 'f', $var);
+		$var = round((float) $input, $precision);
+		if ($sprinft) {
+			$var = sprintf('%.' . $precision . 'f', $var);
+		}
 
 		return $var;
 	}
@@ -217,7 +223,7 @@ class UtilHelper
 		$verify_number_list = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
 		$checksum           = 0;
 		for ($i = 0; $i < strlen($idcard_base); $i++) {
-			$checksum += intval(substr($idcard_base, $i, 1)) * $factor[$i];
+			$checksum += (int) (substr($idcard_base, $i, 1)) * $factor[$i];
 		}
 		$mod           = $checksum % 11;
 		$verify_number = $verify_number_list[$mod];
@@ -463,7 +469,7 @@ class UtilHelper
 	 */
 	public static function toHour($hour, $day = 0)
 	{
-		return intval($day) * 24 + intval($hour);
+		return (int) $day * 24 + (int) $hour;
 	}
 
 	/**
@@ -552,20 +558,20 @@ class UtilHelper
 	 */
 	public static function guid(): string
 	{
-		if (\function_exists('com_create_guid')) {
+		if (function_exists('com_create_guid')) {
 			return com_create_guid();
 		}
 
 		mt_srand((float) microtime() * 10000); //optional for php 4.2.0 and up.
 		$charid = strtoupper(md5(uniqid(mt_rand(), true)));
-		$hyphen = \chr(45); // "-"
-		$uuid   = \chr(123) // "{"
+		$hyphen = chr(45); // "-"
+		$uuid   = chr(123) // "{"
 			. substr($charid, 0, 8) . $hyphen
 			. substr($charid, 8, 4) . $hyphen
 			. substr($charid, 12, 4) . $hyphen
 			. substr($charid, 16, 4) . $hyphen
 			. substr($charid, 20, 12)
-			. \chr(125); // "}"
+			. chr(125); // "}"
 		return $uuid;
 	}
 
@@ -588,7 +594,7 @@ class UtilHelper
 	 */
 	public static function isDate($string): bool
 	{
-		list($year, $month, $day) = explode('-', $string);
+		[$year, $month, $day] = explode('-', $string);
 
 		return checkdate($month, $day, $year);
 	}
@@ -626,6 +632,7 @@ class UtilHelper
 	 * @param string $class  类名
 	 * @param string $suffix 后缀
 	 * @return string
+	 * @deprecated  系统系统模块的缓存替代
 	 */
 	public static function cacheName($class, $suffix = ''): string
 	{
@@ -657,7 +664,7 @@ class UtilHelper
 		$charset[1] = $contents[0];
 		$charset[2] = $contents[1];
 		$charset[3] = $contents[2];
-		if (\ord($charset[1]) === 239 && \ord($charset[2]) === 187 && \ord($charset[3]) === 191) {
+		if (ord($charset[1]) === 239 && ord($charset[2]) === 187 && ord($charset[3]) === 191) {
 			if ($remove_bom) {
 				$rest = substr($contents, 3);
 				file_put_contents($file_name, $rest);

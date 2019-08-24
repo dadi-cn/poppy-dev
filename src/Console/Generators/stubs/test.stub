@@ -1,9 +1,5 @@
 <?php namespace DummyNamespace;
 
-/**
- * Copyright (C) Update For IDE
- */
-
 use Poppy\Framework\Application\TestCase;
 
 class DummyClass extends TestCase

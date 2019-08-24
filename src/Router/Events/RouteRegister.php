@@ -8,13 +8,13 @@ use Illuminate\Routing\Router;
 class RouteRegister
 {
 	/**
-	 * @var \Illuminate\Routing\Router
+	 * @var Router
 	 */
 	protected $router;
 
 	/**
 	 * RouteRegister constructor.
-	 * @param \Illuminate\Routing\Router $router
+	 * @param Router $router
 	 * @internal param \Illuminate\Container\Container|\Illuminate\Contracts\Foundation\Application $container
 	 */
 	public function __construct(Router $router)

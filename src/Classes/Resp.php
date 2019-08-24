@@ -13,9 +13,6 @@ use Redirect;
 use Request;
 use Response;
 use Session;
-use function is_array;
-use function is_null;
-use function is_string;
 
 class Resp
 {
@@ -112,6 +109,7 @@ class Resp
 		if (str_contains($message, '[开发]')) {
 			return str_replace('[开发]', '[开发].', $message);
 		}
+
 		return $env . $message;
 	}
 

@@ -21,6 +21,7 @@
  * @license   http://alphabase.moontoast.com/licenses/apache-2.0.txt Apache 2.0
  */
 
+use InvalidArgumentException;
 use Poppy\Framework\Exceptions\ArithmeticException;
 
 /**
@@ -485,12 +486,12 @@ class Number
 			$roundedDiff = round($diff, $precision);
 		}
 
-
 		$this->numberValue = bcadd(
 			$floored,
 			$roundedDiff,
 			$precision
 		);
+
 		return $this;
 	}
 
@@ -658,12 +659,12 @@ class Number
 	 * @param string|int $number The number to convert
 	 * @param int        $toBase The base to convert $number to
 	 * @return string
-	 * @throws \InvalidArgumentException if $toBase is outside the range 2 to 36
+	 * @throws InvalidArgumentException if $toBase is outside the range 2 to 36
 	 */
 	public static function convertFromBase10($number, $toBase)
 	{
 		if ($toBase < 2 || $toBase > 36) {
-			throw new \InvalidArgumentException("Invalid `to base' ({$toBase})");
+			throw new InvalidArgumentException("Invalid `to base' ({$toBase})");
 		}
 
 		$bn               = new self($number);
@@ -693,12 +694,12 @@ class Number
 	 * @param string|int $number   The number to convert
 	 * @param int        $fromBase The base $number is in
 	 * @return string
-	 * @throws \InvalidArgumentException if $fromBase is outside the range 2 to 36
+	 * @throws InvalidArgumentException if $fromBase is outside the range 2 to 36
 	 */
 	public static function convertToBase10($number, $fromBase)
 	{
 		if ($fromBase < 2 || $fromBase > 36) {
-			throw new \InvalidArgumentException("Invalid `from base' ({$fromBase})");
+			throw new InvalidArgumentException("Invalid `from base' ({$fromBase})");
 		}
 
 		$number    = (string) $number;

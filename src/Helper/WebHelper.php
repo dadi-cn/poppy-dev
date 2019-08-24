@@ -1,5 +1,7 @@
 <?php namespace Poppy\Framework\Helper;
 
+use Session;
+
 /**
  * 搜素排序
  */
@@ -13,7 +15,7 @@ class WebHelper
 	 */
 	public static function setGo($url)
 	{
-		\Session::set(self::GO, $url);
+		Session::set(self::GO, $url);
 	}
 
 	/**
@@ -22,7 +24,7 @@ class WebHelper
 	 */
 	public static function getGo()
 	{
-		return \Session::get(self::GO);
+		return Session::get(self::GO);
 	}
 
 	/**
@@ -31,8 +33,8 @@ class WebHelper
 	 */
 	public static function getGoAndClear()
 	{
-		$go = \Session::get(self::GO);
-		\Session::remove(self::GO);
+		$go = Session::get(self::GO);
+		Session::remove(self::GO);
 
 		return $go;
 	}

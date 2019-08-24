@@ -654,7 +654,7 @@ class StrHelper extends Str
 		$tmp         = file(self::_setting('gb-unicode'));
 		if (!$tmp) return $str;
 		$table = [];
-		while (list($key, $value) = each($tmp)) {
+		foreach ($tmp as $value) {
 			if ($fromCharset == 'utf8') {
 				$table[hexdec(substr($value, 7, 6))] = substr($value, 0, 6);
 			}
@@ -737,7 +737,7 @@ class StrHelper extends Str
 			$return = [];
 			foreach ($arr as $v) {
 				if ($v && strpos($v, '|') !== false) {
-					list($key, $value) = explode('|', $v);
+					[$key, $value]     = explode('|', $v);
 					$key               = trim($key);
 					$return[$key]      = trim($value);
 				}

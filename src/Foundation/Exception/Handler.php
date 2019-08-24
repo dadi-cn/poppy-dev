@@ -1,8 +1,10 @@
 <?php namespace Poppy\Framework\Foundation\Exception;
 
 use Closure;
+use Event;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Poppy\Framework\Exceptions\AjaxException;
 use ReflectionFunction;
@@ -28,8 +30,8 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Render an exception into an HTTP response.
-	 * @param  \Illuminate\Http\Request $request
-	 * @param  \Exception               $exception
+	 * @param  Request $request
+	 * @param Exception                 $exception
 	 * @return \Illuminate\Http\Response
 	 */
 	public function render($request, Exception $exception)
@@ -46,7 +48,7 @@ class Handler extends ExceptionHandler
 			return Response::make($response, $statusCode);
 		}
 
-		if ($event = \Event::fire('exception.beforeRender', [$exception, $statusCode, $request], true)) {
+		if ($event = Event::fire('exception.beforeRender', [$exception, $statusCode, $request], true)) {
 			return Response::make($event, $statusCode);
 		}
 
@@ -56,7 +58,7 @@ class Handler extends ExceptionHandler
 	/**
 	 * Checks if the exception implements the HttpExceptionInterface, or returns
 	 * as generic 500 error code for a server side error.
-	 * @param \Exception $exception
+	 * @param Exception $exception
 	 * @return int
 	 */
 	protected function getStatusCode($exception)
@@ -92,7 +94,7 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Register an application error handler.
-	 * @param  \Closure $callback
+	 * @param Closure $callback
 	 * @return void
 	 */
 	public function error(Closure $callback)
@@ -102,8 +104,8 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Handle the given exception.
-	 * @param  \Exception $exception
-	 * @param  bool       $fromConsole
+	 * @param Exception $exception
+	 * @param  bool     $fromConsole
 	 * @return void
 	 */
 	protected function callCustomHandlers($exception, $fromConsole = false)
@@ -137,8 +139,8 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Determine if the given handler handles this exception.
-	 * @param  \Closure   $handler
-	 * @param  \Exception $exception
+	 * @param Closure   $handler
+	 * @param Exception $exception
 	 * @return bool
 	 */
 	protected function handlesException(Closure $handler, $exception)
@@ -150,8 +152,8 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Determine if the given handler type hints the exception.
-	 * @param  \ReflectionFunction $reflection
-	 * @param  \Exception          $exception
+	 * @param ReflectionFunction $reflection
+	 * @param Exception          $exception
 	 * @return bool
 	 */
 	protected function hints(ReflectionFunction $reflection, $exception)

@@ -2,5 +2,4 @@
 
 class TransactionException extends BaseException
 {
-
 }

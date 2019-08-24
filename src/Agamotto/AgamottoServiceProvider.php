@@ -1,5 +1,6 @@
 <?php namespace Poppy\Framework\Agamotto;
 
+
 use Illuminate\Support\ServiceProvider as L5ServiceProvider;
 use Poppy\Framework\Events\LocaleChanged;
 
@@ -9,8 +10,6 @@ use Poppy\Framework\Events\LocaleChanged;
  */
 class AgamottoServiceProvider extends L5ServiceProvider
 {
-
-
 	/**
 	 * Bootstrap the application events.
 	 *

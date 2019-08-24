@@ -12,15 +12,15 @@ use Illuminate\Translation\Translator as IlluminateTranslator;
 class Translator extends IlluminateTranslator
 {
 	/**
-	 * @var \Illuminate\Filesystem\Filesystem
+	 * @var Filesystem
 	 */
 	protected $files;
 
 	/**
 	 * Translator constructor.
-	 * @param \Illuminate\Contracts\Translation\Loader $loader
-	 * @param string                                   $locale
-	 * @param \Illuminate\Filesystem\Filesystem        $files
+	 * @param Loader     $loader
+	 * @param string     $locale
+	 * @param Filesystem $files
 	 */
 	public function __construct(Loader $loader, $locale, Filesystem $files)
 	{
@@ -30,15 +30,15 @@ class Translator extends IlluminateTranslator
 
 	/**
 	 * Add translation lines to the given locale.
-	 * @param array  $lines
-	 * @param string $locale
-	 * @param string $namespace
+	 * @param array  $lines     line
+	 * @param string $locale    locale
+	 * @param string $namespace namespace
 	 * @return void
 	 */
 	public function addLines(array $lines, $locale, $namespace = '*')
 	{
 		foreach ($lines as $key => $value) {
-			list($group, $item) = explode('.', $key, 2);
+			[$group, $item] = explode('.', $key, 2);
 
 			Arr::set($this->loaded, "$locale.$namespace.$group.$item", $value);
 		}

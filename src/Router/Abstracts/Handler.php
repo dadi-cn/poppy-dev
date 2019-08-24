@@ -3,11 +3,15 @@
 use Closure;
 use Exception;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 use Poppy\Framework\Router\Responses\ApiResponse;
+use Symfony\Component\Translation\TranslatorInterface;
+use Throwable;
 
 /**
  * Class Handler.
@@ -22,12 +26,12 @@ abstract class Handler
 	protected $code = 200;
 
 	/**
-	 * @var \Illuminate\Container\Container
+	 * @var Container
 	 */
 	protected $container;
 
 	/**
-	 * @var \Illuminate\Support\Collection
+	 * @var Collection
 	 */
 	protected $data;
 
@@ -37,12 +41,12 @@ abstract class Handler
 	protected $errors;
 
 	/**
-	 * @var \Illuminate\Support\Collection
+	 * @var Collection
 	 */
 	protected $extra;
 
 	/**
-	 * @var \Illuminate\Contracts\Logging\Log
+	 * @var Log
 	 */
 	protected $log;
 
@@ -52,18 +56,18 @@ abstract class Handler
 	protected $messages;
 
 	/**
-	 * @var \Illuminate\Http\Request
+	 * @var Request
 	 */
 	protected $request;
 
 	/**
-	 * @var \Symfony\Component\Translation\TranslatorInterface
+	 * @var TranslatorInterface
 	 */
 	protected $translator;
 
 	/**
 	 * Handler constructor.
-	 * @param \Illuminate\Container\Container $container
+	 * @param Container $container
 	 */
 	public function __construct(Container $container)
 	{
@@ -96,13 +100,13 @@ abstract class Handler
 
 	/**
 	 * Execute Handler.
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	abstract protected function execute();
 
 	/**
 	 * @param ApiResponse $response
-	 * @param \Exception  $exception
+	 * @param Exception   $exception
 	 * @return ApiResponse
 	 */
 	protected function handleExceptions(ApiResponse $response, Exception $exception)
@@ -131,10 +135,10 @@ abstract class Handler
 	}
 
 	/**
-	 * @param \Closure $closure
-	 * @param int      $attempts
+	 * @param Closure $closure
+	 * @param int     $attempts
 	 * @throws Exception
-	 * @throws \Throwable
+	 * @throws Throwable
 	 */
 	protected function transaction(Closure $closure, $attempts = 1)
 	{
@@ -144,7 +148,7 @@ abstract class Handler
 	/**
 	 * Make data to response with errors or messages.
 	 * @return ApiResponse
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function toResponse()
 	{

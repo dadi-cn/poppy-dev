@@ -1,6 +1,8 @@
 <?php namespace Poppy\Framework\Router;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Router as RouterBase;
 
 class CoreRouter extends RouterBase
@@ -8,8 +10,8 @@ class CoreRouter extends RouterBase
 	/**
 	 * Dispatch the request to the application.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+	 * @param Request $request
+	 * @return Response|JsonResponse
 	 */
 	public function dispatch(Request $request)
 	{

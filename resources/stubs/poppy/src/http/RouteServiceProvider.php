@@ -3,9 +3,9 @@
 /**
  * Copyright (C) Update For IDE
  */
-
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
+use Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -43,14 +43,14 @@ class RouteServiceProvider extends ServiceProvider
 	 */
 	protected function mapWebRoutes()
 	{
-		\Route::group([
+		Route::group([
 			// todo auth
 			'prefix' => 'DummySlug',
 		], function (Router $route) {
 			require_once poppy_path('DummySlug', 'src/http/routes/web.php');
 		});
 
-		\Route::group([
+		Route::group([
 			'prefix' => 'DummySlug',
 		], function (Router $route) {
 			require_once poppy_path('DummySlug', 'src/http/routes/backend.php');
@@ -64,7 +64,7 @@ class RouteServiceProvider extends ServiceProvider
 	 */
 	protected function mapApiRoutes()
 	{
-		\Route::group([
+		Route::group([
 			// todo auth
 			'prefix' => 'api/DummySlug',
 		], function (Router $route) {

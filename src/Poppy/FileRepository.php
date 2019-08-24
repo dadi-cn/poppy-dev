@@ -6,6 +6,7 @@ use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Poppy\Abstracts\Repository;
 use Poppy\Framework\Poppy\Events\PoppyOptimized;
+use function count;
 
 class FileRepository extends Repository
 {
@@ -105,7 +106,7 @@ class FileRepository extends Repository
 	 */
 	public function get($property, $default = null)
 	{
-		list($slug, $key) = explode('::', $property);
+		[$slug, $key] = explode('::', $property);
 
 		$module = $this->where('slug', $slug);
 
@@ -121,7 +122,7 @@ class FileRepository extends Repository
 	 */
 	public function set($property, $value)
 	{
-		list($slug, $key) = explode('::', $property);
+		[$slug, $key] = explode('::', $property);
 
 		$cachePath = $this->getCachePath();
 		$cache     = $this->getCache();
@@ -282,7 +283,7 @@ class FileRepository extends Repository
 
 			$dependencies = (array) $module->get('dependencies');
 
-			if (\count($dependencies)) {
+			if (count($dependencies)) {
 				foreach ($dependencies as $dependency) {
 					$class = $dependency['class'];
 					if (!class_exists($class)) {

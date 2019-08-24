@@ -1,5 +1,6 @@
 <?php namespace Poppy\Framework\Router;
 
+use Exception;
 use InvalidArgumentException;
 
 /**
@@ -185,7 +186,7 @@ class Rule
 						if (!preg_match($regexp, $urlSegments[$index])) {
 							return false;
 						}
-					} catch (\Exception $ex) {
+					} catch (Exception $ex) {
 					}
 				}
 

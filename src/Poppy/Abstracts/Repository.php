@@ -1,20 +1,22 @@
 <?php namespace Poppy\Framework\Poppy\Abstracts;
 
 use Exception;
+use File;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 use Poppy\Framework\Poppy\Contracts\Repository as RepositoryContract;
 
 abstract class Repository implements RepositoryContract
 {
 	/**
-	 * @var \Illuminate\Config\Repository
+	 * @var Config
 	 */
 	protected $config;
 
 	/**
-	 * @var \Illuminate\Filesystem\Filesystem
+	 * @var Filesystem
 	 */
 	protected $files;
 
@@ -25,8 +27,8 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Constructor method.
-	 * @param \Illuminate\Config\Repository     $config
-	 * @param \Illuminate\Filesystem\Filesystem $files
+	 * @param Config     $config
+	 * @param Filesystem $files
 	 */
 	public function __construct(Config $config, Filesystem $files)
 	{
@@ -88,7 +90,7 @@ abstract class Repository implements RepositoryContract
 	{
 		$module = studly_case(str_slug($slug));
 
-		if (\File::exists($this->getPath() . "/{$module}/")) {
+		if (File::exists($this->getPath() . "/{$module}/")) {
 			return $this->getPath() . "/{$module}/";
 		}
 
@@ -131,7 +133,7 @@ abstract class Repository implements RepositoryContract
 			});
 
 			return $baseNames;
-		} catch (\InvalidArgumentException $e) {
+		} catch (InvalidArgumentException $e) {
 			return collect([]);
 		}
 	}

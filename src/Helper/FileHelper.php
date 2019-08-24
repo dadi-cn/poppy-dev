@@ -1,11 +1,13 @@
 <?php namespace Poppy\Framework\Helper;
 
-/*
- *
- * @package    system
- * @author     Mark
- * @copyright  Copyright (c) 2013 ixdcw team
- */
+use Exception;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RuntimeException;
+use Throwable;
+use function dirname;
+use function is_array;
+use function strlen;
 
 /**
  * 文件处理函数
@@ -50,7 +52,7 @@ class FileHelper
 		}
 		$filename = $filename ?: basename($file);
 		$fileType = self::ext($filename);
-		$fileSize = $data ? \strlen($data) : filesize($file);
+		$fileSize = $data ? strlen($data) : filesize($file);
 		ob_end_clean();
 		@set_time_limit(0);
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false) {
@@ -83,7 +85,7 @@ class FileHelper
 	public static function listAll($dir, array $fs = []): array
 	{
 		$files = glob($dir . '/*');
-		if (!\is_array($files)) {
+		if (!is_array($files)) {
 			return $fs;
 		}
 		foreach ($files as $file) {
@@ -111,7 +113,7 @@ class FileHelper
 		$dir    = self::path($dir, false);
 		$files  = scandir($dir, SCANDIR_SORT_NONE);
 		$return = [];
-		if (!\is_array($files)) {
+		if (!is_array($files)) {
 			return $return;
 		}
 		foreach ($files as $file) {
@@ -139,7 +141,7 @@ class FileHelper
 		$dir    = self::path($dir, false);
 		$subDir = self::subDir($dir);
 		$dirs   = $subDir;
-		if (!\is_array($dirs)) {
+		if (!is_array($dirs)) {
 			return $dirs;
 		}
 		foreach ($subDir as $file) {
@@ -178,7 +180,7 @@ class FileHelper
 		}
 		$files   = scandir($dir, SCANDIR_SORT_NONE);
 		$folders = [];
-		if (!\is_array($files)) {
+		if (!is_array($files)) {
 			return $folders;
 		}
 		foreach ($files as $file) {
@@ -202,7 +204,7 @@ class FileHelper
 	 */
 	public static function put($filename, $data)
 	{
-		self::mkdir(\dirname($filename));
+		self::mkdir(dirname($filename));
 		if (@$fp = fopen($filename, 'wb')) {
 			flock($fp, LOCK_EX);
 			$len = fwrite($fp, $data);
@@ -235,7 +237,7 @@ class FileHelper
 		$ch = curl_init();
 		try {
 			$falseIP = random_int(1, 255) . '.' . random_int(1, 255) . '.' . random_int(1, 255) . '.' . random_int(1, 255);
-		} catch (\Throwable $e) {
+		} catch (Throwable $e) {
 			$falseIP = '111.111.111.111';
 		}
 
@@ -248,7 +250,7 @@ class FileHelper
 		$path    = preg_replace("/[\w]*_.*.jpg/i", '', $local);
 		$path    = substr($path, 0, -1);
 		if (!file_exists($path) && !mkdir($path, 0777, true) && !is_dir($path)) {
-			throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
+			throw new RuntimeException(sprintf('Directory "%s" was not created', $path));
 		}
 		touch($local);
 
@@ -399,7 +401,7 @@ class FileHelper
 	 * @param        $to_dir
 	 * @param string $extension
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function dirCopy($from_dir, $to_dir, $extension = '')
 	{
@@ -411,7 +413,7 @@ class FileHelper
 		foreach ($list as $v) {
 			$path = $to_dir . basename($v);
 			if (is_file($path) && !is_writable($path)) {
-				throw new \Exception($path . ' not writable');
+				throw new Exception($path . ' not writable');
 			}
 
 			if (is_dir($v)) {
@@ -452,7 +454,7 @@ class FileHelper
 	{
 		if (file_exists($directory) && is_dir($directory)) {
 			$fileSize = 0;
-			foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory)) as $file) {
+			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory)) as $file) {
 				$fileSize += $file->getSize();
 			}
 		}
@@ -683,6 +685,6 @@ class FileHelper
 	{
 		$ext = self::ext($file);
 
-		return substr($file, 0, \strlen($file) - (\strlen($ext) + 1));
+		return substr($file, 0, strlen($file) - (strlen($ext) + 1));
 	}
 }

@@ -1,5 +1,7 @@
 <?php namespace Poppy\Framework\Application;
 
+use Illuminate\Contracts\Console\Kernel;
+
 /**
  * Main Test Case
  */
@@ -20,7 +22,7 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
 		}
 
 		if ($app !== null) {
-			$app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+			$app->make(Kernel::class)->bootstrap();
 
 			return $app;
 		}

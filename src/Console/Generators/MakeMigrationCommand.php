@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Console\Generators;
 
 use Illuminate\Console\Command;
+use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
 class MakeMigrationCommand extends Command
 {
@@ -23,7 +24,7 @@ class MakeMigrationCommand extends Command
 	/**
 	 * Execute the console command.
 	 * @return int|void
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	public function handle()
 	{

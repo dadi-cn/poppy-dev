@@ -2,6 +2,7 @@
 
 use Illuminate\Console\GeneratorCommand as LaravelGeneratorCommand;
 use Illuminate\Support\Str;
+use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
 abstract class GeneratorCommand extends LaravelGeneratorCommand
 {
@@ -42,7 +43,7 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
 	 * Get the destination class path.
 	 * @param string $name
 	 * @return string
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	protected function getPath($name)
 	{

@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
+use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -57,7 +58,7 @@ class PoppyMigrateResetCommand extends Command
 	/**
 	 * Execute the console command.
 	 * @return mixed
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	public function handle()
 	{
@@ -74,7 +75,7 @@ class PoppyMigrateResetCommand extends Command
 	 * migrated up as. This ensures the database is properly reversed
 	 * without conflict.
 	 * @return mixed
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	protected function reset()
 	{
@@ -124,7 +125,7 @@ class PoppyMigrateResetCommand extends Command
 	/**
 	 * Generate a list of all migration paths, given the arguments/operations supplied.
 	 * @return array
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	protected function getMigrationPaths()
 	{
@@ -182,7 +183,7 @@ class PoppyMigrateResetCommand extends Command
 	 * Get the console command parameters.
 	 * @param string $slug
 	 * @return array
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	protected function getParameters($slug)
 	{
@@ -208,7 +209,7 @@ class PoppyMigrateResetCommand extends Command
 	/**
 	 * Get migrations path.
 	 * @return string
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	protected function getMigrationPath($slug)
 	{

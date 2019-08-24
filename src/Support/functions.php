@@ -1,5 +1,9 @@
 <?php
 
+use Poppy\Framework\Exceptions\ModuleNotFoundException;
+use Poppy\Framework\Helper\HtmlHelper;
+use Poppy\Framework\Helper\UtilHelper;
+
 if (!function_exists('route_url')) {
 	/**
 	 * 自定义可以传值的路由写法
@@ -13,21 +17,18 @@ if (!function_exists('route_url')) {
 		if (is_null($route_params)) {
 			$route_params = [];
 		}
-		if ($route == '') {
-			$route = \Route::currentRouteName();
+		if ($route === '') {
+			$route = Route::currentRouteName();
 			if (empty($route)) {
 				return '';
 			}
 			$route_url = route($route, $route_params);
 		}
+		elseif (strpos($route, '.') === false) {
+			$route_url = url($route, $route_params);
+		}
 		else {
-			// 没有 . , 被认为是url
-			if (strpos($route, '.') === false) {
-				$route_url = url($route, $route_params);
-			}
-			else {
-				$route_url = route($route, $route_params);
-			}
+			$route_url = route($route, $route_params);
 		}
 
 		$route_url = trim($route_url, '?');
@@ -46,10 +47,11 @@ if (!function_exists('route_current')) {
 	 * @param string       $class      符合的当前类的名称
 	 * @param string       $else_class 不符合当前类的样式
 	 * @return string
+	 * @deprecated 使用 hieu-le/active 替代
 	 */
 	function route_current($route, $class = 'current', $else_class = ' ')
 	{
-		if (in_array(\Route::currentRouteName(), (array) $route)) {
+		if (in_array(Route::currentRouteName(), (array) $route, true)) {
 			return $class;
 		}
 
@@ -63,7 +65,7 @@ if (!function_exists('route_prefix')) {
 	 */
 	function route_prefix()
 	{
-		$route = \Route::currentRouteName();
+		$route = Route::currentRouteName();
 		if (!$route) {
 			return '';
 		}
@@ -84,7 +86,7 @@ if (!function_exists('command_exist')) {
 			$returnVal = shell_exec("which $cmd");
 
 			return empty($returnVal) ? false : true;
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			return false;
 		}
 	}
@@ -96,10 +98,11 @@ if (!function_exists('cache_name')) {
 	 * @param string $class
 	 * @param string $suffix
 	 * @return string
+	 * @deprecated 使用系统模块的缓存替代
 	 */
 	function cache_name($class, $suffix = '')
 	{
-		return \Poppy\Framework\Helper\UtilHelper::cacheName($class, $suffix);
+		return UtilHelper::cacheName($class, $suffix);
 	}
 }
 
@@ -119,7 +122,7 @@ if (!function_exists('kv')) {
 		}
 
 		return !is_null($key)
-			? isset($desc[$key]) ? $desc[$key] : ''
+			? $desc[$key] ?? ''
 			: $desc;
 	}
 }
@@ -140,13 +143,14 @@ if (!function_exists('input')) {
 	 */
 	function input($name = null, $default = null)
 	{
-		if ($name === null)
+		if ($name === null) {
 			return Input::all();
+		}
 
 		/*
 		 * Array field name, eg: field[key][key2][key3]
 		 */
-		$name = implode('.', \Poppy\Framework\Helper\HtmlHelper::nameToArray($name));
+		$name = implode('.', HtmlHelper::nameToArray($name));
 
 		return Input::get($name, $default);
 	}
@@ -159,7 +163,7 @@ if (!function_exists('is_post')) {
 	 */
 	function is_post()
 	{
-		return \Input::method() == 'POST';
+		return Input::method() === 'POST';
 	}
 }
 
@@ -172,13 +176,14 @@ if (!function_exists('post')) {
 	 */
 	function post($name = null, $default = null)
 	{
-		if ($name === null)
+		if ($name === null) {
 			return $_POST;
+		}
 
 		/*
 		 * Array field name, eg: field[key][key2][key3]
 		 */
-		$name = implode('.', \Poppy\Framework\Helper\HtmlHelper::nameToArray($name));
+		$name = implode('.', HtmlHelper::nameToArray($name));
 
 		return array_get($_POST, $name, $default);
 	}
@@ -193,13 +198,14 @@ if (!function_exists('get')) {
 	 */
 	function get($name = null, $default = null)
 	{
-		if ($name === null)
+		if ($name === null) {
 			return $_GET;
+		}
 
 		/*
 		 * Array field name, eg: field[key][key2][key3]
 		 */
-		$name = implode('.', \Poppy\Framework\Helper\HtmlHelper::nameToArray($name));
+		$name = implode('.', HtmlHelper::nameToArray($name));
 
 		return array_get($_GET, $name, $default);
 	}
@@ -208,7 +214,7 @@ if (!function_exists('get')) {
 if (!function_exists('plugins_path')) {
 	/**
 	 * Get the path to the plugins folder.
-	 * @param  string $path
+	 * @param string $path
 	 * @return string
 	 */
 	function plugins_path($path = '')
@@ -223,7 +229,7 @@ if (!function_exists('poppy_path')) {
 	 * @param string $slug
 	 * @param string $file
 	 * @return string
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	function poppy_path($slug = null, $file = '')
 	{
@@ -242,7 +248,7 @@ if (!function_exists('poppy_path')) {
 		$module = app('poppy')->where('slug', $slug);
 
 		if (is_null($module)) {
-			throw new \Poppy\Framework\Exceptions\ModuleNotFoundException($slug);
+			throw new ModuleNotFoundException($slug);
 		}
 
 		return $modulesPath . '/' . $module['slug'] . $filePath;
@@ -255,14 +261,14 @@ if (!function_exists('poppy_class')) {
 	 * @param string $slug
 	 * @param string $class
 	 * @return string
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	function poppy_class($slug, $class = '')
 	{
 		$module = app('poppy')->where('slug', $slug);
 
-		if (is_null($module) || count($module) == 0) {
-			throw new \Poppy\Framework\Exceptions\ModuleNotFoundException($slug);
+		if (is_null($module) || count($module) === 0) {
+			throw new ModuleNotFoundException($slug);
 		}
 
 		$namespace = studly_case($module['slug']);
@@ -270,7 +276,7 @@ if (!function_exists('poppy_class')) {
 			return "{$namespace}\\{$class}";
 		}
 
-		return "{$namespace}";
+		return $namespace;
 	}
 }
 
@@ -296,8 +302,8 @@ if (!function_exists('pf_path')) {
 		if (file_exists(base_path('framework/'))) {
 			return base_path('framework/' . $path);
 		}
-		 
-			return base_path('vendor/poppy/framework/' . $path);
+
+		return base_path('vendor/poppy/framework/' . $path);
 	}
 }
 

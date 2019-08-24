@@ -57,6 +57,7 @@ trait AppTrait
 		else {
 			$this->success = new Resp(Resp::ERROR, $success);
 		}
+
 		return true;
 	}
 

@@ -20,7 +20,6 @@ use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\MountManager;
 use Poppy\Framework\Foundation\Application;
-use Poppy\Framework\GraphQL\GraphQL;
 use Poppy\Framework\Poppy\Poppy;
 use Poppy\Framework\Translation\Translator;
 use Psr\Log\LoggerInterface;

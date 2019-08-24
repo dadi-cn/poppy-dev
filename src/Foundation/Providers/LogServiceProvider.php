@@ -8,7 +8,7 @@ class LogServiceProvider extends LogServiceProviderBase
 	/**
 	 * Configure the Monolog handlers for the application.
 	 *
-	 * @param  \Illuminate\Log\Writer $log
+	 * @param Writer $log
 	 */
 	protected function configureSingleHandler(Writer $log)
 	{
@@ -21,7 +21,7 @@ class LogServiceProvider extends LogServiceProviderBase
 	/**
 	 * Configure the Monolog handlers for the application.
 	 *
-	 * @param  \Illuminate\Log\Writer $log
+	 * @param Writer $log
 	 */
 	protected function configureDailyHandler(Writer $log)
 	{

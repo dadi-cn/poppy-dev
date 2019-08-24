@@ -45,7 +45,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 注册错误处理器
-	 * @param  \Closure $callback
+	 * @param Closure $callback
 	 */
 	public function error(Closure $callback)
 	{
@@ -54,7 +54,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 注册严重错误处理器
-	 * @param  \Closure $callback
+	 * @param Closure $callback
 	 */
 	public function fatal(Closure $callback)
 	{

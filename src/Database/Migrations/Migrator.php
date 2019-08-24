@@ -5,24 +5,32 @@ use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator as BaseMigrator;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
+/**
+ * Migrator
+ */
 class Migrator extends BaseMigrator
 {
+
+	/**
+	 * @var string Table name
+	 */
 	protected $table;
 
 	/**
 	 * Create a new migrator instance.
 	 *
-	 * @param string                                                       $table
-	 * @param \Illuminate\Database\Migrations\MigrationRepositoryInterface $repository
-	 * @param \Illuminate\Database\ConnectionResolverInterface             $resolver
-	 * @param \Illuminate\Filesystem\Filesystem                            $files
+	 * @param string                       $table
+	 * @param MigrationRepositoryInterface $repository
+	 * @param Resolver                     $resolver
+	 * @param Filesystem                   $files
 	 */
 	public function __construct(
 		$table,
-								MigrationRepositoryInterface $repository,
-								Resolver $resolver,
-								Filesystem $files
+		MigrationRepositoryInterface $repository,
+		Resolver $resolver,
+		Filesystem $files
 	)
 	{
 		$this->table = $table;
@@ -33,8 +41,8 @@ class Migrator extends BaseMigrator
 	/**
 	 * Rollback the last migration operation.
 	 *
-	 * @param array|string $paths
-	 * @param array        $options
+	 * @param array|string $paths   路径
+	 * @param array        $options 选项
 	 *
 	 * @return array
 	 */
@@ -94,7 +102,7 @@ class Migrator extends BaseMigrator
 	/**
 	 * Get all the ran migrations.
 	 *
-	 * @return \Illuminate\Support\Collection
+	 * @return Collection
 	 */
 	public function getRanMigrations()
 	{

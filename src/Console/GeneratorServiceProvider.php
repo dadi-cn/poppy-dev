@@ -1,6 +1,17 @@
 <?php namespace Poppy\Framework\Console;
 
 use Illuminate\Support\ServiceProvider;
+use Poppy\Framework\Console\Generators\MakeCommandCommand;
+use Poppy\Framework\Console\Generators\MakeControllerCommand;
+use Poppy\Framework\Console\Generators\MakeMiddlewareCommand;
+use Poppy\Framework\Console\Generators\MakeMigrationCommand;
+use Poppy\Framework\Console\Generators\MakeModelCommand;
+use Poppy\Framework\Console\Generators\MakePolicyCommand;
+use Poppy\Framework\Console\Generators\MakePoppyCommand;
+use Poppy\Framework\Console\Generators\MakeProviderCommand;
+use Poppy\Framework\Console\Generators\MakeRequestCommand;
+use Poppy\Framework\Console\Generators\MakeSeederCommand;
+use Poppy\Framework\Console\Generators\MakeTestCommand;
 
 class GeneratorServiceProvider extends ServiceProvider
 {
@@ -17,17 +28,17 @@ class GeneratorServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$generators = [
-			'command.make.poppy'            => \Poppy\Framework\Console\Generators\MakePoppyCommand::class,
-			'command.make.poppy.controller' => \Poppy\Framework\Console\Generators\MakeControllerCommand::class,
-			'command.make.poppy.middleware' => \Poppy\Framework\Console\Generators\MakeMiddlewareCommand::class,
-			'command.make.poppy.migration'  => \Poppy\Framework\Console\Generators\MakeMigrationCommand::class,
-			'command.make.poppy.model'      => \Poppy\Framework\Console\Generators\MakeModelCommand::class,
-			'command.make.poppy.policy'     => \Poppy\Framework\Console\Generators\MakePolicyCommand::class,
-			'command.make.poppy.provider'   => \Poppy\Framework\Console\Generators\MakeProviderCommand::class,
-			'command.make.poppy.request'    => \Poppy\Framework\Console\Generators\MakeRequestCommand::class,
-			'command.make.poppy.seeder'     => \Poppy\Framework\Console\Generators\MakeSeederCommand::class,
-			'command.make.poppy.test'       => \Poppy\Framework\Console\Generators\MakeTestCommand::class,
-			'command.make.poppy.command'    => \Poppy\Framework\Console\Generators\MakeCommandCommand::class,
+			'command.make.poppy'            => MakePoppyCommand::class,
+			'command.make.poppy.controller' => MakeControllerCommand::class,
+			'command.make.poppy.middleware' => MakeMiddlewareCommand::class,
+			'command.make.poppy.migration'  => MakeMigrationCommand::class,
+			'command.make.poppy.model'      => MakeModelCommand::class,
+			'command.make.poppy.policy'     => MakePolicyCommand::class,
+			'command.make.poppy.provider'   => MakeProviderCommand::class,
+			'command.make.poppy.request'    => MakeRequestCommand::class,
+			'command.make.poppy.seeder'     => MakeSeederCommand::class,
+			'command.make.poppy.test'       => MakeTestCommand::class,
+			'command.make.poppy.command'    => MakeCommandCommand::class,
 		];
 
 		foreach ($generators as $slug => $class) {

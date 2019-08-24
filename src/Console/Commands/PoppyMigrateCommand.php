@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Support\Arr;
+use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -50,7 +51,7 @@ class PoppyMigrateCommand extends Command
 	/**
 	 * Execute the console command.
 	 * @return null|void
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	public function handle()
 	{
@@ -92,7 +93,7 @@ class PoppyMigrateCommand extends Command
 	 * Run migrations for the specified module.
 	 * @param string $slug
 	 * @return null
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	protected function migrate($slug)
 	{
@@ -135,7 +136,7 @@ class PoppyMigrateCommand extends Command
 	 * Get migration directory path.
 	 * @param string $slug
 	 * @return string
-	 * @throws \Poppy\Framework\Exceptions\ModuleNotFoundException
+	 * @throws ModuleNotFoundException
 	 */
 	protected function getMigrationPath($slug)
 	{
