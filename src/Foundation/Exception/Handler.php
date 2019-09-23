@@ -11,6 +11,9 @@ use ReflectionFunction;
 use Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
+/**
+ * poppy handler
+ */
 class Handler extends ExceptionHandler
 {
 	/**
@@ -30,9 +33,10 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Render an exception into an HTTP response.
-	 * @param  Request $request
-	 * @param Exception                 $exception
+	 * @param Request   $request   request
+	 * @param Exception $exception exception
 	 * @return \Illuminate\Http\Response
+	 * @throws \ReflectionException
 	 */
 	public function render($request, Exception $exception)
 	{
@@ -42,7 +46,7 @@ class Handler extends ExceptionHandler
 
 		$statusCode = $this->getStatusCode($exception);
 
-		$response   = $this->callCustomHandlers($exception);
+		$response = $this->callCustomHandlers($exception);
 
 		if (!is_null($response)) {
 			return Response::make($response, $statusCode);
@@ -58,7 +62,7 @@ class Handler extends ExceptionHandler
 	/**
 	 * Checks if the exception implements the HttpExceptionInterface, or returns
 	 * as generic 500 error code for a server side error.
-	 * @param Exception $exception
+	 * @param Exception $exception exception
 	 * @return int
 	 */
 	protected function getStatusCode($exception)
@@ -94,7 +98,7 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Register an application error handler.
-	 * @param Closure $callback
+	 * @param Closure $callback callback
 	 * @return void
 	 */
 	public function error(Closure $callback)
@@ -104,9 +108,10 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Handle the given exception.
-	 * @param Exception $exception
-	 * @param  bool     $fromConsole
+	 * @param Exception $exception   exception
+	 * @param bool      $fromConsole from console
 	 * @return void
+	 * @throws \ReflectionException
 	 */
 	protected function callCustomHandlers($exception, $fromConsole = false)
 	{
@@ -139,9 +144,10 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Determine if the given handler handles this exception.
-	 * @param Closure   $handler
-	 * @param Exception $exception
+	 * @param Closure   $handler   handler
+	 * @param Exception $exception exception
 	 * @return bool
+	 * @throws \ReflectionException
 	 */
 	protected function handlesException(Closure $handler, $exception)
 	{
@@ -152,8 +158,8 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Determine if the given handler type hints the exception.
-	 * @param ReflectionFunction $reflection
-	 * @param Exception          $exception
+	 * @param ReflectionFunction $reflection reflection
+	 * @param Exception          $exception  exception
 	 * @return bool
 	 */
 	protected function hints(ReflectionFunction $reflection, $exception)

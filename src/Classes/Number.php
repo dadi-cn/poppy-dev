@@ -34,14 +34,14 @@ class Number
 	/**
 	 * Number value, as a string
 	 *
-	 * @var string
+	 * @var string $numberValue
 	 */
 	protected $numberValue;
 
 	/**
 	 * The scale for the current number
 	 *
-	 * @var int
+	 * @var int $numberScale
 	 */
 	protected $numberScale;
 
@@ -94,8 +94,8 @@ class Number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
 	 *                      representation of a base 10 number
-	 * @link http://www.php.net/bcadd
 	 * @return $this
+	 * @link http://www.php.net/bcadd
 	 */
 	public function add($number)
 	{
@@ -383,8 +383,8 @@ class Number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
 	 *                      representation of a base 10 number
-	 * @link http://www.php.net/bcmul
 	 * @return $this
+	 * @link http://www.php.net/bcmul
 	 */
 	public function multiply($number)
 	{
@@ -412,8 +412,8 @@ class Number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
 	 *                      representation of a base 10 number
-	 * @link http://www.php.net/bcpow
 	 * @return $this
+	 * @link http://www.php.net/bcpow
 	 */
 	public function pow($number)
 	{
@@ -471,7 +471,7 @@ class Number
 	 * 四舍五入
 	 * Rounds the current number to the nearest integer
 	 *
-	 * @param int $precision
+	 * @param int $precision precision
 	 * @return Number
 	 */
 	public function round($precision = 0): self
@@ -536,7 +536,7 @@ class Number
 	 * 位向左移动
 	 * Shifts the current number $bits to the left
 	 *
-	 * @param int $bits
+	 * @param int $bits bits
 	 * @return $this
 	 */
 	public function shiftLeft($bits)
@@ -553,7 +553,7 @@ class Number
 	 * 位向右移动
 	 * Shifts the current number $bits to the right
 	 *
-	 * @param int $bits
+	 * @param int $bits bits
 	 * @return $this
 	 */
 	public function shiftRight($bits)
@@ -606,8 +606,8 @@ class Number
 	 *
 	 * @param mixed $number May be of any type that can be cast to a string
 	 *                      representation of a base 10 number
-	 * @link http://www.php.net/bcsub
 	 * @return $this
+	 * @link http://www.php.net/bcsub
 	 */
 	public function subtract($number)
 	{
@@ -624,7 +624,7 @@ class Number
 	 * 转换成 String 类型
 	 * Filters a number, converting it to a string value
 	 *
-	 * @param mixed $number
+	 * @param mixed $number number
 	 * @return string
 	 */
 	protected function filterNumber($number): string
@@ -736,7 +736,7 @@ class Number
 	 * 设置默认小数位数
 	 * Changes the default scale used by all Binary Calculator functions
 	 *
-	 * @param int $scale
+	 * @param int $scale scale
 	 * @return void
 	 */
 	public static function setDefaultScale($scale)

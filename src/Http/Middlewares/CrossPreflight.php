@@ -16,7 +16,7 @@ class CrossPreflight
 
 	/**
 	 * EnableCrossRequest constructor.
-	 * @param ResponseFactory $response
+	 * @param ResponseFactory $response response
 	 */
 	public function __construct(ResponseFactory $response)
 	{
@@ -25,8 +25,8 @@ class CrossPreflight
 
 	/**
 	 * Middleware handler.
-	 * @param Request $request
-	 * @param Closure $next
+	 * @param Request $request request
+	 * @param Closure $next    next
 	 * @return mixed
 	 */
 	public function handle(Request $request, Closure $next)
@@ -40,7 +40,7 @@ class CrossPreflight
 		if ($request->getMethod() == 'OPTIONS') {
 			return $this->response->make('OK', 200, $headers);
 		}
-		 
-			return $next($request);
+
+		return $next($request);
 	}
 }

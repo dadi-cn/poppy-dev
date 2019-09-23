@@ -77,29 +77,6 @@ $ php artisan poppy:disable {slug}
 $ php artisan poppy:optimize
 ```
 
-### Poppy Document
-
-Use php-cs-fixer fix code style, the .php_cs style in root package folder
-```
-$ php artisan poppy:doc {phpcs/cs} 
-```
-
-Use phplint check code errors.
-```
-$ php artisan poppy:doc {phplint/lint} 
-```
-
-
-Use sami generate php document. Finder Can find all php files under `modules` folder
-```
-$ php artisan poppy:doc {sami/php} 
-```
-
-Display current tail log command.
-```
-$ php artisan poppy:doc {log} 
-```
-
 ### Poppy Database Manager
 
 ```
@@ -129,6 +106,56 @@ php artisan poppy:seeder {slug} {name}
 php artisan poppy:test {slug} {name}
 ```
 
+
+### generate command
+```
+php artisan poppy:command {slug} {name}
+```
+
+### generate controller
+```
+php artisan poppy:controller {slug} {api/web} {name}
+```
+
+### generate middleware
+```
+php artisan poppy:middleware {slug} {name}
+```
+
+### generate model
+```
+php artisan poppy:model {slug} {name}
+```
+
+### generate policy
+```
+php artisan poppy:policy {slug} {name}
+```
+
+### generate provider
+```
+php artisan poppy:provider {slug} {name}
+```
+
+### generate request
+```
+php artisan poppy:request {slug} {name}
+```
+
+### generate seeder
+```
+php artisan poppy:seeder {slug} {name}
+```
+
+### run seed
+```
+php artisan poppy:seed
+```
+
+### generate test
+```
+php artisan poppy:test
+```
 
 ## Events
 

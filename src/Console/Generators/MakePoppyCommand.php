@@ -8,6 +8,9 @@ use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Helper\ProgressBar;
 
+/**
+ * Make Poppy
+ */
 class MakePoppyCommand extends Command
 {
 	/**
@@ -191,8 +194,8 @@ class MakePoppyCommand extends Command
 
 	/**
 	 * Pull the given stub file contents and display them on screen.
-	 * @param string $file
-	 * @param string $level
+	 * @param string $file  file
+	 * @param string $level info type
 	 * @return mixed
 	 * @throws FileNotFoundException
 	 */
@@ -203,6 +206,11 @@ class MakePoppyCommand extends Command
 		return $this->$level($stub);
 	}
 
+	/**
+	 * Replace Placeholder
+	 * @param array $contents Replace Content
+	 * @return mixed
+	 */
 	protected function replacePlaceholders($contents)
 	{
 		$find = [

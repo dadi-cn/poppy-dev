@@ -3,6 +3,9 @@
 use Poppy\Framework\Console\GeneratorCommand;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
+/**
+ * Make Request
+ */
 class MakeRequestCommand extends GeneratorCommand
 {
 	/**
@@ -36,12 +39,12 @@ class MakeRequestCommand extends GeneratorCommand
 
 	/**
 	 * Get the default namespace for the class.
-	 * @param string $rootNamespace
+	 * @param string $rootNamespace namespace
 	 * @return string
 	 * @throws ModuleNotFoundException
 	 */
 	protected function getDefaultNamespace($rootNamespace)
 	{
-		return poppy_class($this->argument('slug'), 'Request\\Requests');
+		return poppy_class($this->argument('slug'), 'Http\\Request');
 	}
 }

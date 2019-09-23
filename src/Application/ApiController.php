@@ -7,6 +7,9 @@ use Illuminate\Container\Container;
  */
 class ApiController extends Controller
 {
+	/**
+	 * ApiController constructor.
+	 */
 	public function __construct()
 	{
 		parent::__construct();

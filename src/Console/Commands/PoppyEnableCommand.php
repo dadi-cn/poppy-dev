@@ -3,6 +3,9 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Poppy Enable
+ */
 class PoppyEnableCommand extends Command
 {
 	/**

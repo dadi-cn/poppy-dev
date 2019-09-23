@@ -88,7 +88,7 @@ class Poppy
 
 	/**
 	 * Register the module service provider.
-	 * @param array $module
+	 * @param array $module module
 	 * @return void
 	 * @throws ModuleNotFoundException
 	 */
@@ -103,7 +103,7 @@ class Poppy
 
 	/**
 	 * Autoload custom module files.
-	 * @param array $module
+	 * @param array $module module
 	 * @return void
 	 * @throws ModuleNotFoundException
 	 */

@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Collection;
 
+/**
+ * Repository
+ */
 interface Repository
 {
 	/**
@@ -29,8 +32,8 @@ interface Repository
 	/**
 	 * Get modules based on where clause.
 	 *
-	 * @param string $key
-	 * @param mixed  $value
+	 * @param string $key   key
+	 * @param mixed  $value value
 	 *
 	 * @return Collection
 	 */
@@ -39,7 +42,7 @@ interface Repository
 	/**
 	 * Sort modules by given key in ascending order.
 	 *
-	 * @param string $key
+	 * @param string $key key
 	 *
 	 * @return Collection
 	 */
@@ -48,7 +51,7 @@ interface Repository
 	/**
 	 * Sort modules by given key in descending order.
 	 *
-	 * @param string $key
+	 * @param string $key key
 	 *
 	 * @return Collection
 	 */
@@ -57,7 +60,7 @@ interface Repository
 	/**
 	 * Determines if the given module exists.
 	 *
-	 * @param string $slug
+	 * @param string $slug slug
 	 *
 	 * @return bool
 	 */
@@ -73,7 +76,7 @@ interface Repository
 	/**
 	 * Returns the modules defined manifest properties.
 	 *
-	 * @param string $slug
+	 * @param string $slug slug
 	 *
 	 * @return Collection
 	 */
@@ -82,8 +85,8 @@ interface Repository
 	/**
 	 * Returns the given module property.
 	 *
-	 * @param string     $property
-	 * @param mixed|null $default
+	 * @param string     $property property
+	 * @param mixed|null $default  default
 	 *
 	 * @return mixed|null
 	 */
@@ -92,8 +95,8 @@ interface Repository
 	/**
 	 * Set the given module property value.
 	 *
-	 * @param string $property
-	 * @param mixed  $value
+	 * @param string $property property
+	 * @param mixed  $value    value
 	 *
 	 * @return bool
 	 */
@@ -116,7 +119,7 @@ interface Repository
 	/**
 	 * Determines if the specified module is enabled.
 	 *
-	 * @param string $slug
+	 * @param string $slug slug
 	 *
 	 * @return bool
 	 */
@@ -125,7 +128,7 @@ interface Repository
 	/**
 	 * Determines if the specified module is disabled.
 	 *
-	 * @param string $slug
+	 * @param string $slug slug
 	 *
 	 * @return bool
 	 */
@@ -134,7 +137,7 @@ interface Repository
 	/**
 	 * Enables the specified module.
 	 *
-	 * @param string $slug
+	 * @param string $slug slug
 	 *
 	 * @return bool
 	 */
@@ -143,7 +146,7 @@ interface Repository
 	/**
 	 * Disables the specified module.
 	 *
-	 * @param string $slug
+	 * @param string $slug slug
 	 *
 	 * @return bool
 	 */

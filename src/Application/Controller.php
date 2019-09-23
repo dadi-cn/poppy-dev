@@ -9,6 +9,9 @@ use Poppy\Framework\Helper\EnvHelper;
 use Route;
 use View;
 
+/**
+ * poppy controller
+ */
 abstract class Controller extends BaseController
 {
 	use DispatchesJobs, ValidatesRequests;
@@ -19,30 +22,38 @@ abstract class Controller extends BaseController
 	public static $permission;
 
 	/**
-	 * @var int
+	 * pagesize
+	 * @var int $pagesize
 	 */
 	protected $pagesize = 15;
 
 	/**
-	 * @var string
+	 * ip
+	 * @var string $ip
 	 */
 	protected $ip;
 
 	/**
-	 * @var Agamotto
+	 * now
+	 * @var Agamotto $now
 	 */
 	protected $now;
 
 	/**
-	 * @var string
+	 * route
+	 * @var string $route
 	 */
 	protected $route;
 
 	/**
-	 * @var string 标题
+	 * title
+	 * @var string $title
 	 */
 	protected $title;
 
+	/**
+	 * Controller constructor.
+	 */
 	public function __construct()
 	{
 		$this->route = Route::currentRouteName();
@@ -80,6 +91,10 @@ abstract class Controller extends BaseController
 		}
 	}
 
+	/**
+	 * seo
+	 * @param mixed ...$args args
+	 */
 	protected function seo(...$args)
 	{
 		$title       = '';

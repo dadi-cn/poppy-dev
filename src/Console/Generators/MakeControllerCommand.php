@@ -3,6 +3,9 @@
 use Poppy\Framework\Console\GeneratorCommand;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
+/**
+ * MakeController
+ */
 class MakeControllerCommand extends GeneratorCommand
 {
 	/**
@@ -42,7 +45,7 @@ class MakeControllerCommand extends GeneratorCommand
 
 	/**
 	 * Get the default namespace for the class.
-	 * @param string $rootNamespace
+	 * @param string $rootNamespace namespace
 	 * @return string
 	 * @throws ModuleNotFoundException
 	 */
@@ -54,6 +57,6 @@ class MakeControllerCommand extends GeneratorCommand
 			$type = 'web';
 		}
 
-		return poppy_class($this->argument('slug'), 'Request\\' . studly_case($type));
+		return poppy_class($this->argument('slug'), 'Http\\Request\\' . studly_case($type));
 	}
 }

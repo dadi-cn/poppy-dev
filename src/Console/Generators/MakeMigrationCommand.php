@@ -3,6 +3,9 @@
 use Illuminate\Console\Command;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
+/**
+ * Make Migration
+ */
 class MakeMigrationCommand extends Command
 {
 	/**

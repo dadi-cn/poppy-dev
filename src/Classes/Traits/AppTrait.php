@@ -4,21 +4,26 @@ use Exception;
 use Illuminate\Support\MessageBag;
 use Poppy\Framework\Classes\Resp;
 
+/**
+ * AppTrait
+ */
 trait AppTrait
 {
 	/**
-	 * @var Resp
+	 * error
+	 * @var Resp $error
 	 */
 	protected $error;
 
 	/**
-	 * @var Resp
+	 * success
+	 * @var Resp $success
 	 */
 	protected $success;
 
 	/**
 	 * 设置错误
-	 * @param string|MessageBag $error
+	 * @param string|MessageBag $error error
 	 * @return bool
 	 */
 	public function setError($error): bool

@@ -4,6 +4,9 @@ use Carbon\Carbon;
 use DateTime as PhpDateTime;
 use Exception;
 
+/**
+ * 时间相关操作
+ */
 class TimeHelper
 {
 	/**
@@ -17,9 +20,10 @@ class TimeHelper
 	}
 
 	/**
-	 * @param        $date
-	 * @param string $sep
-	 * @return bool 检测是否是标准时间
+	 * 检测是否是标准时间
+	 * @param string $date date
+	 * @param string $sep  sep
+	 * @return bool
 	 */
 	public static function isDate($date, $sep = '-'): bool
 	{
@@ -38,8 +42,8 @@ class TimeHelper
 
 	/**
 	 * 格式化时间
-	 * @param int    $time
-	 * @param string $format
+	 * @param int    $time   time
+	 * @param string $format format
 	 * @return bool|string
 	 */
 	public static function datetime($time = 0, $format = '3-3')
@@ -77,7 +81,7 @@ class TimeHelper
 
 	/**
 	 * 自定义函数：time2string($second) 输入秒数换算成多少天/多少小时/多少分/多少秒的字符串
-	 * @param $second
+	 * @param mixed $second second
 	 * @return string
 	 */
 	public static function time2string($second)
@@ -95,7 +99,7 @@ class TimeHelper
 
 	/**
 	 * 转换字符串形式的时间表达式为GMT时间戳
-	 * @param $str
+	 * @param string $str str
 	 * @return bool|int|string
 	 */
 	public static function gmStr2Time($str)
@@ -124,7 +128,7 @@ class TimeHelper
 
 	/**
 	 * 一天的开始
-	 * @param $date
+	 * @param string $date date
 	 * @return string
 	 */
 	public static function dayStart($date)
@@ -138,7 +142,7 @@ class TimeHelper
 
 	/**
 	 * 一天的结束
-	 * @param $date
+	 * @param string $date date
 	 * @return string
 	 */
 	public static function dayEnd($date)
@@ -152,8 +156,8 @@ class TimeHelper
 
 	/**
 	 * 格式化日期
-	 * @param int    $time
-	 * @param string $format
+	 * @param int    $time   time
+	 * @param string $format format
 	 * @return bool|string
 	 */
 	public static function format($time = 0, $format = 'Y-m-d H:i')
@@ -166,7 +170,7 @@ class TimeHelper
 
 	/**
 	 * 空日期检测
-	 * @param $date
+	 * @param string $date date
 	 * @return bool
 	 */
 	public static function isEmpty($date)
@@ -179,7 +183,8 @@ class TimeHelper
 	}
 
 	/**
-	 * @param $datetime
+	 * datetime to timestamp
+	 * @param string $datetime datetime
 	 * @return int
 	 */
 	public static function datetimeToTimestamp($datetime)
@@ -189,7 +194,7 @@ class TimeHelper
 
 	/**
 	 * 时间戳转换成 datetime 类型
-	 * @param $timestamp
+	 * @param string $timestamp timestamp
 	 * @return bool|string
 	 */
 	public static function timestampToDatetime($timestamp)
@@ -199,7 +204,7 @@ class TimeHelper
 
 	/**
 	 * 获取今日起始时间
-	 * @param bool|false $unix
+	 * @param bool|false $unix unix
 	 * @return int|string
 	 */
 	public static function todayStart($unix = false)
@@ -214,7 +219,7 @@ class TimeHelper
 
 	/**
 	 * 获取今日起始时间
-	 * @param bool|false $unix
+	 * @param bool|false $unix unix
 	 * @return int|string
 	 */
 	public static function todayEnd($unix = false)
@@ -227,11 +232,13 @@ class TimeHelper
 		return $Carbon->toDateTimeString();
 	}
 
-	/*
+	/**
 	 * 精确时间间隔函数
 	 * $time 发布时间 如 1356973323
 	 * $str 输出格式 如 Y-m-d H:i:s
 	 * 半年的秒数为15552000，1年为31104000，此处用半年的时间
+	 * @param mixed $time time
+	 * @return false|string
 	 */
 	public static function tranTime($time)
 	{
@@ -271,6 +278,7 @@ class TimeHelper
 	 * Returns a human readable time difference from the value to the
 	 * current time. Eg: **10 minutes ago**
 	 *
+	 * @param string $datetime datetime
 	 * @return string
 	 */
 	public static function timeSince($datetime)
@@ -283,6 +291,7 @@ class TimeHelper
 	 * of the current time. Eg: Today at 12:49, Yesterday at 4:00
 	 * or 18 Sep 2015 at 14:33.
 	 *
+	 * @param mixed $datetime datetime
 	 * @return string
 	 */
 	public static function timeTense($datetime)
@@ -309,8 +318,8 @@ class TimeHelper
 	/**
 	 * Converts mixed inputs to a Carbon object.
 	 *
-	 * @param Carbon|PhpDateTime|mixed $value
-	 * @param bool                     $throwException
+	 * @param Carbon|PhpDateTime|mixed $value          value
+	 * @param bool                     $throwException throwException
 	 * @return Carbon|null
 	 */
 	public static function makeCarbon($value, $throwException = true)
@@ -334,7 +343,7 @@ class TimeHelper
 
 	/**
 	 * Converts a PHP date format to "Moment.js" format.
-	 * @param string $format
+	 * @param string $format format
 	 * @return string
 	 */
 	public static function momentFormat($format)
@@ -401,8 +410,8 @@ class TimeHelper
 
 	/**
 	 * 通过 Carbon 对象来获取格式化的时间
-	 * @param Carbon|null|string $carbon
-	 * @param string             $format
+	 * @param Carbon|null|string $carbon carbon
+	 * @param string             $format format
 	 * @return string
 	 */
 	public static function fetchFormat($carbon, $format = 'Y-m-d H:i:s'): string

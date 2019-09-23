@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider as ServiceProviderBase;
 use Poppy\Framework\Agamotto\Agamotto;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
+/**
+ * PoppyServiceProvider
+ */
 abstract class PoppyServiceProvider extends ServiceProviderBase
 {
 	/**
@@ -103,6 +106,10 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 		}
 	}
 
+	/**
+	 * consoleLog
+	 * @return string
+	 */
 	protected function consoleLog()
 	{
 		$day = Agamotto::now()->toDateString();

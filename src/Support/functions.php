@@ -92,20 +92,6 @@ if (!function_exists('command_exist')) {
 	}
 }
 
-if (!function_exists('cache_name')) {
-	/**
-	 * 缓存前缀生成
-	 * @param string $class
-	 * @param string $suffix
-	 * @return string
-	 * @deprecated 使用系统模块的缓存替代
-	 */
-	function cache_name($class, $suffix = '')
-	{
-		return UtilHelper::cacheName($class, $suffix);
-	}
-}
-
 if (!function_exists('kv')) {
 	/**
 	 * 返回定义的kv 值

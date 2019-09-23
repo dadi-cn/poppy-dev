@@ -7,7 +7,7 @@ class CookieHelper
 {
 	/**
 	 * 判断Cookie是否存在
-	 * @param $name
+	 * @param string $name name
 	 * @return bool
 	 */
 	public static function has($name): bool
@@ -17,7 +17,7 @@ class CookieHelper
 
 	/**
 	 * 获取某个Cookie值
-	 * @param $name
+	 * @param string $name name
 	 * @return string
 	 */
 	public static function get($name): string
@@ -50,7 +50,7 @@ class CookieHelper
 
 	/**
 	 * 删除某个Cookie值
-	 * @param $name
+	 * @param string $name name
 	 */
 	public static function remove($name): void
 	{

@@ -9,6 +9,9 @@ use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+/**
+ * Poppy Migrate Rollback
+ */
 class PoppyMigrateRollbackCommand extends Command
 {
 	use MigrationTrait, ConfirmableTrait;

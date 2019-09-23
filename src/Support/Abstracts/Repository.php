@@ -9,7 +9,7 @@ abstract class Repository extends Collection
 {
 	/**
 	 * Initialize.
-	 * @param Collection $collection
+	 * @param Collection $collection collection
 	 */
 	abstract public function initialize(Collection $collection);
 }

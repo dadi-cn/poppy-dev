@@ -9,6 +9,9 @@ use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+/**
+ * Poppy Migrate
+ */
 class PoppyMigrateCommand extends Command
 {
 	use ConfirmableTrait;
@@ -91,7 +94,7 @@ class PoppyMigrateCommand extends Command
 
 	/**
 	 * Run migrations for the specified module.
-	 * @param string $slug
+	 * @param string $slug slug
 	 * @return null
 	 * @throws ModuleNotFoundException
 	 */
@@ -134,7 +137,7 @@ class PoppyMigrateCommand extends Command
 
 	/**
 	 * Get migration directory path.
-	 * @param string $slug
+	 * @param string $slug slug
 	 * @return string
 	 * @throws ModuleNotFoundException
 	 */

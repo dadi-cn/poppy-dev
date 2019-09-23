@@ -8,6 +8,9 @@ use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use Poppy\Framework\Poppy\Contracts\Repository as RepositoryContract;
 
+/**
+ * Repository
+ */
 abstract class Repository implements RepositoryContract
 {
 	/**
@@ -27,8 +30,8 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Constructor method.
-	 * @param Config     $config
-	 * @param Filesystem $files
+	 * @param Config     $config config
+	 * @param Filesystem $files  files
 	 */
 	public function __construct(Config $config, Filesystem $files)
 	{
@@ -38,7 +41,7 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Get a module's manifest contents.
-	 * @param string $slug
+	 * @param string $slug slug
 	 * @return Collection
 	 * @throws Exception
 	 */
@@ -71,7 +74,7 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Set modules path in "RunTime" mode.
-	 * @param string $path
+	 * @param string $path path
 	 * @return object $this
 	 */
 	public function setPath($path)
@@ -83,7 +86,7 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Get path for the specified module.
-	 * @param string $slug
+	 * @param string $slug slug
 	 * @return string
 	 */
 	public function getModulePath($slug)
@@ -108,7 +111,7 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Get path of module manifest file.
-	 * @param $slug
+	 * @param string $slug $slug
 	 * @return string
 	 */
 	protected function getManifestPath($slug)

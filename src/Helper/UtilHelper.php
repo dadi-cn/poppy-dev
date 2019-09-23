@@ -1,9 +1,5 @@
 <?php namespace Poppy\Framework\Helper;
 
-use function chr;
-use function function_exists;
-use function ord;
-
 /**
  * 功能函数类
  */
@@ -11,17 +7,17 @@ class UtilHelper
 {
 	/**
 	 * 检测是否email
-	 * @param $email
+	 * @param string $email Email address
 	 * @return bool
 	 */
-	public static function isEmail($email)
+	public static function isEmail($email): bool
 	{
 		return strlen($email) > 6 && preg_match("/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/", $email);
 	}
 
 	/**
 	 * 是不是url地址
-	 * @param $url
+	 * @param string $url url address
 	 * @return array
 	 */
 	public static function isUrl($url)
@@ -33,12 +29,13 @@ class UtilHelper
 	 * 检测是否搜索机器人.
 	 * @return bool
 	 */
-	public static function isRobot()
+	public static function isRobot(): bool
 	{
 		if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], '://') === false && preg_match('/(MSIE|Netscape|Opera|Konqueror|Mozilla)/i', $_SERVER['HTTP_USER_AGENT'])) {
 			return false;
 		}
-		elseif (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/(Spider|Bot|Crawl|Slurp|lycos|robozilla)/i', $_SERVER['HTTP_USER_AGENT'])) {
+
+		if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/(Spider|Bot|Crawl|Slurp|lycos|robozilla)/i', $_SERVER['HTTP_USER_AGENT'])) {
 			return true;
 		}
 
@@ -47,7 +44,7 @@ class UtilHelper
 
 	/**
 	 * 检测IP的匹配
-	 * @param $ip
+	 * @param string $ip 是否是IPv4
 	 * @return int
 	 */
 	public static function isIp($ip)
@@ -56,9 +53,9 @@ class UtilHelper
 	}
 
 	/**
-	 * 是否是md5
-	 * @param $str
-	 * @return int      检测是否32位数字字母的组合
+	 * 是否是md5, 检测是否32位数字字母的组合
+	 * @param string $str string
+	 * @return int
 	 */
 	public static function isMd5($str)
 	{
@@ -67,18 +64,18 @@ class UtilHelper
 
 	/**
 	 * 文件是否是图像
-	 * @param $filename
+	 * @param string $filename 文件名是否是图像
 	 * @return bool
 	 */
-	public static function isImage($filename)
+	public static function isImage($filename): bool
 	{
-		return preg_match('/^(jpg|jpeg|gif|png|bmp)$/i', FileHelper::ext($filename));
+		return (bool) preg_match('/^(jpg|jpeg|gif|png|bmp)$/i', FileHelper::ext($filename));
 	}
 
 	/**
 	 * 是否是正确的手机号码
 	 * @url https://regex101.com/r/gO3lJ7/1
-	 * @param $mobile
+	 * @param string $mobile 手机号
 	 * @return int
 	 */
 	public static function isMobile($mobile)
@@ -88,7 +85,7 @@ class UtilHelper
 
 	/**
 	 * 联系方式
-	 * @param $telephone
+	 * @param string $telephone 电话号码
 	 * @return int
 	 */
 	public static function isTelephone($telephone)
@@ -100,11 +97,10 @@ class UtilHelper
 
 	/**
 	 * 是否全部为中文, 并且验证长度
-	 * @param string $str
-	 * @param string $max_length
+	 * @param string $str 字串
 	 * @return int
 	 */
-	public static function isChinese($str, $max_length = '')
+	public static function isChinese($str)
 	{
 		$re = '/^[\\x{4e00}-\\x{9fa5}]{1,}$/u';
 
@@ -113,18 +109,19 @@ class UtilHelper
 
 	/**
 	 * 验证身份证号 , 身份证有效性检测
-	 * @param $id_card
+	 * @param string $id_card 身份证号码
 	 * @return bool
 	 */
-	public static function isChId($id_card)
+	public static function isChId($id_card): bool
 	{
-		if (strlen($id_card) == 18) {
+		if (strlen($id_card) === 18) {
 			return self::idcardChecksum18($id_card);
 		}
-		elseif ((strlen($id_card) == 15)) {
-			$id_card = self::idcard15to18($id_card);
 
-			return self::idcardChecksum18($id_card);
+		if (strlen($id_card) === 15) {
+			$id = self::idcard15to18($id_card);
+
+			return self::idcardChecksum18($id);
 		}
 
 		return false;
@@ -133,44 +130,40 @@ class UtilHelper
 	/**
 	 * 是否是标准的银行账号
 	 * // todo
-	 * @param $bank_account
-	 * @return int
+	 * @param string $bank_account 银行账号
+	 * @return bool
 	 */
-	public static function isBankNumber($bank_account)
+	public static function isBankNumber($bank_account): bool
 	{
 		$bank = str_replace(' ', '', $bank_account);
 
-		return preg_match('/^[0-9]{16,19}$/', $bank);
+		return (bool) preg_match('/^[0-9]{16,19}$/', $bank);
 	}
 
 	/**
 	 * 检测是否含有空格符
-	 * @param $value
-	 * @return int
+	 * @param string $value 需要检测的字串
+	 * @return bool
 	 */
-	public static function hasSpace($value)
+	public static function hasSpace($value): bool
 	{
-		return preg_match('/\s+/', $value);
+		return (bool) preg_match('/\s+/', $value);
 	}
 
 	/**
 	 * 是否是单词, 不包含空格, 仅仅是字母组合
-	 * @param $letter
+	 * @param string $letter 检测是否单词
 	 * @return bool
 	 */
 	public static function isWord($letter)
 	{
 		$letter_match = preg_match('/^[A-Za-z]+$/', $letter);
-		if (empty($letter_match) || strlen($letter) > 1) {
-			return false;
-		}
-
-		return true;
+		return !(empty($letter_match) || strlen($letter) > 1);
 	}
 
 	/**
 	 * 检测代码中是否含有 html 标签
-	 * @param $content
+	 * @param string $content string
 	 * @return int
 	 */
 	public static function hasTag($content)
@@ -180,9 +173,9 @@ class UtilHelper
 
 	/**
 	 * 格式化小数, 也可以用于货币的格式化
-	 * @param      $input
-	 * @param bool $sprinft
-	 * @param int  $precision
+	 * @param string $input     value
+	 * @param bool   $sprinft   是否格式化
+	 * @param int    $precision 保留小数
 	 * @return float|string
 	 */
 	public static function formatDecimal($input, $sprinft = true, $precision = 2)
@@ -197,24 +190,26 @@ class UtilHelper
 
 	/**
 	 * 修复链接地址, 如果没有 :// 则补齐
-	 * @param $url
+	 * @param string $url string
 	 * @return string
 	 */
-	public static function fixLink($url)
+	public static function fixLink($url): string
 	{
-		if (strlen($url) < 10) return '';
+		if (strlen($url) < 10) {
+			return '';
+		}
 
 		return strpos($url, '://') === false ? 'http://' . $url : $url;
 	}
 
 	/**
 	 * 计算身份证校验码，根据国家标准GB 11643-1999
-	 * @param $idcard_base
+	 * @param string $idcard_base idcard_base
 	 * @return bool
 	 */
-	public static function idcardVerify($idcard_base)
+	private static function idcardVerify($idcard_base): bool
 	{
-		if (strlen($idcard_base) != 17) {
+		if (strlen($idcard_base) !== 17) {
 			return false;
 		}
 		//加权因子
@@ -222,23 +217,21 @@ class UtilHelper
 		//校验码对应值
 		$verify_number_list = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
 		$checksum           = 0;
-		for ($i = 0; $i < strlen($idcard_base); $i++) {
-			$checksum += (int) (substr($idcard_base, $i, 1)) * $factor[$i];
+		for ($i = 0, $iMax = strlen($idcard_base); $i < $iMax; $i++) {
+			$checksum += (int) substr($idcard_base, $i, 1) * $factor[$i];
 		}
-		$mod           = $checksum % 11;
-		$verify_number = $verify_number_list[$mod];
-
-		return $verify_number;
+		$mod = $checksum % 11;
+		return $verify_number_list[$mod];
 	}
 
 	/**
 	 * 将15位身份证升级到18位
-	 * @param $idcard
+	 * @param string $idcard idcard
 	 * @return bool|string
 	 */
-	public static function idcard15to18($idcard)
+	private static function idcard15to18($idcard)
 	{
-		if (strlen($idcard) != 15) {
+		if (strlen($idcard) !== 15) {
 			return false;
 		}
 
@@ -250,35 +243,31 @@ class UtilHelper
 			$idcard = substr($idcard, 0, 6) . '19' . substr($idcard, 6, 9);
 		}
 
-		$idcard = $idcard . self::idcardVerify($idcard);
+		$idcard .= self::idcardVerify($idcard);
 
 		return $idcard;
 	}
 
 	/**
 	 * 18位身份证校验码有效性检查
-	 * @param $idcard 18 位身份证号码
+	 * @param string $idcard 18 位身份证号码
 	 * @return bool
 	 */
 	public static function idcardChecksum18($idcard)
 	{
-		if (strlen($idcard) != 18) {
+		if (strlen($idcard) !== 18) {
 			return false;
 		}
 		$idcard_base = substr($idcard, 0, 17);
-		if (self::idcardVerify($idcard_base) != strtoupper(substr($idcard, 17, 1))) {
-			return false;
-		}
-
-		return true;
+		return !(self::idcardVerify($idcard_base) !== strtoupper(substr($idcard, 17, 1)));
 	}
 
 	/**
 	 * 计算给定 字串/数组 的 md5 的值, 支持多个参数传入
-	 * @param $str
+	 * @param string|array $str need md5 string
 	 * @return string
 	 */
-	public static function md5($str)
+	public static function md5($str): string
 	{
 		$key = '';
 		foreach (func_get_args() as $v) {
@@ -345,7 +334,7 @@ class UtilHelper
 
 	/**
 	 * jquery validate 的验证组件
-	 * @param $value
+	 * @param string $value value
 	 */
 	public static function av($value)
 	{
@@ -359,17 +348,17 @@ class UtilHelper
 
 	/**
 	 * 生成 提示信息
-	 * @param string $type
-	 * @param string $message
-	 * @param string $append
+	 * @param string       $type    type
+	 * @param string       $message message
+	 * @param string|array $append  append
 	 * @return array
 	 */
 	public static function genSplash($type = 'success', $message = '', $append = '')
 	{
-		if ($type == 'success' && !$message) {
+		if ($type === 'success' && !$message) {
 			$message = '操作成功';
 		}
-		if ($type == 'error' && !$message) {
+		if ($type === 'error' && !$message) {
 			$message = '操作失败';
 		}
 		$data = [
@@ -391,7 +380,7 @@ class UtilHelper
 
 	/**
 	 * 返回 sql 中存储的时间信息.
-	 * @param int $time
+	 * @param int $time time
 	 * @return bool|string
 	 */
 	public static function sqlTime($time = null)
@@ -404,8 +393,9 @@ class UtilHelper
 	}
 
 	/**
-	 * @param            $basedir
-	 * @param bool|false $remove
+	 * check bom
+	 * @param string     $basedir basedir
+	 * @param bool|false $remove  remove
 	 */
 	public static function checkBom($basedir, $remove = false)
 	{
@@ -415,11 +405,11 @@ class UtilHelper
 		}
 		if ($dh = opendir($basedir)) {
 			while (($file = readdir($dh)) !== false) {
-				if ($file != '.' && $file != '..' && $file != '.git' && $file != 'cache' && $file != '.htaccess' && $file != '.idea') {
+				if ($file !== '.' && $file !== '..' && $file !== '.git' && $file !== '.htaccess' && $file !== '.idea') {
 					if (!is_dir($basedir . '/' . $file)) {
 						$ext = FileHelper::ext($file);
 						if (!in_array($ext, ['jpg', 'gif', 'png'])) {
-							echo "filename: {$basedir}/{$file} &nbsp; " . self::_checkFileBom("$basedir/$file", $remove) . ' <br>';
+							echo "filename: {$basedir}/{$file} &nbsp; " . self::checkFileBom("$basedir/$file", $remove) . ' <br>';
 							ob_flush();
 							flush();
 						}
@@ -436,17 +426,17 @@ class UtilHelper
 
 	/**
 	 * 检测目录文件 utf8 状态
-	 * @param $basedir
+	 * @param string $basedir basedir
 	 */
 	public static function checkUtf8($basedir)
 	{
 		if ($dh = opendir($basedir)) {
 			while (($file = readdir($dh)) !== false) {
-				if ($file != '.' && $file != '..' && $file != '.git' && $file != 'cache' && $file != '.htaccess' && $file != '.idea') {
+				if ($file !== '.' && $file !== '..' && $file !== '.git' && $file !== '.htaccess' && $file !== '.idea') {
 					if (!is_dir($basedir . '/' . $file)) {
 						$ext = FileHelper::ext($file);
 						if (!in_array($ext, ['jpg', 'gif', 'png', 'psd', 'ttf', 'ico', 'swf', 'csv', 'xdb', 'dat', 'fla', 'db', 'cur', 'phar', 'bat'])) {
-							echo "filename: {$basedir}/{$file} &nbsp; " . self::_isUtf8("$basedir/$file") . ' <br>';
+							echo "filename: {$basedir}/{$file} &nbsp; " . self::isUtf8("$basedir/$file") . ' <br>';
 							ob_flush();
 							flush();
 						}
@@ -463,22 +453,22 @@ class UtilHelper
 
 	/**
 	 * 转换成小时
-	 * @param int $hour
-	 * @param int $day
+	 * @param int $hour hour
+	 * @param int $day  day num
 	 * @return int
 	 */
-	public static function toHour($hour, $day = 0)
+	public static function toHour($hour, $day = 0): int
 	{
 		return (int) $day * 24 + (int) $hour;
 	}
 
 	/**
 	 * 格式化文件大小
-	 * @param     $bytes
-	 * @param int $precision
+	 * @param int $bytes     长度
+	 * @param int $precision 分数
 	 * @return string
 	 */
-	public static function formatBytes($bytes, $precision = 2)
+	public static function formatBytes($bytes, $precision = 2): string
 	{
 		$units = ['B', 'KB', 'MB', 'GB', 'TB'];
 
@@ -495,7 +485,7 @@ class UtilHelper
 
 	/**
 	 * 检测是不是正规版本号
-	 * @param $version
+	 * @param string $version 版本
 	 * @return int
 	 */
 	public static function isVersion($version)
@@ -504,7 +494,7 @@ class UtilHelper
 	}
 
 	/**
-	 *计算某个经纬度的周围某段距离的正方形的四个点
+	 * 计算某个经纬度的周围某段距离的正方形的四个点
 	 * @param float $lng      经度
 	 * @param float $lat      纬度
 	 * @param float $distance 该点所在圆的半径，该圆与此正方形内切，默认值为0.5千米
@@ -532,10 +522,10 @@ class UtilHelper
 
 	/**
 	 * 根据两点间的经纬度计算距离
-	 * @param $lng1
-	 * @param $lat1
-	 * @param $lng2
-	 * @param $lat2
+	 * @param float $lng1 lng1
+	 * @param float $lat1 lat1
+	 * @param float $lng2 lng2
+	 * @param float $lat2 lat2
 	 * @return string
 	 */
 	public static function getDistance($lng1, $lat1, $lng2, $lat2): string
@@ -577,7 +567,7 @@ class UtilHelper
 
 	/**
 	 * 检测是否是有效的json数据格式
-	 * @param $string
+	 * @param mixed $string string
 	 * @return bool
 	 */
 	public static function isJson($string): bool
@@ -589,7 +579,7 @@ class UtilHelper
 
 	/**
 	 * 检测是否是有效的日期格式
-	 * @param $string
+	 * @param string $string string
 	 * @return bool
 	 */
 	public static function isDate($string): bool
@@ -601,7 +591,7 @@ class UtilHelper
 
 	/**
 	 * 是否是密码
-	 * @param string $pwd
+	 * @param string $pwd pwd
 	 * @return bool
 	 */
 	public static function isPwd($pwd): bool
@@ -615,7 +605,7 @@ class UtilHelper
 
 	/**
 	 * 是否是逗号隔开的数字字符串
-	 * @param string $str
+	 * @param string $str str
 	 * @return bool
 	 */
 	public static function isComma($str): bool
@@ -628,20 +618,11 @@ class UtilHelper
 	}
 
 	/**
-	 * 缓存 key 生成, 根据类名
-	 * @param string $class  类名
-	 * @param string $suffix 后缀
+	 * check if Utf8
+	 * @param string $filename filename
 	 * @return string
-	 * @deprecated  系统系统模块的缓存替代
 	 */
-	public static function cacheName($class, $suffix = ''): string
-	{
-		$snake = str_replace('\\', '', snake_case(lcfirst($class)));
-
-		return $suffix ? $snake . '_' . $suffix : $snake;
-	}
-
-	private static function _isUtf8($filename): string
+	private static function isUtf8($filename): string
 	{
 		$info     = '<span style="color:red;">NOT UTF8 file</span>';
 		$contents = file_get_contents($filename);
@@ -653,11 +634,12 @@ class UtilHelper
 	}
 
 	/**
-	 * @param            $file_name
-	 * @param bool|false $remove_bom
+	 * _checkFileBom
+	 * @param string $file_name  文件名称
+	 * @param bool   $remove_bom 是否移除
 	 * @return string
 	 */
-	private static function _checkFileBom($file_name, $remove_bom = false)
+	private static function checkFileBom($file_name, $remove_bom = false): string
 	{
 		$info       = '<span>BOM Not Found</span>';
 		$contents   = file_get_contents($file_name);

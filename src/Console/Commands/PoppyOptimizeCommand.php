@@ -2,6 +2,9 @@
 
 use Illuminate\Console\Command;
 
+/**
+ * Poppy Optimize
+ */
 class PoppyOptimizeCommand extends Command
 {
 	/**

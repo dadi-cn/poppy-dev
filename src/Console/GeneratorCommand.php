@@ -4,11 +4,14 @@ use Illuminate\Console\GeneratorCommand as LaravelGeneratorCommand;
 use Illuminate\Support\Str;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
+/**
+ * Poppy Generator Command
+ */
 abstract class GeneratorCommand extends LaravelGeneratorCommand
 {
 	/**
 	 * Parse the name and format according to the root namespace.
-	 * @param string $name
+	 * @param string $name name
 	 * @return string
 	 */
 	protected function parseName($name)
@@ -27,7 +30,7 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
 
 	/**
 	 * Parse the class name and format according to the root namespace.
-	 * @param  string $name
+	 * @param string $name classname
 	 * @return string
 	 */
 	protected function qualifyClass($name)
@@ -41,7 +44,7 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
 
 	/**
 	 * Get the destination class path.
-	 * @param string $name
+	 * @param string $name name
 	 * @return string
 	 * @throws ModuleNotFoundException
 	 */
@@ -73,7 +76,7 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
 			$slug,
 			$addSrc .
 			strtolower($pathInfo['dirname']) . DIRECTORY_SEPARATOR .
-			"{$pathInfo['basename']}"
+			$pathInfo['basename']
 		);
 
 		return $path;
@@ -81,9 +84,8 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
 
 	/**
 	 * Replace the namespace for the given stub.
-	 *
-	 * @param  string $stub
-	 * @param  string $name
+	 * @param string $stub stub file
+	 * @param string $name name
 	 * @return $this
 	 */
 	protected function replaceNamespace(&$stub, $name)

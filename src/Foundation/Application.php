@@ -5,6 +5,9 @@ use Illuminate\Foundation\Application as ApplicationBase;
 use Symfony\Component\Debug\Exception\FatalErrorException;
 use Throwable;
 
+/**
+ * poppy Application
+ */
 class Application extends ApplicationBase
 {
 	/**
@@ -13,10 +16,22 @@ class Application extends ApplicationBase
 	 */
 	protected $executionContext;
 
+	/**
+	 * addon path
+	 * @var string
+	 */
 	protected $addonPath;
 
+	/**
+	 * modules path
+	 * @var string
+	 */
 	protected $modulesPath;
 
+	/**
+	 * namespace
+	 * @var string
+	 */
 	protected $namespace = 'app';
 
 	/**
@@ -35,7 +50,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * register "matched" event
-	 * @param $callback
+	 * @param Closure $callback callback
 	 * @return void
 	 */
 	public function routeMatched($callback)
@@ -45,7 +60,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 注册错误处理器
-	 * @param Closure $callback
+	 * @param Closure $callback callback
 	 */
 	public function error(Closure $callback)
 	{
@@ -54,7 +69,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 注册严重错误处理器
-	 * @param Closure $callback
+	 * @param Closure $callback callback
 	 */
 	public function fatal(Closure $callback)
 	{
@@ -74,7 +89,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 检测运行环境
-	 * @param $context
+	 * @param string $context context
 	 * @return mixed
 	 */
 	public function isRunningIn($context)
@@ -84,7 +99,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 设置运行上下文
-	 * @param  string $context
+	 * @param string $context context
 	 * @return void
 	 */
 	public function setExecutionContext($context)
@@ -116,12 +131,12 @@ class Application extends ApplicationBase
 		if ($this->bound('installed')) {
 			return true;
 		}
-			if (!file_exists($this->storagePath() . DIRECTORY_SEPARATOR . 'installed')) {
-				return false;
-			}
-			$this->instance('installed', true);
+		if (!file_exists($this->storagePath() . DIRECTORY_SEPARATOR . 'installed')) {
+			return false;
+		}
+		$this->instance('installed', true);
 
-			return true;
+		return true;
 	}
 
 	/*
@@ -183,7 +198,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * Get poppy framework path or assigned path.
-	 * @param string $path
+	 * @param string $path path
 	 * @return string
 	 */
 	public function frameworkPath($path = '')
@@ -202,7 +217,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 设置插件路径
-	 * @param  string $path
+	 * @param string $path path
 	 * @return $this
 	 */
 	public function setAddonPath($path)
@@ -223,7 +238,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 设置插件路径
-	 * @param  string $path
+	 * @param string $path path
 	 * @return $this
 	 */
 	public function setExtensionPath($path)

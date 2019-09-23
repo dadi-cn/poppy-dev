@@ -2,6 +2,9 @@
 
 use Poppy\Framework\Application\Event;
 
+/**
+ * PoppyMake
+ */
 class PoppyMake extends Event
 {
 	/**
@@ -9,6 +12,10 @@ class PoppyMake extends Event
 	 */
 	public $slug;
 
+	/**
+	 * PoppyMake constructor.
+	 * @param string $slug slug
+	 */
 	public function __construct($slug)
 	{
 		$this->slug = $slug;

@@ -5,13 +5,13 @@ use Poppy\Framework\Filesystem\Filesystem;
 use Poppy\Framework\Foundation\Application;
 
 /**
- * 注册加载器
+ * poppy register class loader
  */
 class RegisterClassLoader
 {
 	/**
 	 * 注册 Loader
-	 * @param Application $app
+	 * @param Application $app app
 	 */
 	public function bootstrap(Application $app): void
 	{

@@ -8,6 +8,9 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Poppy\Framework\Http\Middlewares\EnableCrossRequest;
 
+/**
+ * poppy http kernel
+ */
 class Kernel extends HttpKernel
 {
 	/**

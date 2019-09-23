@@ -3,6 +3,9 @@
 use Poppy\Framework\Console\GeneratorCommand;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
+/**
+ * MakeCommand
+ */
 class MakeCommandCommand extends GeneratorCommand
 {
 	/**
@@ -36,7 +39,7 @@ class MakeCommandCommand extends GeneratorCommand
 
 	/**
 	 * Get the default namespace for the class.
-	 * @param string $rootNamespace
+	 * @param string $rootNamespace namespace
 	 * @return string
 	 * @throws ModuleNotFoundException
 	 */

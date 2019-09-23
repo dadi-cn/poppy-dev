@@ -11,6 +11,9 @@ use Illuminate\Foundation\Bootstrap\SetRequestForConsole;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Poppy\Framework\Foundation\Bootstrap\RegisterClassLoader;
 
+/**
+ * poppy console kernel
+ */
 class Kernel extends ConsoleKernel
 {
 	/**
@@ -29,7 +32,7 @@ class Kernel extends ConsoleKernel
 
 	/**
 	 * 定义计划命令
-	 * @param Schedule $schedule
+	 * @param Schedule $schedule schedule
 	 */
 	protected function schedule(Schedule $schedule)
 	{

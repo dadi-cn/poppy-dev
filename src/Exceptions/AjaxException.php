@@ -1,5 +1,8 @@
 <?php namespace Poppy\Framework\Exceptions;
 
+/**
+ * AjaxException
+ */
 class AjaxException extends BaseException
 {
 	/**
@@ -9,6 +12,7 @@ class AjaxException extends BaseException
 
 	/**
 	 * Constructor.
+	 * @param array $contents contents
 	 */
 	public function __construct($contents)
 	{
