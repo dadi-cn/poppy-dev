@@ -28,6 +28,7 @@ class Application extends ApplicationBase
 		parent::bindPathsInContainer();
 
 		$this->instance('path.framework', $this->frameworkPath());
+		$this->instance('path.poppy', dirname($this->frameworkPath()));
 		$this->instance('path.module', $this->modulePath());
 		$this->instance('path.extension', $this->extensionPath());
 		$this->instance('path.addon', $this->addonPath());
@@ -84,7 +85,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 设置运行上下文
-	 * @param  string $context
+	 * @param string $context
 	 * @return void
 	 */
 	public function setExecutionContext($context)
@@ -116,12 +117,12 @@ class Application extends ApplicationBase
 		if ($this->bound('installed')) {
 			return true;
 		}
-			if (!file_exists($this->storagePath() . DIRECTORY_SEPARATOR . 'installed')) {
-				return false;
-			}
-			$this->instance('installed', true);
+		if (!file_exists($this->storagePath() . DIRECTORY_SEPARATOR . 'installed')) {
+			return false;
+		}
+		$this->instance('installed', true);
 
-			return true;
+		return true;
 	}
 
 	/*
@@ -202,7 +203,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 设置插件路径
-	 * @param  string $path
+	 * @param string $path
 	 * @return $this
 	 */
 	public function setAddonPath($path)
@@ -223,7 +224,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 设置插件路径
-	 * @param  string $path
+	 * @param string $path
 	 * @return $this
 	 */
 	public function setExtensionPath($path)
