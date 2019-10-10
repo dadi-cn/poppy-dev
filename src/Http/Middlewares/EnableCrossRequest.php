@@ -34,7 +34,7 @@ class EnableCrossRequest
 	{
 		$headers  = collect([
 			'Access-Control-Allow-Origin'      => '*',
-			'Access-Control-Allow-Headers'     => 'Origin,Content-Type,Cookie,Accept,Authorization,X-Requested-With',
+			'Access-Control-Allow-Headers'     => 'Origin,Content-Type,Cookie,Accept,Authorization,X-Requested-With,X-APP-OS',
 			'Access-Control-Allow-Methods'     => 'DELETE,GET,POST,PATCH,PUT,OPTIONS',
 			'Access-Control-Allow-Credentials' => 'true',
 		]);

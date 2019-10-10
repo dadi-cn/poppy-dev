@@ -271,7 +271,7 @@ class FileRepository extends Repository
 			throw new ApplicationException($depends);
 		}
 
-		$content = json_encode($modules->all(), JSON_PRETTY_PRINT);
+		$content = json_encode($modules->all(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
 		$this->files->put($cachePath, $content);
 

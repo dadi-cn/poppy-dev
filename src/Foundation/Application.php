@@ -43,6 +43,7 @@ class Application extends ApplicationBase
 		parent::bindPathsInContainer();
 
 		$this->instance('path.framework', $this->frameworkPath());
+		$this->instance('path.poppy', dirname($this->frameworkPath()));
 		$this->instance('path.module', $this->modulePath());
 		$this->instance('path.extension', $this->extensionPath());
 		$this->instance('path.addon', $this->addonPath());
@@ -99,7 +100,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 设置运行上下文
-	 * @param string $context context
+	 * @param string $context
 	 * @return void
 	 */
 	public function setExecutionContext($context)
@@ -217,7 +218,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 设置插件路径
-	 * @param string $path path
+	 * @param string $path
 	 * @return $this
 	 */
 	public function setAddonPath($path)
@@ -238,7 +239,7 @@ class Application extends ApplicationBase
 
 	/**
 	 * 设置插件路径
-	 * @param string $path path
+	 * @param string $path
 	 * @return $this
 	 */
 	public function setExtensionPath($path)
