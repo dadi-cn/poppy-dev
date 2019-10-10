@@ -11,7 +11,7 @@ class WebHelper
 
 	/**
 	 * 设置要去的操作
-	 * @param $url
+	 * @param string $url url
 	 */
 	public static function setGo($url)
 	{

@@ -2,12 +2,15 @@
 
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
+/**
+ * MigrationTrait
+ */
 trait MigrationTrait
 {
 	/**
 	 * Require (once) all migration files for the supplied module.
 	 *
-	 * @param string $module
+	 * @param string $module module
 	 * @throws ModuleNotFoundException
 	 */
 	protected function requireMigrations($module)
@@ -24,7 +27,7 @@ trait MigrationTrait
 	/**
 	 * Get migration directory path.
 	 *
-	 * @param string $module
+	 * @param string $module module
 	 *
 	 * @return string
 	 * @throws ModuleNotFoundException

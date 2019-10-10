@@ -6,7 +6,8 @@
 trait HasAttributesTrait
 {
 	/**
-	 * @var array
+	 * attributes
+	 * @var array $attributes
 	 */
 	protected $attributes;
 
@@ -20,8 +21,9 @@ trait HasAttributesTrait
 	}
 
 	/**
-	 * @param string $offset
-	 * @param null   $default
+	 * get
+	 * @param string $offset  offset
+	 * @param null   $default default
 	 * @return null
 	 */
 	public function get(string $offset, $default = null)
@@ -31,7 +33,7 @@ trait HasAttributesTrait
 
 	/**
 	 * Whether a offset exists.
-	 * @param mixed $offset
+	 * @param mixed $offset offset
 	 * @return bool
 	 */
 	public function offsetExists($offset)
@@ -41,7 +43,7 @@ trait HasAttributesTrait
 
 	/**
 	 * Offset to retrieve.
-	 * @param mixed $offset
+	 * @param mixed $offset offset
 	 * @return mixed
 	 */
 	public function offsetGet($offset)
@@ -51,8 +53,8 @@ trait HasAttributesTrait
 
 	/**
 	 * Offset to set.
-	 * @param mixed $offset
-	 * @param mixed $value
+	 * @param mixed $offset offset
+	 * @param mixed $value  value
 	 */
 	public function offsetSet($offset, $value)
 	{
@@ -61,7 +63,7 @@ trait HasAttributesTrait
 
 	/**
 	 * Offset to unset.
-	 * @param mixed $offset
+	 * @param mixed $offset offset
 	 */
 	public function offsetUnset($offset)
 	{

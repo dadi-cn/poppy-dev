@@ -12,25 +12,25 @@ class ClassLoader
 {
 	/**
 	 * 文件实例
-	 * @var Filesystem
+	 * @var Filesystem $files
 	 */
 	public $files;
 
 	/**
 	 * 基本路径.
-	 * @var string
+	 * @var string $basePath
 	 */
 	public $basePath;
 
 	/**
 	 * manifest 路径.
-	 * @var string|null
+	 * @var string|null $manifestPath
 	 */
 	public $manifestPath;
 
 	/**
 	 * 加载 manifest 数组局.
-	 * @var array
+	 * @var array $manifest
 	 */
 	public $manifest;
 
@@ -42,7 +42,7 @@ class ClassLoader
 
 	/**
 	 * 注册的目录
-	 * @var array
+	 * @var array $directories
 	 */
 	protected $directories = [];
 
@@ -54,9 +54,9 @@ class ClassLoader
 
 	/**
 	 * Create a new package manifest instance.
-	 * @param  Filesystem $files
-	 * @param  string     $basePath
-	 * @param  string     $manifestPath
+	 * @param Filesystem $files        files
+	 * @param string     $basePath     basePath
+	 * @param string     $manifestPath manifestPath
 	 */
 	public function __construct(Filesystem $files, $basePath, $manifestPath)
 	{
@@ -67,7 +67,7 @@ class ClassLoader
 
 	/**
 	 * 加载指定文件.
-	 * @param  string $class
+	 * @param string $class class
 	 * @return bool||void
 	 */
 	public function load($class)
@@ -102,7 +102,7 @@ class ClassLoader
 
 	/**
 	 * 检测给定相对路径是否是存在的文件
-	 * @param  string $path
+	 * @param string $path path
 	 * @return bool
 	 */
 	protected function isRealFilePath($path)
@@ -112,8 +112,8 @@ class ClassLoader
 
 	/**
 	 * 包含一个类并且添加到 manifest 中
-	 * @param  string $class
-	 * @param  string $path
+	 * @param string $class class
+	 * @param string $path path
 	 * @return void
 	 */
 	protected function includeClass($class, $path)
@@ -156,7 +156,7 @@ class ClassLoader
 
 	/**
 	 * 添加目录
-	 * @param  string|array $directories
+	 * @param string|array $directories directories
 	 * @return void
 	 */
 	public function addDirectories($directories)
@@ -168,7 +168,7 @@ class ClassLoader
 
 	/**
 	 * 移除目录
-	 * @param  string|array $directories
+	 * @param string|array $directories directories
 	 * @return void
 	 */
 	public function removeDirectories($directories = null)
@@ -196,7 +196,7 @@ class ClassLoader
 
 	/**
 	 * 从类名获取文件名
-	 * @param  string $class
+	 * @param string $class class
 	 * @return array
 	 */
 	protected function normalizeClass($class)
@@ -266,7 +266,7 @@ class ClassLoader
 
 	/**
 	 * 清单写入在磁盘
-	 * @param  array $manifest
+	 * @param array $manifest manifest
 	 * @throws Exception
 	 */
 	protected function write(array $manifest)

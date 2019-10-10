@@ -9,6 +9,9 @@ use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+/**
+ * Poppy Migrate Reset
+ */
 class PoppyMigrateResetCommand extends Command
 {
 	use ConfirmableTrait;
@@ -107,8 +110,8 @@ class PoppyMigrateResetCommand extends Command
 
 	/**
 	 * Run "down" a migration instance.
-	 * @param string $file
-	 * @param object $migration
+	 * @param string $file      migrate file
+	 * @param object $migration migration file
 	 */
 	protected function runDown($file, $migration)
 	{
@@ -181,7 +184,7 @@ class PoppyMigrateResetCommand extends Command
 
 	/**
 	 * Get the console command parameters.
-	 * @param string $slug
+	 * @param string $slug slug
 	 * @return array
 	 * @throws ModuleNotFoundException
 	 */

@@ -37,7 +37,7 @@ class SearchHelper
 
 	/**
 	 * 排序类型
-	 * @param string $key
+	 * @param string $key key
 	 * @return string
 	 */
 	public static function order($key = '_order')

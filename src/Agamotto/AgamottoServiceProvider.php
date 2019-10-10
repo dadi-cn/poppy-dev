@@ -28,7 +28,7 @@ class AgamottoServiceProvider extends L5ServiceProvider
 	/**
 	 * Sets the locale using the correct load order.
 	 * 使用指定的加载顺序设置本地化
-	 * @param $locale
+	 * @param string $locale locale
 	 */
 	private function setAgamottoLocale($locale)
 	{
@@ -39,7 +39,7 @@ class AgamottoServiceProvider extends L5ServiceProvider
 	/**
 	 * Split the locale and use it as the fallback.
 	 * 拆分 local 并且设置回滚语言
-	 * @param $locale
+	 * @param string $locale locale
 	 * @return bool|string
 	 */
 	private function getFallbackLocale($locale)

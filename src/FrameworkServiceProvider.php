@@ -5,6 +5,9 @@ use Illuminate\Support\ServiceProvider;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Helper\UtilHelper;
 
+/**
+ * FrameworkServiceProvider
+ */
 class FrameworkServiceProvider extends ServiceProvider
 {
 	use PoppyTrait;
@@ -46,7 +49,7 @@ class FrameworkServiceProvider extends ServiceProvider
 		$this->app->register(Agamotto\AgamottoServiceProvider::class);
 		$this->app->register(Console\ConsoleServiceProvider::class);
 		$this->app->register(Console\GeneratorServiceProvider::class);
-		$this->app->register(Providers\BladeServiceProvider::class);
+		$this->app->register(Http\BladeServiceProvider::class);
 		$this->app->register(Poppy\PoppyServiceProvider::class);
 		$this->app->register(Parse\ParseServiceProvider::class);
 		$this->app->register(Translation\TranslationServiceProvider::class);

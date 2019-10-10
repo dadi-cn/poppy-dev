@@ -3,6 +3,9 @@
 use Illuminate\Console\Command;
 use Poppy\Framework\Poppy\Poppy;
 
+/**
+ * Poppy List
+ */
 class PoppyListCommand extends Command
 {
 	/**
@@ -47,7 +50,7 @@ class PoppyListCommand extends Command
 	{
 		$modules = $this->poppy->all();
 
-		if (count($modules) == 0) {
+		if (count($modules) === 0) {
 			$this->error("Your application doesn't have any modules.");
 
 			return null;
@@ -74,23 +77,23 @@ class PoppyListCommand extends Command
 
 	/**
 	 * Returns module manifest information.
-	 * @param string $module
+	 * @param array $module module
 	 * @return array
 	 */
 	protected function getModuleInformation($module)
 	{
 		return [
 			'#'           => $module['order'],
-			'name'        => isset($module['name']) ? $module['name'] : '',
+			'name'        => $module['name'] ?? '',
 			'slug'        => $module['slug'],
-			'description' => isset($module['description']) ? $module['description'] : '',
-			'status'      => ($this->poppy->isEnabled($module['slug'])) ? 'Enabled' : 'Disabled',
+			'description' => $module['description'] ?? '',
+			'status'      => $this->poppy->isEnabled($module['slug']) ? 'Enabled' : 'Disabled',
 		];
 	}
 
 	/**
 	 * Display the module information on the console.
-	 * @param array $modules
+	 * @param array $modules modules
 	 */
 	protected function displayModules(array $modules)
 	{

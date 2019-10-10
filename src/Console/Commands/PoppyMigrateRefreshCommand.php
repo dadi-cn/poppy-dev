@@ -5,27 +5,27 @@ use Illuminate\Console\ConfirmableTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+/**
+ * Poppy Migrate Refresh
+ */
 class PoppyMigrateRefreshCommand extends Command
 {
 	use ConfirmableTrait;
 
 	/**
 	 * The console command name.
-	 *
 	 * @var string
 	 */
 	protected $name = 'poppy:migrate:refresh';
 
 	/**
 	 * The console command description.
-	 *
 	 * @var string
 	 */
 	protected $description = 'Reset and re-run all migrations for a specific or all modules';
 
 	/**
 	 * Execute the console command.
-	 *
 	 * @return mixed
 	 */
 	public function handle()
@@ -66,7 +66,6 @@ class PoppyMigrateRefreshCommand extends Command
 
 	/**
 	 * Determine if the developer has requested database seeding.
-	 *
 	 * @return bool
 	 */
 	protected function needsSeeding()
@@ -76,9 +75,8 @@ class PoppyMigrateRefreshCommand extends Command
 
 	/**
 	 * Run the module seeder command.
-	 *
-	 * @param null   $slug
-	 * @param string $database
+	 * @param null   $slug slug
+	 * @param string $database database
 	 */
 	protected function runSeeder($slug = null, $database = null)
 	{
@@ -90,7 +88,6 @@ class PoppyMigrateRefreshCommand extends Command
 
 	/**
 	 * Get the console command arguments.
-	 *
 	 * @return array
 	 */
 	protected function getArguments()
@@ -100,7 +97,6 @@ class PoppyMigrateRefreshCommand extends Command
 
 	/**
 	 * Get the console command options.
-	 *
 	 * @return array
 	 */
 	protected function getOptions()

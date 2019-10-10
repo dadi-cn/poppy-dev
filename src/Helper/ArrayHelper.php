@@ -1,12 +1,12 @@
 <?php namespace Poppy\Framework\Helper;
 
+
 use Illuminate\Support\Arr;
-use function is_array;
 
 /**
  * 数组相关操作
  */
-class ArrayHelper extends Arr
+class ArrayHelper
 {
 	/**
 	 * 拼合数组, 支持多维拼合
@@ -16,7 +16,7 @@ class ArrayHelper extends Arr
 	 */
 	public static function combine(array $array, $join = ','): string
 	{
-		$arr = self::flatten($array);
+		$arr = Arr::flatten($array);
 
 		return implode($join, $arr);
 	}
@@ -49,8 +49,8 @@ class ArrayHelper extends Arr
 
 	/**
 	 * 返回kv结构字串
-	 * @param array  $array
-	 * @param string $join
+	 * @param array  $array array
+	 * @param string $join  join
 	 * @return string
 	 */
 	public static function toKvStr($array, $join = ','): string

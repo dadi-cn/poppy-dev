@@ -5,6 +5,9 @@ use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+/**
+ * Poppy Seed
+ */
 class PoppySeedCommand extends Command
 {
 	/**
@@ -72,7 +75,7 @@ class PoppySeedCommand extends Command
 
 	/**
 	 * Seed the specific module.
-	 * @param string $slug
+	 * @param string $slug slug
 	 */
 	protected function seed($slug)
 	{

@@ -2,7 +2,6 @@
 
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Helper\HtmlHelper;
-use Poppy\Framework\Helper\UtilHelper;
 
 if (!function_exists('route_url')) {
 	/**
@@ -40,25 +39,6 @@ if (!function_exists('route_url')) {
 	}
 }
 
-if (!function_exists('route_current')) {
-	/**
-	 * 当前路由的样式
-	 * @param string|array $route
-	 * @param string       $class      符合的当前类的名称
-	 * @param string       $else_class 不符合当前类的样式
-	 * @return string
-	 * @deprecated 使用 hieu-le/active 替代
-	 */
-	function route_current($route, $class = 'current', $else_class = ' ')
-	{
-		if (in_array(Route::currentRouteName(), (array) $route, true)) {
-			return $class;
-		}
-
-		return $else_class;
-	}
-}
-
 if (!function_exists('route_prefix')) {
 	/**
 	 * 路由前缀
@@ -89,20 +69,6 @@ if (!function_exists('command_exist')) {
 		} catch (Exception $e) {
 			return false;
 		}
-	}
-}
-
-if (!function_exists('cache_name')) {
-	/**
-	 * 缓存前缀生成
-	 * @param string $class
-	 * @param string $suffix
-	 * @return string
-	 * @deprecated 使用系统模块的缓存替代
-	 */
-	function cache_name($class, $suffix = '')
-	{
-		return UtilHelper::cacheName($class, $suffix);
 	}
 }
 
@@ -211,18 +177,6 @@ if (!function_exists('get')) {
 	}
 }
 
-if (!function_exists('plugins_path')) {
-	/**
-	 * Get the path to the plugins folder.
-	 * @param string $path
-	 * @return string
-	 */
-	function plugins_path($path = '')
-	{
-		return app('path.plugins') . ($path ? '/' . $path : $path);
-	}
-}
-
 if (!function_exists('poppy_path')) {
 	/**
 	 * Return the path to the given module file.
@@ -234,6 +188,11 @@ if (!function_exists('poppy_path')) {
 	function poppy_path($slug = null, $file = '')
 	{
 		$modulesPath = app('path.module');
+
+		if (str_contains($slug, '.')) {
+			$modulesPath = app('path.poppy');
+			$slug        = str_after($slug, '.');
+		}
 
 		$filePath = $file ? '/' . ltrim($file, '/') : '';
 
@@ -299,8 +258,8 @@ if (!function_exists('pf_path')) {
 	 */
 	function pf_path($path)
 	{
-		if (file_exists(base_path('framework/'))) {
-			return base_path('framework/' . $path);
+		if (file_exists(base_path('poppy/framework/'))) {
+			return base_path('poppy/framework/' . $path);
 		}
 
 		return base_path('vendor/poppy/framework/' . $path);

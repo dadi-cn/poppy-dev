@@ -1,23 +1,23 @@
 <?php namespace Poppy\Framework\Poppy;
 
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Collection;
-use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Poppy\Abstracts\Repository;
 use Poppy\Framework\Poppy\Events\PoppyOptimized;
-use function count;
+use Throwable;
 
+/**
+ * FileRepository
+ */
 class FileRepository extends Repository
 {
-	use PoppyTrait;
 
 	/**
 	 * Get all modules.
 	 * @return Collection
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function all()
+	public function all(): Collection
 	{
 		return $this->getCache()->sortBy('order');
 	}
@@ -25,9 +25,9 @@ class FileRepository extends Repository
 	/**
 	 * Get all module slugs.
 	 * @return Collection
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function slugs()
+	public function slugs(): Collection
 	{
 		$slugs = collect();
 
@@ -40,23 +40,23 @@ class FileRepository extends Repository
 
 	/**
 	 * Get modules based on where clause.
-	 * @param string $key
-	 * @param mixed  $value
+	 * @param string $key   the filter key
+	 * @param mixed  $value value
 	 * @return Collection
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function where($key, $value)
+	public function where($key, $value): Collection
 	{
 		return collect($this->all()->where($key, $value)->first());
 	}
 
 	/**
 	 * Sort modules by given key in ascending order.
-	 * @param string $key
+	 * @param string $key sort by key
 	 * @return Collection
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function sortBy($key)
+	public function sortBy($key): Collection
 	{
 		$collection = $this->all();
 
@@ -65,11 +65,11 @@ class FileRepository extends Repository
 
 	/**
 	 * Sort modules by given key in ascending order.
-	 * @param string $key
+	 * @param string $key sort by key
 	 * @return Collection
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function sortByDesc($key)
+	public function sortByDesc($key): Collection
 	{
 		$collection = $this->all();
 
@@ -78,11 +78,11 @@ class FileRepository extends Repository
 
 	/**
 	 * Determines if the given module exists.
-	 * @param string $slug
+	 * @param string $slug module name
 	 * @return bool
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function exists($slug)
+	public function exists($slug): bool
 	{
 		return $this->slugs()->contains(str_slug($slug));
 	}
@@ -90,19 +90,19 @@ class FileRepository extends Repository
 	/**
 	 * Returns count of all modules.
 	 * @return int
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function count()
+	public function count(): int
 	{
 		return $this->all()->count();
 	}
 
 	/**
 	 * Get a module property value.
-	 * @param string $property
-	 * @param mixed  $default
+	 * @param string $property module property
+	 * @param mixed  $default  default value
 	 * @return mixed
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
 	public function get($property, $default = null)
 	{
@@ -115,39 +115,43 @@ class FileRepository extends Repository
 
 	/**
 	 * Set the given module property value.
-	 * @param string $property
-	 * @param mixed  $value
+	 * @param string $property module property
+	 * @param mixed  $value    set module
 	 * @return bool
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function set($property, $value)
+	public function set($property, $value): bool
 	{
-		[$slug, $key] = explode('::', $property);
+		try {
+			[$slug, $key] = explode('::', $property);
 
-		$cachePath = $this->getCachePath();
-		$cache     = $this->getCache();
-		$module    = $this->where('slug', $slug);
+			$cachePath = $this->getCachePath();
+			$cache     = $this->getCache();
+			$module    = $this->where('slug', $slug);
 
-		if (isset($module[$key])) {
-			unset($module[$key]);
+			if (isset($module[$key])) {
+				unset($module[$key]);
+			}
+
+			$module[$key] = $value;
+
+			$module = collect([$module['basename'] => $module]);
+
+			$merged  = $cache->merge($module);
+			$content = json_encode($merged->all(), JSON_PRETTY_PRINT);
+			$this->files->put($cachePath, $content);
+			return true;
+		} catch (Throwable $e) {
+			throw new ApplicationException($e->getMessage());
 		}
-
-		$module[$key] = $value;
-
-		$module = collect([$module['basename'] => $module]);
-
-		$merged  = $cache->merge($module);
-		$content = json_encode($merged->all(), JSON_PRETTY_PRINT);
-
-		return $this->files->put($cachePath, $content);
 	}
 
 	/**
 	 * Get all enabled modules.
 	 * @return Collection
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function enabled()
+	public function enabled(): Collection
 	{
 		return $this->all()->where('enabled', true);
 	}
@@ -155,20 +159,20 @@ class FileRepository extends Repository
 	/**
 	 * Get all disabled modules.
 	 * @return Collection
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function disabled()
+	public function disabled(): Collection
 	{
 		return $this->all()->where('enabled', false);
 	}
 
 	/**
 	 * Check if specified module is enabled.
-	 * @param string $slug
+	 * @param string $slug module name
 	 * @return bool
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function isEnabled($slug)
+	public function isEnabled($slug): bool
 	{
 		$module = $this->where('slug', $slug);
 
@@ -177,11 +181,11 @@ class FileRepository extends Repository
 
 	/**
 	 * Check if specified module is disabled.
-	 * @param string $slug
+	 * @param string $slug module name
 	 * @return bool
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function isDisabled($slug)
+	public function isDisabled($slug): bool
 	{
 		$module = $this->where('slug', $slug);
 
@@ -189,55 +193,23 @@ class FileRepository extends Repository
 	}
 
 	/**
-	 * @param $slug
-	 * @return bool
-	 * @throws FileNotFoundException
-	 */
-	public function isInstalled($slug)
-	{
-		$module = $this->where('slug', $slug);
-
-		return isset($module['installed']) && $module['installed'] === false;
-	}
-
-	/**
-	 * @param $slug
-	 * @return bool
-	 * @throws FileNotFoundException
-	 */
-	public function install($slug)
-	{
-		return $this->set($slug . '::installed', true);
-	}
-
-	/**
-	 * @param $slug
-	 * @return bool
-	 * @throws FileNotFoundException
-	 */
-	public function uninstall($slug)
-	{
-		return $this->set($slug . '::installed', false);
-	}
-
-	/**
 	 * Enables the specified module.
-	 * @param string $slug
+	 * @param string $slug module name
 	 * @return bool
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function enable($slug)
+	public function enable($slug): bool
 	{
 		return $this->set($slug . '::enabled', true);
 	}
 
 	/**
 	 * Disables the specified module.
-	 * @param string $slug
+	 * @param string $slug module name
 	 * @return bool
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	public function disable($slug)
+	public function disable($slug): bool
 	{
 		return $this->set($slug . '::enabled', false);
 	}
@@ -252,10 +224,9 @@ class FileRepository extends Repository
 	/**
 	 * Update cached repository of module information.
 	 * @return bool
-	 * @throws FileNotFoundException
 	 * @throws ApplicationException
 	 */
-	public function optimize()
+	public function optimize(): bool
 	{
 		$cachePath = $this->getCachePath();
 		$cache     = $this->getCache();
@@ -300,38 +271,42 @@ class FileRepository extends Repository
 			throw new ApplicationException($depends);
 		}
 
-		$content = json_encode($modules->all(), JSON_PRETTY_PRINT);
+		$content = json_encode($modules->all(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-		$result = $this->files->put($cachePath, $content);
+		$this->files->put($cachePath, $content);
 
-		$this->getEvent()->dispatch(new PoppyOptimized($modules->all()));
+		event(new PoppyOptimized($modules->all()));
 
-		return $result;
+		return true;
 	}
 
 	/**
 	 * Get the contents of the cache file.
 	 * @return Collection
-	 * @throws FileNotFoundException
+	 * @throws ApplicationException
 	 */
-	private function getCache()
+	private function getCache(): Collection
 	{
-		$cachePath = $this->getCachePath();
+		try {
+			$cachePath = $this->getCachePath();
 
-		if (!$this->files->exists($cachePath)) {
-			$this->createCache();
+			if (!$this->files->exists($cachePath)) {
+				$this->createCache();
 
-			$this->optimize();
+				$this->optimize();
+			}
+
+			return collect(json_decode($this->files->get($cachePath), true));
+		} catch (Throwable $e) {
+			throw new ApplicationException($e->getMessage());
 		}
-
-		return collect(json_decode($this->files->get($cachePath), true));
 	}
 
 	/**
 	 * Create an empty instance of the cache file.
 	 * @return Collection
 	 */
-	private function createCache()
+	private function createCache(): Collection
 	{
 		$cachePath = $this->getCachePath();
 		$content   = json_encode([], JSON_PRETTY_PRINT);
@@ -345,7 +320,7 @@ class FileRepository extends Repository
 	 * Get the path to the cache file.
 	 * @return string
 	 */
-	private function getCachePath()
+	private function getCachePath(): string
 	{
 		return storage_path('app/poppy.json');
 	}

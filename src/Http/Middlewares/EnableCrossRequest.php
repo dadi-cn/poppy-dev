@@ -17,7 +17,7 @@ class EnableCrossRequest
 
 	/**
 	 * EnableCrossRequest constructor.
-	 * @param ResponseFactory $response
+	 * @param ResponseFactory $response response
 	 */
 	public function __construct(ResponseFactory $response)
 	{
@@ -26,15 +26,15 @@ class EnableCrossRequest
 
 	/**
 	 * Middleware handler.
-	 * @param Request $request
-	 * @param Closure $next
+	 * @param Request $request request
+	 * @param Closure $next    next
 	 * @return mixed
 	 */
 	public function handle(Request $request, Closure $next)
 	{
 		$headers  = collect([
 			'Access-Control-Allow-Origin'      => '*',
-			'Access-Control-Allow-Headers'     => 'Origin,Content-Type,Cookie,Accept,Authorization,X-Requested-With',
+			'Access-Control-Allow-Headers'     => 'Origin,Content-Type,Cookie,Accept,Authorization,X-Requested-With,X-APP-OS',
 			'Access-Control-Allow-Methods'     => 'DELETE,GET,POST,PATCH,PUT,OPTIONS',
 			'Access-Control-Allow-Credentials' => 'true',
 		]);

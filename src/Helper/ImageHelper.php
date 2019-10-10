@@ -1,17 +1,20 @@
 <?php namespace Poppy\Framework\Helper;
 
+/**
+ * 图像相关操作
+ */
 class ImageHelper
 {
 	/**
 	 * 获取图像类型
 	 * x-ms-bmp, gif, png, jpeg, tiff
-	 * @param $filename
+	 * @param string $filename filename
 	 * @return string
 	 */
-	public static function type($filename)
+	public static function type($filename): string
 	{
 		$imageData = getimagesize($filename);
-		if (isset($imageData['mime']) && substr($imageData['mime'], 0, 5) == 'image') {
+		if (isset($imageData['mime']) && substr($imageData['mime'], 'image') === 0) {
 			return substr($imageData['mime'], 6);
 		}
 
@@ -20,7 +23,7 @@ class ImageHelper
 
 	/**
 	 * 取得图像信息
-	 * @param $img string 图像文件名
+	 * @param string $img 图像文件名
 	 * @return array|bool
 	 */
 	public static function getImageInfo($img)
@@ -39,14 +42,19 @@ class ImageHelper
 
 			return $info;
 		}
-		 
-			return false;
+
+		return false;
 	}
 
+	/**
+	 * image create from bmp
+	 * @param string $filename filename
+	 * @return bool|false|resource
+	 */
 	public static function imageCreateFromBmp($filename)
 	{
 		$tmp_name = tempnam('tmp', 'BMP');
-		if (self::_bmp2gd($filename, $tmp_name)) {
+		if (self::bmp2gd($filename, $tmp_name)) {
 			$img = imagecreatefromgd($tmp_name);
 			unlink($tmp_name);
 
@@ -57,16 +65,47 @@ class ImageHelper
 	}
 
 	/**
+	 * 创建字串
+	 * @param string $string      string
+	 * @param string $type        type
+	 * @param int    $singleWidth singleWidth
+	 * @param int    $height      height
+	 * @param string $fontFile    fontFile
+	 */
+	public static function buildStr($string = 'Mark Zhao', $type = 'png', $singleWidth = 10, $height = 20, $fontFile = '')
+	{
+		header("Content-type:image/{$type}");
+		$imageX = strlen($string) * $singleWidth;
+		$imageY = $height;
+		$im = @imagecreate($imageX, $imageY) or exit();
+		imagecolorallocate($im, 255, 255, 255);
+		$color = imagecolorallocate($im, 0, 0, 0);
+
+		if (file_exists($fontFile)) {
+			imagettftext($im, 11, 0, 0, 17, $color, $fontFile, $string);
+		}
+		else {
+			imagestring($im, 5, 0, 5, $string, $color);
+		}
+		imagepng($im);
+		imagedestroy($im);
+	}
+
+	/**
 	 * 图像处理函数
 	 * 节选自 destoon
-	 * @param      $src
-	 * @param bool $dest
+	 * @param string $src  src
+	 * @param bool   $dest dest
 	 * @return bool
 	 */
-	private static function _bmp2gd($src, $dest = false)
+	private static function bmp2gd($src, $dest = false)
 	{
-		if (!($src_f = fopen($src, 'rb'))) return false;
-		if (!($dest_f = fopen($dest, 'wb'))) return false;
+		if (!($src_f = fopen($src, 'rb'))) {
+			return false;
+		}
+		if (!($dest_f = fopen($dest, 'wb'))) {
+			return false;
+		}
 		$header = unpack('vtype/Vsize/v2reserved/Voffset', fread($src_f, 14));
 		$info   = unpack('Vsize/Vwidth/Vheight/vplanes/vbits/Vcompression/Vimagesize/Vxres/Vyres/Vncolor/Vimportant', fread($src_f, 40));
 		extract($info);
@@ -75,11 +114,11 @@ class ImageHelper
 		$palette_size = $offset - 54;
 		$ncolor       = $palette_size / 4;
 		$gd_header    = '';
-		$gd_header                    .= ($palette_size == 0) ? "\xFF\xFE" : "\xFF\xFF";
-		$gd_header                    .= pack('n2', $width, $height);
-		$gd_header                    .= ($palette_size == 0) ? "\x01" : "\x00";
+		$gd_header    .= ($palette_size == 0) ? "\xFF\xFE" : "\xFF\xFF";
+		$gd_header    .= pack('n2', $width, $height);
+		$gd_header    .= ($palette_size == 0) ? "\x01" : "\x00";
 		if ($palette_size) $gd_header .= pack('n', $ncolor);
-		$gd_header                    .= "\xFF\xFF\xFF\xFF";
+		$gd_header .= "\xFF\xFF\xFF\xFF";
 		fwrite($dest_f, $gd_header);
 		if ($palette_size) {
 			$palette    = fread($src_f, $palette_size);
@@ -147,32 +186,5 @@ class ImageHelper
 		fclose($dest_f);
 
 		return true;
-	}
-
-	/**
-	 * 创建字串
-	 * @param string $string
-	 * @param string $type
-	 * @param int    $singleWidth
-	 * @param int    $height
-	 * @param string $fontFile
-	 */
-	public static function buildStr($string = 'Mark Zhao', $type = 'png', $singleWidth = 10, $height = 20, $fontFile = '')
-	{
-		header("Content-type:image/{$type}");
-		$imageX = strlen($string) * $singleWidth;
-		$imageY = $height;
-		$im     = @imagecreate($imageX, $imageY) or exit();
-		imagecolorallocate($im, 255, 255, 255);
-		$color = imagecolorallocate($im, 0, 0, 0);
-
-		if (file_exists($fontFile)) {
-			imagettftext($im, 11, 0, 0, 17, $color, $fontFile, $string);
-		}
-		else {
-			imagestring($im, 5, 0, 5, $string, $color);
-		}
-		imagepng($im);
-		imagedestroy($im);
 	}
 }

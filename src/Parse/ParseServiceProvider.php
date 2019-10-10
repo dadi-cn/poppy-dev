@@ -2,6 +2,9 @@
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * ParseServiceProvider
+ */
 class ParseServiceProvider extends ServiceProvider
 {
 	/**

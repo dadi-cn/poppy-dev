@@ -24,9 +24,13 @@ use Poppy\Framework\Poppy\Poppy;
 use Poppy\Framework\Translation\Translator;
 use Psr\Log\LoggerInterface;
 
+/**
+ * PoppyTrait
+ */
 trait PoppyTrait
 {
 	/**
+	 * get auth
 	 * @return AuthManager
 	 */
 	protected function getAuth(): AuthManager
@@ -35,6 +39,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get translator
 	 * @return Translator
 	 */
 	protected function getTranslator(): Translator
@@ -52,6 +57,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get db
 	 * @return DatabaseManager
 	 */
 	protected function getDb(): DatabaseManager
@@ -99,6 +105,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get request
 	 * @return Request
 	 */
 	protected function getRequest(): Request
@@ -107,6 +114,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get redirector
 	 * @return Redirector
 	 */
 	protected function getRedirector(): Redirector
@@ -115,6 +123,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get validation
 	 * @return \Illuminate\Validation\Factory
 	 */
 	protected function getValidation(): \Illuminate\Validation\Factory
@@ -123,6 +132,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get event
 	 * @return Dispatcher
 	 */
 	protected function getEvent(): Dispatcher
@@ -131,6 +141,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get logger
 	 * @return LoggerInterface
 	 */
 	protected function getLogger(): LoggerInterface
@@ -139,6 +150,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get response
 	 * @return ResponseFactory
 	 */
 	protected function getResponse()
@@ -147,6 +159,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get file
 	 * @return Filesystem
 	 */
 	protected function getFile()
@@ -155,6 +168,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get url
 	 * @return UrlGenerator
 	 */
 	protected function getUrl()
@@ -163,7 +177,8 @@ trait PoppyTrait
 	}
 
 	/**
-	 * @param string $tag
+	 * get cache
+	 * @param string $tag tag
 	 * @return mixed
 	 */
 	protected function getCache($tag = '')
@@ -177,6 +192,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get redis
 	 * @return RedisManager
 	 */
 	protected function getRedis(): RedisManager
@@ -185,6 +201,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get poppy
 	 * @return Poppy
 	 */
 	protected function getPoppy(): Poppy
@@ -193,6 +210,7 @@ trait PoppyTrait
 	}
 
 	/**
+	 * get view
 	 * @return Factory
 	 */
 	protected function getView(): Factory
@@ -202,8 +220,8 @@ trait PoppyTrait
 
 	/**
 	 * Publish the file to the given path.
-	 * @param string $from
-	 * @param string $to
+	 * @param string $from from
+	 * @param string $to   to
 	 */
 	protected function publishFile($from, $to)
 	{
@@ -213,7 +231,7 @@ trait PoppyTrait
 
 	/**
 	 * Create the directory to house the published files if needed.
-	 * @param $directory
+	 * @param string $directory directory
 	 */
 	protected function createParentDirectory($directory)
 	{
@@ -224,8 +242,9 @@ trait PoppyTrait
 
 	/**
 	 * Publish the directory to the given directory.
-	 * @param $from
-	 * @param $to
+	 * @param string $from from
+	 * @param string $to   to
+	 * @throws \League\Flysystem\FileNotFoundException
 	 */
 	protected function publishDirectory($from, $to)
 	{

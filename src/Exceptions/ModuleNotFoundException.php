@@ -2,11 +2,14 @@
 
 use Exception;
 
+/**
+ * ModuleNotFoundException
+ */
 class ModuleNotFoundException extends Exception
 {
 	/**
 	 * ModuleNotFoundException constructor.
-	 * @param string $slug
+	 * @param string $slug slug
 	 */
 	public function __construct($slug) {
 		parent::__construct('Module with slug name [' . $slug . '] not found');

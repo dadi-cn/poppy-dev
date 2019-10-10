@@ -9,22 +9,42 @@ class TreeHelper
 	 * 生成树型结构所需要的2维数组
 	 * @var array
 	 */
-	public $arr  = [];
+	public $arr = [];
 
+	/**
+	 * Tree
+	 * @var array
+	 */
 	public $tree = [];
 
-	private $key_id;
+	/**
+	 * ID
+	 * @var int
+	 */
+	private $keyId;
 
-	private $key_pid;
+	/**
+	 * PID
+	 * @var int
+	 */
+	private $keyPid;
 
-	private $key_title;
+	/**
+	 * Title
+	 * @var string
+	 */
+	private $keyTitle;
 
 	/**
 	 * 生成树型结构所需修饰符号，可以换成图片
 	 * @var array
 	 */
-	public $icon  = ['&nbsp;│', '&nbsp;├', '&nbsp;└'];
+	public $icon = ['&nbsp;│', '&nbsp;├', '&nbsp;└'];
 
+	/**
+	 * Space
+	 * @var string
+	 */
 	public $space = '&nbsp;';
 
 	/**
@@ -34,33 +54,36 @@ class TreeHelper
 
 	/**
 	 * 构造函数，初始化类
-	 * @param array  $arr 2维数组，例如：
-	 *                    array(
-	 *                    1 => array('id'=>'1','pid'=>0,'name'=>'一级栏目一'),
-	 *                    2 => array('id'=>'2','pid'=>0,'name'=>'一级栏目二'),
-	 *                    3 => array('id'=>'3','pid'=>1,'name'=>'二级栏目一'),
-	 *                    4 => array('id'=>'4','pid'=>1,'name'=>'二级栏目二'),
-	 *                    5 => array('id'=>'5','pid'=>2,'name'=>'二级栏目三'),
-	 *                    6 => array('id'=>'6','pid'=>3,'name'=>'三级栏目一'),
-	 *                    7 => array('id'=>'7','pid'=>3,'name'=>'三级栏目二')
-	 *                    )
-	 * @param string $k_id
-	 * @param string $k_pid
-	 * @param string $k_title
+	 * @param array  $arr     2维数组，例如：
+	 *                        array(
+	 *                        1 => array('id'=>'1','pid'=>0,'name'=>'一级栏目一'),
+	 *                        2 => array('id'=>'2','pid'=>0,'name'=>'一级栏目二'),
+	 *                        3 => array('id'=>'3','pid'=>1,'name'=>'二级栏目一'),
+	 *                        4 => array('id'=>'4','pid'=>1,'name'=>'二级栏目二'),
+	 *                        5 => array('id'=>'5','pid'=>2,'name'=>'二级栏目三'),
+	 *                        6 => array('id'=>'6','pid'=>3,'name'=>'三级栏目一'),
+	 *                        7 => array('id'=>'7','pid'=>3,'name'=>'三级栏目二')
+	 *                        )
+	 * @param string $k_id    id key
+	 * @param string $k_pid   pid key
+	 * @param string $k_title title key
 	 * @return bool
 	 */
 	public function init($arr = [], $k_id = 'id', $k_pid = 'pid', $k_title = 'name')
 	{
-		$this->arr       = $arr;
-		$this->ret       = '';
-		$this->key_id    = $k_id;
-		$this->key_pid   = $k_pid;
-		$this->key_title = $k_title;
+		$this->arr      = $arr;
+		$this->ret      = '';
+		$this->keyId    = $k_id;
+		$this->keyPid   = $k_pid;
+		$this->keyTitle = $k_title;
 
 		return is_array($arr);
 	}
 
-	public function replaceSpace()
+	/**
+	 * 空格替换
+	 */
+	public function replaceSpace(): void
 	{
 		$this->icon  = [' │', ' ├', ' └'];
 		$this->space = ' ';
@@ -68,7 +91,7 @@ class TreeHelper
 
 	/**
 	 * 得到父级数组
-	 * @param int
+	 * @param int id id
 	 * @return array|bool
 	 */
 	public function getParent($id)
@@ -77,11 +100,13 @@ class TreeHelper
 		if (!isset($this->arr[$id])) {
 			return false;
 		}
-		$pid = $this->arr[$id][$this->key_pid];
-		$pid = $this->arr[$pid][$this->key_pid];
+		$pid = $this->arr[$id][$this->keyPid];
+		$pid = $this->arr[$pid][$this->keyPid];
 		if (is_array($this->arr)) {
 			foreach ($this->arr as $kid => $a) {
-				if ($a[$this->key_pid] == $pid) $newArray[$kid] = $a;
+				if ((int) $a[$this->keyPid] === $pid) {
+					$newArray[$kid] = $a;
+				}
 			}
 		}
 
@@ -91,24 +116,26 @@ class TreeHelper
 	/**
 	 * 得到子级数组
 	 * @param int
-	 * @return array
+	 * @return array|bool
 	 */
 	public function getChild($id)
 	{
 		$newArray = [];
 		if (is_array($this->arr)) {
 			foreach ($this->arr as $kid => $a) {
-				if ($a[$this->key_pid] == $id) $newArray[$kid] = $a;
+				if ((int) $a[$this->keyPid] === $id) {
+					$newArray[$kid] = $a;
+				}
 			}
 		}
 
-		return $newArray ? $newArray : false;
+		return $newArray ?: false;
 	}
 
 	/**
 	 * 得到当前位置数组
-	 * @param $id
-	 * @param $newArray
+	 * @param int   $id       id
+	 * @param array $newArray newArray
 	 * @return array|bool
 	 */
 	public function getPos($id, &$newArray)
@@ -116,14 +143,14 @@ class TreeHelper
 		$a = [];
 		if (!isset($this->arr[$id])) return false;
 		$newArray[] = $this->arr[$id];
-		$pid        = $this->arr[$id][$this->key_pid];
+		$pid        = $this->arr[$id][$this->keyPid];
 		if (isset($this->arr[$pid])) {
 			$this->getPos($pid, $newArray);
 		}
 		if (is_array($newArray)) {
 			krsort($newArray);
 			foreach ($newArray as $v) {
-				$a[$v[$this->key_id]] = $v;
+				$a[$v[$this->keyId]] = $v;
 			}
 		}
 
@@ -132,17 +159,17 @@ class TreeHelper
 
 	/**
 	 * 得到树型结构
-	 * @param int    $myid        ID，表示获得这个ID下的所有子级
+	 * @param int    $my_id       ID，表示获得这个ID下的所有子级
 	 * @param string $str         生成树型结构的基本代码，例如："<option value=\$id \$selected>\$spacer\$name</option>"
 	 * @param int    $selected_id 被选中的ID，比如在做树型下拉框的时候需要用到
 	 * @param string $adds        是否添加指示标志
-	 * @param string $str_group
+	 * @param string $str_group   分组
 	 * @return string
 	 */
-	public function getTree($myid, $str, $selected_id = 0, $adds = '', $str_group = '')
+	public function getTree($my_id, $str, $selected_id = 0, $adds = '', $str_group = ''): string
 	{
 		$number   = 1;
-		$children = $this->getChild($myid);
+		$children = $this->getChild($my_id);
 		if (is_array($children)) {
 			$total = count($children);
 			foreach ($children as $node_id => $node) {
@@ -159,7 +186,7 @@ class TreeHelper
 				$selected = $node_id == $selected_id ? 'selected="selected"' : '';
 				@extract($node);
 				$nstr = '';
-				if ($node[$this->key_pid] == 0 && isset($node['str_group'])) {
+				if ($node[$this->keyPid] == 0 && isset($node['str_group'])) {
 					eval("\$nstr = \"$str_group\";");
 				}
 				else {
@@ -175,6 +202,13 @@ class TreeHelper
 		return $this->ret;
 	}
 
+	/**
+	 * 获取树数组
+	 * @param int    $id   id
+	 * @param string $adds 追加
+	 * @param string $type 类型
+	 * @return array
+	 */
 	public function getTreeArray($id, $adds = '', $type = 'default')
 	{
 		$number   = 1;
@@ -190,9 +224,9 @@ class TreeHelper
 					$j .= $this->icon[1];
 					$k = $adds ? $this->icon[0] : '';
 				}
-				$spacer                           = $adds ? $adds . $j : '';
-				$this->tree[$node[$this->key_id]] = $spacer . $node[$this->key_title];
-				$nbsp                             = $this->space;
+				$spacer                          = $adds ? $adds . $j : '';
+				$this->tree[$node[$this->keyId]] = $spacer . $node[$this->keyTitle];
+				$nbsp                            = $this->space;
 				$this->getTreeArray($node_id, $adds . $k . $nbsp);
 				$number++;
 			}
@@ -200,24 +234,24 @@ class TreeHelper
 		if ($type == 'default') {
 			return $this->tree;
 		}
-		 
-			$tree = [];
-			foreach ($this->tree as $key => $value) {
-				$tree[] = [
-					'key'   => $key,
-					'value' => $value,
-				];
-			}
 
-			return $tree;
+		$tree = [];
+		foreach ($this->tree as $key => $value) {
+			$tree[] = [
+				'key'   => $key,
+				'value' => $value,
+			];
+		}
+
+		return $tree;
 	}
 
 	/**
 	 * 同上一方法类似,但允许多选
-	 * @param        $myid
-	 * @param        $str
-	 * @param int    $sid
-	 * @param string $adds
+	 * @param int    $myid id
+	 * @param string $str  字串
+	 * @param int    $sid  id
+	 * @param string $adds 附加信息
 	 * @return string
 	 */
 	public function getTreeMulti($myid, $str, $sid = 0, $adds = '')
@@ -237,7 +271,7 @@ class TreeHelper
 				}
 				$spacer = $adds ? $adds . $j : '';
 
-				$selected = $this->_has($sid, $kid) ? 'selected' : '';
+				$selected = $this->has($sid, $kid) ? 'selected' : '';
 				@extract($a);
 				$nstr = '';
 				eval("\$nstr = \"$str\";");
@@ -251,11 +285,12 @@ class TreeHelper
 	}
 
 	/**
-	 * @param   int    $myid 要查询的ID
-	 * @param   string $str  第一种HTML代码方式
-	 * @param  string  $str2 第二种HTML代码方式
-	 * @param int      $sid  默认选中
-	 * @param string   $adds 前缀
+	 * 树分类
+	 * @param int    $myid 要查询的ID
+	 * @param string $str  第一种HTML代码方式
+	 * @param string $str2 第二种HTML代码方式
+	 * @param int    $sid  默认选中
+	 * @param string $adds 前缀
 	 * @return string
 	 */
 	public function getTreeCategory($myid, $str, $str2, $sid = 0, $adds = '')
@@ -274,7 +309,7 @@ class TreeHelper
 					$k = $adds ? $this->icon[0] : '';
 				}
 				$spacer   = $adds ? $adds . $j : '';
-				$selected = $this->_has($sid, $id) ? 'selected' : '';
+				$selected = $this->has($sid, $id) ? 'selected' : '';
 				@extract($a);
 				$nstr = '';
 				if (empty($html_disabled)) {
@@ -328,8 +363,8 @@ class TreeHelper
 		foreach ($child as $id => $a) {
 			@extract($a);
 			if ($showlevel > 0 && $showlevel == $currentlevel && $this->getChild($id)) $folder = 'hasChildren'; //如设置显示层级模式@2011.07.01
-			$floder_status                                                                     = isset($folder) ? ' class="' . $folder . '"' : '';
-			$this->ret .= $recursion ? '<ul><li' . $floder_status . ' id=\'' . $id . '\'>' : '<li' . $floder_status . ' id=\'' . $id . '\'>';
+			$floder_status = isset($folder) ? ' class="' . $folder . '"' : '';
+			$this->ret     .= $recursion ? '<ul><li' . $floder_status . ' id=\'' . $id . '\'>' : '<li' . $floder_status . ' id=\'' . $id . '\'>';
 			$recursion     = false;
 			$nstr          = '';
 			if ($this->getChild($id)) {
@@ -348,12 +383,20 @@ class TreeHelper
 			}
 			$this->ret .= $recursion ? '</li></ul>' : '</li>';
 		}
-		if (!$recursion) $this->ret .= '</ul>';
+		if (!$recursion) {
+			$this->ret .= '</ul>';
+		}
 
 		return $this->ret;
 	}
 
-	private function _has($list, $item)
+	/**
+	 * 是否存在
+	 * @param string $list 位置
+	 * @param string $item 条目
+	 * @return bool|int
+	 */
+	private function has($list, $item)
 	{
 		return strpos(',,' . $list . ',', ',' . $item . ',');
 	}

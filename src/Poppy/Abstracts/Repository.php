@@ -6,8 +6,12 @@ use Illuminate\Config\Repository as Config;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
+use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Poppy\Contracts\Repository as RepositoryContract;
 
+/**
+ * Repository
+ */
 abstract class Repository implements RepositoryContract
 {
 	/**
@@ -27,8 +31,8 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Constructor method.
-	 * @param Config     $config
-	 * @param Filesystem $files
+	 * @param Config     $config config
+	 * @param Filesystem $files  files
 	 */
 	public function __construct(Config $config, Filesystem $files)
 	{
@@ -38,22 +42,20 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Get a module's manifest contents.
-	 * @param string $slug
+	 * @param string $slug slug
 	 * @return Collection
 	 * @throws Exception
 	 */
-	public function getManifest($slug)
+	public function getManifest($slug): Collection
 	{
 		if (!is_null($slug)) {
 			$path     = $this->getManifestPath($slug);
 			$contents = $this->files->get($path);
 			@json_decode($contents, true);
 			if (json_last_error() === JSON_ERROR_NONE) {
-				$collection = collect(json_decode($contents, true));
-
-				return $collection;
+				return collect(json_decode($contents, true));
 			}
-			throw new Exception(
+			throw new ApplicationException(
 				'[' . $slug . '] Your JSON manifest file was not properly formatted. ' .
 				'Check for formatting issues and try again.'
 			);
@@ -61,40 +63,40 @@ abstract class Repository implements RepositoryContract
 	}
 
 	/**
-	 * Get modules path.
-	 * @return string
-	 */
-	public function getPath()
-	{
-		return $this->path ?: app('path.module');
-	}
-
-	/**
-	 * Set modules path in "RunTime" mode.
-	 * @param string $path
-	 * @return object $this
-	 */
-	public function setPath($path)
-	{
-		$this->path = $path;
-
-		return $this;
-	}
-
-	/**
 	 * Get path for the specified module.
 	 * @param string $slug
 	 * @return string
 	 */
-	public function getModulePath($slug)
+	public function getModulePath($slug): string
 	{
-		$module = studly_case(str_slug($slug));
+		// poppy module
+		if (str_contains($slug, '.')) {
+			$poppyModule = str_after($slug, '.');
+			$poppyPath   = app('path.poppy');
+			if (File::exists($poppyPath . "/{$poppyModule}/")) {
+				return $poppyPath . "/{$poppyModule}/";
+			}
 
-		if (File::exists($this->getPath() . "/{$module}/")) {
-			return $this->getPath() . "/{$module}/";
+			return $poppyPath . "/{$poppyModule}/";
+	 * Set modules path in "RunTime" mode.
+	 * @param string $path path
+	 * @return object $this
+	 */
+	public function setPath($path)
 		}
 
-		return $this->getPath() . "/{$slug}/";
+		$module     = studly_case(str_slug($slug));
+	 * @param string $slug slug
+	 * @return string
+	 */
+	public function getModulePath($slug)
+	{
+		$modulePath = app('path.module');
+		if (File::exists($modulePath . "/{$module}/")) {
+			return $modulePath . "/{$module}/";
+		}
+
+		return $modulePath . "/{$slug}/";
 	}
 
 	/**
@@ -108,7 +110,7 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Get path of module manifest file.
-	 * @param $slug
+	 * @param string $slug $slug
 	 * @return string
 	 */
 	protected function getManifestPath($slug)
@@ -121,17 +123,22 @@ abstract class Repository implements RepositoryContract
 	 * Get all module base names.
 	 * @return Collection
 	 */
-	protected function getAllBaseNames()
+	protected function getAllBaseNames(): Collection
 	{
-		$path = $this->getPath();
-
 		try {
-			$collection = collect($this->files->directories($path));
+			$collection = collect($this->files->directories(app('path.module')));
 
 			$baseNames = $collection->map(function ($item, $key) {
 				return basename($item);
 			});
 
+			// poppy path
+			$collection = collect($this->files->directories(app('path.poppy')));
+			$collection->each(function ($item) use ($baseNames) {
+				if ($this->files->exists($item . '/manifest.json')) {
+					$baseNames->push('poppy.' . basename($item));
+				}
+			});
 			return $baseNames;
 		} catch (InvalidArgumentException $e) {
 			return collect([]);

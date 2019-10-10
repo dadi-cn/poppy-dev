@@ -1,6 +1,6 @@
 <?php namespace DummyNamespace\Http\Request\Backend;
 
-use System\Http\Request\Backend\BackendController;
+use Poppy\System\Http\Request\Backend\BackendController;
 
 class DemoController extends BackendController
 {

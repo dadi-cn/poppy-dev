@@ -22,7 +22,18 @@ class PoppyTest extends TestCase
 
 	public function testPath(): void
 	{
-		$this->assertEquals(base_path('framework'), app('path.framework'));
+		$this->assertEquals(base_path('poppy/framework'), app('path.framework'));
 		$this->assertEquals(base_path('modules'), app('path.module'));
+	}
+
+	public function testAll()
+	{
+		$all = app('poppy')->all();
+
+	}
+
+	public function testOptimize()
+	{
+		app('poppy')->optimize();
 	}
 }

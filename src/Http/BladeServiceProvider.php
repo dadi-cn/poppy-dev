@@ -1,8 +1,11 @@
-<?php namespace Poppy\Framework\Providers;
+<?php namespace Poppy\Framework\Http;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 
+/**
+ * BladeServiceProvider
+ */
 class BladeServiceProvider extends ServiceProvider
 {
 	/**

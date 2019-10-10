@@ -3,6 +3,7 @@
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -14,6 +15,9 @@ use Request;
 use Response;
 use Session;
 
+/**
+ * Resp
+ */
 class Resp
 {
 	const SUCCESS       = 0;
@@ -29,10 +33,23 @@ class Resp
 	const WEB_SUCCESS = 'success';
 	const WEB_ERROR   = 'error';
 
+	/**
+	 * code
+	 * @var int $code
+	 */
 	private $code;
 
+	/**
+	 * message
+	 * @var array|Translator|string|null $message
+	 */
 	private $message = '操作出错了';
 
+	/**
+	 * Resp constructor.
+	 * @param int    $code    code
+	 * @param string $message message
+	 */
 	public function __construct($code, $message = '')
 	{
 		// init
@@ -115,17 +132,17 @@ class Resp
 
 	/**
 	 * 错误输出
-	 * @param $type     int  错误码
-	 * @param $msg      string|array|MessageBag  类型
-	 * @param $append   string
-	 *                  json: 强制以 json 数据返回
-	 *                  forget : 不将错误信息返回到session 中
-	 *                  location : 重定向
-	 *                  reload : 刷新页面
-	 *                  time   : 刷新或者重定向的时间(毫秒), 如果不填写, 默认为立即刷新或者重定向
-	 *                  reload_opener : 刷新母窗口
-	 * @param $input    array 表单提交的数据, 是否连带返回
-	 * @return JsonResponse|RedirectResponse|\Illuminate\Http\Response|Redirector
+	 * @param int                     $type   错误码
+	 * @param string|array|MessageBag $msg    类型
+	 * @param string                  $append append
+	 *                                        json: 强制以 json 数据返回
+	 *                                        forget : 不将错误信息返回到session 中
+	 *                                        location : 重定向
+	 *                                        reload : 刷新页面
+	 *                                        time   : 刷新或者重定向的时间(毫秒), 如果不填写, 默认为立即刷新或者重定向
+	 *                                        reload_opener : 刷新母窗口
+	 * @param array                   $input  表单提交的数据, 是否连带返回
+	 * @return JsonResponse|RedirectResponse|Response|Redirector
 	 */
 	public static function web($type, $msg, $append = null, $input = null)
 	{
@@ -181,6 +198,12 @@ class Resp
 		return self::webView($time, $location, $input);
 	}
 
+	/**
+	 * data
+	 * @param string $type type
+	 * @param string $msg  msg
+	 * @return array
+	 */
 	public static function data($type, $msg)
 	{
 		if (!($msg instanceof self)) {
@@ -193,6 +216,10 @@ class Resp
 		return $resp->toArray();
 	}
 
+	/**
+	 * __toString
+	 * @return array|Translator|string|null
+	 */
 	public function __toString()
 	{
 		if (is_array($this->message)) {
@@ -202,6 +229,10 @@ class Resp
 		return $this->message;
 	}
 
+	/**
+	 * to array
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [
@@ -215,7 +246,7 @@ class Resp
 	 * @param string|array|MessageBag $msg    提示消息
 	 * @param string                  $append 追加的信息
 	 * @param string                  $input  保留输入的数据
-	 * @return array|JsonResponse|RedirectResponse|\Illuminate\Http\Response|Redirector
+	 * @return array|JsonResponse|RedirectResponse|Response|Redirector
 	 */
 	public static function success($msg, $append = null, $input = null)
 	{
@@ -227,7 +258,7 @@ class Resp
 	 * @param string|array|MessageBag $msg    提示消息
 	 * @param string                  $append 追加的信息
 	 * @param string                  $input  保留输入的数据
-	 * @return array|JsonResponse|RedirectResponse|\Illuminate\Http\Response|Redirector
+	 * @return array|JsonResponse|RedirectResponse|Response|Redirector
 	 */
 	public static function error($msg, $append = null, $input = null)
 	{
@@ -236,8 +267,8 @@ class Resp
 
 	/**
 	 * 返回自定义信息
-	 * @param        $code
-	 * @param string $message
+	 * @param int    $code    code
+	 * @param string $message message
 	 * @return array
 	 */
 	public static function custom($code, $message = '')
@@ -247,9 +278,9 @@ class Resp
 
 	/**
 	 * 显示界面
-	 * @param $time
-	 * @param $location
-	 * @param $input
+	 * @param mixed  $time     time
+	 * @param string $location location
+	 * @param array  $input    input
 	 * @return RedirectResponse|Resp
 	 */
 	private static function webView($time, $location, $input)
@@ -290,9 +321,9 @@ class Resp
 	/**
 	 * 不支持 location
 	 * splash 不支持 location | back (Mark Zhao)
-	 * @param Resp         $resp
-	 * @param string|array $append
-	 * @param array        $input
+	 * @param Resp         $resp   resp
+	 * @param string|array $append append
+	 * @param array        $input  input
 	 * @return JsonResponse
 	 */
 	private static function webSplash($resp, $append = '', $input = [])
@@ -330,7 +361,7 @@ class Resp
 
 	/**
 	 * 数据分析最佳
-	 * @param array $append
+	 * @param array $append append
 	 * @return array
 	 */
 	private static function append($append): array

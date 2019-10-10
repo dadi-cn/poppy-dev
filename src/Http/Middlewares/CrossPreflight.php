@@ -16,7 +16,7 @@ class CrossPreflight
 
 	/**
 	 * EnableCrossRequest constructor.
-	 * @param ResponseFactory $response
+	 * @param ResponseFactory $response response
 	 */
 	public function __construct(ResponseFactory $response)
 	{
@@ -25,22 +25,22 @@ class CrossPreflight
 
 	/**
 	 * Middleware handler.
-	 * @param Request $request
-	 * @param Closure $next
+	 * @param Request $request request
+	 * @param Closure $next    next
 	 * @return mixed
 	 */
 	public function handle(Request $request, Closure $next)
 	{
 		$headers = [
 			'Access-Control-Allow-Origin'      => '*',
-			'Access-Control-Allow-Headers'     => 'Origin,Content-Type,Cookie,Accept,Authorization,X-Requested-With',
+			'Access-Control-Allow-Headers'     => 'Origin,Content-Type,Cookie,Accept,Authorization,X-Requested-With,X-APP-OS',
 			'Access-Control-Allow-Methods'     => 'DELETE,GET,POST,PATCH,PUT,OPTIONS',
 			'Access-Control-Allow-Credentials' => 'true',
 		];
 		if ($request->getMethod() == 'OPTIONS') {
 			return $this->response->make('OK', 200, $headers);
 		}
-		 
-			return $next($request);
+
+		return $next($request);
 	}
 }

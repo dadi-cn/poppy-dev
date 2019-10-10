@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider as ServiceProviderBase;
 use Poppy\Framework\Agamotto\Agamotto;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
+/**
+ * PoppyServiceProvider
+ */
 abstract class PoppyServiceProvider extends ServiceProviderBase
 {
 	/**
@@ -34,7 +37,7 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 			$modulePath = poppy_path($module);
 			$this->loadViewsFrom($modulePath . '/resources/views', $module);
 			$this->loadTranslationsFrom($modulePath . '/resources/lang', $module);
-			$this->loadMigrationsFrom($modulePath . '/src/database/migrations');
+			$this->loadMigrationsFrom($modulePath . '/resources/database/migrations');
 
 			if ($this->listens) {
 				$this->bootListener();
@@ -62,8 +65,8 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 
 			return $slug;
 		}
-		 
-			return null;
+
+		return null;
 	}
 
 	/**
@@ -103,6 +106,10 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 		}
 	}
 
+	/**
+	 * consoleLog
+	 * @return string
+	 */
 	protected function consoleLog()
 	{
 		$day = Agamotto::now()->toDateString();

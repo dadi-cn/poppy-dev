@@ -3,8 +3,14 @@
 use Poppy\Framework\Application\TestCase;
 use Poppy\Framework\Helper\ArrayHelper;
 
+/**
+ * ArrayHelperTest
+ */
 class ArrayHelperTest extends TestCase
 {
+	/**
+	 * testCombine
+	 */
 	public function testCombine()
 	{
 		$arr     = [

@@ -4,35 +4,34 @@ use stdClass;
 
 /**
  * Methods that may be useful for processing routing activity
- *
- * @package october\router
  * @author  Alexey Bobkov, Samuel Georges
  */
 class RouterHelper
 {
 	/**
 	 * Adds leading slash and removes trailing slash from the URL.
-	 *
 	 * @param string $url URL to normalize
 	 * @return string returns normalized URL
 	 */
 	public static function normalizeUrl($url)
 	{
-		if (substr($url, 0, 1) != '/')
+		if (strpos($url, '/') !== 0) {
 			$url = '/' . $url;
+		}
 
-		if (substr($url, -1) == '/')
+		if (substr($url, -1) === '/') {
 			$url = substr($url, 0, -1);
+		}
 
-		if (!strlen($url))
+		if ($url === '') {
 			$url = '/';
+		}
 
 		return $url;
 	}
 
 	/**
 	 * Splits an URL by segments separated by the slash symbol.
-	 *
 	 * @param string $url URL to segmentize
 	 * @return array returns the URL segments
 	 */
@@ -43,7 +42,7 @@ class RouterHelper
 
 		$result = [];
 		foreach ($segments as $segment) {
-			if (strlen($segment)) {
+			if ($segment !== '') {
 				$result[] = $segment;
 			}
 		}
@@ -53,7 +52,6 @@ class RouterHelper
 
 	/**
 	 * Rebuilds a URL from an array of segments.
-	 *
 	 * @param array $urlArray array the URL segments
 	 * @return string returns rebuilt URL
 	 */
@@ -61,7 +59,7 @@ class RouterHelper
 	{
 		$url = '';
 		foreach ($urlArray as $segment) {
-			if (strlen($segment)) {
+			if ($segment !== '') {
 				$url .= '/' . trim($segment);
 			}
 		}
@@ -71,10 +69,9 @@ class RouterHelper
 
 	/**
 	 * Replaces :column_name with it's object value. Example: /some/link/:id/:name -> /some/link/1/Joe
-	 *
-	 * @param stdClass $object  Object containing the data
-	 * @param array     $columns Expected key names to parse
-	 * @param string    $string  URL template
+	 * @param stdClass|array $object  Object containing the data
+	 * @param array          $columns Expected key names to parse
+	 * @param string         $string  URL template
 	 * @return string Built string
 	 */
 	public static function parseValues($object, array $columns, $string)
@@ -156,8 +153,8 @@ class RouterHelper
 			if ($optMarkerPos < $regexMarkerPos) {
 				return mb_substr($name, 0, $optMarkerPos);
 			}
-			 
-				return mb_substr($name, 0, $regexMarkerPos);
+
+			return mb_substr($name, 0, $regexMarkerPos);
 		}
 
 		if ($optMarkerPos !== false) {
@@ -212,6 +209,6 @@ class RouterHelper
 			$value = mb_substr($segment, $optMarkerPos + 1);
 		}
 
-		return strlen($value) ? $value : false;
+		return $value !== '' ? $value : false;
 	}
 }

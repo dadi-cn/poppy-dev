@@ -6,7 +6,6 @@ use Symfony\Component\Yaml\Parser;
 /**
  * Yaml helper class
  *
- * @package october\parse
  * @author  Alexey Bobkov, Samuel Georges
  */
 class Yaml
@@ -37,8 +36,8 @@ class Yaml
 
 	/**
 	 * Renders a PHP array to YAML format.
-	 * @param array $vars
-	 * @param array $options
+	 * @param array $vars    vars
+	 * @param array $options options
 	 *
 	 * Supported options:
 	 * - inline: The level where you switch to inline YAML.

@@ -79,38 +79,14 @@ $ php artisan poppy:disable {slug}
 $ php artisan poppy:optimize
 ```
 
-### Poppy 文档
-
-使用 php-cs-fixer 修复代码风格, .php_cs 样式在根目录文件夹中.
-```
-$ php artisan poppy:doc {phpcs/cs} 
-```
-
-使用 phplint 检测代码错误
-```
-$ php artisan poppy:doc {phplint/lint} 
-```
-
-使用 Sami 生成 php 文档, 可以找到 modules 文件夹下的所有 php 文件
-
-```
-$ php artisan poppy:doc {sami/php} 
-```
-
-显示当前 tail 日志命令
-
-```
-$ php artisan poppy:doc {log} 
-```
-
 ### Poppy 数据库管理
 
 ```
-poppy:migrate           Run the database migrations for a specific or all modules
-poppy:migrate:refresh   Reset and re-run all migrations for a specific or all modules
-poppy:migrate:reset     Rollback all database migrations for a specific or all modules
-poppy:migrate:rollback  Rollback the last database migrations for a specific or all modules
-poppy:migration {slug}  Create a new module migration file
+poppy:migrate           执行模块的数据库迁移文件
+poppy:migrate:refresh   重新执行模块数据库迁移文件
+poppy:migrate:reset     回滚所有执行的数据库迁移
+poppy:migrate:rollback  回滚执行完的上一个数据库迁移
+poppy:migration {slug}  创建一个指定模块的数据库迁移文件
 ```
 
 ## Poppy 生成器
@@ -128,6 +104,56 @@ php artisan poppy:request {slug} {name}
 php artisan poppy:seed {slug} {name}
 php artisan poppy:seeder {slug} {name}
 php artisan poppy:test {slug} {name}
+```
+
+### 生成命令文件
+```
+php artisan poppy:command {slug} {name}
+```
+
+### 生成控制器文件
+```
+php artisan poppy:controller {slug} {api/web} {name}
+```
+
+### 生成中间件文件
+```
+php artisan poppy:middleware {slug} {name}
+```
+
+### 生成数据库模型文件
+```
+php artisan poppy:model {slug} {name}
+```
+
+### 生成policy策略文件
+```
+php artisan poppy:policy {slug} {name}
+```
+
+### 生成服务提供者provider文件
+```
+php artisan poppy:provider {slug} {name}
+```
+
+### 生成request文件
+```
+php artisan poppy:request {slug} {name}
+```
+
+### 生成种子文件
+```
+php artisan poppy:seeder {slug} {name}
+```
+
+### 写入种子
+```
+php artisan poppy:seed
+```
+
+### 生成测试文件
+```
+php artisan poppy:test
 ```
 
 

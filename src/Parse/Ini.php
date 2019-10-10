@@ -7,8 +7,7 @@
  * - Parsing supports infinite array nesting
  * - Ability to render INI from a PHP array
  *
- * @package october\parse
- * @author Alexey Bobkov, Samuel Georges
+ * @author  Alexey Bobkov, Samuel Georges
  */
 class Ini
 {
@@ -91,7 +90,7 @@ class Ini
 	 * - name[validation|regex|message]
 	 * Converts to:
 	 * - name => [validation => [regex => [message]]]
-	 * @param array $array
+	 * @param array $array array
 	 * @return array
 	 */
 	protected function parsePostProcess($array)
@@ -112,9 +111,9 @@ class Ini
 	/**
 	 * Expands a single array property from traditional INI syntax.
 	 * If no key is given to the method, the entire array will be replaced.
-	 * @param  array   $array
-	 * @param  string  $key
-	 * @param  mixed   $value
+	 * @param array  $array array
+	 * @param string $key   key
+	 * @param mixed  $value value
 	 * @return array
 	 */
 	public function expandProperty(&$array, $key, $value)
@@ -132,7 +131,7 @@ class Ini
 				$array[$key] = [];
 			}
 
-			$array = & $array[$key];
+			$array = &$array[$key];
 		}
 
 		$array[array_shift($keys)] = $value;
@@ -142,8 +141,8 @@ class Ini
 
 	/**
 	 * Formats an INI file string from an array
-	 * @param array $vars data to format
-	 * @param int $level specifies the level of array value
+	 * @param array $vars  data to format
+	 * @param int   $level specifies the level of array value
 	 * @return string returns the INI file string
 	 */
 	public function render($vars = [], $level = 1)
@@ -176,7 +175,7 @@ class Ini
 
 	/**
 	 * Renders section properties.
-	 * @param array $vars
+	 * @param array $vars vars
 	 * @return string
 	 */
 	protected function renderProperties($vars = [])
@@ -214,8 +213,8 @@ class Ini
 
 	/**
 	 * Flatten a multi-dimensional associative array for traditional INI syntax.
-	 * @param  array   $array
-	 * @param  string  $prepend
+	 * @param array  $array array
+	 * @param string $prepend prepend
 	 * @return array
 	 */
 	protected function flattenProperties($array, $prepend = '')
@@ -259,7 +258,7 @@ class Ini
 	/**
 	 * Checks if the array is the final node in a multidimensional array.
 	 * Checked supplied array is not associative and contains no array values.
-	 * @param array $array
+	 * @param array $array array
 	 * @return bool
 	 */
 	protected function isFinalArray(array $array)

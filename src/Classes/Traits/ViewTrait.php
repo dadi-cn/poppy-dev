@@ -11,8 +11,8 @@ trait ViewTrait
 	/**
 	 * Share variable with view.
 	 *
-	 * @param      $key
-	 * @param null $value
+	 * @param string $key   key
+	 * @param null   $value value
 	 */
 	protected function share($key, $value = null)
 	{
@@ -22,9 +22,9 @@ trait ViewTrait
 	/**
 	 * Share variable with view.
 	 *
-	 * @param       $template
-	 * @param array $data
-	 * @param array $mergeData
+	 * @param string $template  template
+	 * @param array  $data      data
+	 * @param array  $mergeData mergeData
 	 *
 	 * @return View
 	 */

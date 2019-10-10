@@ -10,7 +10,7 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function array()
+	public static function array(): string
 	{
 		return 'array';
 	}
@@ -19,7 +19,7 @@ class Rule extends IlluminateRule
 	 * 验证的字段必须完全是字母的字符
 	 * @return string
 	 */
-	public static function alpha()
+	public static function alpha(): string
 	{
 		return 'alpha';
 	}
@@ -28,7 +28,7 @@ class Rule extends IlluminateRule
 	 * 验证的字段可能具有字母、数字、破折号（ - ）以及下划线（ _ ）
 	 * @return string
 	 */
-	public static function alphaDash()
+	public static function alphaDash(): string
 	{
 		return 'alpha_dash';
 	}
@@ -37,7 +37,7 @@ class Rule extends IlluminateRule
 	 * string rule
 	 * @return string
 	 */
-	public static function string()
+	public static function string(): string
 	{
 		return 'string';
 	}
@@ -47,27 +47,27 @@ class Rule extends IlluminateRule
 	 * string rule
 	 * @return string
 	 */
-	public static function chid()
+	public static function chid(): string
 	{
 		return 'chid';
 	}
 
 	/**
 	 * size
-	 * @param $length
+	 * @param int $length length
 	 * @return string
 	 */
-	public static function size($length)
+	public static function size($length): string
 	{
 		return 'size:' . $length;
 	}
 
 	/**
 	 * max
-	 * @param $length
+	 * @param int $length length
 	 * @return string
 	 */
-	public static function max($length)
+	public static function max($length): string
 	{
 		return 'max:' . $length;
 	}
@@ -75,16 +75,17 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function boolean()
+	public static function boolean(): string
 	{
 		return 'boolean';
 	}
 
 	/**
-	 * @param $format
+	 * date format
+	 * @param string $format format
 	 * @return string
 	 */
-	public static function dateFormat($format)
+	public static function dateFormat($format): string
 	{
 		return 'date_format:' . $format;
 	}
@@ -92,7 +93,7 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function date()
+	public static function date(): string
 	{
 		return 'date';
 	}
@@ -100,7 +101,7 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function nullable()
+	public static function nullable(): string
 	{
 		return 'nullable';
 	}
@@ -108,7 +109,7 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function email()
+	public static function email(): string
 	{
 		return 'email';
 	}
@@ -116,7 +117,7 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function file()
+	public static function file(): string
 	{
 		return 'file';
 	}
@@ -124,16 +125,17 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function image()
+	public static function image(): string
 	{
 		return 'image';
 	}
 
 	/**
-	 * @param array $mimeTypes
+	 * mimetypes
+	 * @param array $mimeTypes $mimeTypes
 	 * @return string
 	 */
-	public static function mimetypes(array $mimeTypes)
+	public static function mimetypes(array $mimeTypes): string
 	{
 		return 'mimetypes:' . implode(',', $mimeTypes);
 	}
@@ -141,16 +143,17 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function numeric()
+	public static function numeric(): string
 	{
 		return 'numeric';
 	}
 
 	/**
-	 * @param $regex
+	 * regex
+	 * @param string $regex regex
 	 * @return string
 	 */
-	public static function regex($regex)
+	public static function regex($regex): string
 	{
 		return 'regex:' . $regex;
 	}
@@ -158,12 +161,15 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function required()
+	public static function required(): string
 	{
 		return 'required';
 	}
 
-	public static function confirmed()
+	/**
+	 * @return string
+	 */
+	public static function confirmed(): string
 	{
 		return 'confirmed';
 	}
@@ -171,7 +177,7 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function mobile()
+	public static function mobile(): string
 	{
 		return 'mobile';
 	}
@@ -179,7 +185,7 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function password()
+	public static function password(): string
 	{
 		return 'password';
 	}
@@ -187,28 +193,28 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function url()
+	public static function url(): string
 	{
 		return 'url';
 	}
 
 	/**
 	 * Between String
-	 * @param $start
-	 * @param $end
+	 * @param int $start start
+	 * @param int $end   end
 	 * @return string
 	 */
-	public static function between($start, $end)
+	public static function between($start, $end): string
 	{
 		return 'between:' . $start . ',' . $end;
 	}
 
 	/**
 	 * 最小数
-	 * @param $value
+	 * @param string $value 最小值
 	 * @return string
 	 */
-	public static function min($value)
+	public static function min($value): string
 	{
 		return 'min:' . $value;
 	}
@@ -216,7 +222,7 @@ class Rule extends IlluminateRule
 	/**
 	 * @return string
 	 */
-	public static function integer()
+	public static function integer(): string
 	{
 		return 'integer';
 	}
