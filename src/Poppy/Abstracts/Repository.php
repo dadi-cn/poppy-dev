@@ -63,6 +63,27 @@ abstract class Repository implements RepositoryContract
 	}
 
 	/**
+	 * Get modules path.
+	 * @return string
+	 */
+	public function getPath()
+	{
+		return $this->path ?: app('path.module');
+	}
+
+	/**
+	 * Set modules path in "RunTime" mode.
+	 * @param string $path
+	 * @return object $this
+	 */
+	public function setPath($path)
+	{
+		$this->path = $path;
+
+		return $this;
+	}
+
+	/**
 	 * Get path for the specified module.
 	 * @param string $slug
 	 * @return string
@@ -78,19 +99,9 @@ abstract class Repository implements RepositoryContract
 			}
 
 			return $poppyPath . "/{$poppyModule}/";
-	 * Set modules path in "RunTime" mode.
-	 * @param string $path path
-	 * @return object $this
-	 */
-	public function setPath($path)
 		}
 
 		$module     = studly_case(str_slug($slug));
-	 * @param string $slug slug
-	 * @return string
-	 */
-	public function getModulePath($slug)
-	{
 		$modulePath = app('path.module');
 		if (File::exists($modulePath . "/{$module}/")) {
 			return $modulePath . "/{$module}/";
@@ -110,7 +121,7 @@ abstract class Repository implements RepositoryContract
 
 	/**
 	 * Get path of module manifest file.
-	 * @param string $slug $slug
+	 * @param $slug
 	 * @return string
 	 */
 	protected function getManifestPath($slug)
