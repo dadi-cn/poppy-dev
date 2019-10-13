@@ -1,5 +1,6 @@
 <?php namespace Poppy\Framework\Console\Generators;
 
+use Illuminate\Support\Str;
 use Poppy\Framework\Console\GeneratorCommand;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
@@ -57,6 +58,6 @@ class MakeControllerCommand extends GeneratorCommand
 			$type = 'web';
 		}
 
-		return poppy_class($this->argument('slug'), 'Http\\Request\\' . studly_case($type));
+		return poppy_class($this->argument('slug'), 'Http\\Request\\' . Str::studly($type));
 	}
 }

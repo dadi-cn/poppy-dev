@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Helper\HtmlHelper;
 
@@ -17,7 +19,7 @@ if (!function_exists('route_url')) {
 			$route_params = [];
 		}
 		if ($route === '') {
-			$route = Route::currentRouteName();
+			$route = Route::currentRouteName() ?? '';
 			if (empty($route)) {
 				return '';
 			}
@@ -110,7 +112,7 @@ if (!function_exists('input')) {
 	function input($name = null, $default = null)
 	{
 		if ($name === null) {
-			return Input::all();
+			return Request::all();
 		}
 
 		/*
@@ -118,7 +120,7 @@ if (!function_exists('input')) {
 		 */
 		$name = implode('.', HtmlHelper::nameToArray($name));
 
-		return Input::get($name, $default);
+		return Request::get($name, $default);
 	}
 }
 
@@ -129,7 +131,7 @@ if (!function_exists('is_post')) {
 	 */
 	function is_post()
 	{
-		return Input::method() === 'POST';
+		return Request::method() === 'POST';
 	}
 }
 
@@ -151,7 +153,7 @@ if (!function_exists('post')) {
 		 */
 		$name = implode('.', HtmlHelper::nameToArray($name));
 
-		return array_get($_POST, $name, $default);
+		return Arr::get($_POST, $name, $default);
 	}
 }
 
@@ -173,7 +175,7 @@ if (!function_exists('get')) {
 		 */
 		$name = implode('.', HtmlHelper::nameToArray($name));
 
-		return array_get($_GET, $name, $default);
+		return Arr::get($_GET, $name, $default);
 	}
 }
 
@@ -189,9 +191,9 @@ if (!function_exists('poppy_path')) {
 	{
 		$modulesPath = app('path.module');
 
-		if (str_contains($slug, '.')) {
+		if (Str::contains($slug, '.')) {
 			$modulesPath = app('path.poppy');
-			$slug        = str_after($slug, '.');
+			$slug        = Str::after($slug, '.');
 		}
 
 		$filePath = $file ? '/' . ltrim($file, '/') : '';
@@ -230,7 +232,7 @@ if (!function_exists('poppy_class')) {
 			throw new ModuleNotFoundException($slug);
 		}
 
-		$namespace = studly_case($module['slug']);
+		$namespace = Str::studly($module['slug']);
 		if ($class) {
 			return "{$namespace}\\{$class}";
 		}

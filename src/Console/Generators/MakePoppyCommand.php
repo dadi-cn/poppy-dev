@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Poppy\Framework\Events\PoppyMake;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Poppy\Poppy;
@@ -72,14 +73,15 @@ class MakePoppyCommand extends Command
 			return false;
 		}
 
-		$this->container['slug']        = str_slug($this->argument('slug'));
-		$this->container['name']        = snake_case($this->container['slug']);
+
+		$this->container['slug']        = Str::slug($this->argument('slug'));
+		$this->container['name']        = Str::snake($this->container['slug']);
 		$this->container['version']     = '1.0';
 		$this->container['description'] = 'This is the description for the poppy ' . $this->container['name'] . ' module.';
 
 		if ($this->option('quick')) {
-			$this->container['basename']  = snake_case($this->container['slug']);
-			$this->container['namespace'] = studly_case($this->container['basename']);
+			$this->container['basename']  = Str::snake($this->container['slug']);
+			$this->container['namespace'] = Str::studly($this->container['basename']);
 
 			return $this->generate();
 		}
@@ -102,7 +104,7 @@ class MakePoppyCommand extends Command
 		$this->container['slug']        = $this->ask('Please enter the slug for the module:', $this->container['slug']);
 		$this->container['version']     = $this->ask('Please enter the module version:', $this->container['version']);
 		$this->container['description'] = $this->ask('Please enter the description of the module:', $this->container['description']);
-		$this->container['namespace']   = studly_case($this->container['slug']);
+		$this->container['namespace']   = Str::studly($this->container['slug']);
 
 		$this->comment('You have provided the following manifest information:');
 		$this->comment('Name:                       ' . $this->container['name']);

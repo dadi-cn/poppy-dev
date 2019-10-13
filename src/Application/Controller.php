@@ -64,7 +64,7 @@ abstract class Controller extends BaseController
 		// pagesize
 		$this->pagesize = config('poppy.pages.default_size', 15);
 		$maxPagesize    = config('poppy.pages.max_size');
-		if (Input::get('pagesize')) {
+		if (input('pagesize')) {
 			$pagesize = abs((int) input('pagesize'));
 			$pagesize = ($pagesize <= $maxPagesize) ? $pagesize : $maxPagesize;
 			if ($pagesize > 0) {

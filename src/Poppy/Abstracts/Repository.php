@@ -5,6 +5,7 @@ use File;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Poppy\Contracts\Repository as RepositoryContract;
@@ -91,8 +92,8 @@ abstract class Repository implements RepositoryContract
 	public function getModulePath($slug): string
 	{
 		// poppy module
-		if (str_contains($slug, '.')) {
-			$poppyModule = str_after($slug, '.');
+		if (Str::contains($slug, '.')) {
+			$poppyModule = Str::after($slug, '.');
 			$poppyPath   = app('path.poppy');
 			if (File::exists($poppyPath . "/{$poppyModule}/")) {
 				return $poppyPath . "/{$poppyModule}/";
@@ -101,7 +102,7 @@ abstract class Repository implements RepositoryContract
 			return $poppyPath . "/{$poppyModule}/";
 		}
 
-		$module     = studly_case(str_slug($slug));
+		$module     = Str::studly(str_slug($slug));
 		$modulePath = app('path.module');
 		if (File::exists($modulePath . "/{$module}/")) {
 			return $modulePath . "/{$module}/";

@@ -105,7 +105,8 @@ class Translator extends IlluminateTranslator
 		if (is_string($line)) {
 			return $this->makeReplacements($line, $replace);
 		}
-		elseif (is_array($line) && count($line) > 0) {
+
+		if (is_array($line) && count($line) > 0) {
 			return $line;
 		}
 	}
@@ -138,4 +139,5 @@ class Translator extends IlluminateTranslator
 	{
 		return isset($this->loaded[$locale][$namespace][$group]);
 	}
+
 }

@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Classes;
 
 use Exception;
+use Illuminate\Support\Str;
 use Poppy\Framework\Filesystem\Filesystem;
 use Throwable;
 
@@ -226,7 +227,7 @@ class ClassLoader
 				$carry .= DIRECTORY_SEPARATOR;
 			}
 
-			return $carry . snake_case($directory);
+			return $carry . Str::snake($directory);
 		});
 
 		/*

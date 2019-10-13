@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\MessageBag;
-use Input;
+use Illuminate\Support\Str;
 use Poppy\Framework\Helper\StrHelper;
 use Redirect;
 use Request;
@@ -20,18 +20,15 @@ use Session;
  */
 class Resp
 {
-	const SUCCESS       = 0;
-	const ERROR         = 1;
-	const TOKEN_MISS    = 2;
-	const TOKEN_TIMEOUT = 3;
-	const TOKEN_ERROR   = 4;
-	const PARAM_ERROR   = 5;
-	const SIGN_ERROR    = 6;
-	const NO_AUTH       = 7;
-	const INNER_ERROR   = 99;
-
-	const WEB_SUCCESS = 'success';
-	const WEB_ERROR   = 'error';
+	public const SUCCESS       = 0;
+	public const ERROR         = 1;
+	public const TOKEN_MISS    = 2;
+	public const TOKEN_TIMEOUT = 3;
+	public const TOKEN_ERROR   = 4;
+	public const PARAM_ERROR   = 5;
+	public const SIGN_ERROR    = 6;
+	public const NO_AUTH       = 7;
+	public const INNER_ERROR   = 99;
 
 	/**
 	 * code
@@ -74,32 +71,32 @@ class Resp
 		if (!$message) {
 			switch ($code) {
 				case self::SUCCESS:
-					$message = trans('poppy::resp.success');
+					$message = (string) trans('poppy::resp.success');
 					break;
 				case self::ERROR:
-					$message = trans('poppy::resp.error');
+					$message = (string) trans('poppy::resp.error');
 					break;
 				case self::TOKEN_MISS:
-					$message = trans('poppy::resp.token_miss');
+					$message = (string) trans('poppy::resp.token_miss');
 					break;
 				case self::TOKEN_TIMEOUT:
-					$message = trans('poppy::resp.token_timeout');
+					$message = (string) trans('poppy::resp.token_timeout');
 					break;
 				case self::TOKEN_ERROR:
-					$message = trans('poppy::resp.token_error');
+					$message = (string) trans('poppy::resp.token_error');
 					break;
 				case self::PARAM_ERROR:
-					$message = trans('poppy::resp.param_error');
+					$message = (string) trans('poppy::resp.param_error');
 					break;
 				case self::SIGN_ERROR:
-					$message = trans('poppy::resp.sign_error');
+					$message = (string) trans('poppy::resp.sign_error');
 					break;
 				case self::NO_AUTH:
-					$message = trans('poppy::resp.no_auth');
+					$message = (string) trans('poppy::resp.no_auth');
 					break;
 				case self::INNER_ERROR:
 				default:
-					$message = trans('poppy::resp.inner_error');
+					$message = (string) trans('poppy::resp.inner_error');
 					break;
 			}
 			$this->message = $message;
@@ -110,7 +107,7 @@ class Resp
 	 * 返回错误代码
 	 * @return int
 	 */
-	public function getCode()
+	public function getCode(): int
 	{
 		return $this->code;
 	}
@@ -119,11 +116,11 @@ class Resp
 	 * 返回错误信息
 	 * @return null|string
 	 */
-	public function getMessage()
+	public function getMessage(): string
 	{
 		$env     = !is_production() ? '[开发]' : '';
 		$message = (is_string($this->message) ? $this->message : implode(',', $this->message));
-		if (str_contains($message, '[开发]')) {
+		if (Str::contains($message, '[开发]')) {
 			return str_replace('[开发]', '[开发].', $message);
 		}
 
@@ -166,7 +163,7 @@ class Resp
 		// is json
 		if (isset($arrAppend['json']) ||
 			Request::ajax() ||
-			(strtolower(substr(Input::header('Authorization'), 0, 6)) === 'bearer') ||
+			Request::bearerToken() ||
 			Container::getInstance()->isRunningIn('api')
 		) {
 			$isJson = true;
@@ -204,7 +201,7 @@ class Resp
 	 * @param string $msg  msg
 	 * @return array
 	 */
-	public static function data($type, $msg)
+	public static function data($type, $msg): array
 	{
 		if (!($msg instanceof self)) {
 			$resp = new self($type, $msg);
@@ -271,7 +268,7 @@ class Resp
 	 * @param string $message message
 	 * @return array
 	 */
-	public static function custom($code, $message = '')
+	public static function custom($code, $message = ''): array
 	{
 		return (new self($code, $message))->toArray();
 	}
@@ -326,7 +323,7 @@ class Resp
 	 * @param array        $input  input
 	 * @return JsonResponse
 	 */
-	private static function webSplash($resp, $append = '', $input = [])
+	private static function webSplash($resp, $append = '', $input = []): JsonResponse
 	{
 		$return = [
 			'status'  => $resp->getCode(),

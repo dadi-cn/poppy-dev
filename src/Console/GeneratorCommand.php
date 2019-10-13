@@ -35,7 +35,7 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
 	 */
 	protected function qualifyClass($name)
 	{
-		$name = studly_case(ltrim($name, '\\/'));
+		$name = Str::studly(ltrim($name, '\\/'));
 
 		$name = str_replace('/', '\\', $name);
 
