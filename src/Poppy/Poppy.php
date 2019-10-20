@@ -1,12 +1,14 @@
 <?php namespace Poppy\Framework\Poppy;
 
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Poppy\Contracts\Repository;
 
 /**
- * @method optimize()
+ * @method bool optimize()
  * @method all()
  * @method slugs()
  * @method where($key, $value)
@@ -17,7 +19,7 @@ use Poppy\Framework\Poppy\Contracts\Repository;
  * @method getManifest($slug)
  * @method get($property, $default = null)
  * @method set($property, $value)
- * @method enabled()
+ * @method Collection enabled()
  * @method disabled()
  * @method isEnabled($slug)
  * @method isDisabled($slug)
@@ -53,16 +55,14 @@ class Poppy
 	 * Register the module service provider file from all modules.
 	 * @return void
 	 */
-	public function register()
+	public function register(): void
 	{
 		$modules = $this->repository->enabled();
 
 		$modules->each(function ($module) {
-			try {
+			if (Str::contains($module['slug'], 'module.')) {
 				$this->registerServiceProvider($module);
-
 				$this->autoloadFiles($module);
-			} catch (ModuleNotFoundException $e) {
 			}
 		});
 	}
@@ -92,7 +92,7 @@ class Poppy
 	 * @return void
 	 * @throws ModuleNotFoundException
 	 */
-	private function registerServiceProvider($module)
+	private function registerServiceProvider($module): void
 	{
 		$serviceProvider = poppy_class($module['slug'], 'ServiceProvider');
 

@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Container\Container;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Poppy\Framework\Exceptions\ModuleNotFoundException;
+use Poppy\Framework\Foundation\Application;
 use Poppy\Framework\Helper\HtmlHelper;
 
 if (!function_exists('route_url')) {
@@ -185,34 +186,21 @@ if (!function_exists('poppy_path')) {
 	 * @param string $slug
 	 * @param string $file
 	 * @return string
-	 * @throws ModuleNotFoundException
 	 */
 	function poppy_path($slug = null, $file = '')
 	{
-		$modulesPath = app('path.module');
-
-		if (Str::contains($slug, '.')) {
+		if (Str::contains($slug, 'poppy.')) {
 			$modulesPath = app('path.poppy');
-			$slug        = Str::after($slug, '.');
+			$dir         = Str::after($slug, '.');
+		}
+		else {
+			$modulesPath = app('path.module');
+			$dir         = Str::after($slug, '.');
 		}
 
 		$filePath = $file ? '/' . ltrim($file, '/') : '';
 
-		if (is_null($slug)) {
-			if (empty($file)) {
-				return $modulesPath;
-			}
-
-			return $modulesPath . $filePath;
-		}
-
-		$module = app('poppy')->where('slug', $slug);
-
-		if (is_null($module)) {
-			throw new ModuleNotFoundException($slug);
-		}
-
-		return $modulesPath . '/' . $module['slug'] . $filePath;
+		return $modulesPath . '/' . $dir . $filePath;
 	}
 }
 
@@ -222,22 +210,23 @@ if (!function_exists('poppy_class')) {
 	 * @param string $slug
 	 * @param string $class
 	 * @return string
-	 * @throws ModuleNotFoundException
 	 */
 	function poppy_class($slug, $class = '')
 	{
 		$module = app('poppy')->where('slug', $slug);
 
 		if (is_null($module) || count($module) === 0) {
-			throw new ModuleNotFoundException($slug);
+			return '';
 		}
 
-		$namespace = Str::studly($module['slug']);
-		if ($class) {
-			return "{$namespace}\\{$class}";
+		$type       = Str::before($slug, '.');
+		$moduleName = Str::after($slug, '.');
+		$namespace  = Str::studly($moduleName);
+		if ($type === 'poppy') {
+			return $class ? "Poppy\\{$namespace}\\{$class}" : "Poppy\\{$namespace}";
 		}
 
-		return $namespace;
+		return $class ? "{$namespace}\\{$class}" : $namespace;
 	}
 }
 
@@ -252,19 +241,29 @@ if (!function_exists('is_production')) {
 	}
 }
 
-if (!function_exists('pf_path')) {
+if (!function_exists('home_path')) {
 	/**
-	 * poppy framework path
+	 * Poppy home path.
 	 * @param string $path
 	 * @return string
 	 */
-	function pf_path($path)
+	function home_path($path = '')
 	{
-		if (file_exists(base_path('poppy/framework/'))) {
-			return base_path('poppy/framework/' . $path);
-		}
+		return app('path.poppy') . ($path ? DIRECTORY_SEPARATOR . $path : '');
+	}
+}
 
-		return base_path('vendor/poppy/framework/' . $path);
+if (!function_exists('framework_path')) {
+	/**
+	 * Poppy framework path.
+	 * @param string $path
+	 * @return string
+	 */
+	function framework_path($path = '')
+	{
+		/** @var Application $container */
+		$container = Container::getInstance();
+		return $container->frameworkPath($path);
 	}
 }
 

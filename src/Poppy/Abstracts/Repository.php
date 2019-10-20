@@ -1,7 +1,6 @@
 <?php namespace Poppy\Framework\Poppy\Abstracts;
 
 use Exception;
-use File;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
@@ -85,33 +84,6 @@ abstract class Repository implements RepositoryContract
 	}
 
 	/**
-	 * Get path for the specified module.
-	 * @param string $slug
-	 * @return string
-	 */
-	public function getModulePath($slug): string
-	{
-		// poppy module
-		if (Str::contains($slug, '.')) {
-			$poppyModule = Str::after($slug, '.');
-			$poppyPath   = app('path.poppy');
-			if (File::exists($poppyPath . "/{$poppyModule}/")) {
-				return $poppyPath . "/{$poppyModule}/";
-			}
-
-			return $poppyPath . "/{$poppyModule}/";
-		}
-
-		$module     = Str::studly(str_slug($slug));
-		$modulePath = app('path.module');
-		if (File::exists($modulePath . "/{$module}/")) {
-			return $modulePath . "/{$module}/";
-		}
-
-		return $modulePath . "/{$slug}/";
-	}
-
-	/**
 	 * Get modules namespace.
 	 * @return string
 	 */
@@ -125,14 +97,15 @@ abstract class Repository implements RepositoryContract
 	 * @param $slug
 	 * @return string
 	 */
-	protected function getManifestPath($slug)
+	protected function getManifestPath($slug): string
 	{
-		return $this->getModulePath($slug) . 'manifest.json';
+		return $this->getModulePath($slug) . '/manifest.json';
 	}
 
 	/**
 	 * 获取所有模块的基本名称
 	 * Get all module base names.
+	 * module.{mod}, poppy.{mod}
 	 * @return Collection
 	 */
 	protected function getAllBaseNames(): Collection
@@ -140,8 +113,8 @@ abstract class Repository implements RepositoryContract
 		try {
 			$collection = collect($this->files->directories(app('path.module')));
 
-			$baseNames = $collection->map(function ($item, $key) {
-				return basename($item);
+			$baseNames = $collection->map(function ($item) {
+				return 'module.' . basename($item);
 			});
 
 			// poppy path
@@ -155,5 +128,21 @@ abstract class Repository implements RepositoryContract
 		} catch (InvalidArgumentException $e) {
 			return collect([]);
 		}
+	}
+
+	/**
+	 * Get path for the specified module.
+	 * @param string $slug
+	 * @return string
+	 */
+	private function getModulePath($slug): string
+	{
+		$type   = Str::before($slug, '.');
+		$module = Str::after($slug, '.');
+		if ($type === 'poppy') {
+			return home_path($module);
+		}
+		$modulePath = app('path.module');
+		return $modulePath . "/{$module}";
 	}
 }

@@ -5,6 +5,23 @@ use Poppy\Framework\Helper\ArrayHelper;
 
 class PoppyTest extends TestCase
 {
+	/**
+	 * namespace test
+	 */
+	public function testNamespace(): void
+	{
+		$namespace = poppy_class('module.site', 'ServiceProvider');
+		$this->assertEquals('Site\ServiceProvider', $namespace);
+		$namespace = poppy_class('module.site');
+		$this->assertEquals('Site', $namespace);
+		$namespace = poppy_class('poppy.system', 'ServiceProvider');
+		$this->assertEquals('Poppy\System\ServiceProvider', $namespace);
+		$namespace = poppy_class('poppy.system');
+		$this->assertEquals('Poppy\System', $namespace);
+		$namespace = poppy_class('poppy.un_exist');
+		$this->assertEquals('', $namespace);
+	}
+
 	public function testGenKey(): void
 	{
 		$arr    = [
@@ -20,20 +37,46 @@ class PoppyTest extends TestCase
 		$this->assertEquals('', ArrayHelper::genKey([]));
 	}
 
-	public function testPath(): void
-	{
-		$this->assertEquals(base_path('poppy/framework'), app('path.framework'));
-		$this->assertEquals(base_path('modules'), app('path.module'));
-	}
-
 	public function testAll()
 	{
-		$all = app('poppy')->all();
+		$this->testOptimize();
 
+		$enabled = app('poppy')->all();
+		dd($enabled);
 	}
 
-	public function testOptimize()
+	public function testEnabled()
 	{
+		$this->testOptimize();
+
+		$enabled = app('poppy')->enabled();
+		dd($enabled);
+	}
+
+	public function testOptimize(): void
+	{
+		$poppyJson = storage_path('app/poppy.json');
+		if (app('files')->exists($poppyJson)) {
+			app('files')->delete($poppyJson);
+		}
 		app('poppy')->optimize();
+		$this->assertFileExists($poppyJson);
+	}
+
+	/**
+	 * 测试模块加载
+	 */
+	public function testLoaded(): void
+	{
+		$folders = glob(base_path('modules/*/src'), GLOB_BRACE);
+		collect($folders)->each(function ($folder) {
+			$matched = preg_match('/modules\/(?<module>[a-z]*)\/src/', $folder, $matches);
+			if ($matched && !app('poppy')->exists($matches['module'])) {
+				$this->assertTrue(false, "Module `{$matches['module']}` Not Exist , Please run `php artisan poppy:optimize` to fix.");
+			}
+			else {
+				$this->assertTrue(true, "Module `{$matches['module']}` loaded.");
+			}
+		});
 	}
 }

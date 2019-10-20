@@ -202,9 +202,9 @@ class Application extends ApplicationBase
 	 * @param string $path path
 	 * @return string
 	 */
-	public function frameworkPath($path = '')
+	public function frameworkPath($path = ''): string
 	{
-		return realpath(__DIR__ . '/../../../framework' . ($path ? DIRECTORY_SEPARATOR . $path : $path));
+		return dirname(__FILE__, 3) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
 	}
 
 	/**

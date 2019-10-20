@@ -20,7 +20,7 @@ interface Repository
 	 *
 	 * @return Collection
 	 */
-	public function all();
+	public function all(): Collection;
 
 	/**
 	 * Get all module slugs.

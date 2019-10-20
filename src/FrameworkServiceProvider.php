@@ -16,16 +16,18 @@ class FrameworkServiceProvider extends ServiceProvider
 	 * Bootstrap the application events.
 	 * @return void
 	 */
-	public function boot()
+	public function boot(): void
 	{
+
 		// 注册 api 文档配置
 		$this->publishes([
-			__DIR__ . '/../config/poppy.php' => config_path('poppy.php'),
-		], 'poppy-framework');
+			framework_path('config/poppy.php') => config_path('poppy.php'),
+		], 'poppy');
 
-		$this->app['poppy']->register();
+		// framework register
+		app('poppy')->register();
 
-		// 定义视图
+		// views an lang
 		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'poppy');
 		$this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'poppy');
 
@@ -39,10 +41,10 @@ class FrameworkServiceProvider extends ServiceProvider
 	 * Register the service provider.
 	 * @return void
 	 */
-	public function register()
+	public function register(): void
 	{
 		$this->mergeConfigFrom(
-			__DIR__ . '/../config/poppy.php',
+			framework_path('config/poppy.php'),
 			'poppy'
 		);
 
@@ -55,26 +57,7 @@ class FrameworkServiceProvider extends ServiceProvider
 		$this->app->register(Translation\TranslationServiceProvider::class);
 	}
 
-	/**
-	 * @return array
-	 * @throws Exceptions\ModuleNotFoundException
-	 */
-	protected function providerFiles(): array
-	{
-		$modules = app()->make('poppy')->all();
-		$files   = [];
-
-		foreach ($modules as $module) {
-			$serviceProvider = poppy_class($module['slug'], 'ServiceProvider');
-			if (class_exists($serviceProvider)) {
-				$files[] = $serviceProvider;
-			}
-		}
-
-		return $files;
-	}
-
-	private function bootValidation()
+	private function bootValidation(): void
 	{
 		$this->getValidation()->extend('mobile', function ($attribute, $value, $parameters) {
 			return UtilHelper::isMobile($value);
@@ -97,8 +80,12 @@ class FrameworkServiceProvider extends ServiceProvider
 	 * Get the services provided by the provider.
 	 * @return array
 	 */
-	public function provides()
+	public function provides(): array
 	{
-		return [];
+		return [
+			'path.framework',
+			'path.poppy',
+			'path.module',
+		];
 	}
 }

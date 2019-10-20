@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Poppy;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Poppy\Abstracts\Repository;
 use Poppy\Framework\Poppy\Events\PoppyOptimized;
@@ -84,7 +85,7 @@ class FileRepository extends Repository
 	 */
 	public function exists($slug): bool
 	{
-		return $this->slugs()->contains(str_slug($slug));
+		return $this->slugs()->contains(Str::slug($slug));
 	}
 
 	/**
@@ -234,9 +235,11 @@ class FileRepository extends Repository
 		$modules   = collect();
 
 		$baseNames->each(function ($module) use ($modules, $cache) {
-			$basename = collect(['basename' => $module]);
+			$basename = collect([]);
 			$temp     = $basename->merge(collect($cache->get($module)));
 			$manifest = $temp->merge(collect($this->getManifest($module)));
+			// rewrite slug
+			$manifest['slug'] = $module;
 			$modules->put($module, $manifest);
 		});
 
@@ -245,7 +248,7 @@ class FileRepository extends Repository
 			$module->put('id', crc32($module->get('slug')));
 
 			if (!$module->has('enabled')) {
-				$module->put('enabled', config('modules.enabled', true));
+				$module->put('enabled', true);
 			}
 
 			if (!$module->has('order')) {
@@ -275,7 +278,7 @@ class FileRepository extends Repository
 
 		$this->files->put($cachePath, $content);
 
-		event(new PoppyOptimized($modules->all()));
+		event(new PoppyOptimized(collect($modules->all())));
 
 		return true;
 	}
