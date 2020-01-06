@@ -22,6 +22,15 @@ trait AppTrait
 	protected $success;
 
 	/**
+	 * 获取错误
+	 * @return Resp
+	 */
+	public function getError(): Resp
+	{
+		return $this->error;
+	}
+
+	/**
 	 * 设置错误
 	 * @param string|MessageBag $error error
 	 * @return bool
@@ -42,12 +51,12 @@ trait AppTrait
 	}
 
 	/**
-	 * 获取错误
+	 * Get success messages;
 	 * @return Resp
 	 */
-	public function getError()
+	public function getSuccess(): Resp
 	{
-		return $this->error;
+		return $this->success;
 	}
 
 	/**
@@ -60,18 +69,9 @@ trait AppTrait
 			$this->success = $success;
 		}
 		else {
-			$this->success = new Resp(Resp::ERROR, $success);
+			$this->success = new Resp(Resp::SUCCESS, $success);
 		}
 
 		return true;
-	}
-
-	/**
-	 * Get success messages;
-	 * @return Resp
-	 */
-	public function getSuccess()
-	{
-		return $this->success;
 	}
 }
