@@ -35,21 +35,6 @@ class Application extends ApplicationBase
 	protected $namespace = 'app';
 
 	/**
-	 * 绑定路径到 container
-	 * @return void
-	 */
-	protected function bindPathsInContainer()
-	{
-		parent::bindPathsInContainer();
-
-		$this->instance('path.framework', $this->frameworkPath());
-		$this->instance('path.poppy', dirname($this->frameworkPath()));
-		$this->instance('path.module', $this->modulePath());
-		$this->instance('path.extension', $this->extensionPath());
-		$this->instance('path.addon', $this->addonPath());
-	}
-
-	/**
 	 * register "matched" event
 	 * @param Closure $callback callback
 	 * @return void
@@ -140,12 +125,6 @@ class Application extends ApplicationBase
 		return true;
 	}
 
-	/*
-	|--------------------------------------------------------------------------
-	| Laravel framework Config Path
-	|--------------------------------------------------------------------------
-	*/
-
 	/**
 	 * Get cached config path.
 	 * @return string
@@ -154,6 +133,12 @@ class Application extends ApplicationBase
 	{
 		return $this['path.storage'] . '/framework/config.php';
 	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Laravel framework Config Path
+	|--------------------------------------------------------------------------
+	*/
 
 	/**
 	 * Get cached routes path.
@@ -191,11 +176,17 @@ class Application extends ApplicationBase
 		return $this->storagePath() . '/framework/classes.php';
 	}
 
-	/*
-	|--------------------------------------------------------------------------
-	| Poppy framework Config Path
-	|--------------------------------------------------------------------------
-	*/
+
+	/**
+	 * Get the path to the bootstrap directory.
+	 *
+	 * @param string $path Optionally, a path to append to the bootstrap path
+	 * @return string
+	 */
+	public function bootstrapPath($path = '')
+	{
+		return $this->storagePath() . '/bootstrap' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+	}
 
 	/**
 	 * Get poppy framework path or assigned path.
@@ -206,6 +197,12 @@ class Application extends ApplicationBase
 	{
 		return dirname(__FILE__, 3) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
 	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Poppy framework Config Path
+	|--------------------------------------------------------------------------
+	*/
 
 	/**
 	 * Get poppy module path.
@@ -256,5 +253,20 @@ class Application extends ApplicationBase
 	public function extensionPath()
 	{
 		return $this->basePath . DIRECTORY_SEPARATOR . 'extensions';
+	}
+
+	/**
+	 * 绑定路径到 container
+	 * @return void
+	 */
+	protected function bindPathsInContainer()
+	{
+		parent::bindPathsInContainer();
+
+		$this->instance('path.framework', $this->frameworkPath());
+		$this->instance('path.poppy', dirname($this->frameworkPath()));
+		$this->instance('path.module', $this->modulePath());
+		$this->instance('path.extension', $this->extensionPath());
+		$this->instance('path.addon', $this->addonPath());
 	}
 }

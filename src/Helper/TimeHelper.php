@@ -426,4 +426,23 @@ class TimeHelper
 
 		return '';
 	}
+
+	/**
+	 * 根据日期返回每年的周数
+	 * 例如 2020-01-01 会返回 [2019,52] 周, 用于统计部分
+	 * @param string $date
+	 * @return array
+	 */
+	public static function week($date): array
+	{
+		/** @var Carbon $carbon */
+		$carbon = Carbon::createFromFormat('Y-m-d', $date);
+
+		if ($carbon->month === 12 && $carbon->week === 1) {
+			$year = (clone $carbon)->addYear()->year;
+			$week = $carbon->format('W');
+			return [$year, $week];
+		}
+		return [$carbon->year, $carbon->format('W')];
+	}
 }
