@@ -10,21 +10,21 @@ class WebHelper
 	const GO = '__go';
 
 	/**
-	 * 设置要去的操作
-	 * @param string $url url
-	 */
-	public static function setGo($url)
-	{
-		Session::set(self::GO, $url);
-	}
-
-	/**
 	 * 设置要走向的地方
 	 * @return mixed
 	 */
 	public static function getGo()
 	{
 		return Session::get(self::GO);
+	}
+
+	/**
+	 * 设置要去的操作
+	 * @param string $url url
+	 */
+	public static function setGo($url)
+	{
+		Session::set(self::GO, $url);
 	}
 
 	/**

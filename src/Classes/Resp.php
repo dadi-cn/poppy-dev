@@ -20,15 +20,17 @@ use Session;
  */
 class Resp
 {
-	public const SUCCESS       = 0;
-	public const ERROR         = 1;
-	public const TOKEN_MISS    = 2;
-	public const TOKEN_TIMEOUT = 3;
-	public const TOKEN_ERROR   = 4;
-	public const PARAM_ERROR   = 5;
-	public const SIGN_ERROR    = 6;
-	public const NO_AUTH       = 7;
-	public const INNER_ERROR   = 99;
+	/* 错误代码
+	 * ---------------------------------------- */
+	public const SUCCESS       = 0;     // 正确
+	public const ERROR         = 1;     // 错误
+	public const TOKEN_MISS    = 2;     // 没有Token
+	public const TOKEN_TIMEOUT = 3;     // Token 时间戳错误
+	public const TOKEN_ERROR   = 4;     // Token 错误
+	public const PARAM_ERROR   = 5;     // 参数错误
+	public const SIGN_ERROR    = 6;     // 签名错误
+	public const NO_AUTH       = 7;     // 无权操作
+	public const INNER_ERROR   = 99;    // 其他错误
 
 	/**
 	 * code
@@ -278,7 +280,7 @@ class Resp
 	 * @param mixed  $time     time
 	 * @param string $location location
 	 * @param array  $input    input
-	 * @return RedirectResponse|Resp
+	 * @return RedirectResponse|\Illuminate\Http\Response|Resp
 	 */
 	private static function webView($time, $location, $input)
 	{
@@ -353,7 +355,7 @@ class Resp
 			Session::flashInput($input);
 		}
 
-		return Response::json($return, 200, [], JSON_UNESCAPED_UNICODE);
+		return Response::json($return, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 	}
 
 	/**
