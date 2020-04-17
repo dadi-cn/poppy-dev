@@ -41,7 +41,13 @@ trait AppTrait
 			$this->error = $error;
 		}
 		elseif ($error instanceof Exception) {
-			$this->error = new Resp($error->getCode(), $error->getMessage());
+			if (!$error->getCode()) {
+				$code = Resp::ERROR;
+			}
+			else {
+				$code = $error->getCode();
+			}
+			$this->error = new Resp($code, $error->getMessage());
 		}
 		else {
 			$this->error = new Resp(Resp::ERROR, $error);
