@@ -1,7 +1,5 @@
 <?php namespace Poppy\Framework\Helper;
 
-use Input;
-
 /**
  * 搜素排序
  */
@@ -16,23 +14,23 @@ class SearchHelper
 	 */
 	public static function key($default_order, $allowed = [], $input_key = '_order')
 	{
-		$order = Input::get($input_key);
+		$order = input($input_key);
 		if (!$order) {
 			return $default_order;
 		}
-		 
-			$orderKey = $default_order;
-			if (strpos($order, '_desc') !== false) {
-				$orderKey = str_replace('_desc', '', $order);
-			}
-			if (strpos($order, '_asc') !== false) {
-				$orderKey = str_replace('_asc', '', $order);
-			}
-			if (in_array($orderKey, $allowed)) {
-				return $orderKey;
-			}
-			 
-				return $default_order;
+
+		$orderKey = $default_order;
+		if (strpos($order, '_desc') !== false) {
+			$orderKey = str_replace('_desc', '', $order);
+		}
+		if (strpos($order, '_asc') !== false) {
+			$orderKey = str_replace('_asc', '', $order);
+		}
+		if (in_array($orderKey, $allowed)) {
+			return $orderKey;
+		}
+
+		return $default_order;
 	}
 
 	/**
@@ -42,7 +40,7 @@ class SearchHelper
 	 */
 	public static function order($key = '_order')
 	{
-		$order = Input::get($key);
+		$order = input($key);
 		if (strpos($order, '_desc') !== false) {
 			return 'desc';
 		}
