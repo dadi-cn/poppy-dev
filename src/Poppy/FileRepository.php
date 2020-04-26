@@ -85,7 +85,7 @@ class FileRepository extends Repository
 	 */
 	public function exists($slug): bool
 	{
-		return $this->slugs()->contains(Str::slug($slug));
+		return $this->slugs()->contains($slug);
 	}
 
 	/**
