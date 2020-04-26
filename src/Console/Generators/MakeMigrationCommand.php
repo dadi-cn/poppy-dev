@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Console\Generators;
 
 use Illuminate\Console\Command;
+use Poppy\Framework\Classes\Traits\MigrationTrait;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
 /**
@@ -8,6 +9,9 @@ use Poppy\Framework\Exceptions\ModuleNotFoundException;
  */
 class MakeMigrationCommand extends Command
 {
+
+	use MigrationTrait;
+
 	/**
 	 * The name and signature of the console command.
 	 * @var string
@@ -44,9 +48,14 @@ class MakeMigrationCommand extends Command
 		$options['--path'] = str_replace(
 			realpath(base_path()),
 			'',
-			poppy_path($this->argument('slug'), 'src/database/migrations')
+			$this->getMigrationPath($this->argument('slug'))
 		);
 		$options['--path'] = ltrim($options['--path'], '/');
+
+		if (!app('files')->exists(base_path($options['--path']))) {
+			$this->error('Path `' . $options['--path'] . '` not exists');
+			return;
+		}
 
 		$this->call('make:migration', array_merge($arguments, $options));
 	}

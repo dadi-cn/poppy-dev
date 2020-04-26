@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Support\Arr;
+use Poppy\Framework\Classes\Traits\MigrationTrait;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,7 +15,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class PoppyMigrateCommand extends Command
 {
-	use ConfirmableTrait;
+	use ConfirmableTrait, MigrationTrait;
 
 	/**
 	 * The console command name.
@@ -106,7 +107,11 @@ class PoppyMigrateCommand extends Command
 			$step    = Arr::get($this->option(), 'step', false);
 			$path    = $this->getMigrationPath($slug);
 
-			$this->migrator->run($path, ['pretend' => $pretend, 'step' => $step]);
+			$this->migrator->setOutput($this->output)->run(
+				$path, [
+				'pretend' => $pretend,
+				'step'    => $step,
+			]);
 
 			event($slug . '.poppy.migrated', [$module, $this->option()]);
 
@@ -133,17 +138,6 @@ class PoppyMigrateCommand extends Command
 		}
 
 		return null;
-	}
-
-	/**
-	 * Get migration directory path.
-	 * @param string $slug slug
-	 * @return string
-	 * @throws ModuleNotFoundException
-	 */
-	protected function getMigrationPath($slug)
-	{
-		return poppy_path($slug, 'src/database/migrations');
 	}
 
 	/**

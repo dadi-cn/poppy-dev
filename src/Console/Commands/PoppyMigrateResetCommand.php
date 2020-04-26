@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
+use Poppy\Framework\Classes\Traits\MigrationTrait;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,7 +15,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class PoppyMigrateResetCommand extends Command
 {
-	use ConfirmableTrait;
+	use ConfirmableTrait, MigrationTrait;
 
 	/**
 	 * The console command name.
@@ -207,16 +208,6 @@ class PoppyMigrateResetCommand extends Command
 		}
 
 		return $params;
-	}
-
-	/**
-	 * Get migrations path.
-	 * @return string
-	 * @throws ModuleNotFoundException
-	 */
-	protected function getMigrationPath($slug)
-	{
-		return poppy_path($slug, 'database/migrations');
 	}
 
 	/**

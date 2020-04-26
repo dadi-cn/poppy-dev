@@ -4,6 +4,7 @@ use Event;
 use Gate;
 use Illuminate\Support\ServiceProvider as ServiceProviderBase;
 use Poppy\Framework\Agamotto\Agamotto;
+use Poppy\Framework\Classes\Traits\MigrationTrait;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
 /**
@@ -11,6 +12,9 @@ use Poppy\Framework\Exceptions\ModuleNotFoundException;
  */
 abstract class PoppyServiceProvider extends ServiceProviderBase
 {
+
+	use MigrationTrait;
+
 	/**
 	 * event listener
 	 * @var array
@@ -37,7 +41,7 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 			$modulePath = poppy_path($module);
 			$this->loadViewsFrom($modulePath . '/resources/views', $module);
 			$this->loadTranslationsFrom($modulePath . '/resources/lang', $module);
-			$this->loadMigrationsFrom($modulePath . '/resources/database/migrations');
+			$this->loadMigrationsFrom($this->getMigrationPath($module));
 
 			if ($this->listens) {
 				$this->bootListener();

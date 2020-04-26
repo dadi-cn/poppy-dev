@@ -65,13 +65,14 @@ class PoppyMigrateRollbackCommand extends Command
 
 		$this->migrator->setConnection($this->option('database'));
 
-		$paths = $this->getMigrationPaths();
-		$this->migrator->rollback(
-			$paths,
-			['pretend' => $this->option('pretend'), 'step' => (int) $this->option('step')]
+		$this->migrator->setOutput($this->output)->rollback(
+			$this->getMigrationPaths(), [
+				'pretend' => $this->option('pretend'),
+				'step'    => (int) $this->option('step'),
+			]
 		);
 
-		foreach ($this->migrator->getNotes() as $note) {
+		foreach ($this->migrator->setOutput($this->output) as $note) {
 			$this->output->writeln($note);
 		}
 	}
@@ -110,11 +111,11 @@ class PoppyMigrateRollbackCommand extends Command
 		$paths = [];
 
 		if ($slug) {
-			$paths[] = poppy_path($slug, 'database/migrations');
+			$paths[] = $this->getMigrationPath($slug);
 		}
 		else {
 			foreach ($this->poppy->all() as $module) {
-				$paths[] = poppy_path($module['slug'], 'database/migrations');
+				$paths[] = $this->getMigrationPath($module);
 			}
 		}
 

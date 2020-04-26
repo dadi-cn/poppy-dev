@@ -34,7 +34,7 @@ trait MigrationTrait
 	 */
 	protected function getMigrationPath($module)
 	{
-		return poppy_path($module, 'Database/Migrations');
+		return poppy_path($module, 'src/database/migrations');
 	}
 }
 
