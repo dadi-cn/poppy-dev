@@ -114,7 +114,7 @@ class PoppyMigrateRollbackCommand extends Command
 			$paths[] = $this->getMigrationPath($slug);
 		}
 		else {
-			foreach ($this->poppy->all() as $module) {
+			foreach ($this->poppy->slugs() as $module) {
 				$paths[] = $this->getMigrationPath($module);
 			}
 		}
