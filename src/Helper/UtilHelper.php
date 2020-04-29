@@ -574,9 +574,9 @@ class UtilHelper
 	/**
 	 * 计算身份证校验码，根据国家标准GB 11643-1999
 	 * @param string $idcard_base idcard_base
-	 * @return bool
+	 * @return string
 	 */
-	private static function idcardVerify($idcard_base): bool
+	private static function idcardVerify($idcard_base): string
 	{
 		if (strlen($idcard_base) !== 17) {
 			return false;
