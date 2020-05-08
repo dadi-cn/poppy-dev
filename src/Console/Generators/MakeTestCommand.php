@@ -41,7 +41,6 @@ class MakeTestCommand extends GeneratorCommand
 	 * Get the default namespace for the class.
 	 * @param string $rootNamespace 命名空间
 	 * @return string
-	 * @throws ModuleNotFoundException
 	 */
 	protected function getDefaultNamespace($rootNamespace)
 	{

@@ -156,7 +156,6 @@ class MakePoppyCommand extends Command
 
 	/**
 	 * Generate defined module folders.
-	 * @throws ModuleNotFoundException
 	 */
 	protected function generateModule()
 	{

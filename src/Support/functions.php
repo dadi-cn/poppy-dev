@@ -87,7 +87,7 @@ if (!function_exists('kv')) {
 	function kv($desc, $key = null, $check_key = false)
 	{
 		if ($check_key) {
-			return isset($desc[$key]) ? true : false;
+			return isset($desc[$key]);
 		}
 
 		return !is_null($key)

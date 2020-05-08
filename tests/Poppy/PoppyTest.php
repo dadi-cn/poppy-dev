@@ -1,7 +1,9 @@
 <?php namespace Poppy\Framework\Tests\Poppy;
 
+use Illuminate\Support\Collection;
 use Poppy\Framework\Application\TestCase;
 use Poppy\Framework\Helper\ArrayHelper;
+use Psy\Util\Str;
 
 class PoppyTest extends TestCase
 {
@@ -20,6 +22,13 @@ class PoppyTest extends TestCase
 		$this->assertEquals('Poppy\System', $namespace);
 		$namespace = poppy_class('poppy.un_exist');
 		$this->assertEquals('', $namespace);
+	}
+
+
+	public function testPath()
+	{
+		$path = poppy_path('module.site', 'src/models/Default.php');
+		$this->assertTrue(\Illuminate\Support\Str::endsWith($path, 'modules/site/src/models/Default.php'));
 	}
 
 	public function testGenKey(): void
@@ -41,8 +50,9 @@ class PoppyTest extends TestCase
 	{
 		$this->testOptimize();
 
+		/** @var Collection $enabled */
 		$enabled = app('poppy')->all();
-		dd($enabled);
+		$this->assertNotEquals(0, $enabled->count());
 	}
 
 	public function testEnabled()
@@ -71,7 +81,8 @@ class PoppyTest extends TestCase
 		$folders = glob(base_path('modules/*/src'), GLOB_BRACE);
 		collect($folders)->each(function ($folder) {
 			$matched = preg_match('/modules\/(?<module>[a-z]*)\/src/', $folder, $matches);
-			if ($matched && !app('poppy')->exists($matches['module'])) {
+			$name    = 'module.' . $matches['module'];
+			if ($matched && !app('poppy')->exists($name)) {
 				$this->assertTrue(false, "Module `{$matches['module']}` Not Exist , Please run `php artisan poppy:optimize` to fix.");
 			}
 			else {

@@ -1,0 +1,13 @@
+<?php namespace DummyNamespace;
+
+use Poppy\Framework\Application\Event;
+
+class DummyClass extends Event
+{
+	public $var;
+
+	public function __construct($var)
+	{
+		$this->var = $var;
+	}
+}

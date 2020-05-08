@@ -44,7 +44,7 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
 
 	/**
 	 * Get the destination class path.
-	 * @param string $name name
+	 * @param string $name full class name
 	 * @return string
 	 * @throws ModuleNotFoundException
 	 */
@@ -52,10 +52,15 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
 	{
 		$slug = $this->argument('slug');
 
+		if (!$this->laravel['poppy']->exists($slug)) {
+			throw new ModuleNotFoundException($slug);
+		}
+
 		// take everything after the module name in the given path (ignoring case)
-		$key = array_search(strtolower($slug), explode('\\', strtolower($name)));
+		$trimSlug = Str::after($slug, 'module.');
+		$key      = array_search(strtolower($trimSlug), explode('\\', strtolower($name)));
 		if ($key === false) {
-			$newPath = str_replace('\\', ' / ', $name);
+			$newPath = str_replace('\\', '/', $name);
 		}
 		else {
 			$newPath = implode('/', array_slice(explode('\\', $name), $key + 1));
@@ -72,14 +77,17 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
 			$addSrc = 'src' . DIRECTORY_SEPARATOR;
 		}
 
-		$path = poppy_path(
+		$dirs      = explode('/', $pathInfo['dirname']);
+		$lowerDirs = array_map(function ($item) {
+			return Str::snake($item);
+		}, $dirs);
+		$dirname   = implode('/', $lowerDirs);
+		return poppy_path(
 			$slug,
 			$addSrc .
-			strtolower($pathInfo['dirname']) . DIRECTORY_SEPARATOR .
+			$dirname . DIRECTORY_SEPARATOR .
 			$pathInfo['basename']
 		);
-
-		return $path;
 	}
 
 	/**

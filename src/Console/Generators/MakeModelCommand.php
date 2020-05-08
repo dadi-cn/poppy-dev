@@ -1,8 +1,8 @@
 <?php namespace Poppy\Framework\Console\Generators;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use Poppy\Framework\Console\GeneratorCommand;
-use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
 /**
  * Make Model
@@ -33,6 +33,7 @@ class MakeModelCommand extends GeneratorCommand
 	/**
 	 * Execute the console command.
 	 * @return void
+	 * @throws FileNotFoundException
 	 */
 	public function handle()
 	{
@@ -62,7 +63,6 @@ class MakeModelCommand extends GeneratorCommand
 	 * Get the default namespace for the class.
 	 * @param string $rootNamespace namespace
 	 * @return string
-	 * @throws ModuleNotFoundException
 	 */
 	protected function getDefaultNamespace($rootNamespace)
 	{

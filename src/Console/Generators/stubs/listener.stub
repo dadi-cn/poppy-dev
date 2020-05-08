@@ -1,0 +1,18 @@
+<?php namespace DummyNamespace;
+
+use DummyFullEvent;
+use Poppy\Framework\Application\Event;
+
+class DummyClass
+{
+	/**
+	 * Handle the event.
+	 *
+	 * @param Event|DummyEvent $event
+	 * @return void
+	 */
+	public function handle(DummyEvent $event)
+	{
+
+	}
+}

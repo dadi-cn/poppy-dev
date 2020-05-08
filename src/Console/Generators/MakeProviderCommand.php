@@ -41,7 +41,6 @@ class MakeProviderCommand extends GeneratorCommand
 	 * Get the default namespace for the class.
 	 * @param string $rootNamespace namespace
 	 * @return string
-	 * @throws ModuleNotFoundException
 	 */
 	protected function getDefaultNamespace($rootNamespace)
 	{
