@@ -26,6 +26,9 @@ use Psr\Log\LoggerInterface;
 
 /**
  * PoppyTrait
+ * App Function Can replace this
+ * @deprecated
+ * @see app
  */
 trait PoppyTrait
 {

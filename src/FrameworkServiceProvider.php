@@ -2,7 +2,6 @@
 
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
-use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Helper\UtilHelper;
 
 /**
@@ -10,7 +9,6 @@ use Poppy\Framework\Helper\UtilHelper;
  */
 class FrameworkServiceProvider extends ServiceProvider
 {
-	use PoppyTrait;
 
 	/**
 	 * Bootstrap the application events.
@@ -59,19 +57,19 @@ class FrameworkServiceProvider extends ServiceProvider
 
 	private function bootValidation(): void
 	{
-		$this->getValidation()->extend('mobile', function ($attribute, $value, $parameters) {
+		app('validator')->extend('mobile', function ($attribute, $value, $parameters) {
 			return UtilHelper::isMobile($value);
 		});
-		$this->getValidation()->extend('json', function ($attribute, $value, $parameters) {
+		app('validator')->extend('json', function ($attribute, $value, $parameters) {
 			return UtilHelper::isJson($value);
 		});
-		$this->getValidation()->extend('date', function ($attribute, $value, $parameters) {
+		app('validator')->extend('date', function ($attribute, $value, $parameters) {
 			return UtilHelper::isDate($value);
 		});
-		$this->getValidation()->extend('chid', function ($attribute, $value, $parameters) {
+		app('validator')->extend('chid', function ($attribute, $value, $parameters) {
 			return UtilHelper::isChId($value);
 		});
-		$this->getValidation()->extend('password', function ($attribute, $value, $parameters) {
+		app('validator')->extend('password', function ($attribute, $value, $parameters) {
 			return UtilHelper::isPwd($value);
 		});
 	}

@@ -2,11 +2,12 @@
 
 use Exception;
 use Poppy\Framework\Classes\Traits\AppTrait;
+use Poppy\Framework\Classes\Traits\KeyParserTrait;
 use Poppy\Framework\Exceptions\ApplicationException;
 
 class TraitDemo
 {
-	use AppTrait;
+	use AppTrait, KeyParserTrait;
 
 	public function error()
 	{

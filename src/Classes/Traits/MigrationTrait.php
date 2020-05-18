@@ -1,7 +1,5 @@
 <?php namespace Poppy\Framework\Classes\Traits;
 
-use Poppy\Framework\Exceptions\ModuleNotFoundException;
-
 /**
  * MigrationTrait
  */
@@ -11,7 +9,6 @@ trait MigrationTrait
 	 * Require (once) all migration files for the supplied module.
 	 *
 	 * @param string $module module
-	 * @throws ModuleNotFoundException
 	 */
 	protected function requireMigrations($module)
 	{
@@ -30,7 +27,6 @@ trait MigrationTrait
 	 * @param string $module module
 	 *
 	 * @return string
-	 * @throws ModuleNotFoundException
 	 */
 	protected function getMigrationPath($module)
 	{
