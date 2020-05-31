@@ -11,7 +11,7 @@
 	"require" : {
 		"php" : ">=7.0.0",
 		"ext-bcmath" : "*",
-		"jenssegers/date" : "^3.3"
+		"jenssegers/date" : "^4.0"
 	},
 	"require-dev" : {
 		"roave/security-advisories" : "dev-master"

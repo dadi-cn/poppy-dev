@@ -46,7 +46,6 @@ class FrameworkServiceProvider extends ServiceProvider
 			'poppy'
 		);
 
-		$this->app->register(Agamotto\AgamottoServiceProvider::class);
 		$this->app->register(Console\ConsoleServiceProvider::class);
 		$this->app->register(Console\GeneratorServiceProvider::class);
 		$this->app->register(Http\BladeServiceProvider::class);
