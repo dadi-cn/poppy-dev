@@ -1,10 +1,10 @@
+## 2.0
+**2.0.0**
+- for laravel 6.x
+- remove agmotto
 ## 1.0
-**1.0.0 - rc**
-- []命令行测试
-- []页面注释检查
-- []单元测试完善(类需要存在)
-- []创建静态文档, 甚至可以是 在 wulicode 这个网站上
-- []框架介绍 @wulicode.com
+**1.0.0**
+- for laravel 5.5
 - Remove `cache_name` function
 - Remove similar function with laravel
 - Remove Pinyin Component

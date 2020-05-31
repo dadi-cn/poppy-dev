@@ -3,18 +3,9 @@
 
 [![Join the chat at https://gitter.im/poppy-framework/Lobby](https://badges.gitter.im/poppy-framework/Lobby.svg)](https://gitter.im/poppy-framework/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-中文文档查看[这里](./docs/README_Zh-cn.md);
+中文文档查看[这里](https://doc-poppy.wulicode.com/framework/readme.html);
 Build Document [Click Here](./docs/build.md);
-
-## Agamotto
-
-Agamotto is a simple PHP API extension for DateTime, and is the cousin of Carbon. 
-The goal of this library is to create a solution for displaying localized dates 
-and introducing more robust features.
-
-This library acts as an umbrella for the Date library:
-[Date](https://github.com/jenssegers/date)
-[Carbon](https://github.com/briannesbitt/carbon)¶¶
+Trees [Click Here](https://doc-poppy.wulicode.com/framework/tree.html);
 
 ## Console
 
