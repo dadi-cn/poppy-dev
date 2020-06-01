@@ -1,9 +1,9 @@
 <?php namespace Poppy\Framework\Application;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Poppy\Framework\Agamotto\Agamotto;
 use Poppy\Framework\Helper\EnvHelper;
 use Route;
 use View;
@@ -34,7 +34,7 @@ abstract class Controller extends BaseController
 
 	/**
 	 * now
-	 * @var Agamotto $now
+	 * @var Carbon $now
 	 */
 	protected $now;
 
@@ -72,7 +72,7 @@ abstract class Controller extends BaseController
 		}
 
 		$this->ip  = EnvHelper::ip();
-		$this->now = Agamotto::now();
+		$this->now = Carbon::now();
 
 		View::share([
 			'_ip'       => $this->ip,

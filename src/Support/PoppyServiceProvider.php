@@ -1,9 +1,9 @@
 <?php namespace Poppy\Framework\Support;
 
+use Carbon\Carbon;
 use Event;
 use Gate;
 use Illuminate\Support\ServiceProvider as ServiceProviderBase;
-use Poppy\Framework\Agamotto\Agamotto;
 use Poppy\Framework\Classes\Traits\MigrationTrait;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 
@@ -116,7 +116,7 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 	 */
 	protected function consoleLog()
 	{
-		$day = Agamotto::now()->toDateString();
+		$day = Carbon::now()->toDateString();
 
 		return storage_path('logs/console-' . $day . '.log');
 	}
