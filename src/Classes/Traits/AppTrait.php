@@ -27,6 +27,9 @@ trait AppTrait
 	 */
 	public function getError(): Resp
 	{
+		if (is_null($this->error)) {
+			return (new Resp(Resp::INNER_ERROR, '内部错误'));
+		}
 		return $this->error;
 	}
 
