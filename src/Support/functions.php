@@ -237,7 +237,7 @@ if (!function_exists('is_production')) {
 	 */
 	function is_production()
 	{
-		return env('APP_ENV', 'production') === 'production';
+		return config('app.env') === 'production';
 	}
 }
 
