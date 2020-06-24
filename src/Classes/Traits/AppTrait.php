@@ -65,6 +65,12 @@ trait AppTrait
 	 */
 	public function getSuccess(): Resp
 	{
+		if ($this->success instanceof Resp) {
+			return $this->success;
+		}
+		if (is_string($this->success)) {
+			$this->success = new Resp(Resp::SUCCESS, $this->success);
+		}
 		return $this->success;
 	}
 
