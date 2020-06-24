@@ -69,6 +69,9 @@ trait AppTrait
 			return $this->success;
 		}
 		if (is_string($this->success)) {
+			if (empty($this->success)) {
+				$this->success = '操作成功';
+			}
 			$this->success = new Resp(Resp::SUCCESS, $this->success);
 		}
 		return $this->success;

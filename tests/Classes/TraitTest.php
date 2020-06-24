@@ -17,6 +17,15 @@ class TraitTest extends TestCase
 
 		$class->exceptionWithCode(110011);
 		$this->assertEquals(110011, $class->getError()->getCode());
+
+		$class->success();
+		$this->assertEquals(Resp::SUCCESS, $class->getSuccess()->getCode());
+
+		$class->successWithEmpty();
+		$this->assertEquals(Resp::SUCCESS, $class->getSuccess()->getCode());
+
+		$class->successWithEmpty();
+		$this->assertNotEquals('', $class->getSuccess()->getMessage());
 	}
 
 	public function testHasAttributes()

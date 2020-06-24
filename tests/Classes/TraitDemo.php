@@ -23,4 +23,14 @@ class TraitDemo
 	{
 		return $this->setError((new ApplicationException('This is an Exception With Code', $code)));
 	}
+
+	public function success()
+	{
+		return $this->setSuccess('操作成功');
+	}
+
+	public function successWithEmpty()
+	{
+		return true;
+	}
 }
