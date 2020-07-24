@@ -1,6 +1,7 @@
 <?php namespace Poppy\Framework\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Poppy\Framework\Poppy\Poppy;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -83,8 +84,8 @@ class PoppySeedCommand extends Command
 		$params        = [];
 		$namespacePath = $this->poppy->getNamespace();
 
-		$rootSeeder = ucfirst(camel_case($module['basename'])) . 'DatabaseSeeder';
-		$fullPath   = ucfirst(camel_case($namespacePath)) . '\\' . ucfirst(camel_case($module['basename'])) . '\Database\Seeds\\' . $rootSeeder;
+		$rootSeeder = ucfirst(Str::camel($module['basename'])) . 'DatabaseSeeder';
+		$fullPath   = ucfirst(Str::camel($namespacePath)) . '\\' . ucfirst(Str::camel($module['basename'])) . '\Database\Seeds\\' . $rootSeeder;
 
 		if (class_exists($fullPath)) {
 			if ($this->option('class')) {

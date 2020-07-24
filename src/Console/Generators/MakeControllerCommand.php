@@ -53,7 +53,7 @@ class MakeControllerCommand extends GeneratorCommand
 	{
 		$type = $this->argument('type');
 
-		if (!in_array($type, ['web', 'api'])) {
+		if (!in_array($type, ['web', 'api', 'backend'])) {
 			$type = 'web';
 		}
 
