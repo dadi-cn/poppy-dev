@@ -9,12 +9,13 @@ use Poppy\Framework\Helper\HtmlHelper;
 if (!function_exists('route_url')) {
 	/**
 	 * 自定义可以传值的路由写法
-	 * @param       $route
-	 * @param array $route_params
-	 * @param array $params
+	 * @param string     $route
+	 * @param array      $route_params
+	 * @param array|null $params
+	 * @param bool       $absolute 是否绝对路径
 	 * @return string
 	 */
-	function route_url($route = '', $route_params = [], $params = null)
+	function route_url($route = '', $route_params = [], $params = null, $absolute = false)
 	{
 		if (is_null($route_params)) {
 			$route_params = [];
@@ -24,13 +25,13 @@ if (!function_exists('route_url')) {
 			if (empty($route)) {
 				return '';
 			}
-			$route_url = route($route, $route_params);
+			$route_url = route($route, $route_params, $absolute);
 		}
 		elseif (strpos($route, '.') === false) {
 			$route_url = url($route, $route_params);
 		}
 		else {
-			$route_url = route($route, $route_params);
+			$route_url = route($route, $route_params, $absolute);
 		}
 
 		$route_url = trim($route_url, '?');
