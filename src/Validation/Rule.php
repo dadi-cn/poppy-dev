@@ -226,4 +226,12 @@ class Rule extends IlluminateRule
 	{
 		return 'integer';
 	}
+
+	/**
+	 * @return string
+	 */
+	public static function json(): string
+	{
+		return 'json';
+	}
 }
