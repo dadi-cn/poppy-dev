@@ -15,7 +15,7 @@ if (!function_exists('route_url')) {
 	 * @param bool       $absolute 是否绝对路径
 	 * @return string
 	 */
-	function route_url($route = '', $route_params = [], $params = null, $absolute = false)
+	function route_url($route = '', $route_params = [], $params = null, $absolute = true)
 	{
 		if (is_null($route_params)) {
 			$route_params = [];
