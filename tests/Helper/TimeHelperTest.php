@@ -9,6 +9,6 @@ class TimeHelperTest extends TestCase
 	{
 		$date   = Carbon::now()->subMinutes(4000);
 		$result = $date->diffForHumans(null, false, false, 3);
-		$this->assertEquals('2天 18小时 40分钟前', $result);
+		$this->assertEquals('2天18小时40分钟前', $result);
 	}
 }

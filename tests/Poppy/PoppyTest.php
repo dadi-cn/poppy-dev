@@ -60,7 +60,7 @@ class PoppyTest extends TestCase
 		$this->testOptimize();
 
 		$enabled = app('poppy')->enabled();
-		dd($enabled);
+		$this->assertGreaterThan(0, $enabled->count());
 	}
 
 	public function testOptimize(): void

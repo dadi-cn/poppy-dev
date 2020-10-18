@@ -54,4 +54,12 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
 	{
 		return Container::getInstance();
 	}
+
+	/**
+	 * @param array $array 需要输出的数组
+	 */
+	protected function outputJson(array $array)
+	{
+		var_export(json_encode($array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+	}
 }
