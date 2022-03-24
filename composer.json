@@ -84,13 +84,12 @@
             "Poppy\\AliyunOss\\": "poppy/aliyun-oss/src",
             "Poppy\\AliyunOss\\Tests\\": "poppy/aliyun-oss/tests",
             "Poppy\\CanalEs\\": "poppy/canal-es/src/",
-            "Poppy\\CanalEs\\Tests\\": "poppy/canal-es/tests/",
+            "Poppy\\CanalEs\\Tests\\": "poppy/canal-es/tests/"
         },
         "files": [
             "poppy/framework/src/Support/functions.php",
             "poppy/system/src/Support/functions.php",
             "poppy/core/src/Support/functions.php",
-            "poppy/ext-pinyin/src/Support/functions.php",
             "poppy/sensitive-word/src/Support/functions.php"
         ]
     },

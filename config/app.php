@@ -140,16 +140,6 @@ return [
         // project
         Collective\Html\HtmlServiceProvider::class,                                  // Form
         Poppy\Framework\FrameworkServiceProvider::class,
-        Poppy\System\ServiceProvider::class,
-        Poppy\Core\ServiceProvider::class,
-        Poppy\Area\ServiceProvider::class,
-        Poppy\Ad\ServiceProvider::class,
-        Poppy\MgrPage\ServiceProvider::class,
-        Poppy\AliyunPush\ServiceProvider::class,
-        Poppy\AliyunOss\ServiceProvider::class,
-        Poppy\Version\ServiceProvider::class,
-        Poppy\Extension\IpStore\ExtensionServiceProvider::class,
-        Poppy\Extension\Pinyin\ExtensionServiceProvider::class,
     ],
 
     /*

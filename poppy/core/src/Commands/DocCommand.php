@@ -29,8 +29,7 @@ class DocCommand extends Command
             case 'api':
                 if (!command_exist('apidoc')) {
                     $this->error("apidoc 命令不存在\n");
-                }
-                else {
+                } else {
                     $catalog = config('poppy.core.apidoc');
                     if (!$catalog) {
                         $this->error('尚未配置 apidoc 生成目录');
@@ -68,9 +67,9 @@ class DocCommand extends Command
                 );
                 break;
             case 'php':
-                $sami       = storage_path('doctum/doctum.phar');
-                $samiConfig = storage_path('doctum/config.php');
-                if (!file_exists($samiConfig)) {
+                $doctum     = storage_path('doctum/doctum.phar');
+                $config = storage_path('doctum/config.php');
+                if (!file_exists($config)) {
                     $this->warn(
                         'Please Run Command To Publish Config:' . "\n" .
                         'php artisan vendor:publish '
@@ -78,16 +77,15 @@ class DocCommand extends Command
 
                     return;
                 }
-                if (file_exists($sami)) {
+                if (file_exists($doctum)) {
                     $this->info(
                         'Please Run Command:' . "\n" .
-                        'php ' . $sami . ' update ' . $samiConfig
+                        'php ' . $doctum . ' update ' . $config
                     );
-                }
-                else {
+                } else {
                     $this->warn(
                         'Please Run Command To Install doctum.phar:' . "\n" .
-                        'curl https://doctum.long-term.support/releases/latest/doctum.phar --output ' . $sami
+                        'curl https://doctum.long-term.support/releases/latest/doctum.phar --output ' . $doctum
                     );
                 }
                 break;
@@ -134,8 +132,7 @@ class DocCommand extends Command
         if (env('POPPY_ENV') === 'development') {
             // in poppy development mode
             $f .= ' -f "poppy/.*/src/Http/Request/Api.*/' . Str::studly($key) . '/.*\.php$"';
-        }
-        else {
+        } else {
             $f .= ' -f "vendor/poppy/.*/src/Http/Request/Api.*/' . Str::studly($key) . '/.*\.php$"';
         }
 

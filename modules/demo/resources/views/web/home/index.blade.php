@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Poppy Framework V3 Demo</title>
+    <title>Poppy Framework V4 Demo</title>
     <style>
     .main {
         display: flex;
@@ -41,11 +41,11 @@
 </head>
 <body>
 <div class="main">
-    <h3>Poppy Framework V3 Demo</h3>
+    <h3>Poppy Framework V4 Demo</h3>
     <p>
         <a href="/docs/php">PHP 文档</a>
         <a href="/docs/web">Api 文档</a>
-        <a href="https://wulicode.com/doc/v3">使用手册</a>
+        <a href="https://wulicode.com/doc/v4">使用手册</a>
     </p>
     <small>powered by <a href="https://github.com/dadi-cn" target="_blank">dadi-cn</a></small>
 </div>
