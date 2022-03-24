@@ -25,23 +25,54 @@ class UploadTest extends TestCase
 
             $Upload->setExtension(['jpg']);
             if (!$Upload->saveFile($image)) {
-                $this->assertFalse(true, $Upload->getError());
+                $this->fail($Upload->getError());
             }
 
             // 检测文件存在
             $url = $Upload->getUrl();
-            if ($content = file_get_contents($url)) {
+            if (file_get_contents($url)) {
                 $this->assertTrue(true);
                 $path = base_path('public/' . $Upload->getDestination());
                 $this->outputVariables($path);
                 $result = app('files')->delete(base_path('public/' . $Upload->getDestination()));
                 $this->assertTrue($result);
-            }
-            else {
-                $this->assertTrue(false, "Url {$url} 不可访问!");
+            } else {
+                $this->fail("Url {$url} 不可访问!");
             }
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
+        }
+    }
+
+    /**
+     * 进行上传
+     */
+    public function testDest()
+    {
+        try {
+            $file   = poppy_path('poppy.system', 'tests/files/demo.jpg');
+            $image  = new UploadedFile($file, 'test.jpg', null, null, true);
+            $Upload = new DefaultUploadProvider();
+
+            $Upload->setExtension(['jpg']);
+            $Upload->setDestination('dev/testing/upload-dest.jpg');
+            if (!$Upload->saveFile($image)) {
+                $this->fail($Upload->getError());
+            }
+
+            // 检测文件存在
+            $url = $Upload->getUrl();
+            if (file_get_contents($url)) {
+                $this->assertTrue(true);
+                $path = base_path('public/' . $Upload->getDestination());
+                $this->outputVariables($path);
+                $result = app('files')->delete(base_path('public/' . $Upload->getDestination()));
+                $this->assertTrue($result);
+            } else {
+                $this->fail("Url {$url} 不可访问!");
+            }
+        } catch (Throwable $e) {
+            $this->fail($e->getMessage());
         }
     }
 }
