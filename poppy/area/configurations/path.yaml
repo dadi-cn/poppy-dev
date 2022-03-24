@@ -1,0 +1,13 @@
+backend :
+  area :
+    title : 地区管理
+    # 将当前模块下所有 children 追加到指定key 的 children 中
+    injection : 'poppy.mgr-app/backend||setting'
+    children :
+      -
+        title : 地区管理
+        children :
+          -
+            title : 地区管理
+            path : grid/py-area:api-backend.content.index
+            permission : 'backend:py-area.main.manage'

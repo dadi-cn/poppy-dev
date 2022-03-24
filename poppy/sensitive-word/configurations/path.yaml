@@ -1,0 +1,13 @@
+backend :
+  area :
+    title : 敏感词管理
+    # 将当前模块下所有 children 追加到指定key 的 children 中
+    injection : 'poppy.mgr-app/backend||setting'
+    children :
+      -
+        title : 敏感词
+        children :
+          -
+            title : 敏感词库
+            path : grid/py-sensitive-word:api-backend.word.index
+            permission : 'backend:py-sensitive-word.main.manage'

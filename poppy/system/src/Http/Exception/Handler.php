@@ -10,7 +10,6 @@ use Illuminate\Http\Response;
 use Illuminate\Session\TokenMismatchException;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Foundation\Exception\Handler as ExceptionHandler;
-use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -26,7 +25,7 @@ class Handler extends ExceptionHandler
      * @param Exception $exception
      * @return Response
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Exception $exception)
     {
         if ($exception instanceof PostTooLargeException) {
             return Resp::error('请求超过最大限制');

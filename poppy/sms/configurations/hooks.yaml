@@ -4,3 +4,7 @@
     - '\Poppy\Sms\Services\SendTypeLocal'
     - '\Poppy\Sms\Services\SendTypeAliyun'
     - '\Poppy\Sms\Services\SendTypeChuanglan'
+-
+  name : 'poppy.mgr-app.settings'
+  hooks :
+    - '\Poppy\Sms\Services\MgrApp\ServiceSettings'

@@ -1,0 +1,13 @@
+backend :
+  area :
+    title : 短信管理
+    # 将当前模块下所有 children 追加到指定key 的 children 中
+    injection : 'poppy.mgr-app/backend||setting'
+    children :
+      -
+        title : 短信管理
+        children :
+          -
+            title : 短信模板
+            path : grid/py-sms:api-backend.sms.index
+            permission : 'backend:py-sms.sms.manage'

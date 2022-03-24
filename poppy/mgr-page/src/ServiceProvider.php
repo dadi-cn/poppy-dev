@@ -2,9 +2,6 @@
 
 namespace Poppy\MgrPage;
 
-/**
- * Copyright (C) Update For IDE
- */
 
 use Illuminate\Console\Scheduling\Schedule;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;

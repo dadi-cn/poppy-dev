@@ -1,0 +1,28 @@
+{
+    "name": "poppy/mgr-app",
+    "description": "An form support module for poppy sep system",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Mark Zhao",
+            "email": "zhaody901@126.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "poppy/system": "3.2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Poppy\\MgrApp\\": "src/",
+            "Poppy\\MgrApp\\Tests\\": "tests/"
+        },
+        "files": [
+            "src/Support/functions.php"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev"
+}

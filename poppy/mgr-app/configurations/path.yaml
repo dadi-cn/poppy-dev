@@ -1,0 +1,41 @@
+backend :
+  # 这里的KEY 作为注入项目 poppy.mgr-app/backend||setting, 可以将配置注入到这个地方
+  setting :
+    title : 配置
+    icon : dish
+    children :
+      -
+        title : 主页
+        path : home/py-mgr-page:backend.home.cp
+      -
+        title : 配置
+        children :
+          -
+            title : 系统配置
+            path : setting/py-mgr-app:api-backend.home.setting/poppy.system
+            permission : backend:py-system.global.manage
+          -
+            title : 邮件配置
+            path : form/py-mgr-app:api-backend.mail.store
+            permission : backend:py-system.global.manage
+      -
+        title : 账号
+        children :
+          -
+            title : 修改密码
+            path : form/py-mgr-app:api-backend.user.password
+          -
+            title : 角色管理
+            path : grid/py-mgr-app:api-backend.role.index
+          -
+            title : 账号管理
+            path : grid/py-mgr-app:api-backend.pam.index
+          -
+            title : 封禁管理
+            path : grid/py-mgr-app:api-backend.ban.index
+          -
+            title : 登录用户
+            path : grid/py-mgr-app:api-backend.pam.token
+          -
+            title : 登录日志
+            path : grid/py-mgr-app:api-backend.pam.log

@@ -1,0 +1,139 @@
+backend :
+  # 这里的KEY 作为注入项目 module.demo/backend||default, 可以将配置注入到这个地方
+  default :
+    title : Demo
+    icon : picture-rounded
+    children :
+      -
+        title : Form
+        children :
+          -
+            title : TextArea
+            # {type}/{route}/{route_params|explode by ,}/{query|gen_key}
+            path : form/demo:api.mgr_app.form/field-textarea
+          -
+            title : Radio
+            path : form/demo:api.mgr_app.form/field-radio
+          -
+            title : Checkbox
+            path : form/demo:api.mgr_app.form/field-checkbox
+          -
+            title : Text
+            path : form/demo:api.mgr_app.form/field-text
+          -
+            title : Number
+            path : form/demo:api.mgr_app.form/field-number
+          -
+            title : Color
+            path : form/demo:api.mgr_app.form/field-color
+          -
+            title : Date
+            path : form/demo:api.mgr_app.form/field-date
+          -
+            title : Select
+            path : form/demo:api.mgr_app.form/field-select
+          -
+            title : Switch
+            path : form/demo:api.mgr_app.form/field-switch
+          -
+            title : File
+            path : form/demo:api.mgr_app.form/field-file
+          -
+            title : Image
+            path : form/demo:api.mgr_app.form/field-image
+          -
+            title : Editor
+            path : form/demo:api.mgr_app.form/field-editor
+      -
+        title : Rule
+        children :
+          -
+            title : Text
+            path : form/demo:api.mgr_app.form/rule-text
+          -
+            title : Required
+            path : form/demo:api.mgr_app.form/rule-required
+          -
+            title : Date
+            path : form/demo:api.mgr_app.form/rule-date
+      -
+        title : Filter
+        children :
+          -
+            title : Between
+            path : grid/demo:api.mgr_app.filter/between
+          -
+            title : Like
+            path : grid/demo:api.mgr_app.filter/like
+          -
+            title : Equal
+            path : grid/demo:api.mgr_app.filter/equal
+          -
+            title : Gt
+            path : grid/demo:api.mgr_app.filter/gt
+          -
+            title : Gte
+            path : grid/demo:api.mgr_app.filter/gte
+          -
+            title : Lt
+            path : grid/demo:api.mgr_app.filter/lt
+          -
+            title : Lte
+            path : grid/demo:api.mgr_app.filter/lte
+          -
+            title : NotEqual
+            path : grid/demo:api.mgr_app.filter/not-equal
+          -
+            title : In
+            path : grid/demo:api.mgr_app.filter/in
+          -
+            title : NotIn
+            path : grid/demo:api.mgr_app.filter/not-in
+          -
+            title : Where
+            path : grid/demo:api.mgr_app.filter/where
+          -
+            title : Scope
+            path : grid/demo:api.mgr_app.filter/scope
+          -
+            title : Export
+            path : grid/demo:api.mgr_app.filter/export
+      -
+        title : Grid
+        children :
+          -
+            title : Layout
+            path : grid/demo:api.mgr_app.grid/layout
+          -
+            title : Button
+            path : grid/demo:api.mgr_app.grid/button
+          -
+            title : Button-dropdown
+            path : grid/demo:api.mgr_app.grid/button-dropdown
+          -
+            title : Button-icon-dropdown
+            path : grid/demo:api.mgr_app.grid/button-icon-dropdown
+          -
+            title : Quick
+            path : grid/demo:api.mgr_app.grid/quick
+          -
+            title : Display
+            path : grid/demo:api.mgr_app.grid/display
+          -
+            title : QuickActions
+            path : grid/demo:api.mgr_app.grid/quick-actions
+          -
+            title : BatchAction
+            path : grid/demo:api.mgr_app.grid/batch-actions
+          -
+            title : Id Default
+            path : grid/demo:api.mgr_app.grid/id-default
+          -
+            title : Relation
+            path : grid/demo:api.mgr_app.grid/relation
+      -
+        title : Table
+        children :
+          -
+            title : Simple
+            path : table/demo:api.table.index/simple
