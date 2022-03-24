@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\Constraint;
 use Intervention\Image\Image;
 use Poppy\Framework\Classes\Traits\AppTrait;
+use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Helper\FileHelper;
 use Poppy\Framework\Helper\UtilHelper;
 use Poppy\System\Classes\Contracts\UploadContract;
@@ -22,16 +23,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class DefaultUploadProvider implements UploadContract
 {
     use AppTrait;
-
-    /**
-     * @var string 目标路径
-     */
-    protected $destination = '';
-
-    /**
-     * @var string 目标磁盘
-     */
-    protected $disk = 'public';
 
     /**
      * 图片扩展的描述
@@ -57,6 +48,23 @@ class DefaultUploadProvider implements UploadContract
             'description' => '请选择音频文件',
         ],
     ];
+
+    /**
+     * @var string 目标路径
+     */
+    protected $destination = '';
+
+    /**
+     * @var string 目标磁盘
+     */
+    protected $disk = 'public';
+
+    /**
+     * 是否启用水印
+     * @var bool
+     */
+    protected $watermark = false;
+
     /**
      * @var string 文件夹
      */
@@ -86,13 +94,7 @@ class DefaultUploadProvider implements UploadContract
     /**
      * @var string 图片mime类型
      */
-    private      $mimeType;
-
-    /**
-     * 是否启用水印
-     * @var bool
-     */
-    protected $watermark = false;
+    private $mimeType;
 
     public function __construct()
     {
@@ -132,60 +134,6 @@ class DefaultUploadProvider implements UploadContract
     }
 
     /**
-     * @param string $extension 扩展名
-     * @return string
-     */
-    private function genRelativePath(string $extension = 'png'): string
-    {
-        $now      = Carbon::now();
-        $fileName = $now->format('is') . Str::random(8) . '.' . $extension;
-
-        return ($this->folder ? $this->folder . '/' : '') . $now->format('Ym/d/H/') . $fileName;
-    }
-
-    /**
-     * 重设内容
-     * @param string $extension  扩展
-     * @param mixed  $img_stream 压缩内容
-     * @return bool|StreamInterface
-     */
-    private function resizeContent(string $extension, $img_stream)
-    {
-        // 缩放图片
-        if ($extension !== 'gif' && in_array($extension, Uploader::kvExt(Uploader::TYPE_IMAGES), true)) {
-            $Image  = \Image::make($img_stream);
-            $width  = $Image->width();
-            $height = $Image->height();
-            try {
-                if ($width >= $this->resizeDistrict || $height >= $this->resizeDistrict) {
-                    $r_width  = ($width > $height) ? $this->resizeDistrict : null;
-                    $r_height = ($width > $height) ? null : $this->resizeDistrict;
-                    return $this->resize($Image, $r_width, $r_height);
-                }
-            } catch (Exception $e) {
-                return $this->setError($e->getMessage());
-            }
-        }
-        else {
-            return $img_stream;
-        }
-
-        return $img_stream;
-    }    /**
-     * 设置返回地址
-     * @param string $url 地址
-     */
-    public function setReturnUrl(string $url)
-    {
-        if (!Str::endsWith($url, '/')) {
-            $url .= '/';
-        }
-        $this->returnUrl = $url;
-    }
-
-
-
-    /**
      * Set Extension
      * @param array $extension 支持的扩展
      */
@@ -193,7 +141,6 @@ class DefaultUploadProvider implements UploadContract
     {
         $this->allowedExtensions = $extension;
     }
-
 
     /**
      * District Size.
@@ -224,6 +171,7 @@ class DefaultUploadProvider implements UploadContract
 
     /**
      * @inheritDoc
+     * @throws ApplicationException
      */
     public function saveFile(UploadedFile $file): bool
     {
@@ -280,8 +228,7 @@ class DefaultUploadProvider implements UploadContract
     {
         if ($content instanceof Image) {
             $Image = $content;
-        }
-        else {
+        } else {
             $Image = \Image::make($content);
         }
 
@@ -315,6 +262,7 @@ class DefaultUploadProvider implements UploadContract
 
     /**
      * @inheritDoc
+     * @throws ApplicationException
      */
     public function saveInput($content): bool
     {
@@ -338,8 +286,7 @@ class DefaultUploadProvider implements UploadContract
         // 缩放图片
         if ($extension !== 'gif') {
             $zipContent = $this->resizeContent($extension, $content);
-        }
-        else {
+        } else {
             $zipContent = $content;
         }
 
@@ -383,6 +330,17 @@ class DefaultUploadProvider implements UploadContract
         return $this->returnUrl;
     }
 
+    /**
+     * 设置返回地址
+     * @param string $url 地址
+     */
+    public function setReturnUrl(string $url)
+    {
+        if (!Str::endsWith($url, '/')) {
+            $url .= '/';
+        }
+        $this->returnUrl = $url;
+    }
 
     /**
      * @inheritDoc
@@ -393,8 +351,7 @@ class DefaultUploadProvider implements UploadContract
     {
         if (!isset(self::$extensions[$type])) {
             $ext = self::$extensions['images'];
-        }
-        else {
+        } else {
             $ext = self::$extensions[$type];
         }
         switch ($return_type) {
@@ -420,7 +377,6 @@ class DefaultUploadProvider implements UploadContract
         return $this->storage()->copy($this->destination, $dist);
     }
 
-
     /**
      * @inheritDoc
      */
@@ -438,5 +394,54 @@ class DefaultUploadProvider implements UploadContract
     public function enableWatermark(): void
     {
         $this->watermark = true;
+    }
+
+    /**
+     * @param string $extension 扩展名
+     * @return string
+     * @throws ApplicationException
+     */
+    private function genRelativePath(string $extension = 'png'): string
+    {
+        if ($this->destination) {
+            $ext = FileHelper::ext($this->destination);
+            if ($ext !== $extension) {
+                throw new ApplicationException('指定文件的扩展类型不符, 可能导致图片无法展示');
+            }
+            return $this->destination;
+        }
+        $now      = Carbon::now();
+        $fileName = $now->format('is') . Str::random(8) . '.' . $extension;
+
+        return ($this->folder ? $this->folder . '/' : '') . $now->format('Ym/d/H/') . $fileName;
+    }
+
+    /**
+     * 重设内容
+     * @param string $extension 扩展
+     * @param mixed $img_stream 压缩内容
+     * @return bool|StreamInterface
+     */
+    private function resizeContent(string $extension, $img_stream)
+    {
+        // 缩放图片
+        if ($extension !== 'gif' && in_array($extension, Uploader::kvExt(Uploader::TYPE_IMAGES), true)) {
+            $Image  = \Image::make($img_stream);
+            $width  = $Image->width();
+            $height = $Image->height();
+            try {
+                if ($width >= $this->resizeDistrict || $height >= $this->resizeDistrict) {
+                    $r_width  = ($width > $height) ? $this->resizeDistrict : null;
+                    $r_height = ($width > $height) ? null : $this->resizeDistrict;
+                    return $this->resize($Image, $r_width, $r_height);
+                }
+            } catch (Exception $e) {
+                return $this->setError($e->getMessage());
+            }
+        } else {
+            return $img_stream;
+        }
+
+        return $img_stream;
     }
 }
