@@ -115,7 +115,6 @@
             "git subtree push --prefix=poppy/sms  coding-sms 4.0",
             "git subtree push --prefix=poppy/ext-alipay  coding-ext-alipay 4.0",
             "git subtree push --prefix=poppy/ext-ip_store  coding-ext-ip_store 4.0",
-            "git subtree push --prefix=poppy/ext-wxpay  coding-ext-wxpay 4.0",
             "git subtree push --prefix=poppy/ad  coding-ad 4.0",
             "git subtree push --prefix=poppy/canal-es  coding-canal-es 4.0"
         ],
