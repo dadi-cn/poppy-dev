@@ -77,7 +77,6 @@ class Ban
                 return Resp::error('当前设备被封禁，请联系客服处理');
             }
 
-            \Log::debug($deviceId);
             /* 白名单策略, 设备不在列表中, 封禁
              * ---------------------------------------- */
             if (!$isBlack && !$deviceIn) {
