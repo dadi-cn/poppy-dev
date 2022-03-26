@@ -29,8 +29,8 @@ class HomeController extends BackendController
 
     public function clearCache()
     {
-        sys_cache('py-core')->clear();
-        sys_cache('py-system')->clear();
+        sys_cache('py-core')->flush();
+        sys_cache('py-system')->flush();
         $this->pyConsole()->call('poppy:optimize');
         return Resp::success('已清空缓存');
     }
