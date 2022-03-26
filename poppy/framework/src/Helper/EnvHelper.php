@@ -21,7 +21,7 @@ class EnvHelper
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
             if (strpos($ip, ',') !== false) {
                 $tmp = explode(',', $ip);
-                $ip  = trim(end($tmp));
+                $ip  = trim(reset($tmp));
             }
             if (UtilHelper::isIp($ip)) {
                 return $ip;
