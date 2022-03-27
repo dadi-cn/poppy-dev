@@ -3,7 +3,7 @@
 namespace Demo\Http\Forms\Helpers;
 
 use Poppy\Framework\Helper\TreeHelper;
-use Poppy\System\Classes\Widgets\FormWidget;
+use Poppy\MgrPage\Classes\Widgets\FormWidget;
 
 class FormTreeHelper extends FormWidget
 {

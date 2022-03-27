@@ -1,8 +1,8 @@
 -
   name : 'poppy.system.settings'
   hooks :
-    - '\Poppy\AliyunPush\Services\SettingAliyunPush'
+    - '\Poppy\AliyunPush\Hooks\System\SettingsAliyunPush'
 -
   name : 'poppy.mgr-app.settings'
   hooks :
-    - '\Poppy\AliyunPush\Services\MgrApp\ServiceSettings'
+    - '\Poppy\AliyunPush\Hooks\MgrApp\Settings'

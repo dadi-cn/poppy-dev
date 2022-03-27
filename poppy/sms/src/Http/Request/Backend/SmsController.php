@@ -11,7 +11,7 @@ use Illuminate\View\View;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrPage\Http\Request\Backend\BackendController;
 use Poppy\Sms\Action\Sms;
-use Poppy\Sms\Http\Forms\Settings\FormSettingSms;
+use Poppy\Sms\Http\MgrPage\FormSettingSms;
 
 /**
  * 短信控制器

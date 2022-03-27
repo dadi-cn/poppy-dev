@@ -4,7 +4,7 @@ namespace Demo\Http\Forms\Helpers;
 
 use Poppy\Core\Classes\Inspect\CommentParser;
 use Poppy\Framework\Helper\EnvHelper;
-use Poppy\System\Classes\Widgets\FormWidget;
+use Poppy\MgrPage\Classes\Widgets\FormWidget;
 use ReflectionClass;
 
 class FormEnvHelper extends FormWidget

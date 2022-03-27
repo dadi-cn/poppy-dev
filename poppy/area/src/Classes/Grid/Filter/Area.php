@@ -2,7 +2,7 @@
 
 namespace Poppy\Area\Classes\Grid\Filter;
 
-use Poppy\System\Classes\Grid\Filter\AbstractFilter;
+use Poppy\MgrPage\Classes\Grid\Filter\AbstractFilter;
 
 class Area extends AbstractFilter
 {

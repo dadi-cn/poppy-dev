@@ -23,7 +23,7 @@ class ConfigurationTest extends TestCase
             self::assertTrue(true);
         }
         else {
-            $form_class = 'Poppy\System\Http\Forms\Backend\FormMailStore';
+            $form_class = 'Poppy\MgrPage\Http\MgrPage\FormMailStore';
             $this->detectForm($form_class);
         }
     }

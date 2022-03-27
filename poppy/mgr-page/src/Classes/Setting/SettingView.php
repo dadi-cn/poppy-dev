@@ -4,8 +4,8 @@ namespace Poppy\MgrPage\Classes\Setting;
 
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Exceptions\ApplicationException;
-use Poppy\System\Classes\Widgets\FormWidget;
-use Poppy\System\Http\Forms\Settings\FormSettingBase;
+use Poppy\MgrPage\Classes\Form\FormSettingBase;
+use Poppy\MgrPage\Classes\Widgets\FormWidget;
 use Throwable;
 
 /**

@@ -5,8 +5,8 @@ namespace Poppy\Sms\Http\Request\Backend;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 use Poppy\MgrPage\Http\Request\Backend\BackendController;
-use Poppy\Sms\Http\Forms\Settings\FormSettingAliyun;
-use Poppy\Sms\Http\Forms\Settings\FormSettingChuanglan;
+use Poppy\Sms\Http\MgrPage\FormSettingAliyun;
+use Poppy\Sms\Http\MgrPage\FormSettingChuanglan;
 
 /**
  * 短信控制器

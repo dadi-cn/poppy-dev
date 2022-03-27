@@ -1,4 +1,4 @@
 -
   name: 'poppy.system.upload_type'
   hooks:
-    - '\Poppy\AliyunOss\Services\UploadTypeAliyun'
+    - '\Poppy\AliyunOss\Hooks\System\UploadTypeAliyun'

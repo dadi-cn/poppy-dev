@@ -7,9 +7,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Poppy\Framework\Classes\Resp;
-use Poppy\System\Classes\Layout\Content;
+use Poppy\MgrPage\Classes\Layout\Content;
+use Poppy\MgrPage\Http\MgrPage\FormSettingUpload;
 use Poppy\System\Classes\Traits\SystemTrait;
-use Poppy\System\Http\Forms\Settings\FormSettingUpload;
 
 /**
  * 上传设置

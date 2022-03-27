@@ -11,8 +11,8 @@ use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\MgrApp\Classes\Widgets\GridWidget;
 use Poppy\MgrPage\Http\Request\Backend\BackendController;
 use Poppy\SensitiveWord\Action\Word;
-use Poppy\SensitiveWord\Http\Form\FormSensWordEstablish;
-use Poppy\SensitiveWord\Http\Grid\GridSensitiveWord;
+use Poppy\SensitiveWord\Http\MgrApp\FormSensWordEstablish;
+use Poppy\SensitiveWord\Http\MgrApp\GridSensitiveWord;
 use Poppy\SensitiveWord\Models\SysSensitiveWord;
 use Throwable;
 

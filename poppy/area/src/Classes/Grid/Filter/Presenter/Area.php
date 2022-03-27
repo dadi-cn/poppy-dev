@@ -3,7 +3,7 @@
 namespace Poppy\Area\Classes\Grid\Filter\Presenter;
 
 use Poppy\Area\Models\SysArea;
-use Poppy\System\Classes\Grid\Filter\Presenter\Presenter;
+use Poppy\MgrPage\Classes\Grid\Filter\Presenter\Presenter;
 
 class Area extends Presenter
 {

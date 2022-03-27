@@ -1,10 +1,10 @@
 -
   name: 'poppy.sms.send_type'
   hooks:
-    - '\Poppy\Sms\Services\SendTypeLocal'
-    - '\Poppy\Sms\Services\SendTypeAliyun'
-    - '\Poppy\Sms\Services\SendTypeChuanglan'
+    - '\Poppy\Sms\Hooks\Sms\SendTypeLocal'
+    - '\Poppy\Sms\Hooks\Sms\SendTypeAliyun'
+    - '\Poppy\Sms\Hooks\Sms\SendTypeChuanglan'
 -
   name : 'poppy.mgr-app.settings'
   hooks :
-    - '\Poppy\Sms\Services\MgrApp\ServiceSettings'
+    - '\Poppy\Sms\Hooks\MgrApp\Settings'

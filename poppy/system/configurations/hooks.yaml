@@ -1,12 +1,12 @@
 -
   name: 'poppy.system.upload_type'
   hooks:
-    - '\Poppy\System\Services\UploadTypeDefault'
+    - '\Poppy\System\Hooks\System\UploadTypeDefault'
 -
   name: 'poppy.system.settings'
   hooks:
-    - '\Poppy\System\Services\SettingSystem'
+    - '\Poppy\System\Hooks\System\SettingSystem'
 -
   name: 'poppy.system.api_info'
   hooks:
-    - '\Poppy\System\Services\ApiInfo'
+    - '\Poppy\System\Hooks\System\ApiInfo'

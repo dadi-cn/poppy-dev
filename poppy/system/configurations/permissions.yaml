@@ -11,9 +11,6 @@
         -
           slug: manage
           description: 系统设置
-        -
-          slug: addon
-          description: 扩展管理
     -
       slug: pam
       title: 账号

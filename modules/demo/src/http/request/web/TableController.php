@@ -8,8 +8,8 @@ use Demo\Http\Lists\ListPoppyIndex;
 use Demo\Http\Lists\ListPoppyUser;
 use Demo\Models\DemoWebapp;
 use Poppy\Framework\Exceptions\ApplicationException;
-use Poppy\System\Classes\Grid;
-use Poppy\System\Classes\Widgets\TableWidget;
+use Poppy\MgrPage\Classes\Grid;
+use Poppy\MgrPage\Classes\Widgets\TableWidget;
 use Poppy\System\Http\Request\Web\WebController;
 use Throwable;
 

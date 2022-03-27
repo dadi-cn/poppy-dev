@@ -7,12 +7,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Exceptions\ApplicationException;
+use Poppy\MgrPage\Classes\Grid;
 use Poppy\MgrPage\Http\Request\Backend\BackendController;
 use Poppy\SensitiveWord\Action\Word;
-use Poppy\SensitiveWord\Http\Forms\Backend\FormSensWordEstablish;
-use Poppy\SensitiveWord\Http\Lists\Backend\ListSensitiveWord;
+use Poppy\SensitiveWord\Http\MgrPage\FormSensWordEstablish;
+use Poppy\SensitiveWord\Http\MgrPage\ListSensitiveWord;
 use Poppy\SensitiveWord\Models\SysSensitiveWord;
-use Poppy\System\Classes\Grid;
 use Response;
 use Throwable;
 

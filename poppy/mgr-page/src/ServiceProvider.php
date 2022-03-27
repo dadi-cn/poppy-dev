@@ -6,7 +6,7 @@ namespace Poppy\MgrPage;
 use Illuminate\Console\Scheduling\Schedule;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Support\PoppyServiceProvider;
-use Poppy\MgrPage\Classes\Form\FormBuilder;
+use Poppy\MgrPage\Classes\FormBuilder;
 use Poppy\MgrPage\Commands\MixCommand;
 
 /**

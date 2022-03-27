@@ -9,5 +9,5 @@
 -
   name: 'poppy.system.settings'
   hooks:
-    - '\Demo\Services\SettingKeyA'
-    - '\Demo\Services\SettingKeyB'
+    - '\Demo\Hooks\System\SettingsKeyA'
+    - '\Demo\Hooks\System\SettingsKeyB'

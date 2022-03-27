@@ -6,10 +6,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Poppy\AliyunOss\Http\Forms\Settings\FormSettingAliyunOss;
+use Poppy\AliyunOss\Http\MgrPage\FormSettingAliyunOss;
 use Poppy\Framework\Classes\Resp;
+use Poppy\MgrPage\Classes\Layout\Content;
 use Poppy\MgrPage\Http\Request\Backend\BackendController;
-use Poppy\System\Classes\Layout\Content;
 use Throwable;
 
 /**

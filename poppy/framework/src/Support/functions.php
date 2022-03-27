@@ -9,6 +9,7 @@ use Poppy\Framework\Exceptions\FakerException;
 use Poppy\Framework\Foundation\Application;
 use Poppy\Framework\Foundation\Console\Kernel;
 use Poppy\Framework\Helper\HtmlHelper;
+use Poppy\MgrPage\Classes\Form\Field\Text;
 
 
 if (!function_exists('route_url')) {

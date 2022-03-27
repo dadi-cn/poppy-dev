@@ -20,9 +20,3 @@ poppy.system.custom_settings :
   title : 自定义配置项
   description : 可以自己定义配置的权限以及显示
   type : array
-
-# 服务项目因为支持 MgrApp 和 MgrPage , 所以对配置进行拆离
-
-poppy.mgr-app.settings :
-  title : 系统配置
-  type : array

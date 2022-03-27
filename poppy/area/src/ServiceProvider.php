@@ -7,8 +7,8 @@ use Poppy\Area\Http\RouteServiceProvider;
 use Poppy\Framework\Events\PoppyOptimized;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Support\PoppyServiceProvider as ModuleServiceProviderBase;
-use Poppy\System\Classes\Form;
-use Poppy\System\Classes\Grid\Filter;
+use Poppy\MgrPage\Classes\Form;
+use Poppy\MgrPage\Classes\Grid\Filter;
 
 class ServiceProvider extends ModuleServiceProviderBase
 {

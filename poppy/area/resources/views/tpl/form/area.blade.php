@@ -2,7 +2,7 @@
 
     <div class="{{$viewClass['label']}}">
         <label for="{{$id}}" class="layui-form-auto-label {{$viewClass['label_element']}}">
-            @include('py-system::tpl.form.help-tip')
+            @include('py-mgr-page::tpl.form.help-tip')
             {{$label}}
         </label>
     </div>
@@ -11,7 +11,7 @@
         <div class="layui-form-auto-field">
             {!! app('poppy.mgr-page.form')->select($name, $area, $value) !!}
         </div>
-        @include('py-system::tpl.form.help-block')
-        @include('py-system::tpl.form.error')
+        @include('py-mgr-page::tpl.form.help-block')
+        @include('py-mgr-page::tpl.form.error')
     </div>
 </div>

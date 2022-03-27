@@ -102,6 +102,6 @@ class TotalRow extends AbstractTool
             ];
         });
 
-        return view('py-system::tpl.grid.total-row', compact('columns'));
+        return view('py-mgr-page::tpl.grid.total-row', compact('columns'));
     }
 }

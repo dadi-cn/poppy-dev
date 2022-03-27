@@ -4,11 +4,11 @@ namespace Poppy\Version\Http\Lists\Backend;
 
 use Closure;
 use Poppy\Framework\Exceptions\ApplicationException;
-use Poppy\System\Classes\Grid\Column;
-use Poppy\System\Classes\Grid\Displayer\Actions;
-use Poppy\System\Classes\Grid\Filter;
-use Poppy\System\Classes\Grid\Tools\BaseButton;
-use Poppy\System\Http\Lists\ListBase;
+use Poppy\MgrPage\Classes\Grid\Column;
+use Poppy\MgrPage\Classes\Grid\Displayer\Actions;
+use Poppy\MgrPage\Classes\Grid\Filter;
+use Poppy\MgrPage\Classes\Grid\ListBase;
+use Poppy\MgrPage\Classes\Grid\Tools\BaseButton;
 use Poppy\Version\Models\SysAppVersion;
 
 class ListAppVersion extends ListBase
@@ -70,7 +70,7 @@ class ListAppVersion extends ListBase
 
     public function quickButtons(): array
     {
-        $platform = input(Filter\Scope::QUERY_NAME, SysAppVersion::PLATFORM_ANDROID);
+        $platform = input(\Poppy\MgrPage\Classes\Grid\Filter\Scope::QUERY_NAME, SysAppVersion::PLATFORM_ANDROID);
         $desc     = SysAppVersion::kvType($platform);
         return [
             new BaseButton('<i class="fa fa-plus"></i> 新增' . $desc . '版本', route_url('py-version:backend.version.establish', null, ['platform' => $platform]), [

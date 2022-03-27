@@ -4,8 +4,8 @@ namespace Demo\Http\Request\Web;
 
 use Demo\Forms\FormEntrance;
 use Demo\Models\DemoWebapp;
-use Poppy\System\Classes\Form;
-use Poppy\System\Classes\Layout\Content;
+use Poppy\MgrPage\Classes\Form;
+use Poppy\MgrPage\Classes\Layout\Content;
 use Poppy\System\Http\Request\Web\WebController;
 
 /**

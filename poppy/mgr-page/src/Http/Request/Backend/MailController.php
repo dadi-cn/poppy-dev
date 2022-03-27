@@ -7,10 +7,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Poppy\Framework\Classes\Resp;
-use Poppy\System\Classes\Layout\Content;
+use Poppy\MgrPage\Classes\Layout\Content;
+use Poppy\MgrPage\Http\MgrPage\FormMailStore;
+use Poppy\MgrPage\Http\MgrPage\FormMailTest;
 use Poppy\System\Classes\Traits\SystemTrait;
-use Poppy\System\Http\Forms\Backend\FormMailStore;
-use Poppy\System\Http\Forms\Backend\FormMailTest;
 
 /**
  * 邮件控制器

@@ -10,8 +10,8 @@ use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\MgrApp\Classes\Widgets\GridWidget;
 use Poppy\MgrPage\Http\Request\Backend\BackendController;
 use Poppy\Sms\Action\Sms;
-use Poppy\Sms\Http\Form\FormSmsEstablish;
-use Poppy\Sms\Http\Grid\GridSms;
+use Poppy\Sms\Http\MgrApp\FormSmsEstablish;
+use Poppy\Sms\Http\MgrApp\GridSms;
 use Poppy\Sms\Models\Query\SmsQuery;
 use Throwable;
 

@@ -3,8 +3,8 @@
 namespace Poppy\Version\Http\Forms\Backend;
 
 use Poppy\Framework\Validation\Rule;
+use Poppy\MgrPage\Classes\Form\FormSettingBase;
 use Poppy\System\Classes\Traits\PamTrait;
-use Poppy\System\Http\Forms\Settings\FormSettingBase;
 
 class FormSettingVersion extends FormSettingBase
 {

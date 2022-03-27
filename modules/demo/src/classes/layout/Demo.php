@@ -7,8 +7,8 @@ use Illuminate\Contracts\Support\Renderable;
 use Poppy\Framework\Exceptions\PoppyException;
 use Poppy\Framework\Helper\EnvHelper;
 use Poppy\Framework\Helper\StrHelper;
-use Poppy\System\Classes\Layout\Content;
-use Poppy\System\Classes\Layout\Row;
+use Poppy\MgrPage\Classes\Layout\Content;
+use Poppy\MgrPage\Classes\Layout\Row;
 use Throwable;
 
 class Demo implements Renderable

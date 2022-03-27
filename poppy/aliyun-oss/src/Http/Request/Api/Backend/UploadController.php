@@ -5,7 +5,7 @@ namespace Poppy\AliyunOss\Http\Request\Api\Backend;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Poppy\AliyunOss\Http\Setting\SettingAliyunOss;
+use Poppy\AliyunOss\Http\MgrApp\SettingAliyunOss;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrPage\Http\Request\Backend\BackendController;
 

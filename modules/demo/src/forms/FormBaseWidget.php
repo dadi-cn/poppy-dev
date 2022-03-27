@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Poppy\Framework\Classes\Resp;
-use Poppy\System\Classes\Widgets\FormWidget;
+use Poppy\MgrPage\Classes\Widgets\FormWidget;
 use Response;
 
 abstract class FormBaseWidget extends FormWidget

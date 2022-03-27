@@ -4,8 +4,8 @@ namespace Demo\Http\Lists;
 
 use Closure;
 use Poppy\Framework\Exceptions\ApplicationException;
-use Poppy\System\Classes\Grid\Filter;
-use Poppy\System\Http\Lists\ListBase;
+use Poppy\MgrPage\Classes\Grid\Filter;
+use Poppy\MgrPage\Classes\Grid\ListBase;
 
 class ListPoppyUser extends ListBase
 {

@@ -16,8 +16,8 @@ use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Helper\EnvHelper;
 use Poppy\Framework\Helper\StrHelper;
 use Poppy\MgrPage\Classes\Setting\SettingView;
+use Poppy\MgrPage\Http\MgrPage\FormPassword;
 use Poppy\System\Action\Pam;
-use Poppy\System\Http\Forms\Backend\FormPassword;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamRole;
 

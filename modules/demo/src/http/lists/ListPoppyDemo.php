@@ -5,9 +5,9 @@ namespace Demo\Http\Lists;
 use Closure;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Helper\StrHelper;
-use Poppy\System\Classes\Grid\Filter;
-use Poppy\System\Classes\Grid\Tools\BaseButton;
-use Poppy\System\Http\Lists\ListBase;
+use Poppy\MgrPage\Classes\Grid\Filter;
+use Poppy\MgrPage\Classes\Grid\ListBase;
+use Poppy\MgrPage\Classes\Grid\Tools\BaseButton;
 
 class ListPoppyDemo extends ListBase
 {
@@ -100,7 +100,7 @@ class ListPoppyDemo extends ListBase
                 $filter->month('month');
             });
             $filter->column(1 / 12, function (Filter $filter) {
-                $filter->group('group', 'Group', function (Filter\Group $group) {
+                $filter->group('group', 'Group', function (\Poppy\MgrPage\Classes\Grid\Filter\Group $group) {
                     // 等于
                     $group->equal('=');
 
@@ -153,7 +153,7 @@ class ListPoppyDemo extends ListBase
     public function quickButtons(): array
     {
         return [
-            $this->create(input(Filter\Scope::QUERY_NAME)),
+            $this->create(input(\Poppy\MgrPage\Classes\Grid\Filter\Scope::QUERY_NAME)),
         ];
     }
 

@@ -7,7 +7,7 @@ use Demo\Http\Forms\Helpers\FormEnvHelper;
 use Demo\Http\Forms\Helpers\FormImageHelper;
 use Demo\Http\Forms\Helpers\FormTreeHelper;
 use Poppy\Framework\Helper\ImgHelper;
-use Poppy\System\Classes\Layout\Content;
+use Poppy\MgrPage\Classes\Layout\Content;
 use Poppy\System\Http\Request\Web\WebController;
 
 /**

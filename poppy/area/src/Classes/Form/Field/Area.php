@@ -3,7 +3,7 @@
 namespace Poppy\Area\Classes\Form\Field;
 
 use Poppy\Area\Models\SysArea;
-use Poppy\System\Classes\Form\Field;
+use Poppy\MgrPage\Classes\Form\Field;
 
 final class Area extends Field
 {
