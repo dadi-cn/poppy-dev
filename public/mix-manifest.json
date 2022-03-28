@@ -1,11 +1,10 @@
 {
-    "/assets/libs/boot/style.css": "/assets/libs/boot/style.css?id=ca19e6bf42b49cb3e6d1",
-    "/app/css/web.css": "/app/css/web.css?id=dcc378971415516fd53d",
-    "/assets/libs/boot/poppy.mgr.min.js": "/assets/libs/boot/poppy.mgr.min.js?id=c7f2dc79b83c541b2161",
-    "/assets/libs/boot/vendor.min.js": "/assets/libs/boot/vendor.min.js?id=95dda63b1376b3269766",
-    "/assets/libs/layui/layui.js": "/assets/libs/layui/layui.js?id=70ed0e8151d23de969de",
-    "/assets/libs/vue/README.md": "/assets/libs/vue/README.md?id=5a33ae68a09accb31b28",
-    "/assets/libs/vue/vue.js": "/assets/libs/vue/vue.js?id=c0b34fd784c6afa2f36b",
-    "/assets/libs/underscore/README.md": "/assets/libs/underscore/README.md?id=b5269c745a0e5d18003f",
-    "/assets/libs/underscore/underscore.js": "/assets/libs/underscore/underscore.js?id=0b13233f6239bc2e8d65"
+    "/assets/libs/boot/style.css": "/assets/libs/boot/style.css?id=ca19e6bf42b49cb3e6d1104da9c822ec",
+    "/assets/libs/boot/poppy.mgr.min.js": "/assets/libs/boot/poppy.mgr.min.js?id=94f8562ab519b01ceabeab27afb4c2db",
+    "/assets/libs/boot/vendor.min.js": "/assets/libs/boot/vendor.min.js?id=95dda63b1376b3269766aa83019c7557",
+    "/assets/libs/layui/layui.js": "/assets/libs/layui/layui.js?id=70ed0e8151d23de969de514bfd802a56",
+    "/assets/libs/vue/README.md": "/assets/libs/vue/README.md?id=5a33ae68a09accb31b2807b4b7527c12",
+    "/assets/libs/vue/vue.js": "/assets/libs/vue/vue.js?id=c0b34fd784c6afa2f36b5d35d436bbba",
+    "/assets/libs/underscore/README.md": "/assets/libs/underscore/README.md?id=b5269c745a0e5d18003f10851d974de0",
+    "/assets/libs/underscore/underscore.js": "/assets/libs/underscore/underscore.js?id=0b13233f6239bc2e8d659d7017abb273"
 }

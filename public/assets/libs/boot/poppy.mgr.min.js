@@ -299,7 +299,12 @@ if (typeof Util !== 'object') {
                     if (Util.browser().is_wechat) {
                         window.location.search = '?v=' + Date.now();
                     } else {
-                        window.location.reload()
+                        let $reload = $('#filter-box-reload');
+                        if ($reload.length){
+                            $reload.trigger('click');
+                        } else {
+                            window.location.reload()
+                        }
                     }
                 }, obj_data.time);
                 return;

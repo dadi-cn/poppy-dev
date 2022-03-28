@@ -26,10 +26,6 @@ mix
      * ---------------------------------------- */
     // develop
     .less(
-        'resources/assets/app/web.less',
-        'public/app/css/web.css'
-    )
-    .less(
         'poppy/mgr-page/resources/less/mgr-page.less',
         'public/assets/libs/boot/style.css'
     )

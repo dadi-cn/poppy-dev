@@ -16,7 +16,7 @@ class SearchCache
     public static function py(string $text): string
     {
         $Rds = new RdsDb();
-        if (function_exists('ext_pinyin_abbr')) {
+        if (function_exists('ext_pinyin_abbr' && class_exists('Overtrue\Pinyin\Pinyin'))) {
             if ($py = $Rds->hget(PyMgrPageDef::ckTagSearchPy(), $text)) {
                 return $py;
             }
