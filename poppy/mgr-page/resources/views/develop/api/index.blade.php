@@ -1,13 +1,4 @@
 @extends('py-mgr-page::tpl.develop')
-@section('head-script')
-    @parent
-    {!! Html::script('assets/libs/vue/vue.js') !!}
-    {!! Html::script('assets/libs/underscore/underscore.js') !!}
-    {!! Html::script('assets/libs/jshash/md5.min.js') !!}
-    @foreach((array) ($definition['scripts'] ?? []) as $script)
-        {!! Html::script($script) !!}
-    @endforeach
-@endsection
 @section('develop-main')
     @include('py-mgr-page::develop.api.nav')
     @if (!$data['file_exists'])
@@ -42,8 +33,8 @@
                     }
                     @{{ url }}
                     <a class="pull-right fa fa-paragraph"
-                        href="{!! $apidoc_url !!}/#api-{!! $data['current']->group !!}-{!! $data['current']->name !!}"
-                        target="_blank"></a>
+                       href="{!! $apidoc_url !!}/#api-{!! $data['current']->group !!}-{!! $data['current']->name !!}"
+                       target="_blank"></a>
                     <p class="clearfix api-versions pt5">
                         @foreach($variables as $key => $item)
                             {!! Form::select($key, $item, null, [
@@ -58,30 +49,34 @@
                 <div class="clearfix api-versions pt8" id="api_version">
                     @foreach($data['versions'] as $kv => $version)
                         <a @if ($kv === $data['version']) class="current"
-                            @endif href="{!! route_url('', null, ['url' => $data['current']->url, 'method' => $data['current']->type, 'version' => $version]) !!}"> {{$version}} </a>
+                           @endif href="{!! route_url('', null, ['url' => $data['current']->url, 'method' => $data['current']->type, 'version' => $version]) !!}"> {{$version}} </a>
                     @endforeach
                 </div>
                 <pre id="J_result" style="display: none;color: #0a0a0a" class="layui-elem-quote layui-quote-nm mt8"></pre>
             </div>
         </div>
         <script>
-        $(function() {
+        $(function () {
             let className = 'alert-warning alert-danger alert-info';
-            let conf      = Util.validateConfig({
-                submitHandler : function(form) {
+            let conf = Util.validateConfig({
+                submitHandler: function (form) {
                     let $result = $('#J_result');
                     $result.text(
                         '进行中...'
                     ).css('color', 'grey');
                     $(form).ajaxSubmit({
-                        beforeSend : function(request) {
-	                        let headerStr = '{!! $data['headers'] ?? '' !!}'
-	                        let headers = JSON.parse(headerStr)
-	                        if (typeof headers == "object") {
-		                        Object.keys(headers).forEach((key) => {
-			                        request.setRequestHeader(key, headers[key])
-		                        })
-	                        }
+                        beforeSend: function (request) {
+                            let headerStr = '{!! $data['headers'] ?? '' !!}'
+                            try {
+                                let headers = JSON.parse(headerStr)
+                                if (typeof headers == "object") {
+                                    Object.keys(headers).forEach((key) => {
+                                        request.setRequestHeader(key, headers[key])
+                                    })
+                                }
+                            } catch (e) {
+                            }
+
                             @if(isset($data['token']))
                             request.setRequestHeader("Authorization", "Bearer {!! $data['token'] !!}");
                             request.setRequestHeader("X-ACCESS-TOKEN", "{!! $data['token'] !!}");
@@ -90,7 +85,7 @@
                             request.setRequestHeader("X-APP-VERSION", "1.0.0");
                             @endif
                         },
-                        success : function(data) {
+                        success: function (data) {
                             let objData;
                             try {
                                 objData = Util.toJson(data);
@@ -112,7 +107,7 @@
                                 JSON.stringify(Util.toJson(data), null, '  ')
                             ).show(300).removeClass(className).addClass(className).css('color', '#000000');
                         },
-                        error : function(data) {
+                        error: function (data) {
                             $result
                                 .text(data.responseText)
                                 .show(300)
@@ -127,20 +122,20 @@
         </script>
         <script>
         new Vue({
-            el : '#app',
-            data : {
-                requestType : '{!! $data['current']->type !!}',
-                url : '{!! url($data['current']->url) !!}',
-                url_origin : '{!! url($data['current']->url) !!}',
-                variables : {}
+            el: '#app',
+            data: {
+                requestType: '{!! $data['current']->type !!}',
+                url: '{!! url($data['current']->url) !!}',
+                url_origin: '{!! url($data['current']->url) !!}',
+                variables: {}
             },
-            methods : {
-                changeVariable : function(e) {
-                    const self           = this;
-                    let name             = e.target.name;
+            methods: {
+                changeVariable: function (e) {
+                    const self = this;
+                    let name = e.target.name;
                     this.variables[name] = e.target.value;
-                    let url              = this.url_origin;
-                    Object.keys(this.variables).forEach(function(name) {
+                    let url = this.url_origin;
+                    Object.keys(this.variables).forEach(function (name) {
                         console.log(name);
                         url = url.replace(':' + name, self.variables[name])
                     });

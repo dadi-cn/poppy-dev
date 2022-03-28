@@ -3,14 +3,15 @@
 namespace Poppy\MgrPage\Http\Request\Develop;
 
 use Carbon\Carbon;
-use Curl\Curl;
+use Exception;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -21,6 +22,7 @@ use Poppy\Framework\Helper\FileHelper;
 use Poppy\Framework\Helper\StrHelper;
 use Poppy\Framework\Helper\UtilHelper;
 use Poppy\System\Classes\Contracts\ApiSignContract;
+use Psr\Http\Message\ResponseInterface;
 use Session;
 use Throwable;
 
@@ -34,10 +36,11 @@ class ApiController extends DevelopController
      */
     protected $selfMenu;
 
+
     /**
-     * @var Curl
+     * @var Client
      */
-    private $curl;
+    private Client $client;
 
     /**
      * 当前 Token
@@ -66,7 +69,7 @@ class ApiController extends DevelopController
     /**
      * 自动生成接口
      * @param string $type 支持的类型
-     * @return array|Application|Factory|JsonResponse|RedirectResponse|Response|Redirector|View|Resp|\Response
+     * @return Application|Factory|JsonResponse|RedirectResponse|Resp|Response|View
      */
     public function index($type = '')
     {
@@ -103,13 +106,18 @@ class ApiController extends DevelopController
                 }
                 if (in_array($type, ['web', 'backend'])) {
                     // check token is valid
-
                     $this->token = $token;
-                    $item        = $this->postWithSign(route('py-system:pam.auth.access'));
-                    if ($this->curl->httpStatusCode === 200) {
-                        if ($item->status === 0) {
-                            $pam = json_decode(json_encode($item->data), true);
-                            \View::share('pam', $pam);
+                    try {
+                        $item = $this->postWithSign(route('py-system:pam.auth.access'));
+                    } catch (Exception $e) {
+                        return $token;
+                    }
+
+                    if ($item->getStatusCode() === 200) {
+                        $content = $item->getBody()->getContents();
+                        $obj     = json_decode($content, true);
+                        if ($obj['status'] === 0) {
+                            \View::share('pam', $obj['data']);
                         }
                     }
                 }
@@ -151,7 +159,7 @@ class ApiController extends DevelopController
             }
             $data['token'] = $tokenGet('dev#' . $type . '#token');
 
-            $headerSet = function ($key) use ($type) {
+            $headerSet       = function ($key) use ($type) {
                 $headers = '';
                 if (Session::has($key)) {
                     $headerStr = Session::get($key);
@@ -199,9 +207,9 @@ class ApiController extends DevelopController
 
     /**
      * 设置
-     * @param string $type  类型
+     * @param string $type 类型
      * @param string $field 字段
-     * @return Factory|JsonResponse|RedirectResponse|Response|Redirector|View
+     * @return Application|Factory|JsonResponse|RedirectResponse|Resp|Response|View
      */
     public function field(string $type, string $field)
     {
@@ -220,7 +228,7 @@ class ApiController extends DevelopController
 
     /**
      * api 登录
-     * @return Factory|JsonResponse|RedirectResponse|Response|Redirector|View
+     * @return Application|Factory|JsonResponse|RedirectResponse|Resp|Response|View
      */
     public function login()
     {
@@ -231,21 +239,23 @@ class ApiController extends DevelopController
                 'device_id'   => uniqid(),
                 'device_type' => 'webapp',
             ]);
-            $data  = $this->postWithSign(route_url('py-system:pam.auth.login'), $input);
-
-            if ($this->curl->httpStatusCode === 200) {
-                if ((int) $data->status === Resp::SUCCESS) {
-                    $token = 'dev#' . $type . '#token';
-                    Session::put($token, data_get($data, 'data.token'));
-                }
-                else {
-                    return Resp::error($data->message);
-                }
-
-                return Resp::success('登录成功', '_top_reload|1');
+            try {
+                $resp = $this->postWithSign(route_url('py-system:pam.auth.login'), $input);
+            } catch (Throwable $e) {
+                return Resp::error($e->getMessage());
             }
 
-            return Resp::error($this->curl->errorMessage);
+            $content = $resp->getBody()->getContents();
+            $data    = json_decode($content, true);
+            if ((int) $data['status'] === Resp::SUCCESS) {
+                $token = 'dev#' . $type . '#token';
+                Session::put($token, data_get($data, 'data.token'));
+            }
+            else {
+                return Resp::error($data['message']);
+            }
+
+            return Resp::success('登录成功', '_top_reload|1');
         }
 
         return view('py-mgr-page::develop.api.login', compact('type'));
@@ -253,9 +263,9 @@ class ApiController extends DevelopController
 
     /**
      * 获取生成的 api 数据
-     * @param string $type    类型
-     * @param null   $prefix  前缀
-     * @param string $method  方法
+     * @param string $type 类型
+     * @param null $prefix 前缀
+     * @param string $method 方法
      * @param string $version 版本
      * @return array
      */
@@ -383,7 +393,13 @@ class ApiController extends DevelopController
         return '';
     }
 
-    private function postWithSign($url, $params = [])
+    /**
+     * @param $url
+     * @param $params
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    private function postWithSign($url, $params = []): ResponseInterface
     {
         /** @var ApiSignContract $sign */
         $sign   = app(ApiSignContract::class);
@@ -393,8 +409,13 @@ class ApiController extends DevelopController
 
         $params['token'] = $this->token;
         $params['sign']  = $sign->sign($params);
-        $this->curl      = new Curl();
-        $this->curl->setHeader('Authorization', 'Bearer ' . $this->token);
-        return $this->curl->post($url, $params);
+
+        $this->client = new Client();
+        return $this->client->post($url, [
+            'headers'     => [
+                'Authorization' => 'Bearer ' . $this->token,
+            ],
+            'form_params' => $params
+        ]);
     }
 }

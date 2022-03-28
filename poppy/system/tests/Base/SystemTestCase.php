@@ -2,9 +2,9 @@
 
 namespace Poppy\System\Tests\Base;
 
-use Curl\Curl;
 use DB;
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Contracts\Support\Arrayable;
 use Log;
 use Poppy\Framework\Application\TestCase;
@@ -65,9 +65,9 @@ class SystemTestCase extends TestCase
 
     /**
      * 测试日志
-     * @param bool   $result  测试结果
+     * @param bool $result 测试结果
      * @param string $message 测试消息
-     * @param mixed  $context 上下文信息, 数组
+     * @param mixed $context 上下文信息, 数组
      * @return string
      */
     public function runLog($result = true, $message = '', $context = null): string
@@ -149,21 +149,15 @@ class SystemTestCase extends TestCase
      */
     protected function visit($url)
     {
-        $Curl = new Curl();
-        if ($content = $Curl->get($url)) {
-            $this->assertTrue(true, $Curl->getCurlErrorMessage());
-        }
-        else {
-            $this->assertTrue(false, $Curl->getCurlErrorMessage());
-        }
-        if ($Curl->getHttpStatusCode() !== 200) {
-            $this->assertTrue(false, 'Visit Url ' . $url . ' Failed,  Reason:' . $Curl->getUrl());
-        }
-        else {
-            $this->assertTrue(true);
-        }
+        try {
 
-        $this->visitContent = $content;
+            $Curl = new Client();
+            $resp = $Curl->get($url);
+            $this->assertTrue(true);
+            $this->visitContent = $resp->getBody()->getContents();
+        } catch (Throwable $e) {
+            $this->fail('Visit Url ' . $url . ' Failed,  Reason:' . $e->getMessage());
+        }
     }
 
     /**

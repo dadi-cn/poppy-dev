@@ -1,10 +1,5 @@
 <?php
 
-use Php\Classes\EsFormatter\KoubeiCarDocumentFormatter;
-use Php\Classes\EsFormatter\OrderDocumentFormatter;
-use Php\Classes\EsProperty\CsdnUser;
-use Php\Classes\EsProperty\KoubeiCar;
-use Php\Classes\EsProperty\Order;
 use Poppy\System\Classes\Api\Sign\DefaultApiSignProvider;
 use xingwenge\canal_php\CanalClient;
 
@@ -92,7 +87,7 @@ return [
                 'default_url' => 'api_v1/system/auth/login',
 
                 // 额外添加的脚本
-                'scripts'     => '',
+                'scripts'     => [],
 
                 'method' => 'post',
 
@@ -108,7 +103,6 @@ return [
                         'is_required' => 'Y',
                     ],
                 ],
-                'sign_generate'    => DefaultApiSignProvider::js(),
             ],
         ],
     ],
@@ -158,27 +152,6 @@ return [
             'message_size'    => 100,
         ],
 
-        // filter .*\\..*,shop.user
-        //
-        'mapper' => [
-            'pt_order'   => [
-                'formatter' => OrderDocumentFormatter::class,
-                'table'     => 'fadan.pt_order',
-                'property'  => Order::class,
-            ],
-            'koubei_car' => [
-                'formatter' => KoubeiCarDocumentFormatter::class,
-                'property'  => KoubeiCar::class,
-                'table'     => 'canal_example.koubei_car',
-            ],
-            'csdn_user'  => [
-                'formatter'   => '',
-                'property'    => CsdnUser::class,
-                'table'       => 'canal_example.csdn_users',
-                'destination' => 'csdn_user',
-                'filter'      => 'canal_example.csdn_users',
-            ],
-        ],
 
         'elasticsearch' => [
             'concurrency' => env('ELASTICSEARCH_CONCURRENCY', 100),

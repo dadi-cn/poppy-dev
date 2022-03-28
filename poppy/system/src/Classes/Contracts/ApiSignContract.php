@@ -22,11 +22,6 @@ interface ApiSignContract
     public function check(Request $request): bool;
 
     /**
-     * Js 验签
-     */
-    public static function js(): string;
-
-    /**
      * 返回时间戳
      * @return int
      */

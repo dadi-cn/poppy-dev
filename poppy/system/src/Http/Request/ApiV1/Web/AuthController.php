@@ -156,7 +156,6 @@ class AuthController extends WebApiController
             return Resp::error($e->getMessage());
         }
 
-
         return Resp::success('登录成功', [
             'token' => $token,
             'type'  => $pam->type,

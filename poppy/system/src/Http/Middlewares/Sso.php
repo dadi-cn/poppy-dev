@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Poppy\Core\Redis\RdsDb;
 use Poppy\System\Classes\PySystemDef;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
 /**
@@ -18,9 +19,15 @@ class Sso extends BaseMiddleware
     {
         $token = jwt_token();
 
-        if (!$token || !$payload = $this->auth->setToken($token)->check(true)) {
-            return response('Unauthorized Jwt.', 401);
+        try {
+            if (!$token || !$payload = $this->auth->setToken($token)->check(true)) {
+                return response('Unauthorized Jwt.', 401);
+            }
+            // 这里会抛出异常, IDE 提示不正确
+        } catch (TokenInvalidException $e) {
+            return response('Unauthorized Jwt. Sso check token invalid', 401);
         }
+
 
         // 是否开启单点登录
         if (!\Poppy\System\Action\Sso::isEnable()) {
