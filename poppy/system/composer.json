@@ -15,8 +15,7 @@
         "tymon/jwt-auth": "1.0.*",
         "hieu-le/active": "4.0.*",
         "poppy/core": "4.0.x-dev",
-        "mlocati/ip-lib": "1.*",
-        "php-curl-class/php-curl-class": "9.*"
+        "mlocati/ip-lib": "1.*"
     },
     "autoload": {
         "psr-4": {
