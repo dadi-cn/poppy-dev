@@ -45,6 +45,14 @@ trait AppTrait
         if ($error instanceof Resp) {
             $this->error = $error;
         }
+        elseif ($error instanceof MessageBag) {
+            $messages   = $error->messages();
+            $strMessage = '';
+            foreach ($messages as $message) {
+                $strMessage .= implode(',', $message) . PHP_EOL;
+            }
+            $this->error = new Resp(Resp::PARAM_ERROR, $strMessage);
+        }
         elseif ($error instanceof Exception) {
             if ($error->getCode()) {
                 $code = $error->getCode();
