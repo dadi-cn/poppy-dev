@@ -11,7 +11,7 @@
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md4 layui-col-md-offset4">
             <fieldset class="layui-elem-field layui-field-title">
-                <legend class="@if (Session::get('end.level') == 0 )  text-success @else text-danger  @endif">
+                <legend class="@if ($code == 0 )  text-success @else text-danger  @endif">
                     @if ($code === 0 )
                         <h3 class="panel-title"><i class="fa fa-check-circle-o"></i> 提示</h3>
                     @endif
