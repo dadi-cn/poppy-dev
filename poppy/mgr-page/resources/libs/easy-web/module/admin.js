@@ -252,10 +252,15 @@ layui.define(['layer'], function (exports) {
                 }
             }
             if ($iframe && $iframe[0]) {
-                try {
+                let $reload = $($iframe[0].contentWindow.document.getElementById('filter-box-reload'));
+                if ($reload.length){
+                    let layerobj = $iframe[0].contentWindow.window.layer;
+                    if (layerobj) {
+                        layerobj.closeAll();
+                    }
+                    $reload.trigger('click');
+                } else {
                     $iframe[0].contentWindow.location.reload(true);
-                } catch (e) {
-                    $iframe.attr('src', $iframe.attr('src'));
                 }
             } else {
                 console.warn(url + ' is not found');
