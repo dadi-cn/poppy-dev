@@ -38,7 +38,6 @@
         "alibabacloud/push": "^1.8",
         "alibabacloud/dysmsapi": "^1.8",
         "alibabacloud/sts": "^1.8",
-        "overtrue/wechat": "~4.0",
         "xingwenge/canal_php": "^1.0",
         "mlocati/ip-lib": "^1.16",
         "guzzlehttp/guzzle": "^7.3"
