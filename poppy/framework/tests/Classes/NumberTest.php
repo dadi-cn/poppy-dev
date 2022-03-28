@@ -15,7 +15,7 @@ class NumberTest extends TestCase
             $result = (new Number(5))->divide($NumberB);
             $this->assertEquals('1.00', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -25,7 +25,7 @@ class NumberTest extends TestCase
             $result = (new Number(-10.2))->abs();
             $this->assertEquals('10.20', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -36,7 +36,7 @@ class NumberTest extends TestCase
             $result = (new Number(-100))->add($Number);
             $this->assertEquals('0.00', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -46,7 +46,7 @@ class NumberTest extends TestCase
             $result = (new Number(1.1))->ceil();
             $this->assertEquals('2', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ class NumberTest extends TestCase
             $result = (new Number(10))->compareTo($Number);
             $this->assertEquals('0.00', $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ class NumberTest extends TestCase
             $result = (new Number(10))->convertToBase(2);
             $this->assertEquals('1010', $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -77,7 +77,7 @@ class NumberTest extends TestCase
             $result = (new Number(1))->decrement();
             $this->assertEquals('0.00', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ class NumberTest extends TestCase
             $result = (new Number(2.9))->floor();
             $this->assertEquals('2', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -97,7 +97,7 @@ class NumberTest extends TestCase
             $result = (new Number(2.9))->getScale();
             $this->assertEquals('2', $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ class NumberTest extends TestCase
             $result = (new Number(2.9))->getValue();
             $this->assertEquals('2.90', $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -117,7 +117,7 @@ class NumberTest extends TestCase
             $result = (new Number(2.9))->increment();
             $this->assertEquals('3.90', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -128,7 +128,7 @@ class NumberTest extends TestCase
             $result = (new Number(3))->isEqualTo($Number);
             $this->assertEquals(true, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -139,7 +139,7 @@ class NumberTest extends TestCase
             $result = (new Number(4))->isGreaterThan($Number);
             $this->assertEquals(true, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -150,7 +150,7 @@ class NumberTest extends TestCase
             $result = (new Number(3))->isGreaterThanOrEqualTo($Number);
             $this->assertEquals(true, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -161,7 +161,7 @@ class NumberTest extends TestCase
             $result = (new Number(2))->isLessThan($Number);
             $this->assertEquals(true, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -172,7 +172,7 @@ class NumberTest extends TestCase
             $result = (new Number(3))->isLessThanOrEqualTo($Number);
             $this->assertEquals(true, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -182,7 +182,7 @@ class NumberTest extends TestCase
             $result = (new Number(-3))->isNegative();
             $this->assertEquals(true, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -192,7 +192,7 @@ class NumberTest extends TestCase
             $result = (new Number(2))->isPositive();
             $this->assertEquals(true, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -203,7 +203,7 @@ class NumberTest extends TestCase
             $result = (new Number(4))->mod($Number);
             $this->assertEquals('1', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -214,7 +214,7 @@ class NumberTest extends TestCase
             $result = (new Number(2))->multiply($Number);
             $this->assertEquals('4.20', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -224,7 +224,7 @@ class NumberTest extends TestCase
             $result = (new Number(2))->negate();
             $this->assertEquals('-2.00', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -234,7 +234,7 @@ class NumberTest extends TestCase
             $result = (new Number(5.2))->pow(3);
             $this->assertEquals('140.60', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -245,7 +245,7 @@ class NumberTest extends TestCase
             $result = (new Number(2))->powMod(2, 2);
             $this->assertEquals('0.00', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -256,7 +256,7 @@ class NumberTest extends TestCase
             $result = (new Number(5.499))->round(2);
             $this->assertEquals(5.49, $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -267,7 +267,7 @@ class NumberTest extends TestCase
             $result = (new Number(6))->setScale(1);
             $this->assertEquals('6.00', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -277,7 +277,7 @@ class NumberTest extends TestCase
             $result = (new Number(6))->setValue(3);
             $this->assertEquals('3.00', $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -287,7 +287,7 @@ class NumberTest extends TestCase
             $result = (new Number(6))->shiftLeft(3);
             $this->assertEquals(48, $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -297,7 +297,7 @@ class NumberTest extends TestCase
             $result = (new Number(8))->shiftRight(3);
             $this->assertEquals(1, $result->getValue());
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -307,7 +307,7 @@ class NumberTest extends TestCase
             $result = (new Number(1))->signum();
             $this->assertEquals(1, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -317,7 +317,7 @@ class NumberTest extends TestCase
             $result = (new Number(8))->sqrt();
             $this->assertEquals('2.82', $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -328,7 +328,7 @@ class NumberTest extends TestCase
             $result = (new Number(2))->subtract($Number);
             $this->assertEquals('-2.00', $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -338,7 +338,7 @@ class NumberTest extends TestCase
             $result = (new Number(10))::baseConvert(10, 2);
             $this->assertEquals(2, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false);
+            $this->fail();
         }
     }
 
@@ -348,7 +348,7 @@ class NumberTest extends TestCase
             $result = (new Number(10))::convertFromBase10('8', 2);
             $this->assertEquals(1000, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 
@@ -358,7 +358,7 @@ class NumberTest extends TestCase
             $result = (new Number(10))::convertToBase10('10', 8);
             $this->assertEquals(8, $result);
         } catch (Throwable $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this->fail($e->getMessage());
         }
     }
 }

@@ -64,11 +64,11 @@ class PermissionTest extends SystemTestCase
                 $this->assertTrue(true);
             }
             else {
-                $this->assertTrue(false, "没有 '{$permission->description()} '权限, 无权操作");
+                $this->fail("没有 '{$permission->description()} '权限, 无权操作");
             }
         }
         else {
-            $this->assertTrue(false, 'Permission Not Exists!');
+            $this->fail('Permission Not Exists!');
         }
     }
 }

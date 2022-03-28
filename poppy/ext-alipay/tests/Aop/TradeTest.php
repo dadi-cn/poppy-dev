@@ -70,7 +70,7 @@ class TradeTest extends AlipayBaseTest
 			 */
 			$this->assertEquals('10000', data_get($result, "{$node}.code"));
 		} catch (Throwable $e) {
-			$this->assertTrue(false, $e->getMessage());
+			$this->fail($e->getMessage());
 		}
 
 

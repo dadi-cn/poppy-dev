@@ -26,7 +26,7 @@ class VerificationTest extends SystemTestCase
             $this->assertTrue($Verification->checkCaptcha($mobile, $captcha));
         }
         else {
-            $this->assertTrue(false, $Verification->getError());
+            $this->fail($Verification->getError());
         }
 
         $mobile = $this->faker()->phoneNumber;

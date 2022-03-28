@@ -22,7 +22,7 @@ class PamTest extends SystemTestCase
         // 发送验证码
         $Verification = new Verification();
         if (!$Verification->genCaptcha($mobile)) {
-            $this->assertTrue(false, $Verification->getError());
+            $this->fail($Verification->getError());
         }
         else {
             $platform = collect(array_keys(PamAccount::kvPlatform()))->random(1)[0];
@@ -31,7 +31,7 @@ class PamTest extends SystemTestCase
                 $this->assertTrue(true);
             }
             else {
-                $this->assertTrue(false, $Pam->getError());
+                $this->fail($Pam->getError());
             }
         }
     }
@@ -49,7 +49,7 @@ class PamTest extends SystemTestCase
             $this->assertTrue(true);
         }
         else {
-            $this->assertTrue(false, $Pam->getError());
+            $this->fail($Pam->getError());
         }
     }
 
@@ -62,7 +62,7 @@ class PamTest extends SystemTestCase
             $this->assertTrue(true);
         }
         else {
-            $this->assertTrue(false, $Pam->getError());
+            $this->fail($Pam->getError());
         }
     }
 
@@ -74,7 +74,7 @@ class PamTest extends SystemTestCase
             $this->assertTrue(true);
         }
         else {
-            $this->assertTrue(false, $Pam->getError());
+            $this->fail($Pam->getError());
         }
     }
 
@@ -88,7 +88,7 @@ class PamTest extends SystemTestCase
             $this->assertTrue(true);
         }
         else {
-            $this->assertTrue(false, $Pam->getError());
+            $this->fail($Pam->getError());
         }
     }
 
@@ -103,14 +103,14 @@ class PamTest extends SystemTestCase
         if ($Pam->setPassword($this->pam, $password)) {
             $this->assertTrue(true);
             if (!$Pam->loginCheck($this->pam->mobile, $password)) {
-                $this->assertTrue(false, $Pam->getError());
+                $this->fail($Pam->getError());
             }
             else {
                 $this->assertTrue(true);
             }
         }
         else {
-            $this->assertTrue(false, $Pam->getError());
+            $this->fail($Pam->getError());
         }
     }
 

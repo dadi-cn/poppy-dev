@@ -85,7 +85,7 @@ class PoppyTest extends TestCase
             $matched = preg_match('/modules\/(?<module>[a-z]*)\/src/', $folder, $matches);
             $name    = 'module.' . $matches['module'];
             if ($matched && !app('poppy')->exists($name)) {
-                $this->assertTrue(false, "Module `{$matches['module']}` Not Exist , Please run `php artisan poppy:optimize` to fix.");
+                $this->fail("Module `{$matches['module']}` Not Exist , Please run `php artisan poppy:optimize` to fix.");
             }
             else {
                 $this->assertTrue(true, "Module `{$matches['module']}` loaded.");

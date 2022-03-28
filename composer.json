@@ -146,9 +146,6 @@
         ]
     },
     "config": {
-        "preferred-install": "dist",
-        "allow-plugins": {
-            "easywechat-composer/easywechat-composer": true
-        }
+        "preferred-install": "dist"
     }
 }

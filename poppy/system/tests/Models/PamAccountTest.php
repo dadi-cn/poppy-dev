@@ -33,7 +33,7 @@ class PamAccountTest extends SystemTestCase
             $this->assertTrue(true);
         }
         else {
-            $this->assertTrue(false, 'use `jwt:secret` generate token');
+            $this->fail('use `jwt:secret` generate token');
         }
     }
 

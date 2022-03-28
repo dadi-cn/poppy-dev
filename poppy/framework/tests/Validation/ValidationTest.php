@@ -165,7 +165,7 @@ class ValidationTest extends TestCase
             ],
         ]);
         if ($validator->fails()) {
-            $this->assertTrue(false, $validator->messages()->toJson(JSON_UNESCAPED_UNICODE));
+            $this->fail($validator->messages()->toJson(JSON_UNESCAPED_UNICODE));
         }
         else {
             $this->assertTrue(true);
