@@ -2,6 +2,7 @@
 
 namespace Poppy\MgrPage\Classes;
 
+use Overtrue\Pinyin\Pinyin;
 use Poppy\Core\Redis\RdsDb;
 
 /**
@@ -15,13 +16,17 @@ class SearchCache
      */
     public static function py(string $text): string
     {
+        static $pinyin;
         $Rds = new RdsDb();
-        if (function_exists('ext_pinyin_abbr')) {
+        if (class_exists('Overtrue\Pinyin\Pinyin')) {
             if ($py = $Rds->hget(PyMgrPageDef::ckTagSearchPy(), $text)) {
                 return $py;
             }
+            if (!$pinyin) {
+                $pinyin = new Pinyin();
+            }
             /** @var  $pinYin */
-            $py = ext_pinyin_abbr($text);
+            $py = $pinyin->abbr($text);
             $Rds->hset(PyMgrPageDef::ckTagSearchPy(), $text, $py);
             return $py;
         }
