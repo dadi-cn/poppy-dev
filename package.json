@@ -3,6 +3,7 @@
     "scripts": {
         "development": "mix",
         "watch": "mix watch",
+        "watch-mp": "mix watch --mix-config=poppy/mgr-page/resources/libs/webpack.mix.js",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "production": "mix --production",

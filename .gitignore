@@ -47,6 +47,7 @@ Thumbs.db
 
 # Project User #
 ################
+/poppy/mgr-page/resources/libs/webpack.mix.js
 .sass-cache
 /vendor
 /storage/framework/*.php
