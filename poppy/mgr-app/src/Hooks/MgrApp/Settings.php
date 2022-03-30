@@ -3,9 +3,9 @@
 namespace Poppy\MgrApp\Hooks\MgrApp;
 
 use Poppy\Core\Services\Contracts\ServiceArray;
-use Poppy\MgrApp\Http\Setting\SettingPam;
-use Poppy\MgrApp\Http\Setting\SettingSite;
-use Poppy\MgrApp\Http\Setting\SettingUpload;
+use Poppy\MgrApp\Http\MgrApp\SettingPam;
+use Poppy\MgrApp\Http\MgrApp\SettingSite;
+use Poppy\MgrApp\Http\MgrApp\SettingUpload;
 
 class Settings implements ServiceArray
 {

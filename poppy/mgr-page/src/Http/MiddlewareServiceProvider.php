@@ -9,10 +9,6 @@ class MiddlewareServiceProvider extends ServiceProvider
 {
     public function boot(Router $router)
     {
-        /* MgrPage Permission
-         * ---------------------------------------- */
-        $router->aliasMiddleware('mgr-permission', Middlewares\RbacPermission::class);
-
         $router->middlewareGroup('develop-auth', [
             'web',
             'sys-site_open',
@@ -28,7 +24,7 @@ class MiddlewareServiceProvider extends ServiceProvider
             'sys-auth_session',
             'sys-disabled_pam',
             'sys-ban:backend',
-            'mgr-permission',
+            'sys-mgr-rbac',
         ]);
     }
 }

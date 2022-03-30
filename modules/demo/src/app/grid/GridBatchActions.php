@@ -3,10 +3,9 @@
 
 namespace Demo\App\Grid;
 
-use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Http\Grid\GridBase;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 
 /**
  * 按钮

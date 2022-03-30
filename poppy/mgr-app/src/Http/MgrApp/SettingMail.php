@@ -1,9 +1,10 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Setting;
+namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\Framework\Classes\Traits\KeyParserTrait;
 use Poppy\Framework\Validation\Rule;
+use Poppy\MgrApp\Classes\Form\SettingBase;
 
 class SettingMail extends SettingBase
 {
@@ -38,6 +39,6 @@ class SettingMail extends SettingBase
             Rule::nullable(),
         ]);
         $this->password('password', '密码')->help('如果重新保存, 必须要设置密码, 否则密码会被置空');
-        $this->actions('send', '配置')->page('发送测试邮件', route('py-mgr-app:api-backend.mail.test'), 'form');
+        $this->actions('send', '配置')->page('发送测试邮件', route('py-mgr-app:api.mail.test'), 'form');
     }
 }

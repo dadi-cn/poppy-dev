@@ -4,7 +4,7 @@ namespace Demo\App\Grid;
 
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Http\Grid\GridBase;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 
 /**
  * 按钮

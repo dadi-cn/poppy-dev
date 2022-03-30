@@ -1,0 +1,30 @@
+###  核心信息
+POST {{domain}}/api_v1/system/core/info
+Content-Type: application/json
+
+{
+    "_py_secret": "{{secret}}"
+}
+
+
+> {%
+    client.test("Core Info Return Success", function(){
+        client.log(JSON.stringify(response.body));
+        client.assert(response.status === 200)
+    })
+%}
+
+### 翻译
+POST {{domain}}/api_v1/system/core/translate
+Content-Type: application/json
+
+{
+    "_py_secret": "{{secret}}"
+}
+
+> {%
+    client.test("Translate Info Return Success", function(){
+        client.assert(response.status === 200);
+        client.assert(response.body.status === 0)
+    })
+%}

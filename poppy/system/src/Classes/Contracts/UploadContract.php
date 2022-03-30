@@ -127,14 +127,4 @@ interface UploadContract
      * @return bool
      */
     public function delete(): bool;
-
-    /**
-     * 类型
-     * @param string $type        类型
-     * @param string $return_type 返回的类型
-     * @return mixed
-     * @deprecated
-     * @see \Poppy\System\Classes\Uploader\Uploader::kvExt()
-     */
-    public static function type(string $type, $return_type = 'ext_string');
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Setting;
+namespace Poppy\MgrApp\Classes\Form;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -8,7 +8,6 @@ use Illuminate\Http\Response;
 use Poppy\Core\Classes\Contracts\SettingContract;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Classes\Traits\KeyParserTrait;
-use Poppy\MgrApp\Classes\Form\FormItem;
 use Poppy\MgrApp\Classes\Widgets\FormWidget;
 use Poppy\System\Exceptions\FormException;
 use Psr\Container\ContainerExceptionInterface;

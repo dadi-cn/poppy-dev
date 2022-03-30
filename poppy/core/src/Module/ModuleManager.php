@@ -6,11 +6,8 @@ use Illuminate\Support\Collection;
 use Poppy\Core\Module\Repositories\Modules;
 use Poppy\Core\Module\Repositories\ModulesHook;
 use Poppy\Core\Module\Repositories\ModulesMenu;
-use Poppy\Core\Module\Repositories\ModulesPage;
 use Poppy\Core\Module\Repositories\ModulesPath;
 use Poppy\Core\Module\Repositories\ModulesService;
-use Poppy\Core\Module\Repositories\ModulesSetting;
-use Poppy\Core\Module\Repositories\ModulesUi;
 
 /**
  * Class ModuleManager.
@@ -19,60 +16,29 @@ class ModuleManager
 {
 
     /**
-     * @var ModulesUi
+     * @var ?Modules
      */
-    private $uiRepository;
+    private ?Modules $repository = null;
 
     /**
-     * @var Modules
+     * @var ?ModulesMenu
      */
-    private $repository;
+    private ?ModulesMenu $menuRepository;
 
     /**
-     * @var Collection
-     * @deprecated 3.1
-     * @removed    4.0
+     * @var ?ModulesPath
      */
-    private $excepts;
+    private ?ModulesPath $pathRepository;
 
     /**
-     * @var ModulesMenu
+     * @var ?ModulesHook
      */
-    private $menuRepository;
+    private ?ModulesHook $hooksRepo;
 
     /**
-     * @var ModulesPath
+     * @var ?ModulesService
      */
-    private $pathRepository;
-
-    /**
-     * @var ModulesPage
-     * @deprecated
-     */
-    private $pageRepository;
-
-    /**
-     * @var ModulesSetting
-     */
-    private $settingRepository;
-
-    /**
-     * @var ModulesHook
-     */
-    private $hooksRepo;
-
-    /**
-     * @var ModulesService
-     */
-    private $serviceRepo;
-
-    /**
-     * ModuleManager constructor.
-     */
-    public function __construct()
-    {
-        $this->excepts = collect();
-    }
+    private ?ModulesService $serviceRepo;
 
     /**
      * @return Collection
@@ -183,95 +149,5 @@ class ModuleManager
         }
 
         return $this->serviceRepo;
-    }
-
-    /**
-     * @return Modules
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    public function repository(): Modules
-    {
-        return $this->modules();
-    }
-
-
-    /**
-     * @return array
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    public function getExcepts(): array
-    {
-        return $this->excepts->toArray();
-    }
-
-    /**
-     * 为了兼容而存在
-     * @deprecated
-     */
-    public function pages(): ModulesPage
-    {
-        if (!$this->pageRepository instanceof ModulesPage) {
-            $collection = collect();
-            $this->modules()->enabled()->each(function (Module $module) use ($collection) {
-                $collection->put($module->slug(), $module->get('pages', []));
-            });
-            $this->pageRepository = new ModulesPage();
-            $this->pageRepository->initialize($collection);
-        }
-
-        return $this->pageRepository;
-    }
-
-
-    /**
-     * @return ModulesUi
-     * @deprecated
-     */
-    public function uis(): ModulesUi
-    {
-        if (!$this->uiRepository instanceof ModulesUi) {
-            $collection = collect();
-            $this->modules()->enabled()->each(function (Module $module) use ($collection) {
-                $collection->put($module->slug(), $module->get('ui', []));
-            });
-            $this->uiRepository = new ModulesUi();
-            $this->uiRepository->initialize($collection);
-        }
-
-        return $this->uiRepository;
-    }
-
-    /**
-     * @return ModulesSetting
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    public function settings(): ModulesSetting
-    {
-        if (!$this->settingRepository instanceof ModulesSetting) {
-            $collection = collect();
-            $this->modules()->enabled()->each(function (Module $module) use ($collection) {
-                $collection->put($module->slug(), $module->get('settings', []));
-            });
-            $this->settingRepository = new ModulesSetting();
-            $this->settingRepository->initialize($collection);
-        }
-
-        return $this->settingRepository;
-    }
-
-
-    /**
-     * @param array $excepts 数据数组
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    public function registerExcept(array $excepts): void
-    {
-        foreach ($excepts as $except) {
-            $this->excepts->push($except);
-        }
     }
 }

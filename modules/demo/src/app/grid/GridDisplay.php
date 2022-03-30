@@ -6,7 +6,7 @@ namespace Demo\App\Grid;
 use Demo\Models\DemoWebapp;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Http\Grid\GridBase;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 
 /**
  * 快捷列表

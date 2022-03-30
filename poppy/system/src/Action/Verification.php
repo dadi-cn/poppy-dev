@@ -23,11 +23,6 @@ class Verification
     const TYPE_MOBILE = 'mobile';
 
     /**
-     * @var string 隐藏在加密中的字符串
-     */
-    private $hiddenStr;
-
-    /**
      * @var string
      */
     private $captcha;
@@ -202,16 +197,6 @@ class Verification
     {
         self::$db->del(PySystemDef::ckTagVerificationOnce() . ':' . $code);
         return true;
-    }
-
-    /**
-     * @return string
-     * @deprecated
-     * @see getHidden
-     */
-    public function getHiddenStr(): string
-    {
-        return (string) $this->hidden;
     }
 
 

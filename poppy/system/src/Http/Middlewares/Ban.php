@@ -10,28 +10,25 @@ use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamBan;
 use Poppy\System\Models\PamRole;
 use Poppy\System\Models\PamRoleAccount;
-use Poppy\System\Models\PamToken;
 use Poppy\System\Models\SysConfig;
-use Tymon\JWTAuth\JWTGuard;
 
 class Ban
 {
 
     /**
-     * @var PamToken
-     */
-    public static $init;
-
-    /**
      * @param         $request
      * @param Closure $next
-     * @param string  $type 账号类型, 用于封禁
+     * @param string $type 账号类型, 用于封禁
      * @return mixed
      */
     public function handle($request, Closure $next, string $type = 'user')
     {
         //获取ip
         $ip = EnvHelper::ip();
+
+        if ($appType = x_header('type')) {
+            $type = $appType;
+        }
 
         $status  = sys_setting('py-mgr-page::ban.status-' . $type, SysConfig::DISABLE);
         $isBlack = sys_setting('py-mgr-page::ban.type-' . $type, PamBan::WB_TYPE_BLACK) === PamBan::WB_TYPE_BLACK;
@@ -43,14 +40,22 @@ class Ban
         }
         // 是否是root用户 不进行拦截
         if ($type === PamAccount::TYPE_BACKEND) {
-            /** @var JWTGuard $guard */
-            $guard = app('auth')->guard();
-            /** @var PamAccount $user */
-            $user     = $guard->user();
-            $roleName = PamRole::whereRaw('id = ' . PamRoleAccount::where('account_id', $user->id)->value('role_id'))->value('name');
-            if ($roleName === PamRole::BE_ROOT) {
-                return $next($request);
+            /** @var PamAccount $guard */
+            $user = app('auth')->guard()->user();
+            if ($user) {
+                // todo 登录之后的验证
+                //                $user->roles
+                $roleName = PamRole::whereRaw('id = ' . PamRoleAccount::where('account_id', $user->id)->value('role_id'))->value('name');
+                if ($roleName === PamRole::BE_ROOT) {
+                    return $next($request);
+                }
             }
+            else {
+
+                $pam = PamAccount::with('roles')->where('username', trim(input('passport')))->first();
+                \Log::debug($pam);
+            }
+
         }
         $Ban  = new ActBan();
         $ipIn = $Ban->checkIn($type, PamBan::TYPE_IP, $ip);
@@ -68,7 +73,7 @@ class Ban
         }
 
 
-        $deviceId = (x_header('id') ?: x_app('id')) ?: input('device_id');
+        $deviceId = x_header('id') ?: input('device_id');
         if ($deviceId) {
             $deviceIn = $Ban->checkIn($type, PamBan::TYPE_DEVICE, $deviceId);
             /* 黑名单策略, 设备In : 封禁

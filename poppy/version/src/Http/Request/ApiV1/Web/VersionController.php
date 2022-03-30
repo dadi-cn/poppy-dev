@@ -31,7 +31,7 @@ class VersionController extends WebApiController
         $input   = input();
         $current = sys_get($input, 'version', '1.0.0');
 
-        $os = (x_header('os') ?: x_app('os')) ?: 'android';
+        $os = x_header('os') ?: 'android';
 
         if ($os === SysAppVersion::PLATFORM_ANDROID) {
             $latestVersion = SysAppVersion::latestVersion(SysAppVersion::PLATFORM_ANDROID);

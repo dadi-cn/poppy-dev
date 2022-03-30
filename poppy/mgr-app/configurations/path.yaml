@@ -12,30 +12,30 @@ backend :
         children :
           -
             title : 系统配置
-            path : setting/py-mgr-app:api-backend.home.setting/poppy.system
+            path : setting/py-mgr-app:api.home.setting/poppy.system
             permission : backend:py-system.global.manage
           -
             title : 邮件配置
-            path : form/py-mgr-app:api-backend.mail.store
+            path : form/py-mgr-app:api.mail.store
             permission : backend:py-system.global.manage
       -
         title : 账号
         children :
           -
             title : 修改密码
-            path : form/py-mgr-app:api-backend.user.password
+            path : form/py-mgr-app:api.user.password
           -
             title : 角色管理
-            path : grid/py-mgr-app:api-backend.role.index
+            path : grid/py-mgr-app:api.role.index
           -
             title : 账号管理
-            path : grid/py-mgr-app:api-backend.pam.index
+            path : grid/py-mgr-app:api.pam.index
           -
             title : 封禁管理
-            path : grid/py-mgr-app:api-backend.ban.index
+            path : grid/py-mgr-app:api.ban.index
           -
             title : 登录用户
-            path : grid/py-mgr-app:api-backend.pam.token
+            path : grid/py-mgr-app:api.pam.token
           -
             title : 登录日志
-            path : grid/py-mgr-app:api-backend.pam.log
+            path : grid/py-mgr-app:api.pam.log

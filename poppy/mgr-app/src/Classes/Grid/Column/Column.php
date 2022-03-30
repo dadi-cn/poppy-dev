@@ -25,7 +25,7 @@ use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
  * @property-read bool $relationMany  是否是一对多关系
  * @property-read string $label       标签
  * @property-read bool $hide        是否默认隐藏
- * @method Column image($server = '', $width = 200, $height = 200)
+ * @method Column image($server = '', $width = 200, $height = 200)   // todo 需要完成图片的缩略图约定
  * @method Column link($href = '', $target = '_blank')
  * @method Column download($server = '')
  */

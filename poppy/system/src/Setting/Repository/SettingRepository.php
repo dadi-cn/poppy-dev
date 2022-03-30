@@ -171,25 +171,6 @@ class SettingRepository implements SettingContract
     }
 
     /**
-     * 保存配置
-     * @deprecated 3.2 直接从缓存中读取
-     */
-    public function save(): void
-    {
-        // none
-    }
-
-    /**
-     * 设置是否重新读取缓存
-     * @param bool $reRead 标识
-     * @deprecated 3.2 直接从缓存中取, 无视静态变量
-     */
-    public function setReRead(bool $reRead): void
-    {
-        return;
-    }
-
-    /**
      * 转换 KEY
      * @param $key
      * @return string

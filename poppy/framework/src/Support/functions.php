@@ -15,10 +15,10 @@ use Poppy\MgrPage\Classes\Form\Field\Text;
 if (!function_exists('route_url')) {
     /**
      * 自定义可以传值的路由写法
-     * @param string            $route
+     * @param string $route
      * @param array|string|null $route_params
-     * @param array|null        $params
-     * @param bool              $absolute 是否绝对路径
+     * @param array|null $params
+     * @param bool $absolute 是否绝对路径
      * @return string
      */
     function route_url(string $route = '', $route_params = [], $params = null, $absolute = true): string
@@ -87,8 +87,8 @@ if (!function_exists('kv')) {
      * 返回定义的kv 值
      * 一般用户模型中的数据返回
      * @param array $desc
-     * @param null  $key
-     * @param bool  $check_key 检查key 是否正常
+     * @param null $key
+     * @param bool $check_key 检查key 是否正常
      * @return array|string
      */
     function kv(array $desc, $key = null, $check_key = false)
@@ -164,61 +164,11 @@ if (!function_exists('jwt_token')) {
     }
 }
 
-if (!function_exists('post')) {
-    /**
-     * Identical function to input(), however restricted to $_POST values.
-     * @param null $name
-     * @param null $default
-     * @return mixed
-     * @deprecated
-     * @see     input()
-     * @removed 4.0
-     */
-    function post($name = null, $default = null)
-    {
-        if ($name === null) {
-            return $_POST;
-        }
-
-        /*
-         * Array field name, eg: field[key][key2][key3]
-         */
-        $name = implode('.', HtmlHelper::nameToArray($name));
-
-        return Arr::get($_POST, $name, $default);
-    }
-}
-
-if (!function_exists('get')) {
-    /**
-     * Identical function to input(), however restricted to $_GET values.
-     * @param null $name
-     * @param null $default
-     * @return mixed
-     * @deprecated
-     * @see     Text
-     * @removed 4.0
-     */
-    function get($name = null, $default = null)
-    {
-        if ($name === null) {
-            return $_GET;
-        }
-
-        /*
-         * Array field name, eg: field[key][key2][key3]
-         */
-        $name = implode('.', HtmlHelper::nameToArray($name));
-
-        return Arr::get($_GET, $name, $default);
-    }
-}
-
 if (!function_exists('poppy_path')) {
     /**
      * Return the path to the given module file.
      * @param string|null $slug
-     * @param string      $file
+     * @param string $file
      * @return string
      */
     function poppy_path($slug = null, $file = ''): string
@@ -370,35 +320,6 @@ if (!function_exists('parse_seo')) {
             $description = func_get_arg(1);
         }
         return [$title, $description];
-    }
-}
-
-if (!function_exists('x_app')) {
-    /**
-     * 获取 Header 中的 APP 信息
-     * @param string $type version,id,os
-     * @return string
-     * @since      3.1
-     * @deprecated 3.2 建议使用 x_header 替代 x_header('app-sign')
-     * @see        x_header()
-     */
-    function x_app(string $type): string
-    {
-        /** @var \Illuminate\Http\Request $request */
-        $request = app('request');
-        $header  = $request->header('X-APP');
-        if ($header) {
-            $type = strtolower($type);
-            try {
-                $infos = json_decode($header, true);
-            } catch (Throwable $e) {
-                $infos = [];
-            }
-            return $infos[$type] ?? '';
-        }
-
-        $fullKey = strtoupper('x-app-' . $type);
-        return $request->header($fullKey, '');
     }
 }
 

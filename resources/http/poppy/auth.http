@@ -1,9 +1,11 @@
-### 检测登录
+### 登录成功
 POST {{domain}}/api_v1/system/auth/access
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 Authorization: Bearer {{token}}
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}
+{
+    "_py_secret" : "{{secret}}"
+}
 
 > {%
     client.test("Upload Image Use Type Base64", function(){
@@ -12,13 +14,14 @@ timestamp={{$timestamp}}&_py_secret={{py_secret}}
     })
 %}
 
-### 检测登录
+### 登录失败
 POST {{domain}}/api_v1/system/auth/access
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 Authorization: Bearer {{token}}X
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}
-
+{
+    "_py_secret" : "{{secret}}"
+}
 > {%
     client.test("错误的登录信息, 返回401", function(){
         client.assert(response.status === 401);

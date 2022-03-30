@@ -1,10 +1,11 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Grid;
+namespace Poppy\MgrApp\Http\MgrApp;
 
 use Illuminate\Support\Str;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
@@ -32,14 +33,14 @@ class GridPamAccount extends GridBase
         $table->action(function (ActionsRender $actions) use ($pam) {
             $row = $actions->getRow();
             $actions->default(['plain', 'circle', 'only']);
-            $actions->page('修改密码', route('py-mgr-app:api-backend.pam.password', [data_get($row, 'id')]), 'form')->icon('Key');
+            $actions->page('修改密码', route('py-mgr-app:api.pam.password', [data_get($row, 'id')]), 'form')->icon('Key');
             if ($pam->can('disable', $row)) {
-                $actions->page('禁用', route_url('py-mgr-app:api-backend.pam.disable', [data_get($row, 'id')]), 'form')->icon('MuteNotification')->danger();
+                $actions->page('禁用', route_url('py-mgr-app:api.pam.disable', [data_get($row, 'id')]), 'form')->icon('MuteNotification')->danger();
             }
             if ($pam->can('enable', $row)) {
-                $actions->page('启用', route_url('py-mgr-app:api-backend.pam.enable', [data_get($row, 'id')]), 'form')->icon('Select')->success();
+                $actions->page('启用', route_url('py-mgr-app:api.pam.enable', [data_get($row, 'id')]), 'form')->icon('Select')->success();
             }
-            $actions->page("编辑", route_url('py-mgr-app:api-backend.pam.establish', [data_get($row, 'id')]), 'form')->icon('Edit');
+            $actions->page("编辑", route_url('py-mgr-app:api.pam.establish', [data_get($row, 'id')]), 'form')->icon('Edit');
         })->width(150, true)->fixed();
     }
 
@@ -76,6 +77,6 @@ class GridPamAccount extends GridBase
 
     public function quick(Actions $actions)
     {
-        $actions->page('新增账号', route_url('py-mgr-app:api-backend.pam.establish'), 'form')->icon('CirclePlus');
+        $actions->page('新增账号', route_url('py-mgr-app:api.pam.establish'), 'form')->icon('CirclePlus');
     }
 }

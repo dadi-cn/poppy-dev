@@ -1,7 +1,8 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Grid;
+namespace Poppy\MgrApp\Http\MgrApp;
 
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
 

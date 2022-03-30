@@ -1,7 +1,11 @@
 POST {{domain}}/api_v1/system/auth/login
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}&password={{be-password}}
+{
+    "_py_secret" : "{{secret}}",
+    "passport" : "{{be-username}}",
+    "password" : "{{be-password}}"
+}
 
 > {%
     client.test("Login With User And Set User Token", function(){

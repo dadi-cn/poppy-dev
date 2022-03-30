@@ -31,10 +31,10 @@ class RouteServiceProvider extends \Poppy\Framework\Application\RouteServiceProv
 
 
         Route::group([
-            'prefix'     => 'api/backend/py-sms',
+            'prefix'     => 'api/mgr-app/py-sms',
             'middleware' => 'mgr-auth',
         ], function () {
-            require_once __DIR__ . '/Routes/api-backend.php';
+            require_once __DIR__ . '/Routes/api-mgr-app.php';
         });
     }
 }

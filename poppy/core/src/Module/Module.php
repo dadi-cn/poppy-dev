@@ -4,7 +4,6 @@ namespace Poppy\Core\Module;
 
 use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Collection;
 use JsonSerializable;
 use Poppy\Framework\Classes\Traits\HasAttributesTrait;
 
@@ -59,21 +58,6 @@ class Module implements Arrayable, ArrayAccess, JsonSerializable
     public function isEnabled(): bool
     {
         return (bool) $this->offsetGet('enabled');
-    }
-
-    /**
-     * 为了兼容存在
-     * @return Collection
-     * @deprecated
-     */
-    public function pages(): Collection
-    {
-        return collect($this->get('pages', []))->map(function ($definition, $identification) {
-            $definition['initialization']['identification'] = $identification;
-            unset($definition['initialization']['tabs']);
-
-            return $definition['initialization'];
-        })->groupBy('target');
     }
 
     /**

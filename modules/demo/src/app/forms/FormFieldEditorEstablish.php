@@ -20,7 +20,7 @@ class FormFieldEditorEstablish extends FormWidget
     {
         return [
             'id'       => 5,
-            'default'  => '#cccccc',
+            'default'  => '<p>XXXX</p>',
             'default-code'  => <<<CODE
 \$this->editor('default', 'Editor');
 CODE,

@@ -2,14 +2,14 @@
 
 namespace Poppy\AliyunOss\Http\Request\ApiV1\Web;
 
-use Poppy\AliyunOss\Action\ActSts;
+use Poppy\AliyunOss\Action\Sts;
 use Poppy\Framework\Classes\Resp;
-use Poppy\System\Http\Request\ApiV1\Web\WebApiController;
+use Poppy\System\Http\Request\ApiV1\JwtApiController;
 
 /**
  * Sts 配置
  */
-class StsController extends WebApiController
+class StsController extends JwtApiController
 {
 
     /**
@@ -43,7 +43,7 @@ class StsController extends WebApiController
             return Resp::error('后台配置必须开启 Aliyun 存储');
         }
         $config = config('poppy.aliyun-oss');
-        $Sts    = new ActSts();
+        $Sts    = new Sts();
         $Sts->setConfig($config['temp_key'], $config['temp_secret'], $config['bucket'], $config['endpoint'], $config['role_arn'], $config['url']);
         if ($Sts->tempOss()) {
             return Resp::web(Resp::SUCCESS, '获取成功', $Sts->getTempKey());

@@ -37,8 +37,6 @@ class PoppyDisableCommand extends Command
 
             $module = $this->laravel['poppy']->where('slug', $slug);
 
-            dd($module);
-
             event(new PoppyDisabled($module));
 
             $this->info('Module was disabled successfully.');

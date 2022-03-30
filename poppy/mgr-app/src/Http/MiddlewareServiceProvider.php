@@ -9,17 +9,19 @@ class MiddlewareServiceProvider extends ServiceProvider
 {
     public function boot(Router $router)
     {
-        /* MgrPage Permission
-         * ---------------------------------------- */
-        $router->aliasMiddleware('mgr-rbac', Middlewares\RbacPermission::class);
+        $router->middlewareGroup('mgr-login', [
+            'api',
+            'sys-ban:backend', // 系统禁用
+            // todo Add Sign
+        ]);
 
         $router->middlewareGroup('mgr-auth', [
-            'api',
-            'sys-auth:jwt_backend',
-            'sys-jwt',
-            'sys-disabled_pam',
-            'sys-ban:backend',
-            'mgr-rbac',
+            'api',                   // Api
+            'sys-auth:jwt_backend',  // Auth
+            'sys-jwt',               // Pwd Changed
+            'sys-ban:backend',       // Ban Backend
+            'sys-disabled_pam',      // Pam Disabled
+            'sys-mgr-rbac',          // Permission
         ]);
     }
 }

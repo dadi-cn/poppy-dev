@@ -194,7 +194,14 @@ class Resp
             $code    = $msg->getCode() ?: self::ERROR;
             $message = $msg->getMessage();
             $resp    = new self($code, $message);
-        } elseif (!($msg instanceof self)) {
+        } elseif ($msg instanceof MessageBag) {
+            $messages = $msg->messages();
+            $strMsg = '';
+            foreach ($messages as $message) {
+                $strMsg .= implode(',', $message);
+            }
+            $resp = new self(self::PARAM_ERROR, $strMsg);
+        }  elseif (!($msg instanceof self)) {
             $resp = new self($type, $msg);
         } else {
             $resp = $msg;
@@ -226,25 +233,6 @@ class Resp
         }
 
         return self::webView($resp->getCode(), $resp->getMessage(), $time, $location, $input);
-    }
-
-    /**
-     * data
-     * @param int    $code    type
-     * @param string $message msg
-     * @return array
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    public static function data(int $code, string $message): array
-    {
-        if (!($message instanceof self)) {
-            $resp = new self($code, $message);
-        } else {
-            $resp = $message;
-        }
-
-        return $resp->toArray();
     }
 
     /**

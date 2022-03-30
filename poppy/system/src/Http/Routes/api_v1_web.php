@@ -10,7 +10,7 @@
  * ---------------------------------------- */
 Route::group([
     'middleware' => ['sys-app_sign'],
-    'namespace'  => 'Poppy\System\Http\Request\ApiV1\Web',
+    'namespace'  => 'Poppy\System\Http\Request\ApiV1',
 ], function (Illuminate\Routing\Router $route) {
     $route->post('core/info', 'CoreController@info');
     $route->post('core/translate', 'CoreController@translate');
@@ -21,7 +21,7 @@ Route::group([
  * ---------------------------------------- */
 Route::group([
     'middleware' => ['api-sign'],
-    'namespace'  => 'Poppy\System\Http\Request\ApiV1\Web',
+    'namespace'  => 'Poppy\System\Http\Request\ApiV1',
 ], function (Illuminate\Routing\Router $route) {
     $route->post('auth/login', 'AuthController@login')
         ->name('py-system:pam.auth.login');
@@ -39,7 +39,7 @@ Route::group([
 // Jwt 合法性验证
 Route::group([
     'middleware' => ['sys-jwt'],
-    'namespace'  => 'Poppy\System\Http\Request\ApiV1\Web',
+    'namespace'  => 'Poppy\System\Http\Request\ApiV1',
 ], function (Illuminate\Routing\Router $route) {
     $route->post('upload/image', 'UploadController@image')
         ->name('py-system:api_v1.upload.image');
@@ -50,7 +50,7 @@ Route::group([
 // 单点登录
 Route::group([
     'middleware' => ['api-sso'],
-    'namespace'  => 'Poppy\System\Http\Request\ApiV1\Web',
+    'namespace'  => 'Poppy\System\Http\Request\ApiV1',
 ], function (Illuminate\Routing\Router $route) {
     $route->post('auth/access', 'AuthController@access')
         ->name('py-system:pam.auth.access');

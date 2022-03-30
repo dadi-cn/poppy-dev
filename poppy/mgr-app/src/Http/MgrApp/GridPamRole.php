@@ -1,8 +1,9 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Grid;
+namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
@@ -27,14 +28,14 @@ class GridPamRole extends GridBase
             $actions->default(['plain', 'circle', 'only']);
             $title = data_get($row, 'title');
             if ($pam->can('permission', $row)) {
-                $actions->page('编辑权限', route('py-mgr-app:api-backend.role.menu', [data_get($row, 'id')]), 'form')->icon('Key');
+                $actions->page('编辑权限', route('py-mgr-app:api.role.menu', [data_get($row, 'id')]), 'form')->icon('Key');
             }
             if ($pam->can('edit', $row)) {
-                $actions->page('编辑', route('py-mgr-app:api-backend.role.establish', [data_get($row, 'id')]), 'form')->icon('Edit');
+                $actions->page('编辑', route('py-mgr-app:api.role.establish', [data_get($row, 'id')]), 'form')->icon('Edit');
             }
 
             if ($pam->can('delete', $row)) {
-                $actions->request('删除', route('py-mgr-app:api-backend.role.delete', [data_get($row, 'id')]))->icon('Close')->danger()
+                $actions->request('删除', route('py-mgr-app:api.role.delete', [data_get($row, 'id')]))->icon('Close')->danger()
                     ->confirm("确认删除角色 `{$title}`?");
             }
         })->width(150, true)->fixed();
@@ -58,7 +59,7 @@ class GridPamRole extends GridBase
     {
         $pam = $this->pam;
         if ($pam->can('create', PamRole::class)) {
-            $actions->page('新增', route_url('py-mgr-app:api-backend.role.establish'), 'form')->icon('CirclePlus');
+            $actions->page('新增', route_url('py-mgr-app:api.role.establish'), 'form')->icon('CirclePlus');
         }
 
     }

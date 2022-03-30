@@ -1,8 +1,9 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Grid;
+namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
@@ -29,7 +30,7 @@ class GridPamBan extends GridBase
         $table->action(function (ActionsRender $actions) {
             $row = $actions->getRow();
             $actions->default(['only', 'circle', 'plain']);
-            $actions->request("删除", route_url('py-mgr-app:api-backend.ban.delete', [data_get($row, 'id')]))->icon('Close')->danger();
+            $actions->request("删除", route_url('py-mgr-app:api.ban.delete', [data_get($row, 'id')]))->icon('Close')->danger();
         })->width(60, true);
     }
 
@@ -49,19 +50,19 @@ class GridPamBan extends GridBase
         $status  = sys_setting('py-mgr-page::ban.status-' . $type, SysConfig::DISABLE);
         $isBlack = sys_setting('py-mgr-page::ban.type-' . $type, PamBan::WB_TYPE_BLACK) === PamBan::WB_TYPE_BLACK;
         if ($status) {
-            $actions->request('已启用', route_url('py-mgr-app:api-backend.ban.status'))->success()->icon('Open')
+            $actions->request('已启用', route_url('py-mgr-app:api.ban.status'))->success()->icon('Open')
                 ->confirm('当前启用, 确认禁用风险拦截');
         } else {
-            $actions->request('已禁用', route_url('py-mgr-app:api-backend.ban.status'))->danger()->icon('TurnOff')
+            $actions->request('已禁用', route_url('py-mgr-app:api.ban.status'))->danger()->icon('TurnOff')
                 ->confirm('当前禁用, 确认启用风险拦截');
         }
         if ($isBlack) {
-            $actions->request('黑名单模式', route_url('py-mgr-app:api-backend.ban.type'))->info()->default()->icon('Promotion')
+            $actions->request('黑名单模式', route_url('py-mgr-app:api.ban.type'))->info()->default()->icon('Promotion')
                 ->confirm('当前黑名单模式, 是否切换到白名单');
         } else {
-            $actions->request('白名单模式', route_url('py-mgr-app:api-backend.ban.type'))->primary()->default()->icon('Position')
+            $actions->request('白名单模式', route_url('py-mgr-app:api.ban.type'))->primary()->default()->icon('Position')
                 ->confirm('当前白名单模式, 是否切换到黑名单');
         }
-        $actions->page('新增', route_url('py-mgr-app:api-backend.ban.establish'), 'form')->icon('Plus');
+        $actions->page('新增', route_url('py-mgr-app:api.ban.establish'), 'form')->icon('Plus');
     }
 }

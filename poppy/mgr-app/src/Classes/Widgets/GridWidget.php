@@ -18,7 +18,7 @@ use Poppy\MgrApp\Classes\Grid\Query\Query;
 use Poppy\MgrApp\Classes\Grid\Query\QueryFactory;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Traits\UseWidgetUtil;
-use Poppy\MgrApp\Http\Grid\GridBase;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Throwable;
 use function collect;
 use function input;

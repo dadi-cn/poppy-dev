@@ -2,13 +2,12 @@
 
 namespace Demo\App\Grid;
 
-use Poppy\Framework\Exceptions\ApplicationException;
+
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Http\Grid\GridBase;
-use function Clue\StreamFilter\fun;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 
 class GridLayout extends GridBase
 {

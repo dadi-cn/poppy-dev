@@ -1,8 +1,9 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Setting;
+namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\Framework\Validation\Rule;
+use Poppy\MgrApp\Classes\Form\SettingBase;
 use Poppy\System\Action\Sso;
 
 class SettingPam extends SettingBase

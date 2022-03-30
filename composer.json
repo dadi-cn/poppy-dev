@@ -66,6 +66,8 @@
             "Poppy\\System\\Tests\\": "poppy/system/tests",
             "Poppy\\MgrPage\\": "poppy/mgr-page/src/",
             "Poppy\\MgrPage\\Tests\\": "poppy/mgr-page/tests/",
+            "Poppy\\MgrApp\\": "poppy/mgr-app/src/",
+            "Poppy\\MgrApp\\Tests\\": "poppy/mgr-app/tests/",
             "Poppy\\Ad\\": "poppy/ad/src",
             "Poppy\\Ad\\Tests\\": "poppy/ad/tests",
             "Poppy\\Area\\": "poppy/area/src",

@@ -10,11 +10,9 @@ use Poppy\Framework\Helper\ArrayHelper;
 class DefaultApiSignProvider extends DefaultBaseApiSign
 {
     /**
-     * 获取Sign
-     * @param array $params 请求参数
-     * @return string
+     * @inerhitDoc
      */
-    public function sign(array $params): string
+    public function sign(array $params, $type = 'user'): string
     {
         $token  = jwt_token($params);
         $params = $this->except($params);

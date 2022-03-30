@@ -25,31 +25,6 @@ class DefaultUploadProvider implements UploadContract
     use AppTrait;
 
     /**
-     * 图片扩展的描述
-     * @var array
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    protected static $extensions = [
-        'images' => [
-            'extension'   => ['jpg', 'jpeg', 'png', 'gif'],
-            'description' => '请选择图片',
-        ],
-        'file'   => [
-            'extension'   => ['zip', 'rp', 'rplib', 'svga', 'xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx', 'pdf'],
-            'description' => '选择文件',
-        ],
-        'video'  => [
-            'extension'   => ['mp4', 'rm', 'rmvb', 'wmv'],
-            'description' => '请选择视频文件',
-        ],
-        'audio'  => [
-            'extension'   => ['mp3', 'm4a', 'wav', 'aac'],
-            'description' => '请选择音频文件',
-        ],
-    ];
-
-    /**
      * @var string 目标路径
      */
     protected $destination = '';
@@ -340,29 +315,6 @@ class DefaultUploadProvider implements UploadContract
             $url .= '/';
         }
         $this->returnUrl = $url;
-    }
-
-    /**
-     * @inheritDoc
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    public static function type(string $type, $return_type = 'ext_string')
-    {
-        if (!isset(self::$extensions[$type])) {
-            $ext = self::$extensions['images'];
-        } else {
-            $ext = self::$extensions[$type];
-        }
-        switch ($return_type) {
-            case 'desc':
-                return $ext['description'];
-            case 'ext_array':
-                return explode(',', $ext['extension']);
-            case 'ext_string':
-            default:
-                return $ext['extension'];
-        }
     }
 
     /**

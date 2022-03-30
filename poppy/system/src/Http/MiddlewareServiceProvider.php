@@ -18,6 +18,7 @@ class MiddlewareServiceProvider extends ServiceProvider
         $router->aliasMiddleware('sys-sso', Middlewares\Sso::class);
         $router->aliasMiddleware('sys-jwt', Middlewares\JwtAuthenticate::class);
         $router->aliasMiddleware('sys-auth_session', Middlewares\AuthenticateSession::class);
+        $router->aliasMiddleware('sys-mgr-rbac', Middlewares\MgrRbacPermission::class);
         $router->aliasMiddleware('sys-disabled_pam', Middlewares\DisabledPam::class);
         $router->aliasMiddleware('sys-site_open', Middlewares\SiteOpen::class);
         $router->aliasMiddleware('sys-app_sign', Middlewares\AppSign::class);
@@ -60,9 +61,9 @@ class MiddlewareServiceProvider extends ServiceProvider
         */
 
         $router->middlewareGroup('api-sign', [
-            'sys-ban',
-            'sys-app_sign',
-            'sys-site_open',
+            'sys-ban',          // 系统禁用
+            'sys-app_sign',     // 签名
+            'sys-site_open',    // 站点开启
         ]);
 
         $router->middlewareGroup('api-sso', [

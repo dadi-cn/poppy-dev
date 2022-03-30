@@ -1,6 +1,6 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Grid;
+namespace Poppy\MgrApp\Classes\Grid;
 
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;

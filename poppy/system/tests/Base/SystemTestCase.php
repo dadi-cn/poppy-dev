@@ -161,18 +161,6 @@ class SystemTestCase extends TestCase
     }
 
     /**
-     * 输出变量
-     * @param array|string $var
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    protected function export($var): void
-    {
-        $export = var_export($var, true);
-        echo $export;
-    }
-
-    /**
      * 当前的描述
      * @param string $append 追加的信息
      * @return string

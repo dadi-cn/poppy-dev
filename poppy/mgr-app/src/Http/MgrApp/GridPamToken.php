@@ -1,8 +1,9 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Grid;
+namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
 
 class GridPamToken extends GridBase
@@ -24,9 +25,9 @@ class GridPamToken extends GridBase
         $table->action(function (ActionsRender $actions) {
             $row = $actions->getRow();
             $actions->default(['plain', 'circle', 'only']);
-            $actions->request('禁用IP', route('py-mgr-app:api-backend.pam.ban', [data_get($row, 'id'), 'ip']))->icon('MapLocation');
-            $actions->request('禁用设备', route('py-mgr-app:api-backend.pam.ban', [data_get($row, 'id'), 'device']))->icon('Cellphone');
-            $actions->request("删除", route_url('py-mgr-app:api-backend.pam.delete_token', [data_get($row, 'id')]))->icon('Close')->danger();
+            $actions->request('禁用IP', route('py-mgr-app:api.pam.ban', [data_get($row, 'id'), 'ip']))->icon('MapLocation');
+            $actions->request('禁用设备', route('py-mgr-app:api.pam.ban', [data_get($row, 'id'), 'device']))->icon('Cellphone');
+            $actions->request("删除", route_url('py-mgr-app:api.pam.delete_token', [data_get($row, 'id')]))->icon('Close')->danger();
         })->width(150, true)->fixed();
     }
 }

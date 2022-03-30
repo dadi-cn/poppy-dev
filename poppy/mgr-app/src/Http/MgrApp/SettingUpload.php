@@ -1,9 +1,10 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Setting;
+namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\Core\Module\Repositories\ModulesPath;
 use Poppy\Framework\Validation\Rule;
+use Poppy\MgrApp\Classes\Form\SettingBase;
 use function sys_hook;
 
 class SettingUpload extends SettingBase

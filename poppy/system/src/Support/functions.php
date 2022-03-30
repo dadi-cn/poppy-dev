@@ -303,18 +303,6 @@ if (!function_exists('sys_key_trim')) {
     }
 }
 
-if (!function_exists('sys_container')) {
-    /**
-     * Get IoC Container.
-     * @return Container | Application
-     * @deprecated
-     * @see py_container()
-     */
-    function sys_container(): Container
-    {
-        return Container::getInstance();
-    }
-}
 
 if (!function_exists('sys_api_demo')) {
     /**

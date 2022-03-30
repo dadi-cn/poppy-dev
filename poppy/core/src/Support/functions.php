@@ -159,22 +159,6 @@ if (!function_exists('sys_error')) {
     }
 }
 
-if (!function_exists('sys_success')) {
-    /**
-     * 记录成功信息
-     * @param mixed        $object
-     * @param string       $class
-     * @param string|array $append
-     * @deprecated 3.1
-     * @removed    4.0
-     * @see        sys_info()
-     */
-    function sys_success($object, string $class, $append = '')
-    {
-        sys_debug($object, $class, $append);
-    }
-}
-
 if (!function_exists('sys_debug')) {
     /**
      * 开发环境下记录成功信息, 便于错误调试

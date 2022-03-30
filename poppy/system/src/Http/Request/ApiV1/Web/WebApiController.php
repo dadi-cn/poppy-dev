@@ -4,18 +4,22 @@ namespace Poppy\System\Http\Request\ApiV1\Web;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Poppy\Framework\Application\ApiController;
+use Poppy\System\Http\Request\ApiV1\JwtApiController;
 use Poppy\System\Models\PamAccount;
 
 /**
  * Web api 控制器
+ * @deprecated 4.0
+ * @removed 5.0
+ * @see JwtApiController
  */
 abstract class WebApiController extends ApiController
 {
 
     /**
-     * @var PamAccount
+     * @var ?PamAccount
      */
-    protected $pam;
+    protected ?PamAccount $pam = null;
 
     public function __construct()
     {
@@ -29,7 +33,6 @@ abstract class WebApiController extends ApiController
     /**
      * 返回 Jwt 用户
      * @return Authenticatable|PamAccount
-     * @deprecated 使用 变量, 不使用 函数
      * @see        $pam
      */
     protected function pam()

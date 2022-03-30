@@ -283,49 +283,4 @@ class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticat
     {
         return '33023-' . sprintf("%s%'.07d", '', $id);
     }
-
-    /**
-     * @param int    $id    id
-     * @param string $field 获取字段
-     * @return \Illuminate\Database\Eloquent\Collection|Model|mixed|null|PamAccount|PamAccount[]
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    public static function fetch($id, $field = '')
-    {
-        if ($field) {
-            return self::find($id)->$field;
-        }
-
-        return self::find($id);
-    }
-
-    /**
-     * 根据 Username 获取账户ID
-     * @param string $username 用户名
-     * @return mixed
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    public static function getIdByUsername($username)
-    {
-        return self::where('username', $username)->value('id');
-    }
-
-    /**
-     * 允许缓存, 获取账户类型, 因为账户类型不会变化
-     * @param int $id 账户类型
-     * @return mixed
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    public static function getTypeById($id)
-    {
-        static $accountType;
-        if (!isset($accountType[$id])) {
-            $accountType[$id] = self::where('id', $id)->value('type');
-        }
-
-        return $accountType[$id];
-    }
 }

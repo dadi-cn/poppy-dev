@@ -3,9 +3,9 @@
 
 namespace Demo\App\Filter;
 
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Http\Grid\GridBase;
 
 /**
  * 按钮

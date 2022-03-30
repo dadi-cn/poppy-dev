@@ -766,7 +766,6 @@ class InspectCommand extends Command
             try {
                 foreach ($files as $file) {
                     if (preg_match('/[mM]odels\/(?<model>[A-Za-z]+)\.php/', $file, $matches)) {
-                        // dd($matches['model']);
                         $key           = Str::snake($matches['model']);
                         $className     = poppy_class($slug, 'Models\\' . $matches['model']);
                         $ref           = new ReflectionClass($className);

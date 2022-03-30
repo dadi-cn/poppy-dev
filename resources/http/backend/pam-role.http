@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "timestamp": {{$timestamp}},
-    "_py_secret": {{py_secret}},
+    "_py_secret": {{secret}},
     "mock" : {
         "title" : "lexify|Role-????",
         "titleModify" : "lexify|Role-??????",

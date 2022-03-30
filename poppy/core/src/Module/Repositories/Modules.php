@@ -2,7 +2,6 @@
 
 namespace Poppy\Core\Module\Repositories;
 
-use Exception;
 use Illuminate\Support\Collection;
 use Poppy\Core\Classes\PyCoreDef;
 use Poppy\Core\Module\Module;
@@ -37,7 +36,7 @@ class Modules extends Repository
                 $collection          = collect();
                 $slugs->each(function ($slug) use ($collection, $files) {
                     $module = new Module($slug);
-                    if ($files->exists($file = $module->directory() . DIRECTORY_SEPARATOR . 'manifest.json')) {
+                    if ($files->exists($module->directory() . DIRECTORY_SEPARATOR . 'manifest.json')) {
                         // load config
                         $configurations = $this->loadConfigurations($module->directory());
 
@@ -93,7 +92,7 @@ class Modules extends Repository
      * Load configuration from module configurations folder.
      * @param string $directory 字典
      * @return Collection
-     * @throws Exception
+     * @throws LoadConfigurationException
      */
     protected function loadConfigurations(string $directory): Collection
     {
@@ -102,13 +101,6 @@ class Modules extends Repository
         if ($files->isDirectory($directory)) {
             $configurations = collect();
 
-            // load module, in root element
-            $module = $directory . DIRECTORY_SEPARATOR . 'module.yaml';
-            if ($files->exists($module)) {
-                $configurations = collect(Yaml::parse($files->get($module)));
-            }
-
-            // load other config except module.yaml file
             // put it in filename key
             collect($files->files($directory))->each(function ($file) use ($configurations, $files) {
                 $name = basename(realpath($file), '.yaml');

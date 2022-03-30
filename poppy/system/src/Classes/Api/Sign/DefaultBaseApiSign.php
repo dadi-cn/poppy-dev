@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Classes\Traits\AppTrait;
 use Poppy\System\Classes\Contracts\ApiSignContract;
+use Poppy\System\Models\PamAccount;
 
 /**
  * 默认的 Timestamp 约定
@@ -45,8 +46,10 @@ abstract class DefaultBaseApiSign implements ApiSignContract
             return $this->setError(new Resp(Resp::PARAM_ERROR, '未进行签名'));
         }
 
+        $type = $request->header('x-type') ?: PamAccount::TYPE_USER;
+
         // check sign
-        if ($sign !== $this->sign($request->all())) {
+        if ($sign !== $this->sign($request->all(), $type)) {
             return $this->setError(new Resp(Resp::SIGN_ERROR, '签名错误'));
         }
         return true;

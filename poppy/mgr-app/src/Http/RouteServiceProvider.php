@@ -22,12 +22,10 @@ class RouteServiceProvider extends \Poppy\Framework\Application\RouteServiceProv
      */
     protected function mapBackendRoutes(): void
     {
-        dd(3);
         Route::group([
-            'prefix'     => 'api/backend/py-mgr-app',
-            'middleware' => 'mgr-auth',
+            'prefix'     => 'api/py-mgr-app',
         ], function () {
-            require_once __DIR__ . '/Routes/api-backend.php';
+            require_once __DIR__ . '/Routes/api-mgr.php';
         });
     }
 }

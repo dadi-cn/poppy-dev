@@ -91,19 +91,6 @@ class Tools extends AbstractFilter implements Renderable
     }
 
     /**
-     * Disable refresh button.
-     *
-     * @param bool $disable
-     * @return void
-     *
-     * @deprecated
-     */
-    public function disableRefreshButton(bool $disable = true)
-    {
-        //
-    }
-
-    /**
      * Disable batch actions.
      *
      * @param bool $disable

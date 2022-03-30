@@ -2,7 +2,7 @@
 POST {{domain}}/api_v1/system/captcha/send
 Content-Type: application/x-www-form-urlencoded
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}
+timestamp={{$timestamp}}&_py_secret={{secret}}&passport={{passport}}
 
 > {%
     client.test("发送验证码", function(){
@@ -15,7 +15,7 @@ timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}
 POST {{domain}}/api_v1/system/captcha/fetch
 Content-Type: application/x-www-form-urlencoded
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}
+timestamp={{$timestamp}}&_py_secret={{secret}}&passport={{passport}}
 
 > {%
     client.test("[L]获取验证码", function(){
@@ -30,7 +30,7 @@ timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}
 POST {{domain}}/api_v1/system/captcha/verify_code
 Content-Type: application/x-www-form-urlencoded
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}&captcha={{_captcha}}
+timestamp={{$timestamp}}&_py_secret={{secret}}&passport={{passport}}&captcha={{_captcha}}
 
 > {%
     client.test("获取验证串", function(){
@@ -44,7 +44,7 @@ timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}&captcha=
 POST {{domain}}/api_v1/system/auth/reset_password
 Content-Type: application/x-www-form-urlencoded
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}&verify_code={{_verify_code}}&password={{password}}
+timestamp={{$timestamp}}&_py_secret={{secret}}&verify_code={{_verify_code}}&password={{password}}
 
 > {%
     client.test("根据验证串重设密码", function(){
@@ -58,7 +58,7 @@ timestamp={{$timestamp}}&_py_secret={{py_secret}}&verify_code={{_verify_code}}&p
 POST {{domain}}/api_v1/system/captcha/send
 Content-Type: application/x-www-form-urlencoded
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}
+timestamp={{$timestamp}}&_py_secret={{secret}}&passport={{passport}}
 
 > {%
     client.test("发送验证码", function(){
@@ -71,7 +71,7 @@ timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}
 POST {{domain}}/api_v1/system/auth/reset_password
 Content-Type: application/x-www-form-urlencoded
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}&captcha={{_captcha}}&password={{_password}}
+timestamp={{$timestamp}}&_py_secret={{secret}}&passport={{passport}}&captcha={{_captcha}}&password={{_password}}
 
 > {%
     client.test("根据手机号设置密码", function(){
@@ -85,7 +85,7 @@ POST {{domain}}/api_v1/system/auth/bind_mobile
 Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer {{token}}
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}&passport={{passport}}&captcha={{_captcha}}&verify_code={{_verify_code}}
+timestamp={{$timestamp}}&_py_secret={{secret}}&passport={{passport}}&captcha={{_captcha}}&verify_code={{_verify_code}}
 
 > {%
     client.test("绑定成功", function(){

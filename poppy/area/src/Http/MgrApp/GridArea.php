@@ -8,7 +8,7 @@ use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Http\Grid\GridBase;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 
 class GridArea extends GridBase
 {

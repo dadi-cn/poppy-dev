@@ -409,29 +409,6 @@ class Pam
         ];
     }
 
-    /**
-     * Passport Type
-     * @param string $passport 通行证
-     * @return string
-     * @deprecated 3.1
-     * @removed    4.0
-     * @see        PamAccount::passportType()
-     */
-    public function passportType(string $passport): string
-    {
-        if (UtilHelper::isMobile($passport)) {
-            $type = PamAccount::REG_TYPE_MOBILE;
-        } elseif (UtilHelper::isEmail($passport)) {
-            $type = PamAccount::REG_TYPE_EMAIL;
-        } elseif (is_numeric($passport)) {
-            $type = 'id';
-        } else {
-            $type = PamAccount::REG_TYPE_USERNAME;
-        }
-
-        return $type;
-    }
-
 
     /**
      * 更换账号主体, 支持除非ID外的更换方式
@@ -596,27 +573,6 @@ class Pam
         }
 
         return $this->setPassword($this->pam, $password);
-    }
-
-    /**
-     * 修改账户密码
-     * @param int    $id       用户id
-     * @param string $password 密码
-     * @return bool
-     * @see        setPassword()
-     * @deprecated 3.1
-     */
-    public function setPasswordById(int $id, string $password): bool
-    {
-        if (!$pam = PamAccount::find($id)) {
-            return $this->setError(trans('py-system::action.pam.account_not_exist'));
-        }
-
-        if (!$this->setPassword($pam, $password)) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

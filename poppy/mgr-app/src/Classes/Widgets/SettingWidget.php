@@ -5,8 +5,8 @@ namespace Poppy\MgrApp\Classes\Widgets;
 use Poppy\Core\Classes\Traits\CoreTrait;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Exceptions\ApplicationException;
+use Poppy\MgrApp\Classes\Form\SettingBase;
 use Poppy\MgrApp\Classes\Traits\UseWidgetUtil;
-use Poppy\MgrApp\Http\Setting\SettingBase;
 
 /**
  * 设置
@@ -66,14 +66,14 @@ class SettingWidget
             $groups = collect();
             collect($hooks)->map(function ($item, $key) use ($groups) {
                 $groups->push([
-                    'path'  => route_url('py-mgr-app:api-backend.home.setting', [$key], [], false),
+                    'path'  => route_url('py-mgr-app:api.home.setting', [$key], [], false),
                     'title' => $item['title']
                 ]);
             });
             $struct = array_merge($struct, [
                 'type'   => 'setting',
                 'title'  => $service['title'],
-                'path'   => route_url('py-mgr-app:api-backend.home.setting', [$path], [], false),
+                'path'   => route_url('py-mgr-app:api.home.setting', [$path], [], false),
                 'groups' => $groups->toArray(),
                 'forms'  => $fms,
             ]);

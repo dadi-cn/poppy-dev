@@ -1,6 +1,6 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Form;
+namespace Poppy\MgrApp\Http\MgrApp;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;

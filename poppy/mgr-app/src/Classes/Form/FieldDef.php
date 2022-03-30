@@ -589,38 +589,6 @@ class FieldDef
     }
 
     /**
-     * Disable form submit.
-     *
-     * @param bool $disable
-     *
-     * @return $this
-     *
-     * @deprecated
-     */
-    public function disableSubmit(bool $disable = true)
-    {
-        $this->builder()->getFooter()->disableSubmit($disable);
-
-        return $this;
-    }
-
-    /**
-     * Disable form reset.
-     *
-     * @param bool $disable
-     *
-     * @return $this
-     *
-     * @deprecated
-     */
-    public function disableReset(bool $disable = true)
-    {
-        $this->builder()->getFooter()->disableReset($disable);
-
-        return $this;
-    }
-
-    /**
      * Disable View Checkbox on footer.
      *
      * @param bool $disable

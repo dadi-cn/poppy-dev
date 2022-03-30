@@ -3,7 +3,7 @@ POST {{domain}}/api_v1/system/upload/image
 Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer {{token}}
 
-timestamp={{$timestamp}}&_py_secret={{py_secret}}
+timestamp={{$timestamp}}&_py_secret={{secret}}
 &type=base64
 &image[]={{image-base64}}
 &image[]={{image-base64}}
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 {
     "timestamp" : "{{$timestamp}}",
-    "_py_secret" : "{{py_secret}}",
+    "_py_secret" : "{{secret}}",
     "type" : "url",
     "image" : [
         "https://jdc.jd.com/img/100",
@@ -55,7 +55,7 @@ Content-Type: application/json
 
 
 ### 上传图片并缩小
-POST {{domain}}/api_v1/system/upload/image?timestamp={{$timestamp}}&_py_secret={{py_secret}}&image_type=avatar
+POST {{domain}}/api_v1/system/upload/image?timestamp={{$timestamp}}&_py_secret={{secret}}&image_type=avatar
 Authorization: Bearer {{token}}
 Content-Type: multipart/form-data; boundary=file
 
@@ -67,7 +67,7 @@ Content-Disposition: form-data; name="image"; filename="480x640.jpg"
 
 
 ### 上传音乐文件
-POST {{domain}}/api_v1/system/upload/file?timestamp={{$timestamp}}&_py_secret={{py_secret}}&type=audio
+POST {{domain}}/api_v1/system/upload/file?timestamp={{$timestamp}}&_py_secret={{secret}}&type=audio
 Authorization: Bearer {{token}}
 Content-Type: multipart/form-data; boundary=file
 

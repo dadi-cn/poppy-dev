@@ -1,6 +1,6 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Form;
+namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Validation\Rule;

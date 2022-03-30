@@ -38,7 +38,7 @@ return [
             // app
             'x-app', 'x-app-host', 'x-app-sign',
             // common software
-            'x-os', 'x-ver', 'x-id',
+            'x-os', 'x-ver', 'x-id', 'x-type',
             // system
             'x-sys-name', 'x-sys-version', 'x-sys-device', 'x-sys-cpu',
             // append
@@ -143,7 +143,7 @@ return [
     ],
 
     'canal-es' => [
-        'canal'  => [
+        'canal' => [
             'client_type'     => CanalClient::TYPE_SWOOLE,
             'host'            => env('CANAL_HOST', '127.0.0.1'),
             'port'            => env('CANAL_PORT', 11111),

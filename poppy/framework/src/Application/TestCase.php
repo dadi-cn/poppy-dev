@@ -51,17 +51,6 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     }
 
     /**
-     * 返回当前容器
-     * @return Container|Application
-     * @deprecated 3.1
-     * @removed    4.0
-     */
-    protected function poppyContainer()
-    {
-        return Container::getInstance();
-    }
-
-    /**
      * 输出变量/使用 STD 标准输出, 不会出现测试错误
      * @param array|string $vars 需要输出的内容
      * @param string       $description
