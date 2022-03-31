@@ -84,7 +84,7 @@ class AuthController extends JwtApiController
      * @apiVersion             1.0.0
      * @apiName                SysAuthLogin
      * @apiGroup               Poppy
-     * @apiParam {string}      guard           登录类型;web|Web;backend|后台;
+     * @apiParam {string}      guard           登录类型;web|Web;backend|后台;develop|开发者
      * @apiParam {string}      passport        通行证
      * @apiParam {string}      [password]      密码
      * @apiParam {string}      [captcha]       验证码
@@ -92,7 +92,7 @@ class AuthController extends JwtApiController
      * @apiParam {string}      [device_type]   设备类型[开启单一登录之后可用]
      * @apiSuccess {string}    token           认证成功的Token
      * @apiSuccess {string}    type            账号类型
-     * @apiSuccessExample      data
+     * @apiSuccessExample  data
      * {
      *     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.*******",
      *     "type": "backend"
@@ -112,7 +112,6 @@ class AuthController extends JwtApiController
         $passport = PamAccount::fullFilledPassport(input('passport', ''));
         $captcha  = input('captcha', '');
         $password = input('password', '');
-        $platform = input('platform', '');
 
         if (!$captcha && !$password) {
             return Resp::error('登录密码或者验证码必须填写');
@@ -130,14 +129,27 @@ class AuthController extends JwtApiController
             ], 401, [], JSON_UNESCAPED_UNICODE);
         }
 
+        $guard = PamAccount::GUARD_JWT_WEB;
+        $type  = x_header('type');
+        if ($type === 'backend') {
+            $guard = PamAccount::GUARD_JWT_BACKEND;
+        }
+        elseif ($type === 'develop') {
+            $guard = PamAccount::GUARD_JWT_DEVELOP;
+        }
+
         $Pam = new Pam();
-        if ($captcha) {
-            if (!$Pam->captchaLogin($passport, $captcha, $platform)) {
+        try {
+            if ($captcha) {
+                if (!$Pam->captchaLogin($passport, $captcha, $guard)) {
+                    return Resp::error($Pam->getError());
+                }
+            }
+            elseif (!$Pam->loginCheck($passport, $password, $guard)) {
                 return Resp::error($Pam->getError());
             }
-        }
-        elseif (!$Pam->loginCheck($passport, $password, PamAccount::GUARD_JWT)) {
-            return Resp::error($Pam->getError());
+        } catch (Throwable $e) {
+            return Resp::error($e);
         }
 
         $this->clearLoginAttempts($this->pyRequest());

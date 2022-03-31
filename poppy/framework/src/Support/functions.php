@@ -2,14 +2,12 @@
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Console\Kernel as ConsoleKernelContract;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Poppy\Faker\Factory;
 use Poppy\Framework\Exceptions\FakerException;
 use Poppy\Framework\Foundation\Application;
 use Poppy\Framework\Foundation\Console\Kernel;
 use Poppy\Framework\Helper\HtmlHelper;
-use Poppy\MgrPage\Classes\Form\Field\Text;
 
 
 if (!function_exists('route_url')) {
@@ -327,16 +325,17 @@ if (!function_exists('x_header')) {
     /**
      * 获取 Header 中的 x-{ph} 信息, 不支持获取 x-app 里存储的 json 信息
      * 完整列表参考以下地址
-     * @url https://wulicode.com/note/develop/standard/client.html
+     * @url https://wulicode.com/develop/standard/client/
      * @param string $type ver,id,os
+     * @param string $default 增加默认参数
      * @return string
      * @since 3.2
      */
-    function x_header(string $type): string
+    function x_header(string $type, string $default = ''): string
     {
         /** @var \Illuminate\Http\Request $request */
         $request = app('request');
         $fullKey = strtoupper('x-' . $type);
-        return $request->header($fullKey, '');
+        return $request->header($fullKey, $default);
     }
 }

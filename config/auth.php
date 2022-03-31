@@ -51,6 +51,10 @@ return [
 			'driver'   => 'jwt',
 			'provider' => 'pam_backend',
 		],
+		'jwt_develop' => [
+			'driver'   => 'jwt',
+			'provider' => 'pam_develop',
+		],
 		'jwt_web'     => [
 			'driver'   => 'jwt',
 			'provider' => 'pam_web',

@@ -5,11 +5,12 @@ namespace Poppy\System\Action;
 use Auth;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Auth\SessionGuard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Poppy\Framework\Classes\Traits\AppTrait;
-use Poppy\Framework\Helper\UtilHelper;
+use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Validation\Rule;
 use Poppy\System\Classes\Contracts\PasswordContract;
 use Poppy\System\Classes\Traits\PamTrait;
@@ -58,21 +59,27 @@ class Pam
     /**
      * 验证验登录
      * @param string $passport 通行证
-     * @param string $captcha  验证码
-     * @param string $platform 平台
+     * @param string $captcha 验证码
+     * @param string $guard 认证 Guard
      * @return bool
+     * @throws Throwable
      */
-    public function captchaLogin(string $passport, string $captcha, string $platform): bool
+    public function captchaLogin(string $passport, string $captcha, string $guard): bool
     {
         $initDb = [
             'passport' => $passport,
             'captcha'  => $captcha,
+            'platform' => x_header('os'),
         ];
 
         // 数据验证
         $validator = Validator::make($initDb, [
+            'passport' => Rule::required(),
             'captcha'  => Rule::required(),
-            'platform' => Rule::in(PamAccount::kvPlatform()),
+            'platform' => [
+                Rule::required(),
+                Rule::in(PamAccount::kvPlatform())
+            ],
         ]);
         if ($validator->fails()) {
             return $this->setError($validator->messages());
@@ -87,8 +94,13 @@ class Pam
 
         // 判定账号是否存在, 如果不存在则进行注册
         $this->pam = PamAccount::passport($passport);
-        if (!$this->pam && !$this->register($initDb['passport'], '', PamRole::FE_USER, $platform)) {
-            return false;
+        if (!$this->pam) {
+            if (Str::contains($guard, ['develop', 'backend'])) {
+                return $this->setError('此类账号不允许自动注册');
+            }
+            if (!$this->register($initDb['passport'])) {
+                return false;
+            }
         }
 
         // 检测权限, 是否被禁用
@@ -97,13 +109,12 @@ class Pam
         }
 
         try {
-            event(new LoginBannedEvent($this->pam, PamAccount::GUARD_USER));
+            event(new LoginBannedEvent($this->pam, $guard));
         } catch (Throwable $e) {
             return $this->setError($e);
         }
 
-        event(new LoginSuccessEvent($this->pam, $platform));
-
+        event(new LoginSuccessEvent($this->pam, $initDb['platform'], $guard));
         return true;
     }
 
@@ -118,14 +129,13 @@ class Pam
 
     /**
      * 用户注册
-     * @param string $passport  passport
-     * @param string $password  密码
+     * @param string $passport passport
+     * @param string $password 密码
      * @param string $role_name 用户角色名称
-     * @param string $platform  支持的平台
      * @return bool
      * @throws Throwable
      */
-    public function register(string $passport, string $password = '', string $role_name = PamRole::FE_USER, string $platform = ''): bool
+    public function register(string $passport, string $password = '', string $role_name = PamRole::FE_USER): bool
     {
         $passport = PamAccount::fullFilledPassport($passport);
         $type     = PamAccount::passportType($passport);
@@ -133,7 +143,7 @@ class Pam
         $initDb = [
             $type          => $passport,
             'password'     => $password,
-            'reg_platform' => $platform,
+            'reg_platform' => x_header('os'),
             'parent_id'    => $this->parentId,
         ];
 
@@ -166,7 +176,8 @@ class Pam
 
                 // 注册子用户, 子用户比主账号多一个 :
                 array_unshift($rule[$type], Rule::username(true));
-            } else {
+            }
+            else {
                 array_unshift($rule[$type], Rule::username());
             }
         }
@@ -188,7 +199,8 @@ class Pam
 
         if (is_string($role_name)) {
             $role = PamRole::whereIn('name', (array) $role_name)->get();
-        } else {
+        }
+        else {
             $roleNames = (array) $role_name;
             $role      = PamRole::whereIn('id', $roleNames)->get();
         }
@@ -205,7 +217,8 @@ class Pam
                 return $this->setError(trans('py-system::action.pam.not_set_name_prefix'));
             }
             $username = $prefix . '_' . Carbon::now()->format('YmdHis') . Str::random(6);
-        } else {
+        }
+        else {
             $hasAccountName = true;
             $username       = $passport;
         }
@@ -255,13 +268,13 @@ class Pam
 
     /**
      * 密码登录
-     * @param string $passport   passport
-     * @param string $password   密码
-     * @param string $guard_type 类型
-     * @param string $platform   平台
+     * @param string $passport passport
+     * @param string $password 密码
+     * @param string $guard_name 类型
      * @return bool
+     * @throws ApplicationException
      */
-    public function loginCheck(string $passport, string $password, $guard_type = PamAccount::GUARD_WEB, $platform = ''): bool
+    public function loginCheck(string $passport, string $password, string $guard_name = PamAccount::GUARD_WEB): bool
     {
         $type        = PamAccount::passportType($passport);
         $credentials = [
@@ -280,16 +293,16 @@ class Pam
             return $this->setError($validator->errors());
         }
 
-        $guard = Auth::guard($guard_type);
+        $guard = Auth::guard($guard_name);
 
         if ($guard->attempt($credentials)) {
             // jwt 不能获取到 user， 使用 getLastAttempted 方法来获取数据
-            if ($guard instanceof JWTGuard) {
+            if ($guard instanceof JWTGuard || $guard instanceof SessionGuard) {
                 /** @var PamAccount $pam */
-                $pam = $guard->getLastAttempted();
-            } else {
-                /** @var PamAccount $user */
                 $pam = $guard->user();
+            }
+            else {
+                throw new ApplicationException('未知的 guard');
             }
             $this->pam = $pam;
 
@@ -297,28 +310,8 @@ class Pam
                 return false;
             }
 
-
-            event(new LoginBannedEvent($pam, $guard));
-
-            if (method_exists($this, 'loginAllowIpCheck') && !$this->loginAllowIpCheck()) {
-                $guard->logout();
-                return false;
-            }
-
-            // 兼容存在 system 模块事件
-            // deprecated 为了兼容 q2
-            if (class_exists('\System\Events\LoginSuccessEvent')) {
-                event(new \System\Events\LoginSuccessEvent($pam, $platform, $guard));
-                return true;
-            }
-
-            event(new LoginSuccessEvent($pam, $platform, $guard));
-
+            event(new LoginSuccessEvent($pam, $guard_name));
             return true;
-        }
-
-        if (!$guard->getLastAttempted()) {
-            return $this->setError(trans('py-system::action.pam.account_not_exist'));
         }
 
         $credentials += [
@@ -334,8 +327,8 @@ class Pam
 
     /**
      * 设置登录密码
-     * @param PamAccount|mixed $pam      用户
-     * @param string           $password 密码
+     * @param PamAccount|mixed $pam 用户
+     * @param string $password 密码
      * @return bool
      */
     public function setPassword($pam, string $password): bool
@@ -373,8 +366,8 @@ class Pam
 
     /**
      * 设置角色
-     * @param PamAccount|mixed $pam   账号数据
-     * @param array            $roles 角色名
+     * @param PamAccount|mixed $pam 账号数据
+     * @param array $roles 角色名
      * @return bool
      */
     public function setRoles($pam, array $roles): bool
@@ -413,7 +406,7 @@ class Pam
     /**
      * 更换账号主体, 支持除非ID外的更换方式
      * @param string|numeric|PamAccount $old_passport
-     * @param string                    $new_passport
+     * @param string $new_passport
      * @return bool
      */
     public function rebind($old_passport, string $new_passport): bool
@@ -425,7 +418,8 @@ class Pam
         if (is_numeric($old_passport) || is_string($old_passport)) {
             $old_passport = PamAccount::fullFilledPassport($old_passport);
             $pam          = PamAccount::passport($old_passport);
-        } else if ($old_passport instanceof PamAccount) {
+        }
+        else if ($old_passport instanceof PamAccount) {
             $pam = $old_passport;
         }
         if (!$pam) {
@@ -444,8 +438,8 @@ class Pam
 
     /**
      * 后台用户禁用
-     * @param int    $id     用户id
-     * @param string $to     解禁时间
+     * @param int $id 用户id
+     * @param string $to 解禁时间
      * @param string $reason 禁用原因
      * @return bool
      */
@@ -496,7 +490,7 @@ class Pam
 
     /**
      * 后台用户启用
-     * @param int    $id     用户Id
+     * @param int $id 用户Id
      * @param string $reason 原因
      * @return bool
      */
@@ -553,7 +547,7 @@ class Pam
     /**
      * 修改密码
      * @param string $old_password 老密码
-     * @param string $password     新密码
+     * @param string $password 新密码
      * @return bool
      */
     public function changePassword($old_password, $password): bool

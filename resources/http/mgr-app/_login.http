@@ -1,0 +1,18 @@
+POST {{domain}}/api_v1/system/auth/login
+Content-Type: application/json
+x-type: backend
+
+{
+    "_py_secret" : "{{secret}}",
+    "passport" : "{{be-username}}",
+    "password" : "{{be-password}}"
+}
+
+> {%
+    client.test("Login With User And Set User Token", function(){
+        client.assert(response.status === 200);
+        client.assert(response.body.status === 0);
+        client.global.set('token', response.body.data.token)
+        client.log(client.global.get('token'));
+    })
+%}

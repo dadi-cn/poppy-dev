@@ -2,7 +2,7 @@
 
 namespace Poppy\System\Listeners\LoginSuccess;
 
-use Illuminate\Auth\SessionGuard;
+use Illuminate\Support\Str;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\System\Events\LoginSuccessEvent;
 use Poppy\System\Http\Middlewares\AuthenticateSession;
@@ -12,18 +12,18 @@ use Poppy\System\Http\Middlewares\AuthenticateSession;
  */
 class UpdatePasswordHashListener
 {
-	use PoppyTrait;
+    use PoppyTrait;
 
-	/**
-	 * @param LoginSuccessEvent $event 登录成功
-	 */
-	public function handle(LoginSuccessEvent $event)
-	{
-		if ($event->guard instanceof SessionGuard) {
-			$name    = $event->guard->getName();
-			$hashKey = AuthenticateSession::hashKey($name);
-			$this->pySession()->put($hashKey, $event->pam->getAuthPassword());
-		}
-	}
+    /**
+     * @param LoginSuccessEvent $event 登录成功
+     */
+    public function handle(LoginSuccessEvent $event)
+    {
+        $name = $event->guard;
+        if ($name && !Str::contains($name, 'jwt')) {
+            $hashKey = AuthenticateSession::hashKey($name);
+            $this->pySession()->put($hashKey, $event->pam->getAuthPassword());
+        }
+    }
 }
 

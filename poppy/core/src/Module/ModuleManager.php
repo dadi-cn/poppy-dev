@@ -23,22 +23,22 @@ class ModuleManager
     /**
      * @var ?ModulesMenu
      */
-    private ?ModulesMenu $menuRepository;
+    private ?ModulesMenu $menuRepository = null;
 
     /**
      * @var ?ModulesPath
      */
-    private ?ModulesPath $pathRepository;
+    private ?ModulesPath $pathRepository = null;
 
     /**
      * @var ?ModulesHook
      */
-    private ?ModulesHook $hooksRepo;
+    private ?ModulesHook $hooksRepo = null;
 
     /**
      * @var ?ModulesService
      */
-    private ?ModulesService $serviceRepo;
+    private ?ModulesService $serviceRepo = null;
 
     /**
      * @return Collection

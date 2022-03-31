@@ -2,7 +2,6 @@
 
 namespace Poppy\System\Events;
 
-use Illuminate\Auth\SessionGuard;
 use Poppy\System\Models\PamAccount;
 
 /**
@@ -13,22 +12,16 @@ class LoginSuccessEvent
     /**
      * @var PamAccount 用户账户
      */
-    public $pam;
+    public PamAccount $pam;
 
     /**
-     * @var string 平台
+     * @var string
      */
-    public $platform;
+    public string $guard;
 
-    /**
-     * @var SessionGuard|null
-     */
-    public $guard;
-
-    public function __construct(PamAccount $pam, $platform, $guard = null)
+    public function __construct(PamAccount $pam, $guard)
     {
-        $this->pam      = $pam;
-        $this->platform = $platform;
-        $this->guard    = $guard;
+        $this->pam   = $pam;
+        $this->guard = $guard;
     }
 }

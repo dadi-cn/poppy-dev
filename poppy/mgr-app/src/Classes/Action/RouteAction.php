@@ -2,10 +2,11 @@
 
 namespace Poppy\MgrApp\Classes\Action;
 
+
 /**
- * 请求操作
+ * 新页面打开路由
  */
-final class RequestAction extends Action
+class RouteAction extends Action
 {
 
     /**
@@ -15,7 +16,7 @@ final class RequestAction extends Action
     public function struct(): array
     {
         return array_merge(parent::struct(), [
-            'method' => 'request'
+            'method' => 'route',
         ]);
     }
 }

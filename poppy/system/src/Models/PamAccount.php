@@ -17,27 +17,27 @@ use Tymon\JWTAuth\Contracts\JWTSubject as JWTSubjectAuthenticatable;
 /**
  * 用户账号
  *
- * @property int                       $id
- * @property string                    $mobile             手机号
- * @property string                    $username           用户名称
- * @property string                    $password           用户密码
- * @property string|null               $password_key       账号注册时候随机生成的6位key
- * @property Carbon                    $logined_at         登录时间
- * @property int                       $login_times        登录次数
- * @property string                    $reg_ip             注册IP
- * @property string                    $login_ip           当前登录IP
- * @property int                       $parent_id          父ID
- * @property int                       $is_enable          是否启用
- * @property string|null               $type               类型
- * @property string|null               $email              邮箱
- * @property string|null               $reg_platform       注册平台
- * @property string                    $disable_reason     禁用原因
- * @property string|null               $disable_start_at   禁用开始时间
- * @property string|null               $disable_end_at     禁用结束时间
- * @property string                    $remember_token     Token
- * @property Carbon                    $created_at
- * @property Carbon                    $updated_at
- * @property-read PamRoleAccount       $role
+ * @property int $id
+ * @property string $mobile             手机号
+ * @property string $username           用户名称
+ * @property string $password           用户密码
+ * @property string|null $password_key       账号注册时候随机生成的6位key
+ * @property Carbon $logined_at         登录时间
+ * @property int $login_times        登录次数
+ * @property string $reg_ip             注册IP
+ * @property string $login_ip           当前登录IP
+ * @property int $parent_id          父ID
+ * @property int $is_enable          是否启用
+ * @property string|null $type               类型
+ * @property string|null $email              邮箱
+ * @property string|null $reg_platform       注册平台
+ * @property string $disable_reason     禁用原因
+ * @property string|null $disable_start_at   禁用开始时间
+ * @property string|null $disable_end_at     禁用结束时间
+ * @property string $remember_token     Token
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property-read PamRoleAccount $role
  * @property-read Collection|PamRole[] $roles
  * @mixin Eloquent
  */
@@ -64,6 +64,7 @@ class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticat
     const GUARD_DEVELOP     = 'develop';
     const GUARD_USER        = 'user';
     const GUARD_JWT_BACKEND = 'jwt_backend';
+    const GUARD_JWT_DEVELOP = 'jwt_develop';
     const GUARD_JWT_WEB     = 'jwt_web';
     const GUARD_JWT         = 'jwt';
 
@@ -75,6 +76,8 @@ class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticat
     const REG_PLATFORM_PC      = 'pc';
     const REG_PLATFORM_H5      = 'h5';
     const REG_PLATFORM_WEAPP   = 'weapp';
+    const REG_PLATFORM_WEBAPP  = 'webapp';
+    const REG_PLATFORM_MGRAPP  = 'mgrapp';
 
     protected $table = 'pam_account';
 
@@ -207,8 +210,8 @@ class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticat
 
     /**
      * 获取定义的 kv 值
-     * @param null|string $key       需要获取的key, 默认返回整个定义
-     * @param bool        $check_key 检测当前key 是否存在
+     * @param null|string $key 需要获取的key, 默认返回整个定义
+     * @param bool $check_key 检测当前key 是否存在
      * @return array|string
      */
     public static function kvType($key = null, $check_key = false)
@@ -224,8 +227,8 @@ class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticat
 
     /**
      * 获取定义的 kv 值
-     * @param null|string $key       需要获取的key, 默认返回整个定义
-     * @param bool        $check_key 检测当前key 是否存在
+     * @param null|string $key 需要获取的key, 默认返回整个定义
+     * @param bool $check_key 检测当前key 是否存在
      * @return array|string
      */
     public static function kvRegType($key = null, $check_key = false)
@@ -241,7 +244,7 @@ class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticat
 
     /**
      * 注册平台
-     * @param null $key          key
+     * @param null $key key
      * @param bool $check_exists 检测当前key 是否存在
      * @return array|string
      */
@@ -254,6 +257,8 @@ class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticat
             self::REG_PLATFORM_WEB     => 'web',
             self::REG_PLATFORM_H5      => 'h5',
             self::REG_PLATFORM_WEAPP   => 'weapp',
+            self::REG_PLATFORM_WEBAPP  => 'webapp',
+            self::REG_PLATFORM_MGRAPP  => 'mgrapp',
         ];
 
         return kv($desc, $key, $check_exists);
