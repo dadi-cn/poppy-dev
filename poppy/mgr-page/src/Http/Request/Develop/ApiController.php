@@ -85,7 +85,7 @@ class ApiController extends DevelopController
         $definition = $catalog[$type];
 
         // 添加代签名
-        $certificate = $definition['sign_certificate'] ?? [];
+        $certificate = [];
         array_unshift($certificate, [
             'name'        => '_py_secret',
             'title'       => '代签名',

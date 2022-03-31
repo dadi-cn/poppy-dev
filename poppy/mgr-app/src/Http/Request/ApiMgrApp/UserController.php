@@ -1,6 +1,6 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Request\Api;
+namespace Poppy\MgrApp\Http\Request\ApiMgrApp;
 
 use Poppy\Core\Classes\Traits\CoreTrait;
 use Poppy\Core\Exceptions\PermissionException;

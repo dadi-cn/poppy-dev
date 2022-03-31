@@ -1,6 +1,6 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Request\Api;
+namespace Poppy\MgrApp\Http\Request\ApiMgrApp;
 
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Widgets\SettingWidget;

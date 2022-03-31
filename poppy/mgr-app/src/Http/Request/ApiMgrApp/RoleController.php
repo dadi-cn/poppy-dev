@@ -1,6 +1,6 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Request\Api;
+namespace Poppy\MgrApp\Http\Request\ApiMgrApp;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Poppy\MgrApp\Http\Request\Api;
+namespace Poppy\MgrApp\Http\Request\ApiDev;
 
 use Poppy\Framework\Application\Controller;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
@@ -10,7 +10,7 @@ use function py_container;
 /**
  * 后台初始化控制器
  */
-abstract class BackendController extends Controller
+abstract class DevelopController extends Controller
 {
     use PoppyTrait;
 

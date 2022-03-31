@@ -3,15 +3,8 @@
 use Illuminate\Routing\Router;
 
 Route::group([
-    'middleware' => 'mgr-login',
-], function (Router $router) {
-    // 用户信息
-});
-
-
-Route::group([
     'middleware' => 'mgr-auth',
-    'namespace'  => 'Poppy\MgrApp\Http\Request\Api',
+    'namespace'  => 'Poppy\MgrApp\Http\Request\ApiMgrApp',
 ], function (Router $router) {
     // 用户信息
     $router->any('user/info', 'UserController@info')
