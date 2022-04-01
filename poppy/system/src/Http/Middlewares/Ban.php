@@ -9,9 +9,13 @@ use Poppy\System\Action\Ban as ActBan;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamBan;
 use Poppy\System\Models\PamRole;
-use Poppy\System\Models\PamRoleAccount;
 use Poppy\System\Models\SysConfig;
 
+/**
+ * 禁止访问, 对于用户访问的控制
+ * 如果是前台用户, 放到所有请求之前
+ * 如果是后台用户, 放到所有请求之后(需要放过管理员)
+ */
 class Ban
 {
 
@@ -28,6 +32,7 @@ class Ban
 
         if ($appType = x_header('type')) {
             $type = $appType;
+
         }
 
         $status  = sys_setting('py-mgr-page::ban.status-' . $type, SysConfig::DISABLE);
@@ -36,26 +41,14 @@ class Ban
         /* 未开启风险拦截
          * ---------------------------------------- */
         if (!$status) {
-            return $next($request);
+             return $next($request);
         }
         // 是否是root用户 不进行拦截
-        if ($type === PamAccount::TYPE_BACKEND) {
-            /** @var PamAccount $guard */
-            $user = app('auth')->guard()->user();
-            if ($user) {
-                // todo 登录之后的验证
-                //                $user->roles
-                $roleName = PamRole::whereRaw('id = ' . PamRoleAccount::where('account_id', $user->id)->value('role_id'))->value('name');
-                if ($roleName === PamRole::BE_ROOT) {
-                    return $next($request);
-                }
+        if ($type === PamAccount::TYPE_BACKEND && $user = app('auth')->guard()->user()) {
+            /** @var PamAccount $user */
+            if ($user->roles->where('name', PamRole::BE_ROOT)->count()) {
+                return $next($request);
             }
-            else {
-
-                $pam = PamAccount::with('roles')->where('username', trim(input('passport')))->first();
-                \Log::debug($pam);
-            }
-
         }
         $Ban  = new ActBan();
         $ipIn = $Ban->checkIn($type, PamBan::TYPE_IP, $ip);
