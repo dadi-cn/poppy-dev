@@ -2,21 +2,6 @@ poppy.system.api_info :
   title : 系统接口
   type : array
   description : 系统信息接口调用, 系统信息返回的灵活数据
-poppy.system.html_cp :
-  title : 主页卡片
-  type : html
-  description : 主页卡片, 返回不同方式的Html数据
-poppy.system.html_top_nav :
-  title : 顶部导航
-  type : html
-  description : 顶部导航需要追加的内容
 poppy.system.upload_type :
   title : 上传类型
-  type : array
-poppy.system.settings :
-  title : 配置项
-  type : array
-poppy.system.custom_settings :
-  title : 自定义配置项
-  description : 可以自己定义配置的权限以及显示
   type : array

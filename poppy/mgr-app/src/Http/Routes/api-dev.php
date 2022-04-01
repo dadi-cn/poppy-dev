@@ -8,4 +8,6 @@ Route::group([
 ], function (Router $router) {
     $router->any('apidoc/json', 'ApidocController@json')
         ->name('py-mgr-dev:api.apidoc.json');
+    $router->any('config/check', 'ConfigController@check')
+        ->name('py-mgr-dev:api.config.check');
 });

@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "poppy/system": "3.2.*"
+        "poppy/system": "4.0.x-dev"
     },
     "autoload": {
         "psr-4": {

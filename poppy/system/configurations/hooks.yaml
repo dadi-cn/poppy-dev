@@ -3,10 +3,6 @@
   hooks:
     - '\Poppy\System\Hooks\System\UploadTypeDefault'
 -
-  name: 'poppy.system.settings'
-  hooks:
-    - '\Poppy\System\Hooks\System\SettingSystem'
--
   name: 'poppy.system.api_info'
   hooks:
     - '\Poppy\System\Hooks\System\ApiInfo'

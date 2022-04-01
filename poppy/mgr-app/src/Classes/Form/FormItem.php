@@ -14,6 +14,9 @@ use function validator;
 
 /**
  * 表单条目
+ * @property-read  string $label 标签
+ * @property-read  string $name  Name
+ * @property-read  array $rules  规则
  */
 abstract class FormItem implements Structable
 {
@@ -72,7 +75,7 @@ abstract class FormItem implements Structable
 
     /**
      * 表单条目
-     * @param string $name  名称/属性
+     * @param string $name 名称/属性
      * @param string $label 标签名称
      */
     public function __construct(string $name, string $label)
@@ -127,14 +130,14 @@ abstract class FormItem implements Structable
         return $this;
     }
 
-
     /**
-     * 获取字段名字
+     * 获取字段属性
+     * @param $attr
      * @return string
      */
-    public function getName(): string
+    public function __get($attr)
     {
-        return $this->name;
+        return $this->{$attr} ?? '';
     }
 
     /**
@@ -152,7 +155,7 @@ abstract class FormItem implements Structable
 
         $rules = $attributes = [];
 
-        if (!$fieldRules = $this->getRules()) {
+        if (!$fieldRules = $this->rules) {
             return false;
         }
 
@@ -208,15 +211,6 @@ abstract class FormItem implements Structable
     public function getToModel(): bool
     {
         return $this->toModel;
-    }
-
-    /**
-     * 校验规则
-     * @return array
-     */
-    protected function getRules(): array
-    {
-        return $this->rules;
     }
 
     /**

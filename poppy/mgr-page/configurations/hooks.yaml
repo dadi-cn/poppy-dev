@@ -1,0 +1,4 @@
+-
+  name: 'poppy.mgr-page.settings'
+  hooks:
+    - '\Poppy\MgrPage\Hooks\MgrPage\SettingSystem'

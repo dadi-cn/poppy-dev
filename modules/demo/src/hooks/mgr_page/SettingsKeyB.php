@@ -1,6 +1,6 @@
 <?php
 
-namespace Demo\Services;
+namespace Demo\Services\MgrPage;
 
 use Poppy\Core\Services\Contracts\ServiceArray;
 use Poppy\MgrPage\Http\MgrPage\FormSettingPam;

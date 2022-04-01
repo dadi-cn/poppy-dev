@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Poppy\AliyunPush\Hooks\System;
+namespace Poppy\AliyunPush\Hooks\MgrPage;
 
 use Poppy\AliyunPush\Http\MgrPage\FormSettingAliyunPush;
 use Poppy\Core\Services\Contracts\ServiceArray;

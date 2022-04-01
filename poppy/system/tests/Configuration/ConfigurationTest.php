@@ -9,7 +9,7 @@ class ConfigurationTest extends TestCase
 
     public function testSettings()
     {
-        $hooks = sys_hook('poppy.system.settings');
+        $hooks = sys_hook('poppy.mgr-page.settings');
         foreach ($hooks as $forms) {
             collect($forms['forms'])->map(function ($form_class) {
                 $this->detectForm($form_class);

@@ -1,0 +1,11 @@
+poppy.mgr-page.html_cp :
+  title : 主页卡片
+  type : html
+  description : 主页卡片, 返回不同方式的Html数据
+poppy.mgr-page.html_top_nav :
+  title : 顶部导航
+  type : html
+  description : 顶部导航需要追加的内容
+poppy.mgr-page.settings :
+  title : 配置项
+  type : array

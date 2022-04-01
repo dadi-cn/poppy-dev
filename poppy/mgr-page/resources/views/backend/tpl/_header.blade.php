@@ -32,7 +32,7 @@
     </ul>
     <ul class="layui-nav layui-layout-right" data-pjax pjax-ctr="#main" style="padding-right: 4px;">
         <li class="layui-nav-item layui-hide-xs" lay-unselect>
-            {!! sys_hook('poppy.system.html_top_nav') !!}
+            {!! sys_hook('poppy.mgr-page.html_top_nav') !!}
         </li>
         <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a href="#" ew-event="note" data-url="{!! route_url('py-mgr-page:backend.home.easy-web', ['note']) !!}" class="J_ignore">

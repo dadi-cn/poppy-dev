@@ -7,7 +7,7 @@
   hooks:
     - '\Demo\Hooks\HtmlDemo\Service'
 -
-  name: 'poppy.system.settings'
+  name: 'poppy.mgr-page.settings'
   hooks:
     - '\Demo\Hooks\System\SettingsKeyA'
     - '\Demo\Hooks\System\SettingsKeyB'

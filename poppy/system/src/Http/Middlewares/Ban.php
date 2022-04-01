@@ -41,7 +41,7 @@ class Ban
         /* 未开启风险拦截
          * ---------------------------------------- */
         if (!$status) {
-             return $next($request);
+            return $next($request);
         }
         // 是否是root用户 不进行拦截
         if ($type === PamAccount::TYPE_BACKEND && $user = app('auth')->guard()->user()) {
@@ -78,7 +78,12 @@ class Ban
             /* 白名单策略, 设备不在列表中, 封禁
              * ---------------------------------------- */
             if (!$isBlack && !$deviceIn) {
-                return Resp::error('当前设备不允许访问系统, 请联系管理员');
+                $maps = [
+                    'user'    => '用户',
+                    'backend' => '后台',
+                    'develop' => '开发',
+                ];
+                return Resp::error('当前设备不在' . ($maps[$type] ?? '') . '白名单中, 不允许访问');
             }
         }
 

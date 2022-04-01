@@ -42,8 +42,8 @@ abstract class SettingBase extends FormWidget
             $Setting = app(SettingContract::class);
             $all     = input();
             $this->items('model')->each(function (FormItem $field) use ($Setting, $all) {
-                $value   = $all[$field->getName()] ?? '';
-                $fullKey = $this->group . '.' . $field->getName();
+                $value   = $all[$field->name] ?? '';
+                $fullKey = $this->group . '.' . $field->name;
                 $class   = __CLASS__;
                 if (!$this->keyParserMatch($fullKey)) {
                     throw new FormException("Key {$fullKey} Not Match At Group `{$this->group}` In Class `{$class}`");
@@ -68,7 +68,7 @@ abstract class SettingBase extends FormWidget
             '_group' => $this->group
         ];
         foreach ($this->items('model') as $field) {
-            $data[$field->getName()] = $Setting->get($this->group . '.' . $field->getName());
+            $data[$field->name] = $Setting->get($this->group . '.' . $field->name);
         }
         return $data;
     }
