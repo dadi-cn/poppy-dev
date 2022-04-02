@@ -16,7 +16,7 @@ class HomeController extends BackendController
      * Setting
      * @param string $path 地址
      */
-    public function setting(string $path = 'poppy.system')
+    public function setting(string $path = 'poppy.mgr-app')
     {
         $Setting = new SettingWidget();
         return $Setting->resp($path);

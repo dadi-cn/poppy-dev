@@ -131,11 +131,11 @@ class Pam
      * 用户注册
      * @param string $passport passport
      * @param string $password 密码
-     * @param string $role_name 用户角色名称
+     * @param string|array|int $role_name 用户角色名称
      * @return bool
      * @throws Throwable
      */
-    public function register(string $passport, string $password = '', string $role_name = PamRole::FE_USER): bool
+    public function register(string $passport, string $password = '', $role_name = PamRole::FE_USER): bool
     {
         $passport = PamAccount::fullFilledPassport($passport);
         $type     = PamAccount::passportType($passport);
