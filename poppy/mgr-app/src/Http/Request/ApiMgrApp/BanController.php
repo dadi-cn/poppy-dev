@@ -19,12 +19,14 @@ use function app;
 use function input;
 use function sys_setting;
 
+
 class BanController extends BackendController
 {
     /**
-     * 设备
-     * @throws ApplicationException
-     * @throws Throwable
+     * @api              {post} api/mgr-app/default/ban 用户封禁
+     * @apiVersion       1.0.0
+     * @apiName          BanIndex
+     * @apiGroup         Ban
      */
     public function index()
     {
@@ -54,7 +56,7 @@ class BanController extends BackendController
 
     /**
      * 创建/编辑
-     * @return array|Response|JsonResponse|RedirectResponse|Resp
+     * @return JsonResponse|RedirectResponse|Resp|Response
      */
     public function establish()
     {

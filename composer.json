@@ -103,6 +103,7 @@
         "coding": [
             "git subtree push --prefix=poppy/framework  coding-framework 4.0",
             "git subtree push --prefix=poppy/mgr-page  coding-mgr-page 4.0",
+            "git subtree push --prefix=poppy/mgr-app  coding-mgr-app 4.0",
             "git subtree push --prefix=poppy/core  coding-core 4.0",
             "git subtree push --prefix=poppy/system  coding-system 4.0",
             "git subtree push --prefix=poppy/faker  coding-faker 4.0",
@@ -120,6 +121,7 @@
         "github": [
             "git subtree push --prefix=poppy/system  gh-system 4.0",
             "git subtree push --prefix=poppy/mgr-page  gh-mgr-page 4.0",
+            "git subtree push --prefix=poppy/mgr-app  gh-mgr-app 4.0",
             "git subtree push --prefix=poppy/core  gh-core 4.0",
             "git subtree push --prefix=poppy/framework  gh-framework 4.0",
             "git subtree push --prefix=poppy/aliyun-oss  gh-aliyun-oss 4.0",

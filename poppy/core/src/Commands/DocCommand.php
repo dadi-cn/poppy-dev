@@ -29,7 +29,8 @@ class DocCommand extends Command
             case 'api':
                 if (!command_exist('apidoc')) {
                     $this->error("apidoc 命令不存在\n");
-                } else {
+                }
+                else {
                     $catalog = config('poppy.core.apidoc');
                     if (!$catalog) {
                         $this->error('尚未配置 apidoc 生成目录');
@@ -67,7 +68,7 @@ class DocCommand extends Command
                 );
                 break;
             case 'php':
-                $doctum     = storage_path('doctum/doctum.phar');
+                $doctum = storage_path('doctum/doctum.phar');
                 $config = storage_path('doctum/config.php');
                 if (!file_exists($config)) {
                     $this->warn(
@@ -82,7 +83,8 @@ class DocCommand extends Command
                         'Please Run Command:' . "\n" .
                         'php ' . $doctum . ' update ' . $config
                     );
-                } else {
+                }
+                else {
                     $this->warn(
                         'Please Run Command To Install doctum.phar:' . "\n" .
                         'curl https://doctum.long-term.support/releases/latest/doctum.phar --output ' . $doctum
@@ -109,7 +111,7 @@ class DocCommand extends Command
     protected function getArguments()
     {
         return [
-            ['type', InputArgument::REQUIRED, ' Support Type [api,phpcs|cs,log,php|sami,lint|phplint].'],
+            ['type', InputArgument::REQUIRED, ' Support Type [api,phpcs|cs,log,php,lint|phplint].'],
         ];
     }
 
@@ -123,18 +125,31 @@ class DocCommand extends Command
 
         if (!file_exists($path)) {
             $this->error('Err > 目录 `' . $path . '` 不存在');
-
             return;
         }
 
-
-        $f = ' -f "modules/.*/src/http/request/api.*/' . $key . '/.*\.php$"';
-        if (env('POPPY_ENV') === 'development') {
-            // in poppy development mode
-            $f .= ' -f "poppy/.*/src/Http/Request/Api.*/' . Str::studly($key) . '/.*\.php$"';
-        } else {
-            $f .= ' -f "vendor/poppy/.*/src/Http/Request/Api.*/' . Str::studly($key) . '/.*\.php$"';
+        $def = config('poppy.core.apidoc.' . $key);
+        if ($def['match'] ?? '') {
+            $match = $def['match'];
         }
+        else {
+            $matches = [
+                'web'     => 'api.*/web|ApiWeb|api/web',
+                'dev'     => 'api.*/dev|ApiDev|api/dev',
+                'mgr-app' => 'ApiMgrApp|api/mgr_app|api.*/mgr_app',
+            ];
+            $type    = $def['type'] ?? 'web';
+            $match   = $matches[$type] ?? $matches['web'];
+        }
+
+        $arrMatches = explode('|', $match);
+        $f = array_map(function ($mt) {
+            $f = ' -f "modules/.*/src/http/request/' . $mt . '/.*\.php$"';
+            $f .= ' -f "poppy/.*/src/Http/Request/' . $mt . '/.*\.php$"';
+            $f .= ' -f "vendor/poppy/.*/src/Http/Request/' . $mt . '/.*\.php$"';
+            return $f;
+        }, $arrMatches);
+        $f = implode(' ', $f);
 
         $lower = strtolower($key);
         $shell = 'apidoc -i ' . $path . '  -o ' . $aim . ' ' . $f;

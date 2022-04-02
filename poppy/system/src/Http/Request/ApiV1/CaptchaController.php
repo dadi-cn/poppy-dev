@@ -20,8 +20,8 @@ class CaptchaController extends JwtApiController
      * @apiName          SysCaptchaSend
      * @apiGroup         Poppy
      *
-     * @apiParam {string}  passport       通行证
-     * @apiParam {string}  [type]         是否存在[exist:验证必须存在;no-exist:验证必须不存在]
+     * @apiQuery {string}  passport       通行证
+     * @apiQuery {string}  [type]         是否存在[exist:验证必须存在;no-exist:验证必须不存在]
      */
     public function send()
     {
@@ -68,7 +68,7 @@ class CaptchaController extends JwtApiController
      * @apiName          SysCaptchaFetch
      * @apiGroup         Poppy
      *
-     * @apiParam {int}   passport            通行证
+     * @apiQuery {int}   passport            通行证
      */
     public function fetch()
     {
@@ -96,9 +96,9 @@ class CaptchaController extends JwtApiController
      * @apiName          SysCaptchaVerifyCode
      * @apiGroup         Poppy
      *
-     * @apiParam {string}   passport           通行证
-     * @apiParam {string}   captcha            验证码
-     * @apiParam {string}   [expire_min]       验证串有效期[默认:10 分钟, 最长不超过 60 分钟]
+     * @apiQuery {string}   passport           通行证
+     * @apiQuery {string}   captcha            验证码
+     * @apiQuery {string}   [expire_min]       验证串有效期[默认:10 分钟, 最长不超过 60 分钟]
      */
     public function verifyCode()
     {

@@ -17,6 +17,7 @@ class MgrAppController extends WebApiController
      * @api                    {get} api/demo/form/:auto   [Demo]Form
      * @apiVersion             1.0.0
      * @apiName                Form
+     * @apiParam               {string} auto 表单名称
      * @apiGroup               MgrApp
      */
     public function form($auto)
@@ -33,6 +34,7 @@ class MgrAppController extends WebApiController
      * @api                    {get} api/demo/grid/:auto   [Demo]Grid
      * @apiVersion             1.0.0
      * @apiName                Grid
+     * @apiParam               {string} auto 列表名称
      * @apiGroup               MgrApp
      */
     public function grid($type)
@@ -50,6 +52,7 @@ class MgrAppController extends WebApiController
      * @api                    {get} api/demo/filter/:auto   [Demo]Filter
      * @apiVersion             1.0.0
      * @apiName                Filter
+     * @apiParam               {string} auto 列表名称
      * @apiGroup               MgrApp
      */
     public function filter($type)
@@ -66,13 +69,15 @@ class MgrAppController extends WebApiController
      * @api                    {get} api/demo/grid_request/:type   GridRequest
      * @apiVersion             1.0.0
      * @apiName                GridRequest
+     * @apiParam               {string} type 请求名称
      * @apiGroup               MgrApp
      */
     public function gridRequest($type)
     {
         if ($type === 'error') {
             return Resp::error('请求错误');
-        } else {
+        }
+        else {
             return Resp::success('请求成功', input());
         }
     }
