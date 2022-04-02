@@ -16,10 +16,7 @@
         "psr-4": {
             "Poppy\\MgrApp\\": "src/",
             "Poppy\\MgrApp\\Tests\\": "tests/"
-        },
-        "files": [
-            "src/Support/functions.php"
-        ]
+        }
     },
     "config": {
         "preferred-install": "dist"
