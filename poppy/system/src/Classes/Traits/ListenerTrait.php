@@ -21,7 +21,7 @@ trait ListenerTrait
 			sys_error($event, $class, 'listen im:' . data_get($result, 'desc'));
 		}
 		else {
-			sys_success($event, $class, 'listen im:' . data_get($result, 'data.msgid'));
+			sys_info($event, $class, 'listen im:' . data_get($result, 'data.msgid'));
 		}
 	}
 
@@ -37,7 +37,7 @@ trait ListenerTrait
 			sys_error($event, $class, 'listen Socket : ' . $result['error'] ?? '');
 		}
 		else {
-			sys_success($event, $class, $result['channels'] ?? []);
+			sys_info($event, $class, $result['channels'] ?? []);
 		}
 	}
 
@@ -52,7 +52,7 @@ trait ListenerTrait
 	public function listenAction($event, $class, $result, $item, $append = '')
 	{
 		if ($result) {
-			sys_success($event, $class, $append);
+			sys_info($event, $class, $append);
 		}
 		else {
 			if (is_callable([$item, 'getError'])) {

@@ -1,5 +1,6 @@
 POST {{domain}}/api_v1/system/auth/login
 Content-Type: application/json
+x-type: backend
 
 {
     "_py_secret" : "{{secret}}",
