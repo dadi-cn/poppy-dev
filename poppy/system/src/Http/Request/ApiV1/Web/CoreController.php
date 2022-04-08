@@ -48,7 +48,7 @@ class CoreController extends WebApiController
      * @apiVersion             1.0.0
      * @apiName                SysCoreMock
      * @apiGroup               Poppy
-     * @apiParam {string}      mock   Json 格式的数据
+     * @apiQuery {string}      mock   Json 格式的数据
      */
     public function mock()
     {

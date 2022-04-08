@@ -32,7 +32,7 @@ class AuthController extends WebApiController
      * @apiName          SysAuthAccess
      * @apiGroup         Poppy
      *
-     * @apiParam {int}   token            Token
+     * @apiQuery {int}   token            Token
      *
      * @apiSuccess {int}      id              ID
      * @apiSuccess {string}   username        用户名
@@ -84,12 +84,12 @@ class AuthController extends WebApiController
      * @apiVersion             1.0.0
      * @apiName                SysAuthLogin
      * @apiGroup               Poppy
-     * @apiParam {string}      guard           登录类型;web|Web;backend|后台;
-     * @apiParam {string}      passport        通行证
-     * @apiParam {string}      [password]      密码
-     * @apiParam {string}      [captcha]       验证码
-     * @apiParam {string}      [device_id]     设备ID[开启单一登录之后可用]
-     * @apiParam {string}      [device_type]   设备类型[开启单一登录之后可用]
+     * @apiQuery {string}      guard           登录类型;web|Web;backend|后台;
+     * @apiQuery {string}      passport        通行证
+     * @apiQuery {string}      [password]      密码
+     * @apiQuery {string}      [captcha]       验证码
+     * @apiQuery {string}      [device_id]     设备ID[开启单一登录之后可用]
+     * @apiQuery {string}      [device_type]   设备类型[开启单一登录之后可用]
      * @apiSuccess {string}    token           认证成功的Token
      * @apiSuccess {string}    type            账号类型
      * @apiSuccessExample      data
@@ -169,10 +169,10 @@ class AuthController extends WebApiController
      * @apiVersion             1.0.0
      * @apiName                SysAuthResetPassword
      * @apiGroup               Poppy
-     * @apiParam {string}      [verify_code]     方式1: 通过验证码获取到-> 验证串
-     * @apiParam {string}      [passport]        方式2: 手机号 + 验证码直接验证并修改
-     * @apiParam {string}      [captcha]         验证码
-     * @apiParam {string}      password          密码
+     * @apiQuery {string}      [verify_code]     方式1: 通过验证码获取到-> 验证串
+     * @apiQuery {string}      [passport]        方式2: 手机号 + 验证码直接验证并修改
+     * @apiQuery {string}      [captcha]         验证码
+     * @apiQuery {string}      password          密码
      */
     public function resetPassword()
     {
@@ -225,9 +225,9 @@ class AuthController extends WebApiController
      * @apiVersion             1.0.0
      * @apiName                SysAuthBindMobile
      * @apiGroup               Poppy
-     * @apiParam {string}      verify_code     之前手机号生成的校验验证串
-     * @apiParam {string}      passport        新手机号
-     * @apiParam {string}      captcha         验证码
+     * @apiQuery {string}      verify_code     之前手机号生成的校验验证串
+     * @apiQuery {string}      passport        新手机号
+     * @apiQuery {string}      captcha         验证码
      */
     public function bindMobile()
     {

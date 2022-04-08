@@ -22,11 +22,11 @@ class UploadController extends WebApiController
      * @apiVersion          1.0.0
      * @apiName             SysUploadImage
      * @apiGroup            Poppy
-     * @apiParam   {string} image         图片内容(支持多张/单张上传)
-     * @apiParam   {string} [type]        上传图片的类型 [form|表单(默认),base64,url]
-     * @apiParam   {string} [image_type]  图片图片存储类型[default|默认]
-     * @apiParam   {string} [from]        上传来源,根据不同来源返回不同的格式 [wang-editor]
-     * @apiParam   {string} [watermark]   是否开启水印[1:开启]
+     * @apiQuery   {string} image         图片内容(支持多张/单张上传)
+     * @apiQuery   {string} [type]        上传图片的类型 [form|表单(默认),base64,url]
+     * @apiQuery   {string} [image_type]  图片图片存储类型[default|默认]
+     * @apiQuery   {string} [from]        上传来源,根据不同来源返回不同的格式 [wang-editor]
+     * @apiQuery   {string} [watermark]   是否开启水印[1:开启]
      */
     public function image()
     {
@@ -179,10 +179,10 @@ class UploadController extends WebApiController
      * @apiVersion          1.0.0
      * @apiName             SysUploadFile
      * @apiGroup            Poppy
-     * @apiParam   {string} file        内容
-     * @apiParam   {string} type        上传类型[audio|音频;video|视频;images|图片;file|文件上传]
-     * @apiParam   {string} [ext]       上传限制扩展(后台进行限制), 多个使用 ',' 分隔, 默认是 后台进行限制
-     * @apiParam   {string} [district]  图片大小限制(最高边, 默认是 1440)
+     * @apiQuery   {string} file        内容
+     * @apiQuery   {string} type        上传类型[audio|音频;video|视频;images|图片;file|文件上传]
+     * @apiQuery   {string} [ext]       上传限制扩展(后台进行限制), 多个使用 ',' 分隔, 默认是 后台进行限制
+     * @apiQuery   {string} [district]  图片大小限制(最高边, 默认是 1440)
      */
     public function file()
     {

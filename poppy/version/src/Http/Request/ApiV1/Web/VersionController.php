@@ -13,7 +13,7 @@ class VersionController extends WebApiController
      * @apiVersion              1.0.0
      * @apiName                 VersionAppVersion
      * @apiGroup                Poppy
-     * @apiParam    {string}    version       版本号
+     * @apiQuery    {string}    version       版本号
      * @apiSuccess  {string}    download_url  下载地址
      * @apiSuccess  {string}    description   描述
      * @apiSuccess  {string}    version       版本
