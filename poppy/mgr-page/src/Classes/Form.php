@@ -77,7 +77,6 @@ use function trans;
  * @method \Poppy\MgrPage\Classes\Form\_Back\Embeds         embeds($column, $label = '', $callback)
  * @method \Poppy\MgrPage\Classes\Form\Field\MultiImage     multipleImage($column, $label = '')
  * @method \Poppy\MgrPage\Classes\Form\_Back\MultipleFile   multipleFile($column, $label = '')
- * @method Field\Captcha        captcha($column, $label = '')
  * @method \Poppy\MgrPage\Classes\Form\_Back\Listbox        listbox($column, $label = '')
  * @method \Poppy\MgrPage\Classes\Form\_Back\Table          table($column, $label, $builder)
  * @method \Poppy\MgrPage\Classes\Form\Field\Timezone       timezone($column, $label = '')
@@ -149,7 +148,6 @@ class Form implements Renderable
         'tags'           => Field\Tags::class,
         'icon'           => \Poppy\MgrPage\Classes\Form\_Back\Icon::class,
         'multipleFile'   => \Poppy\MgrPage\Classes\Form\_Back\MultipleFile::class,
-        'captcha'        => Field\Captcha::class,
         'listbox'        => \Poppy\MgrPage\Classes\Form\_Back\Listbox::class,
         'table'          => \Poppy\MgrPage\Classes\Form\_Back\Table::class,
         'timezone'       => \Poppy\MgrPage\Classes\Form\Field\Timezone::class,

@@ -69,7 +69,6 @@ use function view;
  * @method Field\Html           html($html, $arguments)
  * @method Field\Tags           tags($column, $label = '')
  * @method \Poppy\MgrPage\Classes\Form\_Back\Icon           icon($column, $label = '')
- * @method Field\Captcha        captcha($column, $label = '')
  * @method \Poppy\MgrPage\Classes\Form\_Back\Listbox        listbox($column, $label = '')
  * @method \Poppy\MgrPage\Classes\Form\_Back\Table          table($column, $label, $builder)
  * @method \Poppy\MgrPage\Classes\Form\Field\Timezone       timezone($column, $label = '')

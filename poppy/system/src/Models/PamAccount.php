@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Poppy\Core\Rbac\Traits\RbacUserTrait;
 use Poppy\Framework\Helper\UtilHelper;
-use Tymon\JWTAuth\Contracts\JWTSubject as JWTSubjectAuthenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * 用户账号
@@ -41,7 +41,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject as JWTSubjectAuthenticatable;
  * @property-read Collection|PamRole[] $roles
  * @mixin Eloquent
  */
-class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticatable
+class PamAccount extends Model implements Authenticatable, JWTSubject
 {
     use TraitAuthenticatable, RbacUserTrait, Authorizable, Notifiable;
 
@@ -62,7 +62,6 @@ class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticat
     const GUARD_WEB         = 'web';
     const GUARD_BACKEND     = 'backend';
     const GUARD_DEVELOP     = 'develop';
-    const GUARD_USER        = 'user';
     const GUARD_JWT_BACKEND = 'jwt_backend';
     const GUARD_JWT_DEVELOP = 'jwt_develop';
     const GUARD_JWT_WEB     = 'jwt_web';
