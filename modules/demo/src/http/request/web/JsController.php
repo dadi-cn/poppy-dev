@@ -29,7 +29,7 @@ class JsController extends WebController
 
     /**
      * @param string $page 需要引入的页面地址
-     * @return Factory|JsonResponse|RedirectResponse|Response|Redirector|View
+     * @return Factory|JsonResponse|RedirectResponse|Response|View
      */
     public function index($page = '')
     {

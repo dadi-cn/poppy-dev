@@ -14,7 +14,7 @@ class DefaultApiSignProvider extends DefaultBaseApiSign
      */
     public function sign(array $params, $type = 'user'): string
     {
-        $token  = jwt_token($params);
+        $token  = jwt_token();
         $params = $this->except($params);
         ksort($params);
         $kvStr    = ArrayHelper::toKvStr($params);

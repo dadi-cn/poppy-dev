@@ -2,6 +2,16 @@
 
 use Illuminate\Routing\Router;
 
+
+Route::group([
+//    'middleware' => 'sys-auth:jwt_web',
+    'namespace'  => 'Demo\Http\Request\Web',
+], function (Router $router) {
+
+    $router->any('token', 'TokenController@index')
+        ->name('demo:web.token.index');
+});
+
 Route::group([
     'namespace' => 'Demo\Http\Request\Web',
 ], function (Router $router) {
@@ -34,7 +44,6 @@ Route::group([
     // env-helper
     $router->any('env/{type}', 'EnvHelperController@index')
         ->name('demo:web.env.index');
-
 
     /* Layout
      * ---------------------------------------- */

@@ -3,11 +3,11 @@
 namespace Poppy\System\Http\Middlewares;
 
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Poppy\Core\Redis\RdsDb;
 use Poppy\System\Classes\PySystemDef;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
 /**
@@ -24,10 +24,9 @@ class Sso extends BaseMiddleware
                 return response('Unauthorized Jwt.', 401);
             }
             // 这里会抛出异常, IDE 提示不正确
-        } catch (TokenInvalidException $e) {
+        } catch (Exception $e) {
             return response('Unauthorized Jwt. Sso check token invalid', 401);
         }
-
 
         // 是否开启单点登录
         if (!\Poppy\System\Action\Sso::isEnable()) {
@@ -36,7 +35,7 @@ class Sso extends BaseMiddleware
 
         // sso check
         $md5Token = md5($token);
-        $pamId    = data_get($payload, 'user.id');
+        $pamId    = data_get($payload, 'sub');
         $Rds      = RdsDb::instance();
         $hash     = $Rds->hGet(PySystemDef::ckTagSso('valid'), $pamId);
         if (Str::contains($hash, '|')) {

@@ -67,7 +67,6 @@ class RouteServiceProvider extends \Poppy\Framework\Application\RouteServiceProv
     protected function mapApiRoutes()
     {
         Route::group([
-            // todo auth
             'prefix' => 'api/demo',
         ], function (Router $route) {
             require_once poppy_path('demo', 'src/http/routes/api.php');

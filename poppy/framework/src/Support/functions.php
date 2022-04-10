@@ -152,13 +152,14 @@ if (!function_exists('is_post')) {
 if (!function_exists('jwt_token')) {
     /**
      * 是否是 Jwt 请求
-     * @param array $params 支持传入参数 [>3.1]
      * @return string
      */
-    function jwt_token(array $params = []): string
+    function jwt_token(): string
     {
-        $inputToken = (string) (Request::bearerToken() ?: input('token'));
-        return $inputToken ?: ($params['token'] ?? '');
+        if (is_null(app('tymon.jwt'))) {
+            return '';
+        }
+        return app('tymon.jwt')->setRequest(Request::instance())->getToken();
     }
 }
 

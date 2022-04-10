@@ -122,7 +122,6 @@ class PamAccount extends Model implements Authenticatable, JWTSubjectAuthenticat
     {
         return [
             'user' => [
-                'id'   => $this->id,
                 'type' => $this->type,
                 'salt' => md5(sha1($this->password_key) . $this->password),
             ],

@@ -2,8 +2,6 @@
 
 namespace Poppy\System\Classes\Auth\Provider;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Poppy\System\Models\PamAccount;
 
 /**
@@ -11,11 +9,22 @@ use Poppy\System\Models\PamAccount;
  */
 class BackendProvider extends PamProvider
 {
+
     /**
-     * Retrieve a user by the given credentials.
-     * DO NOT TEST PASSWORD HERE!
-     * @param array $credentials 凭证
-     * @return Builder|Model
+     * @inheritDoc
+     */
+    public function retrieveById($identifier)
+    {
+        /** @var PamAccount $user */
+        $user = $this->createModel()->newQuery()->find($identifier);
+        if ($user && $user->type !== PamAccount::TYPE_BACKEND) {
+            return null;
+        }
+        return $user;
+    }
+
+    /**
+     * @inheritDoc
      */
     public function retrieveByCredentials(array $credentials)
     {
