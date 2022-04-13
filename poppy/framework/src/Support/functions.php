@@ -152,9 +152,9 @@ if (!function_exists('is_post')) {
 if (!function_exists('jwt_token')) {
     /**
      * 是否是 Jwt 请求
-     * @return string
+     * @return string|null
      */
-    function jwt_token(): string
+    function jwt_token(): ?string
     {
         if (is_null(app('tymon.jwt'))) {
             return '';
