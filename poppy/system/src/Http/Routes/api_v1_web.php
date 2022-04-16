@@ -5,6 +5,11 @@
 |--------------------------------------------------------------------------
 |
 */
+Route::group([
+    'namespace'  => 'Poppy\System\Http\Request\ApiV1',
+], function (Illuminate\Routing\Router $route) {
+    $route->post('core/doc', 'CoreController@doc');
+});
 
 /* 核心信息无需禁用, 仅需要加密鉴权即可
  * ---------------------------------------- */

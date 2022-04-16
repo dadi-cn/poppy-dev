@@ -5,6 +5,7 @@ namespace Poppy\System\Http\Request\ApiV1;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Poppy\Framework\Classes\Mocker;
 use Poppy\Framework\Classes\Resp;
+use Poppy\System\Action\Apidoc;
 
 /**
  * 系统信息控制
@@ -14,7 +15,7 @@ class CoreController extends JwtApiController
     use ThrottlesLogins;
 
     /**
-     * @api                    {post} api_v1/system/core/translate [Sys]多语言包
+     * @api                    {post} api_v1/system/core/translate 多语言包
      * @apiVersion             1.0.0
      * @apiName                SysCoreTranslate
      * @apiGroup               Poppy
@@ -29,7 +30,7 @@ class CoreController extends JwtApiController
 
 
     /**
-     * @api                    {post} api_v1/system/core/info [Sys]系统信息
+     * @api                    {post} api_v1/system/core/info 系统信息
      * @apiVersion             1.0.0
      * @apiName                SysCoreInfo
      * @apiGroup               Poppy
@@ -42,7 +43,28 @@ class CoreController extends JwtApiController
     }
 
     /**
-     * @api                    {post} api_v1/system/core/mock [Sys]Mock
+     * @api                    {post} api_v1/system/core/doc 获取文档
+     * @apiVersion             1.0.0
+     * @apiName                SysCoreDoc
+     * @apiGroup               Poppy
+     * @apiParam {String}      type 文档类型 [web:前端]
+     */
+    public function doc()
+    {
+        $type = input('type', 'web');
+        $doc  = new Apidoc();
+        if ($content = $doc->local($type)) {
+            return Resp::success('获取文档信息', [
+                'content' => $content
+            ]);
+        }
+        else {
+            return Resp::error($doc->getError());
+        }
+    }
+
+    /**
+     * @api                    {post} api_v1/system/core/mock Mock
      * @apiVersion             1.0.0
      * @apiName                SysCoreMock
      * @apiGroup               Poppy
