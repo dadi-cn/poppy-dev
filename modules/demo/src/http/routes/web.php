@@ -36,6 +36,12 @@ Route::group([
         ->name('demo:web.env.index');
 
 
+    $router->any('token', 'TokenController@index')
+        ->name('demo:web.token.index');
+
+    $router->any('header', 'HeaderController@index')
+        ->name('demo:web.header.index');
+
     /* Layout
      * ---------------------------------------- */
     $router->any('layout/fe', 'JsController@fe')
