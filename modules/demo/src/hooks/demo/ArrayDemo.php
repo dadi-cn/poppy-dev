@@ -1,6 +1,6 @@
 <?php
 
-namespace Demo\Hooks\ArrayDemo;
+namespace Demo\Hooks\Demo;
 
 use Poppy\Core\Services\Contracts\ServiceArray;
 
@@ -16,7 +16,7 @@ class ArrayDemo implements ServiceArray
     }
 
 
-    public function data():array
+    public function data(): array
     {
         return [];
     }

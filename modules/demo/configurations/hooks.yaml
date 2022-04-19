@@ -1,13 +1,17 @@
 -
   name: 'demo.array_demo'
   hooks:
-    - '\Demo\Hooks\ArrayDemo\Service'
+    - '\Demo\Hooks\Demo\ArrayDemo'
 -
   name: 'demo.html_demo'
   hooks:
-    - '\Demo\Hooks\HtmlDemo\Service'
+    - '\Demo\Hooks\Demo\HtmlDemo'
+-
+  name: 'poppy.mgr-dev.checker'
+  hooks:
+    - '\Demo\Hooks\MgrDev\Checker'
 -
   name: 'poppy.mgr-page.settings'
   hooks:
-    - '\Demo\Hooks\System\SettingsKeyA'
-    - '\Demo\Hooks\System\SettingsKeyB'
+    - '\Demo\Hooks\MgrPage\SettingsKeyA'
+    - '\Demo\Hooks\MgrPage\SettingsKeyB'

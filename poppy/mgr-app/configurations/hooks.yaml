@@ -2,7 +2,3 @@
   name : 'poppy.mgr-app.settings'
   hooks :
     - '\Poppy\MgrApp\Hooks\MgrApp\Settings'
--
-  name: 'poppy.system.api_info'
-  hooks:
-    - '\Poppy\MgrApp\Hooks\System\ApiInfo'

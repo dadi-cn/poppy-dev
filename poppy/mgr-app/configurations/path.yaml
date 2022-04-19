@@ -14,10 +14,6 @@ backend :
             title : 系统配置
             path : setting/py-mgr-app:api.home.setting/poppy.mgr-app
             permission : backend:py-system.global.manage
-          -
-            title : 邮件配置
-            path : form/py-mgr-app:api.mail.store
-            permission : backend:py-system.global.manage
       -
         title : 账号
         children :

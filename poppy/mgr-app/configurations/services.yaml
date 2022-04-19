@@ -1,3 +1,6 @@
 poppy.mgr-app.settings :
   title : 系统配置
   type : array
+poppy.mgr-dev.checker :
+  title : 配置检测
+  type : array

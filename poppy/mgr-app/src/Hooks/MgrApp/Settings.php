@@ -3,6 +3,7 @@
 namespace Poppy\MgrApp\Hooks\MgrApp;
 
 use Poppy\Core\Services\Contracts\ServiceArray;
+use Poppy\MgrApp\Http\MgrApp\SettingMail;
 use Poppy\MgrApp\Http\MgrApp\SettingPam;
 use Poppy\MgrApp\Http\MgrApp\SettingSite;
 use Poppy\MgrApp\Http\MgrApp\SettingUpload;
@@ -23,6 +24,7 @@ class Settings implements ServiceArray
                 SettingSite::class,
                 SettingPam::class,
                 SettingUpload::class,
+                SettingMail::class
             ],
         ];
     }

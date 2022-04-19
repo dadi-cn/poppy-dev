@@ -4,7 +4,6 @@ namespace Poppy\MgrApp\Classes\Widgets;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -273,7 +272,7 @@ abstract class FormWidget
         $this->form();
 
         if ($this->queryHas('submit')) {
-            $message = $this->validate($request);
+            $message = $this->validate($request->all());
             if ($message instanceof MessageBag) {
                 return Resp::error($message);
             }
@@ -333,17 +332,15 @@ abstract class FormWidget
 
     /**
      * Validate this form fields.
-     *
-     * @param Request $request
-     *
+     * @param array $input 输入待验证的值
      * @return bool|MessageBag
      */
-    protected function validate(Request $request)
+    public function validate(array $input = [])
     {
         $failed = [];
 
         foreach ($this->items() as $field) {
-            if (!$validator = $field->getValidator($request->all())) {
+            if (!$validator = $field->getValidator($input)) {
                 continue;
             }
 

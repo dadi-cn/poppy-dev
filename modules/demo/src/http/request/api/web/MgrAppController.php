@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Widgets\FormWidget;
 use Poppy\MgrApp\Classes\Widgets\GridWidget;
-use Poppy\System\Http\Request\ApiV1\Web\WebApiController;
+use Poppy\System\Http\Request\ApiV1\WebApiController;
 
 class MgrAppController extends WebApiController
 {

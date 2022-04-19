@@ -4,7 +4,6 @@ namespace Poppy\MgrApp\Http\Request\ApiMgrApp;
 
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Widgets\SettingWidget;
-use Poppy\MgrApp\Http\MgrApp\SettingUpload;
 use function sys_cache;
 
 /**
@@ -20,12 +19,6 @@ class HomeController extends BackendController
     {
         $Setting = new SettingWidget();
         return $Setting->resp($path);
-    }
-
-    public function upload()
-    {
-        $Setting = new SettingUpload();
-        return $Setting->resp();
     }
 
     public function clearCache()

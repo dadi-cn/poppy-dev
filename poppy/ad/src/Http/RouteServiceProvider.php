@@ -2,10 +2,9 @@
 
 namespace Poppy\Ad\Http;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Route;
 
-class RouteServiceProvider extends ServiceProvider
+class RouteServiceProvider extends \Poppy\Framework\Application\RouteServiceProvider
 {
     /**
      * This namespace is applied to your controller routes.
@@ -26,6 +25,14 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => 'mgr-auth',
         ], function () {
             require_once __DIR__ . '/Routes/api-mgr-app.php';
+        });
+
+
+        Route::group([
+            'prefix'     => $this->prefix . '/py-ad',
+            'middleware' => 'backend-auth',
+        ], function () {
+            require_once __DIR__ . '/Routes/backend.php';
         });
     }
 }

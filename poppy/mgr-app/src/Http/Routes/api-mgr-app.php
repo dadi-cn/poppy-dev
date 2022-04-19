@@ -13,8 +13,6 @@ Route::group([
         ->name('py-mgr-app:api.user.password');
     $router->any('home/setting/{key}', 'HomeController@setting')
         ->name('py-mgr-app:api.home.setting');
-    $router->any('home/upload', 'HomeController@upload')
-        ->name('py-mgr-app:api.home.upload');
     $router->any('home/clear-cache', 'HomeController@clearCache')
         ->name('py-mgr-app:api.home.clear_cache');
     $router->any('mail/test', 'MailController@test')
