@@ -58,7 +58,7 @@ class Pam
     /**
      * 验证验登录
      * @param string $passport 通行证
-     * @param string $captcha  验证码
+     * @param string $captcha 验证码
      * @param string $platform 平台
      * @return bool
      */
@@ -118,14 +118,14 @@ class Pam
 
     /**
      * 用户注册
-     * @param string $passport  passport
-     * @param string $password  密码
-     * @param string $role_name 用户角色名称
-     * @param string $platform  支持的平台
+     * @param string $passport passport
+     * @param string $password 密码
+     * @param string|int $role_name 用户角色名称
+     * @param string $platform 支持的平台
      * @return bool
      * @throws Throwable
      */
-    public function register(string $passport, string $password = '', string $role_name = PamRole::FE_USER, string $platform = ''): bool
+    public function register(string $passport, string $password = '', $role_name = PamRole::FE_USER, string $platform = ''): bool
     {
         $passport = PamAccount::fullFilledPassport($passport);
         $type     = PamAccount::passportType($passport);
@@ -166,7 +166,8 @@ class Pam
 
                 // 注册子用户, 子用户比主账号多一个 :
                 array_unshift($rule[$type], Rule::username(true));
-            } else {
+            }
+            else {
                 array_unshift($rule[$type], Rule::username());
             }
         }
@@ -188,7 +189,8 @@ class Pam
 
         if (is_string($role_name)) {
             $role = PamRole::whereIn('name', (array) $role_name)->get();
-        } else {
+        }
+        else {
             $roleNames = (array) $role_name;
             $role      = PamRole::whereIn('id', $roleNames)->get();
         }
@@ -205,7 +207,8 @@ class Pam
                 return $this->setError(trans('py-system::action.pam.not_set_name_prefix'));
             }
             $username = $prefix . '_' . Carbon::now()->format('YmdHis') . Str::random(6);
-        } else {
+        }
+        else {
             $hasAccountName = true;
             $username       = $passport;
         }
@@ -255,10 +258,10 @@ class Pam
 
     /**
      * 密码登录
-     * @param string $passport   passport
-     * @param string $password   密码
+     * @param string $passport passport
+     * @param string $password 密码
      * @param string $guard_type 类型
-     * @param string $platform   平台
+     * @param string $platform 平台
      * @return bool
      */
     public function loginCheck(string $passport, string $password, $guard_type = PamAccount::GUARD_WEB, $platform = ''): bool
@@ -287,7 +290,8 @@ class Pam
             if ($guard instanceof JWTGuard) {
                 /** @var PamAccount $pam */
                 $pam = $guard->getLastAttempted();
-            } else {
+            }
+            else {
                 /** @var PamAccount $user */
                 $pam = $guard->user();
             }
@@ -334,8 +338,8 @@ class Pam
 
     /**
      * 设置登录密码
-     * @param PamAccount|mixed $pam      用户
-     * @param string           $password 密码
+     * @param PamAccount|mixed $pam 用户
+     * @param string $password 密码
      * @return bool
      */
     public function setPassword($pam, string $password): bool
@@ -373,8 +377,8 @@ class Pam
 
     /**
      * 设置角色
-     * @param PamAccount|mixed $pam   账号数据
-     * @param array            $roles 角色名
+     * @param PamAccount|mixed $pam 账号数据
+     * @param array $roles 角色名
      * @return bool
      */
     public function setRoles($pam, array $roles): bool
@@ -421,11 +425,14 @@ class Pam
     {
         if (UtilHelper::isMobile($passport)) {
             $type = PamAccount::REG_TYPE_MOBILE;
-        } elseif (UtilHelper::isEmail($passport)) {
+        }
+        elseif (UtilHelper::isEmail($passport)) {
             $type = PamAccount::REG_TYPE_EMAIL;
-        } elseif (is_numeric($passport)) {
+        }
+        elseif (is_numeric($passport)) {
             $type = 'id';
-        } else {
+        }
+        else {
             $type = PamAccount::REG_TYPE_USERNAME;
         }
 
@@ -436,7 +443,7 @@ class Pam
     /**
      * 更换账号主体, 支持除非ID外的更换方式
      * @param string|numeric|PamAccount $old_passport
-     * @param string                    $new_passport
+     * @param string $new_passport
      * @return bool
      */
     public function rebind($old_passport, string $new_passport): bool
@@ -448,7 +455,8 @@ class Pam
         if (is_numeric($old_passport) || is_string($old_passport)) {
             $old_passport = PamAccount::fullFilledPassport($old_passport);
             $pam          = PamAccount::passport($old_passport);
-        } else if ($old_passport instanceof PamAccount) {
+        }
+        else if ($old_passport instanceof PamAccount) {
             $pam = $old_passport;
         }
         if (!$pam) {
@@ -467,8 +475,8 @@ class Pam
 
     /**
      * 后台用户禁用
-     * @param int    $id     用户id
-     * @param string $to     解禁时间
+     * @param int $id 用户id
+     * @param string $to 解禁时间
      * @param string $reason 禁用原因
      * @return bool
      */
@@ -519,7 +527,7 @@ class Pam
 
     /**
      * 后台用户启用
-     * @param int    $id     用户Id
+     * @param int $id 用户Id
      * @param string $reason 原因
      * @return bool
      */
@@ -576,7 +584,7 @@ class Pam
     /**
      * 修改密码
      * @param string $old_password 老密码
-     * @param string $password     新密码
+     * @param string $password 新密码
      * @return bool
      */
     public function changePassword($old_password, $password): bool
@@ -600,7 +608,7 @@ class Pam
 
     /**
      * 修改账户密码
-     * @param int    $id       用户id
+     * @param int $id 用户id
      * @param string $password 密码
      * @return bool
      * @see        setPassword()
