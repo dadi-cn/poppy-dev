@@ -214,7 +214,7 @@ class Resp
         }
 
         if ($isJson) {
-            return self::webSplash($resp, count($arrAppend) ? $arrAppend : null);
+            return self::webSplash($resp, !is_null($append) ? $arrAppend : null);
         }
 
         // is forgotten, 不写入 session 数据
