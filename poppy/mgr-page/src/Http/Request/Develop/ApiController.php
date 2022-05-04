@@ -14,12 +14,13 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use OviDigital\JsObjectToJson\JsConverter;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Helper\ArrayHelper;
-use Poppy\Framework\Helper\FileHelper;
 use Poppy\Framework\Helper\StrHelper;
 use Poppy\Framework\Helper\UtilHelper;
+use Poppy\System\Action\Apidoc;
 use Poppy\System\Classes\Contracts\ApiSignContract;
 use Session;
 use Throwable;
@@ -263,12 +264,14 @@ class ApiController extends DevelopController
     {
         $catalog  = config('poppy.core.apidoc');
         $docs     = $catalog[$type];
-        $jsonFile = base_path('public/docs/' . $type . '/api_data.json');
+        $Apidoc = new Apidoc();
+        $jsObject = $Apidoc->local($type);
+        $jsonFile = base_path('public/docs/' . $type . '/index.html');
         $data     = [];
         if (file_exists($jsonFile)) {
             $data['file_exists'] = true;
             $data['url_base']    = config('app.url');
-            $data['content']     = FileHelper::getJson($jsonFile, false);
+            $data['content']     = json_decode(str_replace(['"`"', '`'], '', JsConverter::convertToJson($jsObject)), false);
             $content             = new Collection($data['content']);
             $group               = $content->groupBy('groupTitle');
             // add 排序
