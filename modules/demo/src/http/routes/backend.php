@@ -6,7 +6,7 @@
 |
 */
 Route::group([
-    'middleware' => ['sys-auth:backend', 'sys-disabled_pam', 'mgr-append_data', 'mgr-permission'],
+    'middleware' => ['sys-auth:backend', 'sys-disabled_pam', 'sys-mgr-rbac'],
     'namespace'  => 'Demo\Http\Request\Backend',
 ], function (Illuminate\Routing\Router $route) {
     $route->get('/', 'DemoController@index');

@@ -15,7 +15,7 @@ class MiddlewareServiceProvider extends ServiceProvider
             'sys-auth:develop',
             'sys-auth_session',
             'sys-disabled_pam',
-            'mgr-permission',
+            'sys-mgr-rbac',
         ]);
 
         $router->middlewareGroup('backend-auth', [

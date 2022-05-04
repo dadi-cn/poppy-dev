@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": ">=7.4",
-        "poppy/system": "4.0.x-dev"
+        "poppy/system": "4.0.x-dev",
+        "ovidigital/js-object-to-json": "1.1.*"
     },
     "autoload": {
         "psr-4": {

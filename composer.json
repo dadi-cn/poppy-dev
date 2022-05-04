@@ -40,7 +40,8 @@
         "xingwenge/canal_php": "^1.0",
         "mlocati/ip-lib": "^1.16",
         "guzzlehttp/guzzle": "^7.3",
-        "overtrue/pinyin": "^4.0"
+        "overtrue/pinyin": "^4.0",
+        "ovidigital/js-object-to-json": "^1.0"
     },
     "require-dev": {
         "itsgoingd/clockwork": "^5.1",
@@ -150,6 +151,9 @@
         ]
     },
     "config": {
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "easywechat-composer/easywechat-composer": true
+        }
     }
 }

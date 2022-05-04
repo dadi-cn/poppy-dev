@@ -21,6 +21,7 @@
                 @include('py-mgr-page::develop.api._headers')
                 @include('py-mgr-page::develop.api._certificate')
                 @include('py-mgr-page::develop.api._params')
+                @include('py-mgr-page::develop.api._queries')
 
                 <div class="layui-form-item">
                     {!! Form::button($data['current']->title, ['class' => 'layui-btn layui-btn-sm', 'type'=>'submit', 'id'=>'submit']) !!}
