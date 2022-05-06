@@ -12,6 +12,7 @@ Route::group([
     $route->get('apidoc/how', 'ApiDocController@how');
     $route->get('resp/success', 'RespController@success');
     $route->get('resp/error', 'RespController@error');
+    $route->get('resp/validator', 'RespController@validator');
     $route->get('resp/401', 'RespController@unAuth');
     $route->get('resp/header', 'RespController@header');
     // form 数据

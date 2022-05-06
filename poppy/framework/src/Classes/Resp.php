@@ -49,9 +49,9 @@ class Resp
     /**
      * Resp constructor.
      * @param int    $code    code
-     * @param string $message message
+     * @param string|MessageBag $message message
      */
-    public function __construct(int $code, string $message = '')
+    public function __construct(int $code, $message = '')
     {
         // init
         if (!$code) {
