@@ -20,7 +20,7 @@ class MiddlewareServiceProvider extends ServiceProvider
 
         $router->middlewareGroup('backend-auth', [
             'web',
-            'sys-auth:backend,jwt_backend',
+            'sys-auth:backend',
             'sys-auth_session',
             'sys-disabled_pam',
             'sys-ban:backend',
