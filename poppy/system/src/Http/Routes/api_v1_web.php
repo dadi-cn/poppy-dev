@@ -6,7 +6,7 @@
 |
 */
 Route::group([
-    'namespace'  => 'Poppy\System\Http\Request\ApiV1',
+    'namespace' => 'Poppy\System\Http\Request\ApiV1',
 ], function (Illuminate\Routing\Router $route) {
     $route->post('core/doc', 'CoreController@doc');
 });
@@ -30,6 +30,7 @@ Route::group([
 ], function (Illuminate\Routing\Router $route) {
     $route->post('auth/login', 'AuthController@login')
         ->name('py-system:pam.auth.login');
+    $route->post('auth/exists', 'AuthController@exists');
 
     // captcha
     $route->post('captcha/verify_code', 'CaptchaController@verifyCode');

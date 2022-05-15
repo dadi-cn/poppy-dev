@@ -313,6 +313,25 @@ class AuthController extends JwtApiController
         return Resp::success('已退出登录');
     }
 
+    /**
+     * @api               {post} api_v1/system/auth/exists 检查通行证是否存在
+     * @apiVersion        1.0.0
+     * @apiName           SysAuthExists
+     * @apiGroup          Poppy
+     * @apiQuery {string} passport 通行证
+     */
+    public function exists()
+    {
+        $passport = input('passport');
+        $exists   = PamAccount::passportExists($passport);
+        if ($exists) {
+            return Resp::success('通行证存在');
+        }
+        else {
+            return Resp::error('通行证不存在');
+        }
+    }
+
     protected function username(): string
     {
         return 'passport';
