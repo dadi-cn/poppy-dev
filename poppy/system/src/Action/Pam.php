@@ -20,6 +20,7 @@ use Poppy\System\Events\LoginFailedEvent;
 use Poppy\System\Events\LoginSuccessEvent;
 use Poppy\System\Events\PamDisableEvent;
 use Poppy\System\Events\PamEnableEvent;
+use Poppy\System\Events\PamPasswordModifiedEvent;
 use Poppy\System\Events\PamRebindEvent;
 use Poppy\System\Events\PamRegisteredEvent;
 use Poppy\System\Models\PamAccount;
@@ -360,6 +361,8 @@ class Pam
         $pam->password     = $cryptPassword;
         $pam->password_key = $key;
         $pam->save();
+
+        event(new PamPasswordModifiedEvent($pam));
 
         return true;
     }
