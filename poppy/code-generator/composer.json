@@ -1,5 +1,5 @@
 {
-  "name": "poppy/code-genrator",
+  "name": "poppy/code-generator",
   "description": "Code generator for Poppy",
   "license": "Apache-2.0",
   "require": {
