@@ -10,7 +10,8 @@ use Poppy\CodeGenerator\Classes\Constants;
 use Poppy\CodeGenerator\Classes\Generator\Hook\HookService;
 use Poppy\CodeGenerator\Classes\Generator\Hook\ModuleWrite;
 use Poppy\Core\Classes\Traits\CoreTrait;
-use Poppy\Core\Module\Repositories\ModulesHook;
+use Poppy\Core\Module\Module;
+use Poppy\Core\Module\Repositories\Modules;
 
 class SettingGenerateCommand extends Command
 {
@@ -40,57 +41,61 @@ class SettingGenerateCommand extends Command
     {
         $module = $this->argument('module');
 
-        $errors = collect();
+        $modules = $this->coreModule()
+            ->modules()
+            ->when($module, function (Modules $modules, $module) {
+                return $modules->filter(fn($value, string $key) => $module === $this->getModuleByHookKey($key));
+            })
+            ->when(!$module, function (Modules $modules) {
+                return $modules->filter(fn($value, string $key) => !Str::contains($key, self::$skipModulePrefixes));
+            });
+
+        if ($modules->isEmpty()) {
+            $this->error(sprintf('Module [%s] Not Found!', $module));
+            return;
+        }
 
         $this->hookService = app(HookService::class);
 
-        $this->coreModule()
-            ->hooks()
-            ->filter(fn($value, string $key) => !Str::contains($key, self::$skipModulePrefixes))
-            ->map(fn($values, string $key) => [
-                'module' => $this->getModuleByHookKey($key),
-                'values' => $values,
-            ])
-            ->groupBy('module')
-            ->when($module, function (ModulesHook $hook) use ($module) {
-                return $hook->filter(fn($value, string $key) => $module === $this->getModuleByHookKey($key));
-            })
-            ->each(function (ModulesHook $hook, string $key) use ($errors) {
-                $values = $hook->values()
-                    ->pluck('values')
-                    ->collapse()
-                    ->toArray();
+        $errors = collect();
+        $modules->each(function (Module $values, string $key) use ($errors) {
+            $hooks = (array) collect($values->get('hooks', []))
+                ->pluck('hooks', 'name')
+                ->get('poppy.mgr-page.settings', []);
 
-                $module = $this->getModuleByHookKey($key);
+            $module = $this->getModuleByHookKey($key);
+            if (empty($hooks)) {
+                return;
+            }
 
-                $newClasses = [];
-                foreach ($values as $clazz) {
-                    try {
-                        $handled = $this->hookService->handle($clazz);
-                        if (!$handled) {
-                            continue;
-                        }
-
-                        $names     = explode('\\', $clazz);
-                        $className = array_pop($names);
-                        $names[]   = Constants::APPEND_NAMESPACE;
-                        $names[]   = $className;
-
-                        $newClass     = implode('\\', $names);
-                        $newClasses[] = $newClass;
-
-                        $this->info("[{$module}] {$className} 生成成功");
-                    } catch (\Throwable $e) {
-                        $error = sprintf(
-                            'module: %s, class: %s, message: %s',
-                            $module, $clazz, $e->getMessage()
-                        );
-                        $errors->add($error);
+            $newClasses = [];
+            foreach ($hooks as $clazz) {
+                try {
+                    $handled = $this->hookService->handle($clazz);
+                    if (!$handled) {
+                        continue;
                     }
-                }
 
-                (new ModuleWrite())->write($module, $newClasses);
-            });
+                    $names     = explode('\\', $clazz);
+                    $className = array_pop($names);
+                    $names[]   = Constants::APPEND_NAMESPACE;
+                    $names[]   = $className;
+
+                    $newClass     = implode('\\', $names);
+                    $newClasses[] = $newClass;
+
+                    $this->info("[{$module}] {$className} 生成成功");
+                } catch (\Throwable $e) {
+                    $error = sprintf(
+                        'module: %s, class: %s, message: %s',
+                        $module, $clazz, $e->getMessage()
+                    );
+                    $errors->add($error);
+                }
+            }
+
+            (new ModuleWrite())->write($module, $newClasses);
+        });
 
         if ($errors->isNotEmpty()) {
             $this->error($errors->implode("\n"));
@@ -103,6 +108,6 @@ class SettingGenerateCommand extends Command
      */
     private function getModuleByHookKey(string $key): string
     {
-        return head(explode('.', $key));
+        return last(explode('.', $key));
     }
 }

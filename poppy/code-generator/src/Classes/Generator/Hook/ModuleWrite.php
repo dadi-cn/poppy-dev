@@ -19,6 +19,10 @@ class ModuleWrite
 
     public function write(string $module, array $classes): void
     {
+        if (count($classes) <= 0) {
+            return;
+        }
+
         $hookPath = poppy_path($module, $this->configPath);
 
         $this->filesystem->append($hookPath, $this->hookContent($classes));

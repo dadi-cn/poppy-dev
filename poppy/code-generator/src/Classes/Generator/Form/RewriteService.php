@@ -21,13 +21,10 @@ class RewriteService
     {
         $contents = file_get_contents($filePath);
 
-        $code = $this->ast->generate($this->replacePlaceholder($contents), new Visitor());
+        $contents = (new MethodReplacer($contents))->replace();
+
+        $code = $this->ast->generate($contents, new Visitor());
 
         file_put_contents($filePath, $code);
-    }
-
-    protected function replacePlaceholder(string $contents)
-    {
-        return preg_replace('/->placeholder\(.*\)/', '', $contents);
     }
 }
