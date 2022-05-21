@@ -90,6 +90,7 @@ class AuthController extends JwtApiController
      * @apiQuery {string}      [captcha]       验证码
      * @apiQuery {string}      [device_id]     设备ID[开启单一登录之后可用]
      * @apiQuery {string}      [device_type]   设备类型[开启单一登录之后可用]
+     * @apiQuery {string}      [guard]         登录前台/后台, 默认是前台
      * @apiSuccess {string}    token           认证成功的Token
      * @apiSuccess {string}    type            账号类型
      * @apiSuccessExample  data
@@ -129,8 +130,8 @@ class AuthController extends JwtApiController
             ], 401, [], JSON_UNESCAPED_UNICODE);
         }
 
+        $type  = (input('guard') ?: x_header('type'));
         $guard = PamAccount::GUARD_JWT_WEB;
-        $type  = x_header('type');
         if ($type === 'backend') {
             $guard = PamAccount::GUARD_JWT_BACKEND;
         }
