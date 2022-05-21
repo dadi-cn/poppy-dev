@@ -6,6 +6,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Log;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Classes\Traits\AppTrait;
 use Poppy\System\Classes\Contracts\ApiSignContract;
@@ -50,6 +51,14 @@ abstract class DefaultBaseApiSign implements ApiSignContract
 
         // check sign
         if ($sign !== $this->sign($request->all(), $type)) {
+            Log::error('sign-error', [
+                'params'  => $request->all(),
+                'headers' => [
+                    'os'      => x_header('os'),
+                    'version' => x_header('ver'),
+                    'token'   => jwt_token(),
+                ],
+            ]);
             return $this->setError(new Resp(Resp::SIGN_ERROR, '签名错误'));
         }
         return true;

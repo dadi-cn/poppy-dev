@@ -1,0 +1,19 @@
+{
+  "name": "poppy/code-generator",
+  "description": "Code generator for Poppy",
+  "license": "Apache-2.0",
+  "require": {
+    "php": ">=7.4",
+    "poppy/system": "4.*",
+    "nikic/php-parser": "^4.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "Poppy\\CodeGenerator\\": "src/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev"
+}

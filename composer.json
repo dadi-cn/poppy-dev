@@ -83,7 +83,8 @@
             "Poppy\\AliyunOss\\": "poppy/aliyun-oss/src",
             "Poppy\\AliyunOss\\Tests\\": "poppy/aliyun-oss/tests",
             "Poppy\\CanalEs\\": "poppy/canal-es/src/",
-            "Poppy\\CanalEs\\Tests\\": "poppy/canal-es/tests/"
+            "Poppy\\CanalEs\\Tests\\": "poppy/canal-es/tests/",
+            "Poppy\\CodeGenerator\\": "poppy/code-generator/src/"
         },
         "files": [
             "poppy/framework/src/Support/functions.php",
@@ -116,7 +117,8 @@
             "git subtree push --prefix=poppy/ext-alipay  coding-ext-alipay 4.0",
             "git subtree push --prefix=poppy/ext-ip_store  coding-ext-ip_store 4.0",
             "git subtree push --prefix=poppy/ad  coding-ad 4.0",
-            "git subtree push --prefix=poppy/canal-es  coding-canal-es 4.0"
+            "git subtree push --prefix=poppy/canal-es  coding-canal-es 4.0",
+            "git subtree push --prefix=poppy/code-generator coding-code-generator 4.0"
         ],
         "github": [
             "git subtree push --prefix=poppy/system  gh-system 4.0",
@@ -129,7 +131,8 @@
             "git subtree push --prefix=poppy/faker  gh-faker 4.0",
             "git subtree push --prefix=poppy/sensitive-word  gh-sensitive-word 4.0",
             "git subtree push --prefix=poppy/ext-ip_store  gh-ext-ip_store 4.0",
-            "git subtree push --prefix=poppy/ext-alipay  gh-ext-alipay 4.0"
+            "git subtree push --prefix=poppy/ext-alipay  gh-ext-alipay 4.0",
+            "git subtree push --prefix=poppy/code-generator gh-code-generator 4.0"
         ],
         "post-install-cmd": [
             "php artisan clear-compiled",

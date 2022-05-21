@@ -448,12 +448,13 @@ CONTENT;
      */
     public function multiThumb(string $name, $value = null, array $options = []): string
     {
-        $id       = $this->getIdAttribute($name, $options) ?? 'multi_thumb_' . Str::random(6);
-        $number   = $options['number'] ?? 3;
-        $pop_size = $options['pop_size'] ?? '300';
-        $type     = $options['type'] ?? 'image';
-        $sequence = $options['sequence'] ?? false;
-        $pam      = $options['pam'] ?? false;
+        $id        = $this->getIdAttribute($name, $options) ?? 'multi_thumb_' . Str::random(6);
+        $number    = $options['number'] ?? 3;
+        $pop_size  = $options['pop_size'] ?? '300';
+        $type      = $options['type'] ?? 'image';
+        $sequence  = $options['sequence'] ?? false;
+        $imageType = $options['image_type'] ?? 'default';
+        $pam       = $options['pam'] ?? false;
         if (!$pam) {
             $pam = app('auth')->guard(PamAccount::TYPE_BACKEND)->user();
         }
@@ -569,6 +570,7 @@ $(function(){
             token : '{$token}',
             sign : '{$sign}',
             timestamp : '{$timestamp}',
+            image_type: '{$imageType}',
         },
         choose: function (obj) {  //选择图片后事件
             var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列

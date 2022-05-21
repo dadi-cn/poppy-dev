@@ -140,6 +140,8 @@ return [
         // project
         Collective\Html\HtmlServiceProvider::class,                                  // Form
         Poppy\Framework\FrameworkServiceProvider::class,
+
+        Poppy\CodeGenerator\ServiceProvider::class,
     ],
 
     /*
