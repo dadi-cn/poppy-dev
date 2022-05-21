@@ -69,6 +69,16 @@ class Authenticate extends IlluminateAuthenticate
         if (empty($guards)) {
             return app('auth')->authenticate();
         }
+        $extendGuards = [
+            'backend' => 'jwt_backend',
+            'web'     => 'jwt_web',
+            'develop' => 'jwt_develop',
+        ];
+        if ($type = x_header('type')) {
+            if (isset($extendGuards[$type])) {
+                $guards = array_merge($extendGuards, [$extendGuards[$type]]);
+            }
+        }
         foreach ($guards as $guard) {
             if (app('auth')->guard($guard)->check()) {
                 return app('auth')->shouldUse($guard);
