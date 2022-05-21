@@ -16,7 +16,6 @@ use Poppy\System\Events\LoginTokenPassedEvent;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\Resources\PamResource;
 use Throwable;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
 
 /**
@@ -57,25 +56,9 @@ class AuthController extends JwtApiController
      */
     public function access(): JsonResponse
     {
-        /** @var ResponseFactory $response */
-        $response = app(ResponseFactory::class);
-        try {
-            if (!$user = app('tymon.jwt.auth')->parseToken()->authenticate()) {
-                return $response->json([
-                    'message' => '登录失效，请重新登录！',
-                    'status'  => 401,
-                ], 401, [], JSON_UNESCAPED_UNICODE);
-            }
-        } catch (JWTException $e) {
-            return $response->json([
-                'message' => 'Token 错误',
-                'status'  => 401,
-            ], 401, [], JSON_UNESCAPED_UNICODE);
-        }
-
         return Resp::success(
             '有效登录',
-            (new PamResource($user))->toArray(app('request'))
+            (new PamResource($this->pam()))->toArray(app('request'))
         );
     }
 
