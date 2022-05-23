@@ -16,7 +16,6 @@ use Poppy\System\Events\LoginTokenPassedEvent;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\Resources\PamResource;
 use Throwable;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
 
 /**
@@ -60,25 +59,9 @@ class AuthController extends JwtApiController
      */
     public function access(): JsonResponse
     {
-        /** @var ResponseFactory $response */
-        $response = app(ResponseFactory::class);
-        try {
-            if (!$user = app('tymon.jwt.auth')->parseToken()->authenticate()) {
-                return $response->json([
-                    'message' => '登录失效，请重新登录！',
-                    'status'  => 401,
-                ], 401, [], JSON_UNESCAPED_UNICODE);
-            }
-        } catch (JWTException $e) {
-            return $response->json([
-                'message' => 'Token 错误',
-                'status'  => 401,
-            ], 401, [], JSON_UNESCAPED_UNICODE);
-        }
-
         return Resp::success(
             '有效登录',
-            (new PamResource($user))->toArray(app('request'))
+            (new PamResource($this->pam()))->toArray(app('request'))
         );
     }
 
@@ -97,6 +80,20 @@ class AuthController extends JwtApiController
      * @apiSuccess {String}   token           认证成功的Token
      * @apiSuccess {String}   type            账号类型
      * @apiSuccessExample     {json} data:
+     * @api                    {post} api_v1/system/auth/login [Sys]登录/注册
+     * @apiVersion             1.0.0
+     * @apiName                SysAuthLogin
+     * @apiGroup               Poppy
+     * @apiQuery {string}      guard           登录类型;web|Web;backend|后台;develop|开发者
+     * @apiQuery {string}      passport        通行证
+     * @apiQuery {string}      [password]      密码
+     * @apiQuery {string}      [captcha]       验证码
+     * @apiQuery {string}      [device_id]     设备ID[开启单一登录之后可用]
+     * @apiQuery {string}      [device_type]   设备类型[开启单一登录之后可用]
+     * @apiQuery {string}      [guard]         登录前台/后台, 默认是前台
+     * @apiSuccess {string}    token           认证成功的Token
+     * @apiSuccess {string}    type            账号类型
+     * @apiSuccessExample  data
      * {
      *     "status": 0,
      *     "message": "",
@@ -137,8 +134,8 @@ class AuthController extends JwtApiController
             ], 401, [], JSON_UNESCAPED_UNICODE);
         }
 
+        $type  = (input('guard') ?: x_header('type'));
         $guard = PamAccount::GUARD_JWT_WEB;
-        $type  = x_header('type');
         if ($type === 'backend') {
             $guard = PamAccount::GUARD_JWT_BACKEND;
         }
