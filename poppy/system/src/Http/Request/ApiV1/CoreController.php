@@ -47,7 +47,7 @@ class CoreController extends JwtApiController
      * @apiVersion            1.0.0
      * @apiName               SysCoreDoc
      * @apiGroup              Poppy
-     * @apiParam {String}     type 文档类型 [web:前端]
+     * @apiQuery {String}     type 文档类型 [web:前端]
      */
     public function doc()
     {
