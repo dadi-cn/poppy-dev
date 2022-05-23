@@ -8,11 +8,11 @@ use Poppy\Framework\Classes\Resp;
 class ApidocController extends DevelopController
 {
     /**
-     * @api              {post} api/mgr-dev/apidoc/json 接口文档
-     * @apiVersion       1.0.0
-     * @apiName          ApidocJson
-     * @apiGroup         Apidoc
-     * @apiQuery {string}  type     类型
+     * @api                   {post} api/mgr-dev/apidoc/json 接口文档
+     * @apiVersion            1.0.0
+     * @apiName               ApidocJson
+     * @apiGroup              Apidoc
+     * @apiQuery {String}     type     类型
      */
     public function json()
     {

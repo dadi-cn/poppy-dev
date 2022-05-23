@@ -342,7 +342,7 @@ class ApiController extends DevelopController
         "description": "<p>设备ID, 设备唯一的序列号</p> "
          */
         if (!isset($param->type)) {
-            throw new ApplicationException('参数 `' . data_get($param, 'field') . '` 未配置类型, 例如: {string}');
+            throw new ApplicationException('参数 `' . data_get($param, 'field') . '` 未配置类型, 例如: {String}');
         }
         $type          = strtolower(strip_tags(trim($param->type)));
         $allowedValues = $param->allowedValues ?? [];

@@ -15,13 +15,12 @@ class CaptchaController extends JwtApiController
 {
 
     /**
-     * @api              {post} api_v1/system/captcha/send [Sys]发送验证码
-     * @apiVersion       1.0.0
-     * @apiName          SysCaptchaSend
-     * @apiGroup         Poppy
-     *
-     * @apiQuery {string}  passport       通行证
-     * @apiQuery {string}  [type]         是否存在[exist:验证必须存在;no-exist:验证必须不存在]
+     * @api                   {post} api_v1/system/captcha/send [Sys]发送验证码
+     * @apiVersion            1.0.0
+     * @apiName               SysCaptchaSend
+     * @apiGroup              Poppy
+     * @apiQuery {String}     passport       通行证
+     * @apiQuery {String}     [type]         是否存在[exist:验证必须存在;no-exist:验证必须不存在]
      */
     public function send()
     {
@@ -63,12 +62,11 @@ class CaptchaController extends JwtApiController
     }
 
     /**
-     * @api              {post} api_v1/system/captcha/fetch [Sys][L]获取验证码
-     * @apiVersion       1.0.0
-     * @apiName          SysCaptchaFetch
-     * @apiGroup         Poppy
-     *
-     * @apiQuery {int}   passport            通行证
+     * @api                   {post} api_v1/system/captcha/fetch [Sys][L]获取验证码
+     * @apiVersion            1.0.0
+     * @apiName               SysCaptchaFetch
+     * @apiGroup              Poppy
+     * @apiQuery {Integer}    passport            通行证
      */
     public function fetch()
     {
@@ -84,21 +82,19 @@ class CaptchaController extends JwtApiController
                 'captcha' => $captcha,
             ]);
         }
-        else {
-            return Resp::error($Verification->getError());
-        }
+
+        return Resp::error($Verification->getError());
     }
 
     /**
-     * @api              {post} api_v1/system/captcha/verify_code [Sys]获取验证串
-     * @apiDescription   用以保存 passport 验证的验证串, 隐藏字串为 passport
-     * @apiVersion       1.0.0
-     * @apiName          SysCaptchaVerifyCode
-     * @apiGroup         Poppy
-     *
-     * @apiQuery {string}   passport           通行证
-     * @apiQuery {string}   captcha            验证码
-     * @apiQuery {string}   [expire_min]       验证串有效期[默认:10 分钟, 最长不超过 60 分钟]
+     * @api                   {post} api_v1/system/captcha/verify_code [Sys]获取验证串
+     * @apiDescription        用以保存 passport 验证的验证串, 隐藏字串为 passport
+     * @apiVersion            1.0.0
+     * @apiName               SysCaptchaVerifyCode
+     * @apiGroup              Poppy
+     * @apiQuery {String}     passport           通行证
+     * @apiQuery {String}     captcha            验证码
+     * @apiQuery {String}     [expire_min]       验证串有效期[默认:10 分钟, 最长不超过 60 分钟]
      */
     public function verifyCode()
     {

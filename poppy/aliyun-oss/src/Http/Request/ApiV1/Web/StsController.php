@@ -13,28 +13,33 @@ class StsController extends JwtApiController
 {
 
     /**
-     * @api                 {post} api_v1/aliyun-oss/sts/temp_oss AliOss Sts授权
-     * @apiDescription      命名规则采用 His{rand(8)} 格式
-     * @apiVersion          1.0.0
-     * @apiName             AliyunOssStsTempOss
-     * @apiGroup            Poppy
-     * @apiSuccess {string}  directory              允许上传的目录
-     * @apiSuccess {string}  prefix_url             组合上传的URL
-     * @apiSuccess {string}  bucket                 存储名称
-     * @apiSuccess {string}  access_key_secret      key
-     * @apiSuccess {string}  access_key_id          id
-     * @apiSuccess {string}  expiration             过期时间
-     * @apiSuccess {string}  security_token         安全token
-     * @apiSuccessExample   data
+     * @api                   {post} api_v1/aliyun-oss/sts/temp_oss AliOss Sts授权
+     * @apiDescription        命名规则采用 His{rand(8)} 格式
+     * @apiVersion            1.0.0
+     * @apiName               AliyunOssStsTempOss
+     * @apiGroup              Poppy
+     * @apiSuccess {object[]} data              返回
+     * @apiSuccess {String}   directory         允许上传的目录
+     * @apiSuccess {String}   prefix_url        组合上传的URL
+     * @apiSuccess {String}   bucket            存储名称
+     * @apiSuccess {String}   access_key_secret key
+     * @apiSuccess {String}   access_key_id     id
+     * @apiSuccess {String}   expiration        过期时间
+     * @apiSuccess {String}   security_token    安全token
+     * @apiSuccessExample     data
      * {
-     *     "directory": "upload/202106/02/",
-     *     "prefix_url": "https://test-oss.domain.com",
-     *     "bucket": "dadi-xxx",
-     *     "endpoint": "oss-cn-beijing.aliyuncs.com",
-     *     "security_token": "CAISqQJ1q6Ft5B2yfSjIr5fAB+....veLex67A==",
-     *     "access_key_id": "STS.NTu...xC",
-     *     "access_key_secret": "2sKKB5cg9...JEJR2p",
-     *     "expiration": "2021-06-02T02:51:45Z"
+     *     "status": 0,
+     *     "message": "",
+     *     "data": {
+     *         "directory": "upload/202106/02/",
+     *         "prefix_url": "https://test-oss.domain.com",
+     *         "bucket": "dadi-xxx",
+     *         "endpoint": "oss-cn-beijing.aliyuncs.com",
+     *         "security_token": "CAISqQJ1q6Ft5B2yfSjIr5fAB+....veLex67A==",
+     *         "access_key_id": "STS.NTu...xC",
+     *         "access_key_secret": "2sKKB5cg9...JEJR2p",
+     *         "expiration": "2021-06-02T02:51:45Z"
+     *     }
      * }
      */
     public function tempOss()
