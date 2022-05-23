@@ -70,30 +70,17 @@ class AuthController extends JwtApiController
      * @apiVersion            1.0.0
      * @apiName               SysAuthLogin
      * @apiGroup              Poppy
-     * @apiQuery {String}     guard           登录类型;web|Web;backend|后台;develop|开发者
-     * @apiQuery {String}     passport        通行证
-     * @apiQuery {String}     [password]      密码
-     * @apiQuery {String}     [captcha]       验证码
-     * @apiQuery {String}     [device_id]     设备ID[开启单一登录之后可用]
-     * @apiQuery {String}     [device_type]   设备类型[开启单一登录之后可用]
+     * @apiQuery {string}     guard           登录类型;web|Web;backend|后台;develop|开发者
+     * @apiQuery {string}     passport        通行证
+     * @apiQuery {string}     [password]      密码
+     * @apiQuery {string}     [captcha]       验证码
+     * @apiQuery {string}     [device_id]     设备ID[开启单一登录之后可用]
+     * @apiQuery {string}     [device_type]   设备类型[开启单一登录之后可用]
+     * @apiQuery {string}     [guard]         登录前台/后台, 默认是前台
      * @apiSuccess {object[]} data            返回
-     * @apiSuccess {String}   token           认证成功的Token
-     * @apiSuccess {String}   type            账号类型
+     * @apiSuccess {string}   token           认证成功的Token
+     * @apiSuccess {string}   type            账号类型
      * @apiSuccessExample     {json} data:
-     * @api                    {post} api_v1/system/auth/login [Sys]登录/注册
-     * @apiVersion             1.0.0
-     * @apiName                SysAuthLogin
-     * @apiGroup               Poppy
-     * @apiQuery {string}      guard           登录类型;web|Web;backend|后台;develop|开发者
-     * @apiQuery {string}      passport        通行证
-     * @apiQuery {string}      [password]      密码
-     * @apiQuery {string}      [captcha]       验证码
-     * @apiQuery {string}      [device_id]     设备ID[开启单一登录之后可用]
-     * @apiQuery {string}      [device_type]   设备类型[开启单一登录之后可用]
-     * @apiQuery {string}      [guard]         登录前台/后台, 默认是前台
-     * @apiSuccess {string}    token           认证成功的Token
-     * @apiSuccess {string}    type            账号类型
-     * @apiSuccessExample  data
      * {
      *     "status": 0,
      *     "message": "",
