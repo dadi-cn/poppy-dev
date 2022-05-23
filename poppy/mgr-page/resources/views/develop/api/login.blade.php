@@ -24,5 +24,58 @@
             </div>
             {!! Form::close() !!}
         </div>
+        <pre id="J_result" style="display: none;color: #0a0a0a" class="layui-elem-quote layui-quote-nm mt8"></pre>
     </div>
+    <script>
+	$(function () {
+		let conf = Util.validateConfig({
+			submitHandler : function (form) {
+				let $result = $('#J_result');
+				$result.text(
+					'进行中...'
+				).css('color', 'grey');
+				$(form).ajaxSubmit({
+					beforeSend : function (request) {
+						let headerStr = '{!! $headers ?? '' !!}'
+						try {
+							let headers = JSON.parse(headerStr);
+							if (typeof headers == "object") {
+								Object.keys(headers).forEach((key) => {
+									request.setRequestHeader(key, headers[key])
+								})
+							}
+						} catch (e) {
+						}
+					},
+					success    : function (data) {
+						let objData;
+						try {
+							objData = Util.toJson(data);
+						} catch (e) {
+							$result.text(
+								'返回的不是标准的json 格式, 请求地址需要链接接访问 ' + "\n" + $(form).attr('action') + '?' + $(form).serialize()
+							).show(300);
+							return;
+						}
+						if (objData.status !== 0) {
+							$result
+								.text(objData.message)
+								.show(300)
+								.removeClass(className).addClass('alert-danger');
+						}
+						window.top.location.reload();
+						window.close();
+					},
+					error      : function (data) {
+						$result
+							.text(data.responseText)
+							.show(300)
+							.removeClass(className).addClass('alert-danger');
+					}
+				});
+			},
+		}, true);
+		$('#form_auto').validate(conf);
+	});
+    </script>
 @endsection

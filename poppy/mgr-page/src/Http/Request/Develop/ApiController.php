@@ -19,7 +19,6 @@ use OviDigital\JsObjectToJson\JsConverter;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Helper\ArrayHelper;
-use Poppy\Framework\Helper\FileHelper;
 use Poppy\Framework\Helper\StrHelper;
 use Poppy\Framework\Helper\UtilHelper;
 use Poppy\System\Action\Apidoc;
@@ -209,7 +208,7 @@ class ApiController extends DevelopController
 
     /**
      * 设置
-     * @param string $type 类型
+     * @param string $type  类型
      * @param string $field 字段
      * @return Application|Factory|JsonResponse|RedirectResponse|Resp|Response|View
      */
@@ -217,11 +216,12 @@ class ApiController extends DevelopController
     {
         $sessionKey = 'dev#' . $type . '#' . $field;
         if (is_post()) {
-            $token = input('value');
-            if (!$token) {
+            $value = input('value');
+            if (!$value) {
                 return Resp::error($field . '不能为空');
             }
-            Session::put($sessionKey, $token);
+            $value = StrHelper::trimSpace($value);
+            Session::put($sessionKey, $value);
             return Resp::success('设置 ' . $field . ' 成功', '_top_reload|1');
         }
         $value = Session::get($sessionKey);
@@ -238,7 +238,7 @@ class ApiController extends DevelopController
 
         if (is_post()) {
             $input = array_merge(input(), [
-                'device_id'   => uniqid(),
+                'device_id'   => uniqid('', true),
                 'device_type' => 'webapp',
             ]);
             try {
@@ -260,14 +260,16 @@ class ApiController extends DevelopController
             return Resp::success('登录成功', '_top_reload|1');
         }
 
-        return view('py-mgr-page::develop.api.login', compact('type'));
+        $headers = Session::get('dev#web#headers');
+
+        return view('py-mgr-page::develop.api.login', compact('type', 'headers'));
     }
 
     /**
      * 获取生成的 api 数据
-     * @param string $type 类型
-     * @param null $prefix 前缀
-     * @param string $method 方法
+     * @param string $type    类型
+     * @param null   $prefix  前缀
+     * @param string $method  方法
      * @param string $version 版本
      * @return array
      */
@@ -275,7 +277,7 @@ class ApiController extends DevelopController
     {
         $catalog  = config('poppy.core.apidoc');
         $docs     = $catalog[$type];
-        $Apidoc = new Apidoc();
+        $Apidoc   = new Apidoc();
         $jsObject = $Apidoc->local($type);
         $jsonFile = base_path('public/docs/' . $type . '/index.html');
         $data     = [];
@@ -293,7 +295,7 @@ class ApiController extends DevelopController
             $data['versions'] = [];
             $url              = $prefix;
             if (!$url) {
-                $url    = '/' . trim($docs['default_url'] ?? '', '/');
+                $url    = trim($docs['default_url'] ?? '', '/');
                 $method = $docs['method'] ?? 'get';
             }
             if ($url) {
@@ -303,9 +305,8 @@ class ApiController extends DevelopController
                     if ($val->type === $method && $valUrl === $url && $val->version === $version) {
                         $data['index']   = $url;
                         $data['current'] = $val;
-
-                        if (isset($data['current']->parameter)) {
-                            $data['current_params'] = $data['current']->parameter->fields->Parameter;
+                        if (isset($data['current']->query)) {
+                            $data['current_params'] = $data['current']->query;
                         }
                     }
                     if ($val->type === $method && $valUrl === $url) {
@@ -342,7 +343,7 @@ class ApiController extends DevelopController
         "description": "<p>设备ID, 设备唯一的序列号</p> "
          */
         if (!isset($param->type)) {
-            throw new ApplicationException('参数 `' . data_get($param, 'field') . '` 未配置类型, 例如: {String}');
+            throw new ApplicationException('参数 `' . data_get($param, 'field') . '` 未配置类型, 例如: {string}');
         }
         $type          = strtolower(strip_tags(trim($param->type)));
         $allowedValues = $param->allowedValues ?? [];
@@ -414,12 +415,19 @@ class ApiController extends DevelopController
         $params['token'] = $this->token;
         $params['sign']  = $sign->sign($params);
 
+        $headers = Session::get('dev#web#headers') ?? [];
+        if ($headers && UtilHelper::isJson($headers)) {
+            $headers = json_decode($headers, true);
+        }
+
+        $headers = array_merge([
+            'Authorization' => 'Bearer ' . $this->token,
+        ], $headers);
+
         $this->client = new Client();
         return $this->client->post($url, [
-            'headers'     => [
-                'Authorization' => 'Bearer ' . $this->token,
-            ],
-            'form_params' => $params
+            'headers'     => $headers,
+            'form_params' => $params,
         ]);
     }
 }
