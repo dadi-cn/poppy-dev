@@ -13,9 +13,9 @@ class ApiDocController extends ApiController
      * @apiVersion        1.0.0
      * @apiName           ApidocHow
      * @apiGroup          Demo
-     * @apiQuery {Integer}            number         数值
+     * @apiQuery {integer}            number         数值
      * @apiQuery {int{100-999}}   number_range   数值范围
-     * @apiQuery {String}         string         字串
+     * @apiQuery {string}         string         字串
      * @apiQuery {string{..5}}    string_mx      字串最大5
      * @apiQuery {string{2..5}}   string_between 字串间隔
      * @apiQuery {int{2..5}}      number_between 数值间隔

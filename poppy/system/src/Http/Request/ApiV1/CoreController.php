@@ -47,7 +47,7 @@ class CoreController extends JwtApiController
      * @apiVersion            1.0.0
      * @apiName               SysCoreDoc
      * @apiGroup              Poppy
-     * @apiQuery {String}     type 文档类型 [web:前端]
+     * @apiQuery {string}     type 文档类型 [web:前端]
      */
     public function doc()
     {
@@ -67,7 +67,7 @@ class CoreController extends JwtApiController
      * @apiVersion            1.0.0
      * @apiName               SysCoreMock
      * @apiGroup              Poppy
-     * @apiQuery {String}     mock   Json 格式的数据
+     * @apiQuery {string}     mock   Json 格式的数据
      */
     public function mock()
     {

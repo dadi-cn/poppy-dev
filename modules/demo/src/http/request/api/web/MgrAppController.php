@@ -17,7 +17,7 @@ class MgrAppController extends WebApiController
      * @api                    {get} api/demo/form/:auto   [Demo]Form
      * @apiVersion             1.0.0
      * @apiName                Form
-     * @apiQuery               {String} auto 表单名称
+     * @apiQuery               {string} auto 表单名称
      * @apiGroup               MgrApp
      */
     public function form($auto)
@@ -34,7 +34,7 @@ class MgrAppController extends WebApiController
      * @api                    {get} api/demo/grid/:auto   [Demo]Grid
      * @apiVersion             1.0.0
      * @apiName                Grid
-     * @apiQuery               {String} auto 列表名称
+     * @apiQuery               {string} auto 列表名称
      * @apiGroup               MgrApp
      */
     public function grid($type)
@@ -52,7 +52,7 @@ class MgrAppController extends WebApiController
      * @api                    {get} api/demo/filter/:auto   [Demo]Filter
      * @apiVersion             1.0.0
      * @apiName                Filter
-     * @apiQuery               {String} auto 列表名称
+     * @apiQuery               {string} auto 列表名称
      * @apiGroup               MgrApp
      */
     public function filter($type)
@@ -69,7 +69,7 @@ class MgrAppController extends WebApiController
      * @api                    {get} api/demo/grid_request/:type   GridRequest
      * @apiVersion             1.0.0
      * @apiName                GridRequest
-     * @apiQuery               {String} type 请求名称
+     * @apiQuery               {string} type 请求名称
      * @apiGroup               MgrApp
      */
     public function gridRequest($type)

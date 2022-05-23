@@ -19,13 +19,13 @@ class StsController extends JwtApiController
      * @apiName               AliyunOssStsTempOss
      * @apiGroup              Poppy
      * @apiSuccess {object[]} data              返回
-     * @apiSuccess {String}   directory         允许上传的目录
-     * @apiSuccess {String}   prefix_url        组合上传的URL
-     * @apiSuccess {String}   bucket            存储名称
-     * @apiSuccess {String}   access_key_secret key
-     * @apiSuccess {String}   access_key_id     id
-     * @apiSuccess {String}   expiration        过期时间
-     * @apiSuccess {String}   security_token    安全token
+     * @apiSuccess {string}   directory         允许上传的目录
+     * @apiSuccess {string}   prefix_url        组合上传的URL
+     * @apiSuccess {string}   bucket            存储名称
+     * @apiSuccess {string}   access_key_secret key
+     * @apiSuccess {string}   access_key_id     id
+     * @apiSuccess {string}   expiration        过期时间
+     * @apiSuccess {string}   security_token    安全token
      * @apiSuccessExample     data
      * {
      *     "status": 0,

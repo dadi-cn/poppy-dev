@@ -30,16 +30,16 @@ class AuthController extends JwtApiController
      * @apiVersion            1.0.0
      * @apiName               SysAuthAccess
      * @apiGroup              Poppy
-     * @apiQuery {Integer}    token           Token
-     * @apiSuccess {Object[]} data            返回
-     * @apiSuccess {Integer}  id              ID
-     * @apiSuccess {String}   username        用户名
-     * @apiSuccess {String}   mobile          手机号
-     * @apiSuccess {String}   email           邮箱
-     * @apiSuccess {String}   type            类型
-     * @apiSuccess {String}   is_enable       是否启用[Y|N]
-     * @apiSuccess {String}   disable_reason  禁用原因
-     * @apiSuccess {String}   created_at      创建时间
+     * @apiQuery {integer}    token           Token
+     * @apiSuccess {object[]} data            返回
+     * @apiSuccess {integer}  id              ID
+     * @apiSuccess {string}   username        用户名
+     * @apiSuccess {string}   mobile          手机号
+     * @apiSuccess {string}   email           邮箱
+     * @apiSuccess {string}   type            类型
+     * @apiSuccess {string}   is_enable       是否启用[Y|N]
+     * @apiSuccess {string}   disable_reason  禁用原因
+     * @apiSuccess {string}   created_at      创建时间
      * @apiSuccessExample {json} data:
      * {
      *     "status": 0,
@@ -173,10 +173,10 @@ class AuthController extends JwtApiController
      * @apiVersion            1.0.0
      * @apiName               SysAuthResetPassword
      * @apiGroup              Poppy
-     * @apiQuery {String}     [verify_code]     方式1: 通过验证码获取到-> 验证串
-     * @apiQuery {String}     [passport]        方式2: 手机号 + 验证码直接验证并修改
-     * @apiQuery {String}     [captcha]         验证码
-     * @apiQuery {String}     password          密码
+     * @apiQuery {string}     [verify_code]     方式1: 通过验证码获取到-> 验证串
+     * @apiQuery {string}     [passport]        方式2: 手机号 + 验证码直接验证并修改
+     * @apiQuery {string}     [captcha]         验证码
+     * @apiQuery {string}     password          密码
      */
     public function resetPassword()
     {
@@ -229,9 +229,9 @@ class AuthController extends JwtApiController
      * @apiVersion            1.0.0
      * @apiName               SysAuthBindMobile
      * @apiGroup              Poppy
-     * @apiQuery {String}     verify_code     之前手机号生成的校验验证串
-     * @apiQuery {String}     passport        新手机号
-     * @apiQuery {String}     captcha         验证码
+     * @apiQuery {string}     verify_code     之前手机号生成的校验验证串
+     * @apiQuery {string}     passport        新手机号
+     * @apiQuery {string}     captcha         验证码
      */
     public function bindMobile()
     {
@@ -310,7 +310,7 @@ class AuthController extends JwtApiController
      * @apiVersion            1.0.0
      * @apiName               SysAuthExists
      * @apiGroup              Poppy
-     * @apiQuery {String}     passport 通行证
+     * @apiQuery {string}     passport 通行证
      */
     public function exists()
     {

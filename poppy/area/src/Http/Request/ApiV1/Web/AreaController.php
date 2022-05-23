@@ -20,9 +20,9 @@ class AreaController extends WebApiController
      * @apiName               AreaAreaCode
      * @apiGroup              Poppy
      * @apiSuccess {object[]} data         返回
-     * @apiSuccess {Integer}  id           ID
-     * @apiSuccess {String}   title        标题
-     * @apiSuccess {String}   code         地区编码
+     * @apiSuccess {integer}  id           ID
+     * @apiSuccess {string}   title        标题
+     * @apiSuccess {string}   code         地区编码
      * @apiSuccess {object[]} children     子级别
      * @apiSuccessExample     城市数据
      * {
