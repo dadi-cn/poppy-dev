@@ -134,7 +134,7 @@ class DocCommand extends Command
         }
         else {
             $matches = [
-                'web'     => 'api.*/web|ApiWeb|api/web',
+                'web'     => 'api.*/web|ApiWeb|ApiV1|api.*/web',
                 'dev'     => 'api.*/dev|ApiDev|api/dev',
                 'mgr-app' => 'ApiMgrApp|api/mgr_app|api.*/mgr_app',
             ];

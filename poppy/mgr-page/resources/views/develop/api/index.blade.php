@@ -20,7 +20,7 @@
                 @include('py-mgr-page::develop.api._token')
                 @include('py-mgr-page::develop.api._headers')
                 @include('py-mgr-page::develop.api._certificate')
-                @include('py-mgr-page::develop.api._params')
+                {{--@include('py-mgr-page::develop.api._params')--}}
                 @include('py-mgr-page::develop.api._queries')
 
                 <div class="layui-form-item">
@@ -57,94 +57,89 @@
             </div>
         </div>
         <script>
-        $(function () {
-            let className = 'alert-warning alert-danger alert-info';
-            let conf = Util.validateConfig({
-                submitHandler: function (form) {
-                    let $result = $('#J_result');
-                    $result.text(
-                        '进行中...'
-                    ).css('color', 'grey');
-                    $(form).ajaxSubmit({
-                        beforeSend: function (request) {
-                            let headerStr = '{!! $data['headers'] ?? '' !!}'
-                            try {
-                                let headers = JSON.parse(headerStr)
-                                if (typeof headers == "object") {
-                                    Object.keys(headers).forEach((key) => {
-                                        request.setRequestHeader(key, headers[key])
-                                    })
-                                }
-                            } catch (e) {
-                            }
-
+		$(function () {
+			let className = 'alert-warning alert-danger alert-info';
+			let conf      = Util.validateConfig({
+				submitHandler : function (form) {
+					let $result = $('#J_result');
+					$result.text(
+						'进行中...'
+					).css('color', 'grey');
+					$(form).ajaxSubmit({
+						beforeSend : function (request) {
+							let headerStr = '{!! $data['headers'] ?? '' !!}'
+							try {
+								let headers = JSON.parse(headerStr);
+								if (typeof headers == "object") {
+									Object.keys(headers).forEach((key) => {
+										request.setRequestHeader(key, headers[key])
+									})
+								}
+							} catch (e) {
+							}
                             @if(isset($data['token']))
-                            request.setRequestHeader("Authorization", "Bearer {!! $data['token'] !!}");
-                            request.setRequestHeader("X-ACCESS-TOKEN", "{!! $data['token'] !!}");
+							request.setRequestHeader("Authorization", "Bearer {!! $data['token'] !!}");
+							request.setRequestHeader("X-ACCESS-TOKEN", "{!! $data['token'] !!}");
                             @endif
-                            @if(isset($data['version']))
-                            request.setRequestHeader("X-APP-VERSION", "1.0.0");
-                            @endif
-                        },
-                        success: function (data) {
-                            let objData;
-                            try {
-                                objData = Util.toJson(data);
-                            } catch (e) {
-                                console.log($(form).serialize());
-                                $result.text(
-                                    '返回的不是标准的json 格式, 请求地址需要链接接访问 ' + "\n" + $(form).attr('action') + '?' + $(form).serialize()
-                                ).show(300);
-                                return;
-                            }
+						},
+						success    : function (data) {
+							let objData;
+							try {
+								objData = Util.toJson(data);
+							} catch (e) {
+								$result.text(
+									'返回的不是标准的json 格式, 请求地址需要链接接访问 ' + "\n" + $(form).attr('action') + '?' + $(form).serialize()
+								).show(300);
+								return;
+							}
 
-                            let className;
-                            if (objData.status === 0) {
-                                className = 'alert-info'
-                            } else {
-                                className = 'alert-warning'
-                            }
-                            $result.text(
-                                JSON.stringify(Util.toJson(data), null, '  ')
-                            ).show(300).removeClass(className).addClass(className).css('color', '#000000');
-                        },
-                        error: function (data) {
-                            $result
-                                .text(data.responseText)
-                                .show(300)
-                                .removeClass(className).addClass('alert-danger');
-                        }
-                    });
-                },
+							let className;
+							if (objData.status === 0) {
+								className = 'alert-info'
+							} else {
+								className = 'alert-warning'
+							}
+							$result.text(
+								JSON.stringify(Util.toJson(data), null, '  ')
+							).show(300).removeClass(className).addClass(className).css('color', '#000000');
+						},
+						error      : function (data) {
+							$result
+								.text(data.responseText)
+								.show(300)
+								.removeClass(className).addClass('alert-danger');
+						}
+					});
+				},
                 @include('py-mgr-page::develop.api._validate')
-            }, true);
-            $('#form_auto').validate(conf);
-        });
+			}, true);
+			$('#form_auto').validate(conf);
+		});
         </script>
         <script>
-        new Vue({
-            el: '#app',
-            data: {
-                requestType: '{!! $data['current']->type !!}',
-                url: '{!! url($data['current']->url) !!}',
-                url_origin: '{!! url($data['current']->url) !!}',
-                variables: {}
-            },
-            methods: {
-                changeVariable: function (e) {
-                    const self = this;
-                    let name = e.target.name;
-                    this.variables[name] = e.target.value;
-                    let url = this.url_origin;
-                    Object.keys(this.variables).forEach(function (name) {
-                        console.log(name);
-                        url = url.replace(':' + name, self.variables[name])
-                    });
-                    this.url = url;
-                    $('#form_auto').attr('action', this.url);
-                }
-            }
-        });
+		new Vue({
+			el      : '#app',
+			data    : {
+				requestType : '{!! $data['current']->type !!}',
+				url         : '{!! url($data['current']->url) !!}',
+				url_origin  : '{!! url($data['current']->url) !!}',
+				variables   : {}
+			},
+			methods : {
+				changeVariable : function (e) {
+					const self           = this;
+					let name             = e.target.name;
+					this.variables[name] = e.target.value;
+					let url              = this.url_origin;
+					Object.keys(this.variables).forEach(function (name) {
+						console.log(name);
+						url = url.replace(':' + name, self.variables[name])
+					});
+					this.url = url;
+					$('#form_auto').attr('action', this.url);
+				}
+			}
+		});
         </script>
     @endif
 @endsection

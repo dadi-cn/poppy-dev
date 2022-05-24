@@ -7,7 +7,7 @@
                 {!! $field !!} ( String )
             </div>
             <div class="layui-form-item">
-                {!! Form::text('value',null, ['id'=>$field, 'class'=>'layui-input']) !!}
+                {!! Form::text('value', $value ?? null, ['id'=>$field, 'class'=>'layui-input']) !!}
             </div>
             <div class="layui-form-item">
                 <button class="layui-btn J_submit" type="submit" id="submit">设置 {!! $field !!}</button>

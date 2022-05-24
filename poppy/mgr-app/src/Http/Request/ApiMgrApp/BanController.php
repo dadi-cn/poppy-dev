@@ -6,7 +6,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Poppy\Framework\Classes\Resp;
-use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Widgets\GridWidget;
 use Poppy\MgrApp\Http\MgrApp\FormBanEstablish;
@@ -14,7 +13,6 @@ use Poppy\MgrApp\Http\MgrApp\GridPamBan;
 use Poppy\System\Action\Ban;
 use Poppy\System\Models\PamBan;
 use Poppy\System\Models\SysConfig;
-use Throwable;
 use function app;
 use function input;
 use function sys_setting;
@@ -23,10 +21,10 @@ use function sys_setting;
 class BanController extends BackendController
 {
     /**
-     * @api              {post} api/mgr-app/default/ban 用户封禁
-     * @apiVersion       1.0.0
-     * @apiName          BanIndex
-     * @apiGroup         Ban
+     * @api                   {post} api/mgr-app/default/ban 用户封禁
+     * @apiVersion            1.0.0
+     * @apiName               BanIndex
+     * @apiGroup              Ban
      */
     public function index()
     {

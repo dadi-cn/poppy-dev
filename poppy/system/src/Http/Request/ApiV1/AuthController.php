@@ -26,14 +26,13 @@ class AuthController extends JwtApiController
     use PoppyTrait, ThrottlesLogins;
 
     /**
-     * @api              {post} api_v1/system/auth/access [Sys]检测 Token
-     * @apiVersion       1.0.0
-     * @apiName          SysAuthAccess
-     * @apiGroup         Poppy
-     *
-     * @apiQuery {int}   token            Token
-     *
-     * @apiSuccess {int}      id              ID
+     * @api                   {post} api_v1/system/auth/access [Sys]检测 Token
+     * @apiVersion            1.0.0
+     * @apiName               SysAuthAccess
+     * @apiGroup              Poppy
+     * @apiQuery {integer}    token           Token
+     * @apiSuccess {object[]} data            返回
+     * @apiSuccess {integer}  id              ID
      * @apiSuccess {string}   username        用户名
      * @apiSuccess {string}   mobile          手机号
      * @apiSuccess {string}   email           邮箱
@@ -43,15 +42,19 @@ class AuthController extends JwtApiController
      * @apiSuccess {string}   created_at      创建时间
      * @apiSuccessExample {json} data:
      * {
-     *     "id": 9,
-     *     "username": "user001",
-     *     "mobile": "",
-     *     "email": "",
-     *     "type": "user",
-     *     "is_enable": "Y",
-     *     "disable_reason": "",
-     *     "created_at": "2021-03-18 15:30:15",
-     *     "updated_at": "2021-03-18 16:38:06"
+     *     "status": 0,
+     *     "message": "",
+     *     "data": {
+     *         "id": 9,
+     *         "username": "user001",
+     *         "mobile": "",
+     *         "email": "",
+     *         "type": "user",
+     *         "is_enable": "Y",
+     *         "disable_reason": "",
+     *         "created_at": "2021-03-18 15:30:15",
+     *         "updated_at": "2021-03-18 16:38:06"
+     *     }
      * }
      */
     public function access(): JsonResponse
@@ -63,23 +66,28 @@ class AuthController extends JwtApiController
     }
 
     /**
-     * @api                    {post} api_v1/system/auth/login [Sys]登录/注册
-     * @apiVersion             1.0.0
-     * @apiName                SysAuthLogin
-     * @apiGroup               Poppy
-     * @apiQuery {string}      guard           登录类型;web|Web;backend|后台;develop|开发者
-     * @apiQuery {string}      passport        通行证
-     * @apiQuery {string}      [password]      密码
-     * @apiQuery {string}      [captcha]       验证码
-     * @apiQuery {string}      [device_id]     设备ID[开启单一登录之后可用]
-     * @apiQuery {string}      [device_type]   设备类型[开启单一登录之后可用]
-     * @apiQuery {string}      [guard]         登录前台/后台, 默认是前台
-     * @apiSuccess {string}    token           认证成功的Token
-     * @apiSuccess {string}    type            账号类型
-     * @apiSuccessExample  data
+     * @api                   {post} api_v1/system/auth/login [Sys]登录/注册
+     * @apiVersion            1.0.0
+     * @apiName               SysAuthLogin
+     * @apiGroup              Poppy
+     * @apiQuery {string}     guard           登录类型;web|Web;backend|后台;develop|开发者
+     * @apiQuery {string}     passport        通行证
+     * @apiQuery {string}     [password]      密码
+     * @apiQuery {string}     [captcha]       验证码
+     * @apiQuery {string}     [device_id]     设备ID[开启单一登录之后可用]
+     * @apiQuery {string}     [device_type]   设备类型[开启单一登录之后可用]
+     * @apiQuery {string}     [guard]         登录前台/后台, 默认是前台
+     * @apiSuccess {object[]} data            返回
+     * @apiSuccess {string}   token           认证成功的Token
+     * @apiSuccess {string}   type            账号类型
+     * @apiSuccessExample     {json} data:
      * {
-     *     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.*******",
-     *     "type": "backend"
+     *     "status": 0,
+     *     "message": "",
+     *     "data": {
+     *         "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.*******",
+     *         "type": "backend"
+     *     }
      * }
      */
     public function login(): JsonResponse
@@ -161,14 +169,14 @@ class AuthController extends JwtApiController
 
 
     /**
-     * @api                    {post} api_v1/system/auth/reset_password [Sys]重设密码
-     * @apiVersion             1.0.0
-     * @apiName                SysAuthResetPassword
-     * @apiGroup               Poppy
-     * @apiQuery {string}      [verify_code]     方式1: 通过验证码获取到-> 验证串
-     * @apiQuery {string}      [passport]        方式2: 手机号 + 验证码直接验证并修改
-     * @apiQuery {string}      [captcha]         验证码
-     * @apiQuery {string}      password          密码
+     * @api                   {post} api_v1/system/auth/reset_password [Sys]重设密码
+     * @apiVersion            1.0.0
+     * @apiName               SysAuthResetPassword
+     * @apiGroup              Poppy
+     * @apiQuery {string}     [verify_code]     方式1: 通过验证码获取到-> 验证串
+     * @apiQuery {string}     [passport]        方式2: 手机号 + 验证码直接验证并修改
+     * @apiQuery {string}     [captcha]         验证码
+     * @apiQuery {string}     password          密码
      */
     public function resetPassword()
     {
@@ -217,13 +225,13 @@ class AuthController extends JwtApiController
     }
 
     /**
-     * @api                    {post} api_v1/system/auth/bind_mobile [Sys]换绑手机
-     * @apiVersion             1.0.0
-     * @apiName                SysAuthBindMobile
-     * @apiGroup               Poppy
-     * @apiQuery {string}      verify_code     之前手机号生成的校验验证串
-     * @apiQuery {string}      passport        新手机号
-     * @apiQuery {string}      captcha         验证码
+     * @api                   {post} api_v1/system/auth/bind_mobile [Sys]换绑手机
+     * @apiVersion            1.0.0
+     * @apiName               SysAuthBindMobile
+     * @apiGroup              Poppy
+     * @apiQuery {string}     verify_code     之前手机号生成的校验验证串
+     * @apiQuery {string}     passport        新手机号
+     * @apiQuery {string}     captcha         验证码
      */
     public function bindMobile()
     {
@@ -254,10 +262,10 @@ class AuthController extends JwtApiController
     }
 
     /**
-     * @api                    {post} api_v1/system/auth/renew [Sys]续期
-     * @apiVersion             1.0.0
-     * @apiName                SysAuthRenew
-     * @apiGroup               Poppy
+     * @api                   {post} api_v1/system/auth/renew [Sys]续期
+     * @apiVersion            1.0.0
+     * @apiName               SysAuthRenew
+     * @apiGroup              Poppy
      */
     public function renew()
     {
@@ -282,10 +290,10 @@ class AuthController extends JwtApiController
 
 
     /**
-     * @api                    {post} api_v1/system/auth/logout [Sys]退出登录
-     * @apiVersion             1.0.0
-     * @apiName                SysAuthLogout
-     * @apiGroup               Poppy
+     * @api                   {post} api_v1/system/auth/logout [Sys]退出登录
+     * @apiVersion            1.0.0
+     * @apiName               SysAuthLogout
+     * @apiGroup              Poppy
      */
     public function logout()
     {
@@ -298,11 +306,11 @@ class AuthController extends JwtApiController
     }
 
     /**
-     * @api               {post} api_v1/system/auth/exists 检查通行证是否存在
-     * @apiVersion        1.0.0
-     * @apiName           SysAuthExists
-     * @apiGroup          Poppy
-     * @apiQuery {string} passport 通行证
+     * @api                   {post} api_v1/system/auth/exists 检查通行证是否存在
+     * @apiVersion            1.0.0
+     * @apiName               SysAuthExists
+     * @apiGroup              Poppy
+     * @apiQuery {string}     passport 通行证
      */
     public function exists()
     {
@@ -311,9 +319,8 @@ class AuthController extends JwtApiController
         if ($exists) {
             return Resp::success('通行证存在');
         }
-        else {
-            return Resp::error('通行证不存在');
-        }
+
+        return Resp::error('通行证不存在');
     }
 
     protected function username(): string

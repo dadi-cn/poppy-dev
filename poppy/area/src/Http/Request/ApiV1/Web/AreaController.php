@@ -14,34 +14,39 @@ class AreaController extends WebApiController
 {
 
     /**
-     * @api                   {get} api_v1/area/area/code [Area]地区代码
+     * @api                   {post} api_v1/area/area/code [Area]地区代码
      * @apiDescription        获取地区代码
      * @apiVersion            1.0.0
      * @apiName               AreaAreaCode
      * @apiGroup              Poppy
-     * @apiSuccess {int}      id           ID
+     * @apiSuccess {object[]} data         返回
+     * @apiSuccess {integer}  id           ID
      * @apiSuccess {string}   title        标题
      * @apiSuccess {string}   code         地区编码
      * @apiSuccess {object[]} children     子级别
      * @apiSuccessExample     城市数据
-     * [
-     *     {
-     *         "id": 1,
-     *         "title": "北京市",
-     *         "children": [
-     *             {
-     *                 "id": 3,
-     *                 "title": "北京市",
-     *                 "children": [
-     *                     {
-     *                         "id": 4,
-     *                         "title": "东城区"
-     *                     }
-     *                 ]
-     *             }
-     *         ]
-     *     }
-     * ]
+     * {
+     *     "status": 0,
+     *     "message": "",
+     *     "data": [
+     *         {
+     *             "id": 1,
+     *             "title": "北京市",
+     *             "children": [
+     *                 {
+     *                     "id": 3,
+     *                     "title": "北京市",
+     *                     "children": [
+     *                         {
+     *                             "id": 4,
+     *                             "title": "东城区"
+     *                         }
+     *                     ]
+     *                 }
+     *             ]
+     *         }
+     *     ]
+     * }
      */
     public function code()
     {

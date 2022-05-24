@@ -16,10 +16,10 @@ class CoreController extends JwtApiController
     use ThrottlesLogins;
 
     /**
-     * @api                    {post} api_v1/system/core/translate 多语言包
-     * @apiVersion             1.0.0
-     * @apiName                SysCoreTranslate
-     * @apiGroup               Poppy
+     * @api                   {post} api_v1/system/core/translate 多语言包
+     * @apiVersion            1.0.0
+     * @apiName               SysCoreTranslate
+     * @apiGroup              Poppy
      */
     public function translate()
     {
@@ -31,10 +31,10 @@ class CoreController extends JwtApiController
 
 
     /**
-     * @api                    {post} api_v1/system/core/info 系统信息
-     * @apiVersion             1.0.0
-     * @apiName                SysCoreInfo
-     * @apiGroup               Poppy
+     * @api                   {post} api_v1/system/core/info 系统信息
+     * @apiVersion            1.0.0
+     * @apiName               SysCoreInfo
+     * @apiGroup              Poppy
      */
     public function info()
     {
@@ -44,11 +44,11 @@ class CoreController extends JwtApiController
     }
 
     /**
-     * @api                    {post} api_v1/system/core/doc 获取文档
-     * @apiVersion             1.0.0
-     * @apiName                SysCoreDoc
-     * @apiGroup               Poppy
-     * @apiParam {String}      type 文档类型 [web:前端]
+     * @api                   {post} api_v1/system/core/doc 获取文档
+     * @apiVersion            1.0.0
+     * @apiName               SysCoreDoc
+     * @apiGroup              Poppy
+     * @apiQuery {string}     type 文档类型 [web:前端]
      */
     public function doc()
     {
@@ -59,17 +59,16 @@ class CoreController extends JwtApiController
                 'content' => $content
             ]);
         }
-        else {
-            return Resp::error($doc->getError());
-        }
+
+        return Resp::error($doc->getError());
     }
 
     /**
-     * @api                    {post} api_v1/system/core/mock Mock
-     * @apiVersion             1.0.0
-     * @apiName                SysCoreMock
-     * @apiGroup               Poppy
-     * @apiQuery {string}      mock   Json 格式的数据
+     * @api                   {post} api_v1/system/core/mock Mock
+     * @apiVersion            1.0.0
+     * @apiName               SysCoreMock
+     * @apiGroup              Poppy
+     * @apiQuery {string}     mock   Json 格式的数据
      */
     public function mock()
     {
