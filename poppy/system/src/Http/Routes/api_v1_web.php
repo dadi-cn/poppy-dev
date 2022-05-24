@@ -20,6 +20,7 @@ Route::group([
     $route->post('core/info', 'CoreController@info');
     $route->post('core/translate', 'CoreController@translate');
     $route->post('core/mock', 'CoreController@mock');
+    $route->post('core/helper', 'CoreController@helper');
 });
 
 /* 可以对用户设备进行封禁
