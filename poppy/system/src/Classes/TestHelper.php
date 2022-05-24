@@ -17,11 +17,11 @@ class TestHelper
      */
     public static function generate(string $helper): string
     {
-        if (!is_production()) {
+        if (is_production()) {
             return '';
         }
         $parsed = explode('|', $helper);
-        $method = array_unshift($parsed);
+        $method = array_shift($parsed);
         $tree   = new self();
         if (is_callable([$tree, $method])) {
             return call_user_func_array([$tree, $method], $parsed);
@@ -38,6 +38,9 @@ class TestHelper
     public function captcha(string $passport): string
     {
         $Verification = new Verification();
-        return $Verification->fetchCaptcha($passport);
+        if ($Verification->fetchCaptcha($passport)) {
+            return $Verification->getCaptcha();
+        }
+        return '';
     }
 }

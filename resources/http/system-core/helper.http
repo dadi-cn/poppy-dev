@@ -1,0 +1,32 @@
+### 发送验证码
+POST {{domain}}/api_v1/system/captcha/send
+Content-Type: application/json
+
+{
+    "passport" : "{{passport}}",
+    "_py_secret": "{{secret}}"
+}
+
+> {%
+    client.test("发送验证码", function(){
+        client.assert(response.status === 200);
+        client.assert(response.body['status'] === 0);
+    })
+%}
+
+
+### Helper 获取验证码
+POST {{domain}}/api_v1/system/core/helper
+Content-Type: application/json
+
+{
+    "type": "captcha|{{passport}}",
+    "_py_secret": "{{secret}}"
+}
+
+> {%
+    client.test("获取验证码", function(){
+        client.assert(response.status === 200);
+        client.assert(response.body['status'] === 0)
+    })
+%}
