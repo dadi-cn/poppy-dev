@@ -87,8 +87,6 @@ class CoreController extends JwtApiController
     {
         $type = input('type');
         $data = TestHelper::generate($type);
-        return Resp::success('Success', [
-            'content' => $data
-        ]);
+        return Resp::success('Success', $data);
     }
 }
