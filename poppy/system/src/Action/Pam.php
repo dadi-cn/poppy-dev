@@ -583,9 +583,15 @@ class Pam
      * @param PamAccount $pam 用户
      * @return bool
      */
-    private function checkIsEnable($pam): bool
+    private function checkIsEnable(PamAccount $pam): bool
     {
         if ($pam->is_enable === SysConfig::NO) {
+            $now = Carbon::now();
+            // 当前时间小于禁用时间(已解禁)
+            if ($now->lessThan($pam->disable_end_at)) {
+                $this->enable($pam->id, '用户登录, 超过封禁时间, 自动解禁');
+                return true;
+            }
             return $this->setError("该账号因 $pam->disable_reason 被封禁至 $pam->disable_end_at");
         }
         return true;
