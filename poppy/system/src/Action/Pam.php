@@ -311,6 +311,12 @@ class Pam
                 return false;
             }
 
+            try {
+                event(new LoginBannedEvent($this->pam, $guard));
+            } catch (Throwable $e) {
+                return $this->setError($e);
+            }
+
             event(new LoginSuccessEvent($pam, $guard_name));
             return true;
         }
