@@ -3,6 +3,7 @@
 namespace Poppy\Framework\Classes;
 
 use Faker\Factory;
+use Faker\Generator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Poppy\Framework\Helper\UtilHelper;
@@ -11,26 +12,31 @@ use Throwable;
 class Mocker
 {
 
-    private static $factory;
+    private static Generator $factory;
 
     /**
      * Mocker 生成器
      * {
      *     "name" : "name"
      * }
-     * @param mixed  $json
+     * @param string|array $json
      * @param string $locale
      * @return array
      */
-    public static function generate($json, $locale = Factory::DEFAULT_LOCALE): array
+    public static function generate($json, string $locale = Factory::DEFAULT_LOCALE): array
     {
         self::$factory = Factory::create($locale);
 
-        if (!UtilHelper::isJson($json)) {
-            return ['Input Mock Is Not Valid Json'];
+        if (Arr::isAssoc($json)) {
+            $define = (object) $json;
         }
-        $define = json_decode($json);
-        $gen    = [];
+        else {
+            if (!UtilHelper::isJson($json)) {
+                return ['Input Mock Is Not Valid Json'];
+            }
+            $define = json_decode($json);
+        }
+        $gen = [];
         if (is_array($define)) {
             return self::parseValue($define, 15);
         }

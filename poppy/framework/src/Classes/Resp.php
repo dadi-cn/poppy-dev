@@ -48,7 +48,7 @@ class Resp
 
     /**
      * Resp constructor.
-     * @param int    $code    code
+     * @param int $code code
      * @param string|MessageBag $message message
      */
     public function __construct(int $code, $message = '')
@@ -178,14 +178,14 @@ class Resp
 
     /**
      * 错误输出
-     * @param int                     $type   错误码
-     * @param string|array|MessageBag $msg    类型
-     * @param string|null|array       $append
+     * @param int $type 错误码
+     * @param string|array|MessageBag $msg 类型
+     * @param string|null|array $append
      *                                        _json: 强制以 json 数据返回
      *                                        _location : 重定向
      *                                        _reload : 刷新页面, 需要提前设定 Session::previousUrl()
      *                                        _time   : 刷新或者重定向的时间(毫秒), 如果为null, 则显示页面信息, false 为立即刷新或者重定向, true 默认为 3S, 指定时间则为 xx ms
-     * @param array|null              $input  表单提交的数据, 是否连带返回
+     * @param array|null $input 表单提交的数据, 是否连带返回
      * @return JsonResponse|RedirectResponse
      */
     public static function web(int $type, $msg, $append = null, array $input = null)
@@ -194,18 +194,22 @@ class Resp
             $code    = $msg->getCode() ?: self::ERROR;
             $message = $msg->getMessage();
             $resp    = new self($code, $message);
-        } elseif ($msg instanceof MessageBag) {
+        }
+        elseif ($msg instanceof MessageBag) {
             $messages = $msg->messages();
-            $strMsg = '';
+            $strMsg   = '';
             foreach ($messages as $message) {
                 $strMsg .= implode(',', $message);
             }
             $resp = new self(self::PARAM_ERROR, $strMsg);
-        }  elseif (!($msg instanceof self)) {
+        }
+        elseif (!($msg instanceof self)) {
             $resp = new self($type, $msg);
-        } else {
+        }
+        else {
             $resp = $msg;
         }
+
 
         $arrAppend = StrHelper::parseKey($append);
 
@@ -221,6 +225,9 @@ class Resp
         }
 
         if ($isJson) {
+            if ($append && is_string($append) && !Str::contains($append, '|')) {
+                return self::webSplash($resp, $append);
+            }
             return self::webSplash($resp, !is_null($append) ? $arrAppend : null);
         }
 
@@ -237,9 +244,9 @@ class Resp
 
     /**
      * 返回成功输入
-     * @param string|array|MessageBag $msg    提示消息
-     * @param string|null|array       $append 追加的信息
-     * @param array|null              $input  保留输入的数据
+     * @param string|array|MessageBag $msg 提示消息
+     * @param string|null|array $append 追加的信息
+     * @param array|null $input 保留输入的数据
      * @return JsonResponse|RedirectResponse
      */
     public static function success($msg, $append = null, array $input = null)
@@ -249,9 +256,9 @@ class Resp
 
     /**
      * 返回错误数组
-     * @param string|array|MessageBag $msg    提示消息
-     * @param string|null|array       $append 追加的信息
-     * @param array|null              $input  保留输入的数据
+     * @param string|array|MessageBag $msg 提示消息
+     * @param string|null|array $append 追加的信息
+     * @param array|null $input 保留输入的数据
      * @return JsonResponse|RedirectResponse
      */
     public static function error($msg, $append = null, array $input = null)
@@ -261,7 +268,7 @@ class Resp
 
     /**
      * 返回自定义信息
-     * @param int    $code    code
+     * @param int $code code
      * @param string $message message
      * @return array
      */
@@ -272,10 +279,10 @@ class Resp
 
     /**
      * 显示界面
-     * @param int|bool|null $time     时间
-     * @param string|null   $location location
-     * @param array|null    $input    input
-     * @return RedirectResponse|\Illuminate\Http\Response|Resp
+     * @param int|bool|null $time 时间
+     * @param string|null $location location
+     * @param array|null $input input
+     * @return RedirectResponse|\Illuminate\Http\Response
      */
     private static function webView($code, $message, $time = null, string $location = null, array $input = null)
     {
@@ -300,14 +307,16 @@ class Resp
         $to = '';
         if (UtilHelper::isUrl($location)) {
             $to = $location;
-        } elseif ($location === 'back') {
+        }
+        elseif ($location === 'back') {
             $to = app('url')->previous();
         }
 
         // 默认 3s
         if ($time === true) {
             $time = 0;
-        } else {
+        }
+        else {
             $time = (int) $time;
         }
 
@@ -327,7 +336,7 @@ class Resp
     /**
      * 不支持 location
      * splash 不支持 location | back (Mark Zhao)
-     * @param Resp         $resp   resp
+     * @param Resp $resp resp
      * @param string|array $append append
      * @return JsonResponse
      */
@@ -339,12 +348,11 @@ class Resp
         ];
 
         $data = null;
-        if (!is_null($append)) {
+        if ($append instanceof Arrayable || is_array($append)) {
             if ($append instanceof Arrayable) {
                 $data = $append->toArray();
-            } elseif (is_string($append)) {
-                $data = StrHelper::parseKey($append);
-            } elseif (is_array($append)) {
+            }
+            if (is_array($append)) {
                 $data = $append;
             }
             $returnData = [];
@@ -354,6 +362,9 @@ class Resp
                 }
             }
             $data = $returnData;
+        }
+        else if (is_string($append)) {
+            $data = $append;
         }
         if (!is_null($data)) {
             $return['data'] = $data;

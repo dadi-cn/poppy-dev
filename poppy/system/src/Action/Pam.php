@@ -115,7 +115,7 @@ class Pam
             return $this->setError($e);
         }
 
-        event(new LoginSuccessEvent($this->pam, $initDb['platform'], $guard));
+        event(new LoginSuccessEvent($this->pam, $guard));
         return true;
     }
 
