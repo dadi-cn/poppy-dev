@@ -3,7 +3,7 @@
 namespace Demo\Http\Request\Api\Web;
 
 use Poppy\MgrApp\Classes\Widgets\SimpleTableWidget;
-use Poppy\System\Http\Request\ApiV1\Web\WebApiController;
+use Poppy\System\Http\Request\ApiV1\WebApiController;
 
 class TableController extends WebApiController
 {

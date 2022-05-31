@@ -3,7 +3,7 @@
 namespace Demo\Http\Request\Api\Web;
 
 use Poppy\Framework\Classes\Resp;
-use Poppy\System\Http\Request\ApiV1\Web\WebApiController;
+use Poppy\System\Http\Request\ApiV1\WebApiController;
 
 class SsoController extends WebApiController
 {

@@ -5,7 +5,7 @@ namespace Poppy\Area\Http\Request\ApiV1\Web;
 use Poppy\Area\Models\SysArea;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Helper\UtilHelper;
-use Poppy\System\Http\Request\ApiV1\Web\WebApiController;
+use Poppy\System\Http\Request\ApiV1\WebApiController;
 
 /**
  * 地区管理控制器
@@ -24,7 +24,7 @@ class AreaController extends WebApiController
      * @apiSuccess {string}   title        标题
      * @apiSuccess {string}   code         地区编码
      * @apiSuccess {object[]} children     子级别
-     * @apiSuccessExample     城市数据
+     * @apiSuccessExample     json   城市数据
      * {
      *     "status": 0,
      *     "message": "",

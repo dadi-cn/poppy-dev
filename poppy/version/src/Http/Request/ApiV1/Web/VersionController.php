@@ -3,7 +3,7 @@
 namespace Poppy\Version\Http\Request\ApiV1\Web;
 
 use Poppy\Framework\Classes\Resp;
-use Poppy\System\Http\Request\ApiV1\Web\WebApiController;
+use Poppy\System\Http\Request\ApiV1\WebApiController;
 use Poppy\Version\Models\SysAppVersion;
 
 class VersionController extends WebApiController

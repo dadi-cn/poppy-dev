@@ -1,0 +1,54 @@
+### 第一个设备登录
+POST {{domain}}/api_v1/system/auth/login
+Content-Type: application/json
+x-id:11223344
+x-os: android
+
+{
+    "_py_secret" : "{{secret}}",
+    "passport" : "{{passport}}",
+    "password" : "{{password}}"
+}
+
+> {%
+    client.test("登录第一个设备", function(){
+        client.assert(response.status === 200);
+        client.assert(response.body['status'] === 0);
+        client.global.set('token', response.body['data']['token'])
+    })
+%}
+
+### 第二个设备登录
+POST {{domain}}/api_v1/system/auth/login
+Content-Type: application/json
+x-id:44332211
+x-os: ios
+
+{
+    "_py_secret" : "{{secret}}",
+    "passport" : "{{passport}}",
+    "password" : "{{password}}"
+}
+
+> {%
+    client.test("登录第二个设备", function(){
+        client.assert(response.status === 200);
+        client.assert(response.body['status'] === 0);
+    })
+%}
+
+
+### 第一个设备不可访问
+POST {{domain}}/api_v1/system/auth/access
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "_py_secret" : "{{secret}}"
+}
+
+> {%
+    client.test("第一个设备不可访问", function(){
+        client.assert(response.status === 401);
+    })
+%}

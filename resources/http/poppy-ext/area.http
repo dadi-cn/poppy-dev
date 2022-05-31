@@ -1,0 +1,14 @@
+### 地区代码
+POST {{domain}}/api_v1/area/area/code
+Content-Type: application/json
+
+{
+    "_py_secret" : "{{secret}}"
+}
+
+> {%
+    client.test("地区代码", function(){
+        client.assert(response.status === 200);
+        client.assert(response.body['status'] === 0);
+    })
+%}

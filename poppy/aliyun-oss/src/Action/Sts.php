@@ -19,7 +19,7 @@ class Sts
     /**
      * @var array 临时授权信息
      */
-    protected $tempKey;
+    protected array $tempKey;
 
     /**
      * @var mixed|string

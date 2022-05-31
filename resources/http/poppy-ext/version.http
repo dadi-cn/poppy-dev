@@ -1,0 +1,14 @@
+### 获取最新版本
+POST {{domain}}/api_v1/version/app/version
+Content-Type: application/json
+
+{
+    "_py_secret" : "{{secret}}"
+}
+
+> {%
+    client.test("最新版本", function(){
+        client.assert(response.status === 200);
+        client.assert(response.body['status'] === 0);
+    })
+%}
