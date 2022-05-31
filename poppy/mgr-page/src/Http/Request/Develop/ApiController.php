@@ -3,7 +3,6 @@
 namespace Poppy\MgrPage\Http\Request\Develop;
 
 use Carbon\Carbon;
-use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
@@ -70,7 +69,7 @@ class ApiController extends DevelopController
     /**
      * 自动生成接口
      * @param string $type 支持的类型
-     * @return Application|Factory|JsonResponse|RedirectResponse|Resp|Response|View
+     * @return Application|Factory|JsonResponse|RedirectResponse|Response|View
      */
     public function index($type = '')
     {
@@ -95,44 +94,18 @@ class ApiController extends DevelopController
         ]);
         $definition['sign_certificate'] = $certificate;
 
-        $apiDocUrl = url('docs/' . $type);
-
         $this->seo('Restful-' . $type, '优雅的在线接口调试方案');
+        try {
+            $index     = input('url');
+            $version   = input('version', '1.0.0');
+            $method    = input('method', 'get');
+            $variables = [];
 
-        $tokenGet = function ($key) use ($type) {
-            if (Session::has($key)) {
-                $token = Session::get($key);
-                if (!Str::contains($token, '.')) {
-                    return $token;
-                }
-                if (in_array($type, ['web', 'backend'])) {
-                    // check token is valid
-                    $this->token = $token;
-                    try {
-                        $item = $this->postWithSign(route('py-system:pam.auth.access'));
-                    } catch (Exception $e) {
-                        return $token;
-                    }
-
-                    if ($item->getStatusCode() === 200) {
-                        $content = $item->getBody()->getContents();
-                        $obj     = json_decode($content, true);
-                        if ($obj['status'] === 0) {
-                            \View::share('pam', $obj['data']);
-                        }
-                    }
-                }
+            $data = $this->apiData($type, $index, $method, $version);
+            if (!isset($data['current'])) {
+                return Resp::error('没有找到对应 URL 地址');
             }
 
-            return Session::get($key);
-        };
-
-        $index   = input('url');
-        $version = input('version', '1.0.0');
-        $method  = input('method', 'get');
-        try {
-            $data      = $this->apiData($type, $index, $method, $version);
-            $variables = [];
             if (isset($data['current_params'])) {
                 foreach ($data['current_params'] as $current_param) {
                     if (!isset($data['params'][$current_param->field]) && !$current_param->optional) {
@@ -148,54 +121,25 @@ class ApiController extends DevelopController
                 }
             }
             $data['version'] = 'v' . substr($version, 0, strpos($version, '.'));
-
-            $key           = 'Success 200';
-            $successFields = data_get($data['current'], 'success.fields');
-
-            if ($successFields && $successFields->$key) {
-                $success = $data['current']->success->fields->$key;
-            }
-            else {
-                $success = [];
-            }
-            $data['token'] = $tokenGet('dev#' . $type . '#token');
-
-            $headerSet       = function ($key) use ($type) {
-                $headers = '';
-                if (Session::has($key)) {
-                    $headerStr = Session::get($key);
-                    if (UtilHelper::isJson($headerStr)) {
-                        $headers = $headerStr;
-                    }
-                    \View::share('headers', $headers);
-                }
-
-                return $headers;
-            };
-            $data['headers'] = $headerSet("dev#${type}#headers");
-
-            // user
-            $user  = [];
-            $front = [];
-            if (!isset($data['current'])) {
-                return Resp::error('没有找到对应 URL 地址');
-            }
+            $data['token']   = Session::get('dev#' . $type . '#token');
+            $data['headers'] = Session::get('dev#' . $type . '#headers');
 
             return view('py-mgr-page::develop.api.index', [
                 'guard'      => $type,
                 'data'       => $data,
                 'variables'  => $variables,
-                'success'    => $success,
                 'definition' => $definition,
-                'apidoc_url' => $apiDocUrl,
-                'user'       => $user,
-                'front'      => $front,
+                'apidoc_url' => url('docs/' . $type),
             ]);
         } catch (Throwable $e) {
             return Resp::error('Url : `' . $index . '` 存在错误 : ' . $e->getMessage());
         }
     }
 
+    /**
+     * @param $type
+     * @return JsonResponse|RedirectResponse|Response
+     */
     public function json($type)
     {
         $jsonFile = base_path('public/docs/' . $type . '/api_data.json');
@@ -210,7 +154,7 @@ class ApiController extends DevelopController
      * 设置
      * @param string $type  类型
      * @param string $field 字段
-     * @return Application|Factory|JsonResponse|RedirectResponse|Resp|Response|View
+     * @return Application|Factory|JsonResponse|RedirectResponse|Response|View
      */
     public function field(string $type, string $field)
     {
@@ -230,7 +174,7 @@ class ApiController extends DevelopController
 
     /**
      * api 登录
-     * @return Application|Factory|JsonResponse|RedirectResponse|Resp|Response|View
+     * @return Application|Factory|JsonResponse|RedirectResponse|Response|View
      */
     public function login()
     {

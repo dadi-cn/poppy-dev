@@ -15,7 +15,7 @@ class PamEnableEvent
     public $pam;
 
     /**
-     * @var PamAccount 操作账号
+     * @var PamAccount|null
      */
     public $editor;
 
@@ -27,11 +27,11 @@ class PamEnableEvent
 
     /**
      * PamDisableEvent constructor.
-     * @param PamAccount $pam
-     * @param PamAccount $editor
-     * @param string     $reason
+     * @param PamAccount      $pam
+     * @param PamAccount|null $editor
+     * @param string          $reason
      */
-    public function __construct(PamAccount $pam, PamAccount $editor, $reason = '')
+    public function __construct(PamAccount $pam, ?PamAccount $editor, $reason = '')
     {
         $this->pam    = $pam;
         $this->editor = $editor;
