@@ -24,7 +24,7 @@ class AreaController extends WebApiController
      * @apiSuccess {string}   title        标题
      * @apiSuccess {string}   code         地区编码
      * @apiSuccess {object[]} children     子级别
-     * @apiSuccessExample     json   城市数据
+     * @apiSuccessExample     {json} data:
      * {
      *     "status": 0,
      *     "message": "",

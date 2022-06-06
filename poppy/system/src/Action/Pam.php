@@ -60,8 +60,8 @@ class Pam
     /**
      * 验证验登录
      * @param string $passport 通行证
-     * @param string $captcha 验证码
-     * @param string $guard 认证 Guard
+     * @param string $captcha  验证码
+     * @param string $guard    认证 Guard
      * @return bool
      * @throws Throwable
      */
@@ -79,7 +79,7 @@ class Pam
             'captcha'  => Rule::required(),
             'platform' => [
                 Rule::required(),
-                Rule::in(PamAccount::kvPlatform())
+                Rule::in(PamAccount::kvPlatform()),
             ],
         ]);
         if ($validator->fails()) {
@@ -130,8 +130,8 @@ class Pam
 
     /**
      * 用户注册
-     * @param string $passport passport
-     * @param string $password 密码
+     * @param string           $passport  passport
+     * @param string           $password  密码
      * @param string|array|int $role_name 用户角色名称
      * @return bool
      * @throws Throwable
@@ -269,8 +269,8 @@ class Pam
 
     /**
      * 密码登录
-     * @param string $passport passport
-     * @param string $password 密码
+     * @param string $passport   passport
+     * @param string $password   密码
      * @param string $guard_name 类型
      * @return bool
      * @throws ApplicationException
@@ -334,8 +334,8 @@ class Pam
 
     /**
      * 设置登录密码
-     * @param PamAccount|mixed $pam 用户
-     * @param string $password 密码
+     * @param PamAccount|mixed $pam      用户
+     * @param string           $password 密码
      * @return bool
      */
     public function setPassword($pam, string $password): bool
@@ -354,7 +354,7 @@ class Pam
                 Rule::string(),
                 Rule::required(),
                 Rule::simplePwd(),
-                Rule::between(6, 20)
+                Rule::between(6, 20),
             ],
         ]);
         if ($validator->fails()) {
@@ -375,8 +375,8 @@ class Pam
 
     /**
      * 设置角色
-     * @param PamAccount|mixed $pam 账号数据
-     * @param array $roles 角色名
+     * @param PamAccount|mixed $pam   账号数据
+     * @param array            $roles 角色名
      * @return bool
      */
     public function setRoles($pam, array $roles): bool
@@ -415,7 +415,7 @@ class Pam
     /**
      * 更换账号主体, 支持除非ID外的更换方式
      * @param string|numeric|PamAccount $old_passport
-     * @param string $new_passport
+     * @param string                    $new_passport
      * @return bool
      */
     public function rebind($old_passport, string $new_passport): bool
@@ -447,8 +447,8 @@ class Pam
 
     /**
      * 后台用户禁用
-     * @param int $id 用户id
-     * @param string $to 解禁时间
+     * @param int    $id     用户id
+     * @param string $to     解禁时间
      * @param string $reason 禁用原因
      * @return bool
      */
@@ -499,7 +499,7 @@ class Pam
 
     /**
      * 后台用户启用
-     * @param int $id 用户Id
+     * @param int    $id     用户Id
      * @param string $reason 原因
      * @return bool
      */
@@ -556,7 +556,7 @@ class Pam
     /**
      * 修改密码
      * @param string $old_password 老密码
-     * @param string $password 新密码
+     * @param string $password     新密码
      * @return bool
      */
     public function changePassword($old_password, $password): bool
@@ -587,8 +587,8 @@ class Pam
     {
         if ($pam->is_enable === SysConfig::NO) {
             $now = Carbon::now();
-            // 当前时间小于禁用时间(已解禁)
-            if ($now->lessThan($pam->disable_end_at)) {
+            // 当前时间大于禁用时间(已解禁)
+            if ($now->gt($pam->disable_end_at)) {
                 $this->enable($pam->id, '用户登录, 超过封禁时间, 自动解禁');
                 return true;
             }
