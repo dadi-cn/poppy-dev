@@ -3,7 +3,6 @@
 namespace Poppy\Area\Action;
 
 use Exception;
-use Illuminate\Contracts\View\Factory;
 use Poppy\Area\Classes\PyAreaDef;
 use Poppy\Area\Models\SysArea;
 use Poppy\Framework\Classes\Traits\AppTrait;
@@ -43,11 +42,11 @@ class Area
 
     /**
      * 创建需求
-     * @param array $data 创建数据
+     * @param array $data    创建数据
      *                       string  title       标题
      *                       int     parent_id   父id
      *                       int     top_id      顶级id
-     * @param null|int $id 地区id
+     * @param null|int $id   地区id
      * @return bool
      */
     public function establish(array $data, $id = null): bool
@@ -79,9 +78,6 @@ class Area
         if ($id && !$this->initArea($id)) {
             return false;
         }
-        if (!$initDb['parent_id'] && $data['top_id']) {
-            $initDb['parent_id'] = (int) $data['top_id'];
-        }
         $needUpdate = [];
         $this->matchKv(true);
         if ($id) {
@@ -94,7 +90,8 @@ class Area
                 [$this->areaId]
             );
             $this->area->update($initDb);
-        } else {
+        }
+        else {
             $area       = SysArea::create($initDb);
             $this->area = $area;
         }
@@ -135,7 +132,7 @@ class Area
 
     /**
      * 获取父元素IDs
-     * @param int $id 地区id
+     * @param int $id      地区id
      * @param string $type 类型
      * @return string|array
      */
@@ -162,7 +159,8 @@ class Area
         $matchKv = $this->matchKv();
         if (!is_array($id)) {
             $ids = [$id];
-        } else {
+        }
+        else {
             $ids = $id;
         }
 
@@ -233,7 +231,8 @@ class Area
 
         if ($view) {
             return $this->fixView();
-        } else {
+        }
+        else {
             return $this->fixResp();
         }
     }
@@ -250,7 +249,8 @@ class Area
             SysArea::where('id', $id)->update([
                 'has_child' => 1,
             ]);
-        } else {
+        }
+        else {
             SysArea::where('id', $id)->update([
                 'has_child' => 0,
             ]);
