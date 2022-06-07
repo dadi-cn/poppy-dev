@@ -3,9 +3,10 @@
 namespace Poppy\MgrApp\Classes\Traits;
 
 use Poppy\MgrApp\Classes\Action\Action;
+use Poppy\MgrApp\Classes\Action\CopyAction;
 use Poppy\MgrApp\Classes\Action\PageAction;
-use Poppy\MgrApp\Classes\Action\RequestAction;
 use Poppy\MgrApp\Classes\Action\ProgressAction;
+use Poppy\MgrApp\Classes\Action\RequestAction;
 
 trait UseActions
 {
@@ -52,7 +53,8 @@ trait UseActions
     {
         if (is_array($action)) {
             $this->items = array_merge($this->items, $action);
-        } else {
+        }
+        else {
             $this->items[] = $action;
         }
         return $this;
@@ -101,6 +103,21 @@ trait UseActions
     public function request(string $title, string $url): RequestAction
     {
         $action = new RequestAction($title, $url);
+        $action = $this->useDefaultStyle($action);
+        return tap($action, function () use ($action) {
+            $this->add($action);
+        });
+    }
+
+    /**
+     * 复制内容
+     * @param string $title
+     * @param string $content
+     * @return CopyAction
+     */
+    public function copy(string $title, string $content): CopyAction
+    {
+        $action = new CopyAction($title, $content);
         $action = $this->useDefaultStyle($action);
         return tap($action, function () use ($action) {
             $this->add($action);

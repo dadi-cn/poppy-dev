@@ -4,6 +4,7 @@ namespace Poppy\MgrApp\Http\Request\ApiMgrApp;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
@@ -34,7 +35,7 @@ class BanController extends BackendController
     }
 
 
-    public function status()
+    public function status(Request $request)
     {
         $type   = input(Scope::QUERY_NAME);
         $key    = 'py-mgr-page::ban.status-' . $type;
@@ -65,7 +66,7 @@ class BanController extends BackendController
     /**
      * 删除
      * @param $id
-     * @return JsonResponse|RedirectResponse|Response|Resp
+     * @return JsonResponse|RedirectResponse|Response
      */
     public function delete($id)
     {

@@ -83,7 +83,7 @@ abstract class Action implements Structable
      * 请求的Url
      * @var string
      */
-    private string $url;
+    protected string $url;
 
     /**
      * 确认消息

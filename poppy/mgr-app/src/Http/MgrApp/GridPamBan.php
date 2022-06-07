@@ -3,6 +3,7 @@
 namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
@@ -44,7 +45,7 @@ class GridPamBan extends GridBase
 
     public function quick(Actions $actions)
     {
-        $type = input(\Poppy\MgrPage\Classes\Grid\Filter\Scope::QUERY_NAME, PamAccount::TYPE_USER);
+        $type = input(Scope::QUERY_NAME, PamAccount::TYPE_USER);
 
         // 黑名单/白名单
         $status  = sys_setting('py-mgr-page::ban.status-' . $type, SysConfig::DISABLE);
@@ -52,14 +53,16 @@ class GridPamBan extends GridBase
         if ($status) {
             $actions->request('已启用', route_url('py-mgr-app:api.ban.status'))->success()->icon('Open')
                 ->confirm('当前启用, 确认禁用风险拦截');
-        } else {
+        }
+        else {
             $actions->request('已禁用', route_url('py-mgr-app:api.ban.status'))->danger()->icon('TurnOff')
                 ->confirm('当前禁用, 确认启用风险拦截');
         }
         if ($isBlack) {
             $actions->request('黑名单模式', route_url('py-mgr-app:api.ban.type'))->info()->default()->icon('Promotion')
                 ->confirm('当前黑名单模式, 是否切换到白名单');
-        } else {
+        }
+        else {
             $actions->request('白名单模式', route_url('py-mgr-app:api.ban.type'))->primary()->default()->icon('Position')
                 ->confirm('当前白名单模式, 是否切换到黑名单');
         }

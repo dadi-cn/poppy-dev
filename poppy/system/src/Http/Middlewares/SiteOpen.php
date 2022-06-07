@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Poppy\Framework\Classes\Resp;
 
 /**
- * 网站开启/关闭 后台和前台页面
+ * 网站开启/关闭, 用户需要限制, 其他人不进行限制
  */
 class SiteOpen
 {
@@ -20,9 +20,9 @@ class SiteOpen
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!sys_setting('py-system::site.is_open')) {
+        $type = x_header('type') ?? 'user';
+        if (!sys_setting('py-system::site.is_open') && $type === 'user') {
             $reason = sys_setting('py-system::site.close_reason');
-
             return Resp::error('网站临时关闭, 原因:' . $reason);
         }
 

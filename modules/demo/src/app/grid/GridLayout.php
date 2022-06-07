@@ -4,10 +4,10 @@ namespace Demo\App\Grid;
 
 
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Classes\Grid\GridBase;
 
 class GridLayout extends GridBase
 {
@@ -25,12 +25,14 @@ class GridLayout extends GridBase
         $table->add('created_at')->quickDatetime();
         $table->action(function (ActionsRender $actions) {
             $actions->styleIcon();
+            $row = $actions->getRow();
             $actions->request('错误', route('demo:api.mgr_app.grid_request', ['error']))->icon('Close')->danger();
             $actions->request('成功', route('demo:api.mgr_app.grid_request', ['success']))->icon('Check')->success();
             $actions->request('确认', route('demo:api.mgr_app.grid_request', ['success']))->confirm()->icon('QuestionFilled')->warning();
             $actions->request('Disabled', route('demo:api.mgr_app.grid_request', ['success']))->disabled()->icon('Minus');
             $actions->page('页面', route('demo:api.mgr_app.grid_form', ['detail']), 'form')->icon('Edit')->info();
-        })->quickIcon(5, true);
+            $actions->copy('复制', '复制自定义的内容' . $row['id']);
+        })->quickIcon(6);
     }
 
 
