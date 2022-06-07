@@ -33,6 +33,7 @@ class Checkbox extends MultipleSelect
     {
         $value       = Arr::get($data, $this->column);
         $this->value = is_null($value) ? $this->default : $value;
+        $this->value = (array) $this->value;
     }
 
     /**
