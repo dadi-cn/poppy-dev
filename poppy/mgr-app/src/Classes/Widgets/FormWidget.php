@@ -25,6 +25,7 @@ use Poppy\MgrApp\Classes\Form\Field\Datetime;
 use Poppy\MgrApp\Classes\Form\Field\DatetimeRange;
 use Poppy\MgrApp\Classes\Form\Field\Decimal;
 use Poppy\MgrApp\Classes\Form\Field\Divider;
+use Poppy\MgrApp\Classes\Form\Field\Dynamic;
 use Poppy\MgrApp\Classes\Form\Field\Editor;
 use Poppy\MgrApp\Classes\Form\Field\Email;
 use Poppy\MgrApp\Classes\Form\Field\File;
@@ -88,6 +89,7 @@ use function tap;
  * @method MultiImage multiImage($name, $label = '')
  * @method MultiFile multiFile($name, $label = '')
  * @method Editor editor($name, $label = '')
+ * @method Dynamic dynamic($name, $label = '')
  * @method Divider divider($label)
  * @method Code code($name, $label = '')
  * @method Actions actions($name, $label = '')
@@ -263,7 +265,7 @@ abstract class FormWidget
     /**
      * 返回表单的结构
      * 规则解析参考 : https://github.com/yiminghe/async-validator
-     * @return JsonResponse|RedirectResponse|Resp|Response
+     * @return JsonResponse|RedirectResponse|Response
      */
     public function resp()
     {
@@ -280,6 +282,12 @@ abstract class FormWidget
         }
 
         $struct = [];
+        if ($this->queryHas('depend')) {
+            $use    = $this->queryAfter('depend');
+            $name   = input('name', '');
+            $params = (string) input('params');
+            $struct = FieldDef::fetchDepend($name, $use, $params);
+        }
         if ($this->queryHas('struct')) {
             $struct = array_merge($struct, $this->queryStruct());
         }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Poppy\AliyunPush;
 
@@ -9,16 +9,6 @@ use Poppy\Framework\Support\PoppyServiceProvider as ModuleServiceProviderBase;
 
 class ServiceProvider extends ModuleServiceProviderBase
 {
-    /**
-     * @var string 模块标识
-     */
-    protected $name = 'poppy.aliyun-push';
-
-    /**
-     * Indicates if loading of the provider is deferred.
-     * @var bool
-     */
-    protected $defer = false;
 
     /**
      * Bootstrap the application events.
@@ -27,7 +17,7 @@ class ServiceProvider extends ModuleServiceProviderBase
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('poppy.aliyun-push');
 
         $this->bootConfig();
     }

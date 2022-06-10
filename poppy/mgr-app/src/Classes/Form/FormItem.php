@@ -5,10 +5,10 @@ namespace Poppy\MgrApp\Classes\Form;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
 use Poppy\Framework\Helper\StrHelper;
 use Poppy\MgrApp\Classes\Contracts\Structable;
+use Poppy\MgrApp\Classes\Form\Traits\UseFieldAttr;
 use function collect;
 use function validator;
 
@@ -20,6 +20,8 @@ use function validator;
  */
 abstract class FormItem implements Structable
 {
+    use UseFieldAttr;
+
     /**
      * 默认的数据
      * @var mixed
@@ -42,12 +44,6 @@ abstract class FormItem implements Structable
      * @var string 标签
      */
     protected string $label;
-
-    /**
-     * 字段的属性
-     * @var Fluent
-     */
-    private Fluent $fieldAttr;
 
     /**
      * 字段名字
@@ -75,13 +71,12 @@ abstract class FormItem implements Structable
 
     /**
      * 表单条目
-     * @param string $name 名称/属性
+     * @param string $name  名称/属性
      * @param string $label 标签名称
      */
     public function __construct(string $name, string $label)
     {
-        $this->fieldAttr = new Fluent();
-
+        $this->fieldAttrInit();
         $this->name  = $name;
         $this->label = $label;
 
@@ -115,18 +110,6 @@ abstract class FormItem implements Structable
     public function disabled(): self
     {
         $this->setAttribute('disabled', true);
-        return $this;
-    }
-
-    /**
-     * 字段属性
-     * @param $attr
-     * @param $value
-     * @return $this
-     */
-    public function setAttribute($attr, $value): self
-    {
-        $this->fieldAttr->offsetSet($attr, $value);
         return $this;
     }
 
@@ -176,7 +159,7 @@ abstract class FormItem implements Structable
             'name'  => $this->name,
             'label' => $this->label,
             'help'  => $this->help,
-            'field' => $this->attributes(),
+            'attr' => $this->attributes(),
             'rules' => collect($this->rules)->map(function ($rule) {
                 return (string) $rule;
             })->toArray(),
@@ -214,21 +197,11 @@ abstract class FormItem implements Structable
     }
 
     /**
-     * 获取属性
-     * @param $attr
-     * @return mixed
-     */
-    protected function getAttribute($attr)
-    {
-        return $this->fieldAttr->offsetGet($attr);
-    }
-
-    /**
      * 获取属性列表
      * @return object
      */
     protected function attributes(): object
     {
-        return (object) $this->fieldAttr->toArray();
+        return $this->fieldAttr();
     }
 }

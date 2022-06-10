@@ -1,6 +1,9 @@
 poppy.mgr-app.settings :
-  title : 系统配置
-  type : array
+    title : 系统配置
+    type : array
+poppy.mgr-app.form-dependence :
+    title : 表单依赖
+    type : simple-array
 poppy.mgr-dev.checker :
-  title : 配置检测
-  type : array
+    title : 配置检测
+    type : array

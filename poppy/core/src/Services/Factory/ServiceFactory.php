@@ -2,6 +2,8 @@
 
 namespace Poppy\Core\Services\Factory;
 
+use Form;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Poppy\Core\Classes\Traits\CoreTrait;
 use Poppy\Core\Services\Contracts\ServiceArray;
@@ -18,7 +20,7 @@ class ServiceFactory
 
     /**
      * 钩子
-     * @param string $id 钩子标示符
+     * @param string $id    钩子标示符
      * @param array $params 参数
      * @return null
      */
@@ -42,7 +44,7 @@ class ServiceFactory
 
     /**
      * 分析数组
-     * @param array $hooks Hook
+     * @param array $hooks  Hook
      * @param array $params 参数
      * @return array
      * @throws ApplicationException
@@ -64,8 +66,27 @@ class ServiceFactory
     }
 
     /**
+     * 分析数组
+     * @param array $hooks  Hook
+     * @param array $params 参数
+     * @return array
+     * @throws ApplicationException
+     */
+    protected function parseSimpleArray(array $hooks, $params = []): array
+    {
+        $collect = [];
+        collect($hooks)->each(function ($hook) use (&$collect) {
+            if (!class_exists($hook)) {
+                throw new ApplicationException('Hook Class `' . $hook . '` not exist!');
+            }
+            $collect[] = $hook;
+        });
+        return $collect;
+    }
+
+    /**
      * 解析 Html, 多组
-     * @param array $hooks 钩子
+     * @param array $hooks  钩子
      * @param array $params 参数
      * @return string
      */
@@ -87,8 +108,8 @@ class ServiceFactory
     /**
      * 分析表单
      * @param string $builder 构建器
-     * @param array $params 参数
-     * @return \Illuminate\Support\HtmlString|mixed
+     * @param array $params   参数
+     * @return HtmlString|mixed
      */
     protected function parseForm($builder, $params)
     {
@@ -99,6 +120,6 @@ class ServiceFactory
             }
         }
 
-        return \Form::text($params['name'], $params['value'], $params['options'] + ['class' => 'layui-input']);
+        return Form::text($params['name'], $params['value'], $params['options'] + ['class' => 'layui-input']);
     }
 }

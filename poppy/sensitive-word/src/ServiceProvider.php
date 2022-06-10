@@ -9,10 +9,6 @@ use Poppy\SensitiveWord\Http\RouteServiceProvider;
 
 class ServiceProvider extends ModuleServiceProviderBase
 {
-    /**
-     * @var string the poppy name slug
-     */
-    private $name = 'poppy.sensitive-word';
 
     /**
      * Bootstrap the module services.
@@ -21,7 +17,7 @@ class ServiceProvider extends ModuleServiceProviderBase
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('poppy.sensitive-word');
     }
 
     /**

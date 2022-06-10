@@ -12,15 +12,11 @@ use Poppy\MgrPage\Classes\Grid\Filter;
 
 class ServiceProvider extends ModuleServiceProviderBase
 {
-    protected $listens = [
+    protected array $listens = [
         PoppyOptimized::class => [
             Listeners\PoppyOptimized\ClearCacheListener::class,
         ],
     ];
-    /**
-     * @var string the poppy name slug
-     */
-    private $name = 'poppy.area';
 
     /**
      * Bootstrap the module services.
@@ -29,7 +25,7 @@ class ServiceProvider extends ModuleServiceProviderBase
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('poppy.area');
     }
 
     /**

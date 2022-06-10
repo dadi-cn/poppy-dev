@@ -5,6 +5,7 @@ namespace Poppy\MgrApp;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Exceptions\ModuleNotFoundException;
 use Poppy\Framework\Support\PoppyServiceProvider;
+use Poppy\MgrApp\Classes\Form\FieldDef;
 
 /**
  * @property $listens;
@@ -14,25 +15,13 @@ class ServiceProvider extends PoppyServiceProvider
     use PoppyTrait;
 
     /**
-     * @var string Module name
-     */
-    protected $name = 'poppy.mgr-app';
-
-    protected $listens = [
-    ];
-
-    protected $policies = [
-
-    ];
-
-    /**
      * Bootstrap the module services.
      * @return void
      * @throws ModuleNotFoundException
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('poppy.mgr-app');
 
         $this->bootConfigs();
     }
@@ -45,6 +34,8 @@ class ServiceProvider extends PoppyServiceProvider
     {
         $this->app->register(Http\MiddlewareServiceProvider::class);
         $this->app->register(Http\RouteServiceProvider::class);
+
+        $this->registerForm();
     }
 
     public function provides(): array
@@ -52,29 +43,9 @@ class ServiceProvider extends PoppyServiceProvider
         return [];
     }
 
-    private function registerSchedule()
+    private function registerForm()
     {
-
-    }
-
-    /**
-     * register rbac and alias
-     */
-    private function registerContracts()
-    {
-
-
-    }
-
-    private function registerConsole()
-    {
-        $this->commands([
-        ]);
-    }
-
-    private function registerAuth()
-    {
-
+        FieldDef::registerDependencies();
     }
 
     private function bootConfigs()

@@ -32,12 +32,7 @@ class ServiceProvider extends PoppyServiceProvider
 {
     use PoppyTrait;
 
-    /**
-     * @var string Module name
-     */
-    protected $name = 'poppy.system';
-
-    protected $listens = [
+    protected array $listens = [
         // laravel
         AuthLoginEvent::class           => [
 
@@ -60,7 +55,7 @@ class ServiceProvider extends PoppyServiceProvider
         ],
     ];
 
-    protected $policies = [
+    protected array $policies = [
         PamRole::class    => PamRolePolicy::class,
         PamAccount::class => PamAccountPolicy::class,
     ];
@@ -72,7 +67,7 @@ class ServiceProvider extends PoppyServiceProvider
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('poppy.system');
 
         $this->bootConfigs();
     }

@@ -22,13 +22,13 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
      * event listener
      * @var array
      */
-    protected $listens = [];
+    protected array $listens = [];
 
     /**
      * policy
      * @var array
      */
-    protected $policies = [];
+    protected array $policies = [];
 
     /**
      * Bootstrap the application events.
@@ -115,10 +115,9 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
      * consoleLog
      * @return string
      */
-    protected function consoleLog()
+    protected function consoleLog(): string
     {
         $day = Carbon::now()->toDateString();
-
         return storage_path('logs/console-' . $day . '.log');
     }
 }

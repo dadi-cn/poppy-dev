@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Poppy\CodeGenerator;
 
@@ -9,7 +9,11 @@ use Poppy\Framework\Support\PoppyServiceProvider;
 
 class ServiceProvider extends PoppyServiceProvider
 {
-    protected $name = 'poppy.code-generator';
+
+    public function boot()
+    {
+        parent::boot('poppy.code-generator');
+    }
 
     public function register()
     {

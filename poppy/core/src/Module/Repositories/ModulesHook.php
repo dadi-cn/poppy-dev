@@ -36,22 +36,28 @@ class ModulesHook extends Repository
                         if (empty($service)) {
                             return;
                         }
-                        if ($service['type'] === 'array') {
-                            $data = (array) $collection->get($item['name']);
-                            if (!isset($item['hooks'])) {
-                                throw new ApplicationException("Hook `{$item['name']}` did not has property `hooks`");
-                            }
-                            if (!is_array($item['hooks'])) {
-                                throw new ApplicationException("Hook `{$item['name']}` 的 `hooks` 必须是数组");
-                            }
-                            $collection->put($item['name'], array_merge($data, $item['hooks']));
-                        }
-                        if ($service['type'] === 'form') {
-                            $collection->put($item['name'], $item['builder']);
-                        }
-                        if ($service['type'] === 'html') {
-                            $data = (array) $collection->get($item['name']);
-                            $collection->put($item['name'], array_merge($data, $item['hooks']));
+                        switch ($service['type']) {
+                            case 'array':
+                            case 'simple-array':
+                                $data = (array) $collection->get($item['name']);
+                                if (!isset($item['hooks'])) {
+                                    throw new ApplicationException("Hook `{$item['name']}` did not has property `hooks`");
+                                }
+                                if (!is_array($item['hooks'])) {
+                                    throw new ApplicationException("Hook `{$item['name']}` 的 `hooks` 必须是数组");
+                                }
+                                $collection->put($item['name'], array_merge($data, $item['hooks']));
+                                break;
+                            case 'form':
+                                $collection->put($item['name'], $item['builder']);
+                                break;
+                            case 'html':
+                                $data = (array) $collection->get($item['name']);
+                                $collection->put($item['name'], array_merge($data, $item['hooks']));
+                                break;
+                            default:
+                                sys_error('core', __CLASS__, "`{$item['name']}` 的类型 `{$service['type']}` 不支持");
+                                break;
                         }
                     });
                 });

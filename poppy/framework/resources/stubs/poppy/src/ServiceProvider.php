@@ -8,10 +8,6 @@ use Poppy\Framework\Support\PoppyServiceProvider as ModuleServiceProviderBase;
 
 class ServiceProvider extends ModuleServiceProviderBase
 {
-    /**
-     * @var string the poppy name slug
-     */
-    private $name = 'DummySlug';
 
     /**
      * Bootstrap the module services.
@@ -20,7 +16,7 @@ class ServiceProvider extends ModuleServiceProviderBase
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('DummySlug');
     }
 
     /**

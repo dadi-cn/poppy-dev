@@ -7,7 +7,6 @@ use Poppy\MgrPage\Classes\Form\Field;
 
 final class Area extends Field
 {
-
     /**
      * @inheritDoc
      */

@@ -10,12 +10,8 @@ use Poppy\Framework\Support\PoppyServiceProvider;
 
 class ServiceProvider extends PoppyServiceProvider
 {
-    /**
-     * @var string Module name
-     */
-    protected $name = 'poppy.core';
 
-    protected $listens = [
+    protected array $listens = [
         // poppy
         PoppyOptimizedEvent::class => [
             ClearCacheListener::class,
@@ -29,7 +25,7 @@ class ServiceProvider extends PoppyServiceProvider
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('poppy.core');
 
         // 注册 api 文档配置
         $this->publishes([

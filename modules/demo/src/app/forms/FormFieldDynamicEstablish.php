@@ -5,7 +5,7 @@ namespace Demo\App\Forms;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Widgets\FormWidget;
 
-class FormFieldEditorEstablish extends FormWidget
+class FormFieldDynamicEstablish extends FormWidget
 {
 
     public function handle()
@@ -19,17 +19,24 @@ class FormFieldEditorEstablish extends FormWidget
     public function data(): array
     {
         return [
-            'id'           => 5,
-            'default'      => '<p>XXXX</p>',
-            'default-code' => <<<CODE
-\$this->editor('default', 'Editor');
-CODE,
+            'country' => 'HK',
         ];
     }
 
     public function form()
     {
-        $this->editor('default', 'Editor');
+        $this->select('country', '地区')->depend('area', 'type|country')->filterable();
+        $this->select('province')->depend('area', 'type|province')->filterable();
+        $this->dynamic('city', '子地区');
         $this->code('default-code');
+    }
+
+    /**
+     * 定义条件依赖
+     * @return void
+     */
+    public function dependence()
+    {
+
     }
 }

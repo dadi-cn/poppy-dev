@@ -5,10 +5,9 @@ namespace Demo\Forms;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
+use Illuminate\Http\Response;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrPage\Classes\Widgets\FormWidget;
-use Response;
 
 abstract class FormBaseWidget extends FormWidget
 {
@@ -19,7 +18,7 @@ abstract class FormBaseWidget extends FormWidget
      * Handle the form request.
      *
      * @param Request $request
-     * @return array|JsonResponse|RedirectResponse|\Illuminate\Http\Response|Redirector|Resp|Response
+     * @return Response|JsonResponse|RedirectResponse
      */
     public function handle(Request $request)
     {

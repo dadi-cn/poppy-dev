@@ -16,10 +16,13 @@ trait UseOptions
      */
     public function options($options = []): self
     {
+        if ($this->getAttribute('depend')) {
+            sys_error('mgr-app', __CLASS__, '已存在依赖, 不能设置选项, 依赖字段和选项不能共存');
+            return $this;
+        }
         if ($options instanceof Arrayable) {
             $options = $options->toArray();
         }
-
 
         $first = Arr::first($options);
         $group = false;

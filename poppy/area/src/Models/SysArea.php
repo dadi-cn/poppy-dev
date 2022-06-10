@@ -15,13 +15,13 @@ use Poppy\System\Classes\Traits\FilterTrait;
  * 地区表
  *
  * @property int $id
- * @property string $code            编码
- * @property string $title           名称
+ * @property string $code 编码
+ * @property string $title 名称
  * @property string $parent_id       父级
  * @property string $top_parent_id   顶层ID
  * @property string $children        所有的子元素
- * @property int $has_child       是否有子元素
- * @property int $level           级别
+ * @property int $has_child          是否有子元素
+ * @property int $level              级别
  * @method static Builder|SysArea filter($input = [], $filter = null)
  * @method static Builder|SysArea pageFilter(PageInfo $pageInfo)
  * @method static Builder|SysArea paginateFilter($perPage = null, $columns = [], $pageName = 'page', $page = null)
@@ -133,6 +133,23 @@ class SysArea extends Model
         }
         return kv($cache, $code);
     }
+
+    /**
+     * 省份的KV
+     * @param int|null $id 2位长度, 匹配身份证省份/城市
+     * @return array|string
+     */
+    public static function kvProvinceId(int $id = null)
+    {
+        static $cache;
+        if (!$cache) {
+            $cache = sys_cache('py-area')->remember(PyAreaDef::ckArea('kv-province-id'), PyCoreDef::MIN_ONE_MONTH * 60, function () {
+                return self::where('level', self::LEVEL_PROVINCE)->selectRaw('id, title')->pluck('title', 'id')->toArray();
+            });
+        }
+        return kv($cache, $id);
+    }
+
 
     /**
      * 国家KV

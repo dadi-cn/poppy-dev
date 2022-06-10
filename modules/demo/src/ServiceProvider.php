@@ -10,15 +10,11 @@ use Poppy\System\Events\PassportVerifyEvent;
 
 class ServiceProvider extends ModuleServiceProviderBase
 {
-    protected $listens = [
+    protected array $listens = [
         PassportVerifyEvent::class => [
             PassportVerifyListener::class,
         ],
     ];
-    /**
-     * @var string the poppy name slug
-     */
-    private $name = 'demo';
 
     /**
      * Bootstrap the module services.
@@ -27,7 +23,7 @@ class ServiceProvider extends ModuleServiceProviderBase
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('demo');
     }
 
     /**

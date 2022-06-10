@@ -8,16 +8,6 @@ use Poppy\Framework\Support\PoppyServiceProvider as ModuleServiceProviderBase;
 
 class ServiceProvider extends ModuleServiceProviderBase
 {
-    /**
-     * @var string 模块标识
-     */
-    protected $name = 'poppy.aliyun-oss';
-
-    /**
-     * Indicates if loading of the provider is deferred.
-     * @var bool
-     */
-    protected $defer = false;
 
     /**
      * Bootstrap the application events.
@@ -26,7 +16,7 @@ class ServiceProvider extends ModuleServiceProviderBase
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('poppy.aliyun-oss');
 
         $this->bootConfig();
     }

@@ -31,6 +31,8 @@ backend :
                         path : form/demo:api.mgr_app.form/field-image
                     -   title : Editor
                         path : form/demo:api.mgr_app.form/field-editor
+                    -   title : Dynamic
+                        path : form/demo:api.mgr_app.form/field-dynamic
             -   title : Rule
                 children :
                     -   title : Text

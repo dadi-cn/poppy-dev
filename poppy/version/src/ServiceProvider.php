@@ -8,14 +8,6 @@ use Poppy\Version\Http\RouteServiceProvider;
 
 class ServiceProvider extends ModuleServiceProviderBase
 {
-    protected $listens = [
-
-    ];
-    /**
-     * @var string the poppy name slug
-     */
-    private $name = 'poppy.version';
-
     /**
      * Bootstrap the module services.
      * @return void
@@ -23,7 +15,7 @@ class ServiceProvider extends ModuleServiceProviderBase
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('poppy.version');
     }
 
     /**

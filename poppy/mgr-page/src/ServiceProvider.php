@@ -14,14 +14,6 @@ use Poppy\MgrPage\Commands\MixCommand;
  */
 class ServiceProvider extends PoppyServiceProvider
 {
-    /**
-     * @var string Module name
-     */
-    protected $name = 'poppy.mgr-page';
-
-    protected $listens = [];
-
-    protected $policies = [];
 
     /**
      * Bootstrap the module services.
@@ -30,7 +22,7 @@ class ServiceProvider extends PoppyServiceProvider
      */
     public function boot()
     {
-        parent::boot($this->name);
+        parent::boot('poppy.mgr-page');
 
         // 注册 api 文档配置
         $this->publishes([
