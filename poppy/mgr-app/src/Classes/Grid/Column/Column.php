@@ -390,8 +390,9 @@ class Column implements Structable
     public function actions(Closure $closure): self
     {
         $column = $this;
-        return $this->display(function ($value) use ($column, $closure) {
-            $render = new ActionsRender($value, $this);
+        $name   = $this->name;
+        return $this->display(function ($value) use ($column, $closure, $name) {
+            $render = new ActionsRender($value, $this, $name);
             $column->setType('actions');
             return $render->render($closure);
         });
