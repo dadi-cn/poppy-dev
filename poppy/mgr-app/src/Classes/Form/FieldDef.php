@@ -56,23 +56,40 @@ class FieldDef
     /**
      * 获取关联数据
      * @param string $name
-     * @param string $use
      * @param string $params
      * @return array
      */
-    public static function fetchDepend(string $name, string $use, string $params = ''): array
+    public static function fetchDependAttr(string $name, string $params = ''): array
     {
 
         $depend = self::$dependencies[$name] ?? '';
         if (!$depend) {
-            return  [];
+            return [];
         }
         /** @var FormDependence $objDepend */
         $objDepend = new $depend();
         $objDepend->params($params);
-        if ($use === 'field') {
-            return $objDepend->field();
-        }
         return $objDepend->attr();
+    }
+
+    /**
+     * 获取关联字段属性
+     * @param string $name
+     * @param string $params
+     * @param array $values
+     * @return array
+     */
+    public static function fetchDependField(string $name, string $params = '', array $values = []): array
+    {
+
+        $depend = self::$dependencies[$name] ?? '';
+        if (!$depend) {
+            return [];
+        }
+        /** @var FormDependence $objDepend */
+        $objDepend = new $depend();
+        $objDepend->params($params);
+        $objDepend->values($values);
+        return $objDepend->field();
     }
 }

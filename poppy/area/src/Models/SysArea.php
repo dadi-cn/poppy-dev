@@ -135,6 +135,22 @@ class SysArea extends Model
     }
 
     /**
+     * 城市的KV
+     * @param int|null $province
+     * @return array|mixed
+     */
+    public static function kvCityId(int $province)
+    {
+        static $cache;
+        if (!$cache) {
+            $cache = sys_cache('py-area')->remember(PyAreaDef::ckArea('kv-city-id-' . $province), PyCoreDef::MIN_ONE_MONTH * 60, function () use ($province) {
+                return self::where('level', self::LEVEL_CITY)->where('parent_id', $province)->selectRaw('id, title')->pluck('title', 'id')->toArray();
+            });
+        }
+        return $cache;
+    }
+
+    /**
      * 省份的KV
      * @param int|null $id 2位长度, 匹配身份证省份/城市
      * @return array|string

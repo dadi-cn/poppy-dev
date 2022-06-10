@@ -286,7 +286,13 @@ abstract class FormWidget
             $use    = $this->queryAfter('depend');
             $name   = input('name', '');
             $params = (string) input('params');
-            $struct = FieldDef::fetchDepend($name, $use, $params);
+            $values = (array) input('values');
+            if ($use === 'attr') {
+                $struct = FieldDef::fetchDependAttr($name, $params);
+            }
+            else {
+                $struct = FieldDef::fetchDependField($name, $params, $values);
+            }
         }
         if ($this->queryHas('struct')) {
             $struct = array_merge($struct, $this->queryStruct());

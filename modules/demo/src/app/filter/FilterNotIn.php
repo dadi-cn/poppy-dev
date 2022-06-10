@@ -3,9 +3,9 @@
 namespace Demo\App\Filter;
 
 use Demo\Models\DemoUser;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Widgets\FilterWidget;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Classes\Grid\GridBase;
 
 class FilterNotIn extends GridBase
 {
@@ -38,7 +38,7 @@ class FilterNotIn extends GridBase
     public function filter(FilterWidget $filter)
     {
         $filter->action();
-        $filter->notIn('id', 'ID')->asSelect(array_combine(range(1, 20), range(1, 20)), 'ID');
-        $filter->notIn('account_id', 'Uid In(Select)')->asSelect(DemoUser::where('id', '<', 10)->pluck('id', 'id')->toArray(), '选择用户');
+        $filter->notIn('id', 'ID')->asMultiSelect(array_combine(range(1, 20), range(1, 20)), 'ID');
+        $filter->notIn('account_id', 'Uid In(Select)')->asMultiSelect(DemoUser::where('id', '<', 10)->pluck('id', 'id')->toArray(), '选择用户');
     }
 }

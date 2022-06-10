@@ -3,6 +3,7 @@
 namespace Poppy\Area\Classes\Form\Dependence;
 
 use Poppy\Area\Models\SysArea;
+use Poppy\MgrApp\Classes\Form\Field\Select;
 use Poppy\MgrApp\Classes\Form\FormDependence;
 use Poppy\MgrApp\Classes\Form\Traits\UseOptions;
 
@@ -36,7 +37,16 @@ final class Area extends FormDependence
 
     public function field(): array
     {
-        return parent::field();
+        $select     = new Select('city', '城市选择');
+        $provinceId = (int) ($this->values[0] ?? 0);
+        if (!$provinceId) {
+            $select->placeholder('请选择省份');
+        }
+        else {
+            $cities = SysArea::kvCityId($provinceId);
+            $select->options($cities)->placeholder('请选择城市');
+        }
+        return parent::dropField($select->struct());
     }
 
 

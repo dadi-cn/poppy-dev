@@ -19,7 +19,9 @@ class FormFieldDynamicEstablish extends FormWidget
     public function data(): array
     {
         return [
-            'country' => 'HK',
+            'country'  => 'HK',
+            'province' => 4,
+            'city'     => 50,
         ];
     }
 
@@ -27,7 +29,7 @@ class FormFieldDynamicEstablish extends FormWidget
     {
         $this->select('country', '地区')->depend('area', 'type|country')->filterable();
         $this->select('province')->depend('area', 'type|province')->filterable();
-        $this->dynamic('city', '子地区');
+        $this->dynamic('city', '子地区')->rel(['province'])->depend('area', 'type|city');
         $this->code('default-code');
     }
 

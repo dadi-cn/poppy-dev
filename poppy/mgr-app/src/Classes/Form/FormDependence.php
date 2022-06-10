@@ -33,6 +33,12 @@ abstract class FormDependence
     protected array $params;
 
     /**
+     * 动态值参数
+     * @var array
+     */
+    protected array $values;
+
+    /**
      * 表单条目
      */
     public function __construct()
@@ -47,10 +53,22 @@ abstract class FormDependence
         return $this->name;
     }
 
+
+    protected function dropField($struct)
+    {
+        unset($struct['name'], $struct['label']);
+        return $struct;
+    }
+
     public function params($params)
     {
         $arrParams    = StrHelper::parseKey($params);
         $this->params = $arrParams;
+    }
+
+    public function values($values)
+    {
+        $this->values = $values;
     }
 
     /**
@@ -59,7 +77,7 @@ abstract class FormDependence
      */
     public function field(): array
     {
-        return  [];
+        return [];
     }
 
     /**
@@ -68,7 +86,7 @@ abstract class FormDependence
      */
     public function attr(): array
     {
-        return  [];
+        return [];
     }
 
 }
