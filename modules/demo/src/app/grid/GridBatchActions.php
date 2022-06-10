@@ -3,16 +3,16 @@
 
 namespace Demo\App\Grid;
 
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Classes\Grid\GridBase;
 
 /**
  * 按钮
  */
 class GridBatchActions extends GridBase
 {
-    public string $title       = '批量操作';
+    public string $title = '批量操作';
 
     public string $description = '描述';
 
@@ -21,7 +21,7 @@ class GridBatchActions extends GridBase
      */
     public function table(TableWidget $table)
     {
-        $table->add('id', 'ID')->width(150)->sortable();
+        $table->add('id', 'ID')->quickId()->sortable();
         $table->add('title', '标题')->width(200)->ellipsis();
         $table->add('status', '状态')->display(function () {
             $defs = [
@@ -33,7 +33,7 @@ class GridBatchActions extends GridBase
             ];
             return $defs[data_get($this, 'status')] ?? '-';
         });
-        $table->add('birth_at', '发布时间');
+        $table->add('birth_at', '发布时间')->quickDatetime();
     }
 
     /**

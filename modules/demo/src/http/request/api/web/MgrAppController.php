@@ -26,7 +26,7 @@ class MgrAppController extends WebApiController
         $class = "Demo\App\Forms\Form{$type}Establish";
         /** @var FormWidget $form */
         $form = new $class();
-        $form->title($type, '基础表单的描述');
+        $form->title($type);
         return $form->resp();
     }
 

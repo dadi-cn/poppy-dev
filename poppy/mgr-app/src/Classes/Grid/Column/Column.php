@@ -24,7 +24,7 @@ use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
  * @property-read string $relation    当前关系
  * @property-read bool $relationMany  是否是一对多关系
  * @property-read string $label       标签
- * @property-read bool $hide        是否默认隐藏
+ * @property-read bool $hide          是否默认隐藏
  * @method Column image($server = '', $width = 200, $height = 200)   // todo 需要完成图片的缩略图约定
  * @method Column link($href = '', $target = '_blank')
  * @method Column download($server = '')
@@ -228,7 +228,7 @@ class Column implements Structable
     /**
      * 设置列宽度, 单个按钮 最优宽度 60(图标), 每个按钮增加 45 宽度
      * Datetime 最优宽度 170
-     * @param int $width 宽度
+     * @param int $width  宽度
      * @param bool $fixed 是否是固定宽度
      * @return $this
      */
@@ -236,7 +236,8 @@ class Column implements Structable
     {
         if ($fixed) {
             $this->width = $width;
-        } else {
+        }
+        else {
             $this->minWidth = $width;
         }
         return $this;
@@ -499,10 +500,12 @@ class Column implements Structable
             $relations = data_get($row, $relation);
             if ($relations instanceof Collection) {
                 $value = $relations->pluck($field);
-            } else {
+            }
+            else {
                 $value = $relations;
             }
-        } else {
+        }
+        else {
             $value = Arr::get($row, $this->name);
             if ($value instanceof Carbon) {
                 $value = $value->toDateTimeString();

@@ -81,8 +81,13 @@ trait UseActions
         return $this;
     }
 
-
-    public function styleDropdown($length = 5, $icon = false): self
+    /**
+     * 下拉样式
+     * @param int $length 长度
+     * @param bool $icon  图标
+     * @return self
+     */
+    public function styleDropdown(int $length = 5, bool $icon = false): self
     {
         $this->style  = 'dropdown';
         $this->length = $length;
@@ -95,7 +100,7 @@ trait UseActions
 
 
     /**
-     * 返回请求
+     * 请求
      * @param string $title
      * @param string $url
      * @return RequestAction
@@ -125,7 +130,7 @@ trait UseActions
     }
 
     /**
-     * 返回页面
+     * 页面
      * @param string $title
      * @param string $url
      * @param string $type
@@ -141,7 +146,7 @@ trait UseActions
     }
 
     /**
-     * 返回页面
+     * 进度
      * @param string $title
      * @param string $url
      * @return ProgressAction

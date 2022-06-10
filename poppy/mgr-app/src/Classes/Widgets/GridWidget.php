@@ -149,7 +149,7 @@ class GridWidget
     /**
      * 返回相应
      *
-     * @return JsonResponse|RedirectResponse|Resp|Response
+     * @return JsonResponse|RedirectResponse|Response
      * @throws Throwable
      */
     public function resp()
