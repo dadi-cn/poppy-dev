@@ -93,6 +93,8 @@ backend :
                         path : grid/demo:api.mgr_app.grid/relation
                     -   title : Editable
                         path : grid/demo:api.mgr_app.grid/editable
+                    -   title : Hidden
+                        path : grid/demo:api.mgr_app.grid/hidden
             -   title : Table
                 children :
                     -   title : Simple

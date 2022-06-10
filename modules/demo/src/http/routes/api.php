@@ -26,6 +26,8 @@ Route::group([
         ->name('demo:api.table.index');
     $route->any('grid_request/{type}', 'MgrAppController@gridRequest')
         ->name('demo:api.mgr_app.grid_request');
+    $route->any('grid-view', 'MgrAppController@gridView')
+        ->name('demo:api.mgr_app.grid_view');
     $route->any('grid_form/{type}', 'MgrAppController@gridForm')
         ->name('demo:api.mgr_app.grid_form');
 });

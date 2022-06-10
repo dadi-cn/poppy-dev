@@ -13,6 +13,7 @@ use Poppy\Framework\Helper\UtilHelper;
 use Poppy\MgrApp\Classes\Contracts\Structable;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\DownloadRender;
+use Poppy\MgrApp\Classes\Grid\Column\Render\HiddenRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\HtmlRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ImageRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\LinkRender;
@@ -24,10 +25,10 @@ use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
  * @property-read string $relation    当前关系
  * @property-read bool $relationMany  是否是一对多关系
  * @property-read string $label       标签
- * @property-read bool $hide          是否默认隐藏
  * @method Column image($server = '', $width = 200, $height = 200)   // todo 需要完成图片的缩略图约定
  * @method Column link($href = '', $target = '_blank')
  * @method Column download($server = '')
+ * @method Column hidden(Closure $callback = null, string $query = '', string $field = '') 隐藏数据并支持自定义查询
  */
 class Column implements Structable
 {
@@ -44,6 +45,7 @@ class Column implements Structable
         'html'     => HtmlRender::class,
         'image'    => ImageRender::class,
         'link'     => LinkRender::class,
+        'hidden'   => HiddenRender::class,
         'download' => DownloadRender::class,
     ];
 
@@ -53,13 +55,6 @@ class Column implements Structable
      * @var array
      */
     public static $defined = [];
-
-
-    /**
-     * 是否隐藏当前列(用于默认状态下的服务端列返回)
-     * @var bool
-     */
-    protected bool $hide = false;
 
     /**
      * 列名称
@@ -228,7 +223,7 @@ class Column implements Structable
     /**
      * 设置列宽度, 单个按钮 最优宽度 60(图标), 每个按钮增加 45 宽度
      * Datetime 最优宽度 170
-     * @param int $width  宽度
+     * @param int $width 宽度
      * @param bool $fixed 是否是固定宽度
      * @return $this
      */
@@ -417,16 +412,6 @@ class Column implements Structable
 
             return Arr::get($values, $value, $default);
         });
-    }
-
-    /**
-     * 是否在默认状态下显示当前列, 可通过设定进行展示
-     * @return $this
-     */
-    public function hide(): self
-    {
-        $this->hide = true;
-        return $this;
     }
 
 
@@ -626,7 +611,8 @@ class Column implements Structable
             $previous = $value;
 
             $callback = $callback->bindTo($row);
-            $value    = call_user_func_array($callback, [$value, $this]);
+
+            $value = call_user_func_array($callback, [$value, $this]);
 
             if (($value instanceof static) &&
                 ($last = array_pop($this->renderCallbacks))
@@ -735,10 +721,10 @@ class Column implements Structable
 
         if (class_exists($abstract) && is_subclass_of($abstract, Render::class)) {
             $column = $this;
-
-            return $this->display(function ($value) use ($abstract, $column, $arguments) {
+            $name   = $this->name;
+            return $this->display(function ($value) use ($abstract, $column, $arguments, $name) {
                 /** @var Render $render */
-                $render       = new $abstract($value, $this);
+                $render       = new $abstract($value, $this, $name);
                 $column->type = $render->getType();
                 return $render->render(...$arguments);
             });

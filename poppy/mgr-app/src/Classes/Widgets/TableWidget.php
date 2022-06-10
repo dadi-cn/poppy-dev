@@ -148,9 +148,7 @@ final class TableWidget
     {
         $names = collect();
         $this->columns->each(function (Column $column) use ($names) {
-            if (!$column->hide) {
-                $names->push($column->name);
-            }
+            $names->push($column->name);
         });
         return $names->toArray();
     }

@@ -83,6 +83,23 @@ class MgrAppController extends WebApiController
     }
 
     /**
+     * @api              {get} api/demo/grid-view   查询Grid数据
+     * @apiVersion       1.0.0
+     * @apiName          GridView
+     * @apiQuery {string} _pk    主键
+     * @apiQuery {string} _field 字段
+     * @apiGroup         MgrApp
+     */
+    public function gridView()
+    {
+        $pk    = input('_pk');
+        $field = input('_field');
+
+        $value = DemoWebapp::where('id', $pk)->select($field)->value($field);
+        return Resp::success('返回', $value);
+    }
+
+    /**
      * @api                    {get} api/demo/grid_form   GridForm
      * @apiVersion             1.0.0
      * @apiName                Grid表单

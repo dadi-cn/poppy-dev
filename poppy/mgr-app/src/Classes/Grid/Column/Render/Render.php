@@ -24,14 +24,21 @@ abstract class Render
     protected string $type = '';
 
     /**
+     * 字段名称
+     * @var string
+     */
+    protected string $field;
+
+    /**
      * 创建一个渲染实例
-     * @param mixed        $value
+     * @param mixed $value
      * @param object|array $row
      */
-    public function __construct($value, $row)
+    public function __construct($value, $row, $field)
     {
         $this->value = $value;
         $this->row   = $row;
+        $this->field = $field;
     }
 
     /**
