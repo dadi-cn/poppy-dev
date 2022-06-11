@@ -3,23 +3,20 @@
 namespace Poppy\MgrApp\Classes\Widgets;
 
 use Eloquent;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
-use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\MgrApp\Classes\Grid\Column\Column;
 use Poppy\MgrApp\Classes\Grid\Exporter;
 use Poppy\MgrApp\Classes\Grid\Exporters\AbstractExporter;
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Query\Query;
 use Poppy\MgrApp\Classes\Grid\Query\QueryFactory;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Traits\UseWidgetUtil;
-use Poppy\MgrApp\Classes\Grid\GridBase;
-use Throwable;
 use function collect;
 use function input;
 
@@ -78,7 +75,6 @@ class GridWidget
      * Create a new grid instance.
      *
      * @param Model|Eloquent|Query|string $model
-     * @throws ApplicationException
      */
     public function __construct($model)
     {
@@ -111,12 +107,11 @@ class GridWidget
 
     /**
      * @param string $grid_class
-     * @throws ApplicationException
      */
     public function setLists(string $grid_class)
     {
         if (!class_exists($grid_class)) {
-            throw new ApplicationException('Grid Class `' . $grid_class . '` Not Exists.');
+            sys_error('mgr-app', __CLASS__, 'Grid Class `' . $grid_class . '` Not Exists.');
         }
 
         /** @var GridBase $List */
@@ -150,7 +145,6 @@ class GridWidget
      * 返回相应
      *
      * @return JsonResponse|RedirectResponse|Response
-     * @throws Throwable
      */
     public function resp()
     {
@@ -263,7 +257,6 @@ class GridWidget
 
     /**
      * 查询并返回数据
-     * @throws Exception
      */
     private function queryData(): array
     {

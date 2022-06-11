@@ -13,9 +13,7 @@ use Poppy\MgrApp\Classes\Widgets\TableWidget;
 class FilterBetween extends GridBase
 {
     public string $title = 'Between';
-
-    public string $description = '描述';
-
+    
     /**
      * @inheritDoc
      */
