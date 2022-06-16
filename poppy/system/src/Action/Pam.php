@@ -44,6 +44,11 @@ class Pam
     private $parentId = 0;
 
     /**
+     * @var bool
+     */
+    private bool $isRegister = false;
+
+    /**
      * @var string Pam table
      */
     private $pamTable;
@@ -55,6 +60,14 @@ class Pam
             $pamClass = PamAccount::class;
         }
         $this->pamTable = (new $pamClass())->getTable();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsRegister(): bool
+    {
+        return $this->isRegister;
     }
 
     /**
@@ -102,6 +115,7 @@ class Pam
             if (!$this->register($initDb['passport'])) {
                 return false;
             }
+            $this->isRegister = true;
         }
 
         // 检测权限, 是否被禁用
