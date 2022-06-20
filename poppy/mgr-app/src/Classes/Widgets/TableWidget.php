@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 use Poppy\MgrApp\Classes\Grid\Column\Column;
 
 /**
- * @property bool $enableSelection 是否启用选择项
- * @property array $pagesizeOptions 分页选项
+ * @property bool $enableSelection                是否启用选择项
+ * @property array $pagesizeOptions               分页选项
  * @property Collection|Column[] $columns         所有的列数据
  */
 final class TableWidget
@@ -31,7 +31,7 @@ final class TableWidget
      * @var array|int[]
      */
     protected array $pagesizeOptions = [
-        15, 30, 50, 100, 200
+        15, 30, 50, 100, 200,
     ];
 
 
@@ -56,9 +56,10 @@ final class TableWidget
      * 添加列到组件, 最后的 name 形式是 name 或者 relation.name
      * @param string $name
      * @param string $label
+     * @param bool $after 添加位置
      * @return Column
      */
-    public function add(string $name, string $label = ''): Column
+    public function add(string $name, string $label = '', bool $after = true): Column
     {
         // relation 读取
         if (Str::contains($name, '.')) {
@@ -79,7 +80,7 @@ final class TableWidget
             return $this->addColumn($name, $label ?: ucfirst($column));
         }
 
-        return $this->addColumn($name, $label);
+        return $this->addColumn($name, $label, $after);
     }
 
     /**
@@ -155,14 +156,13 @@ final class TableWidget
 
     /**
      * 添加列
-     * todo 是否进行同列添加
-     * @param string $column
-     * @param string $label
+     * @param string $column 列名称
+     * @param string $label  标签
+     * @param bool $after    追加
      * @return Column
      */
-    private function addColumn(string $column = '', string $label = ''): Column
+    private function addColumn(string $column = '', string $label = '', bool $after = true): Column
     {
-
         // 如果有已存在, 不进行 Column 添加
         $colObj = $this->columns->first(function (Column $col) use ($column) {
             return $col->name === $column;
@@ -172,8 +172,10 @@ final class TableWidget
         }
 
         $column = new Column($column, $label);
-        return tap($column, function ($value) {
-            $this->columns->push($value);
+        return tap($column, function ($value) use ($after) {
+            $after
+                ? $this->columns->push($value)
+                : $this->columns->prepend($value);
         });
     }
 }

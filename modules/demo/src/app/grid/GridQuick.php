@@ -4,8 +4,8 @@
 namespace Demo\App\Grid;
 
 use Demo\Models\DemoWebapp;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
 use Poppy\MgrApp\Classes\Grid\GridBase;
+use Poppy\MgrApp\Classes\Widgets\TableWidget;
 
 /**
  * 快捷列表
@@ -20,16 +20,11 @@ class GridQuick extends GridBase
      */
     public function table(TableWidget $table)
     {
-        $table->add('id', 'QuickId')->quickId();
-        $table->add('title', 'QuickTitle')->quickTitle();
-        $table->add('title-large', 'QuickTitleLarge')->display(function () {
+        $table->add('id', '定宽ID')->quickId();
+        $table->add('title', '标题')->quickTitle();
+        $table->add('title-large', '宽标题')->display(function () {
             return $this->title;
         })->quickTitle(true);
-        $table->add('color', '显示 Html 样式')->quickTitle(true)->html(function () {
-            return "<div style='{$this->style}'>$this->title</div>";
-        });
-        $table->add('link', '链接')->link()->ellipsis();
-        $table->add('pdf', 'Pdf')->download();
         $table->add('post_at', 'QuickDatetime')->quickDatetime();
     }
 }

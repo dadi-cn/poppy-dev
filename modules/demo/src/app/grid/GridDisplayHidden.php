@@ -12,7 +12,7 @@ use Poppy\MgrApp\Classes\Widgets\TableWidget;
  * 快捷列表
  * @mixin DemoWebapp
  */
-class GridHidden extends GridBase
+class GridDisplayHidden extends GridBase
 {
     public string $title = '隐藏数据';
 

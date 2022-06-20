@@ -81,20 +81,18 @@ backend :
                         path : grid/demo:api.mgr_app.grid/button-icon-dropdown
                     -   title : Quick
                         path : grid/demo:api.mgr_app.grid/quick
-                    -   title : Display
-                        path : grid/demo:api.mgr_app.grid/display
-                    -   title : QuickActions
-                        path : grid/demo:api.mgr_app.grid/quick-actions
                     -   title : BatchAction
                         path : grid/demo:api.mgr_app.grid/batch-actions
-                    -   title : Id Default
+                    -   title : ID列默认返回
                         path : grid/demo:api.mgr_app.grid/id-default
-                    -   title : Relation
+                    -   title : 关联获取
                         path : grid/demo:api.mgr_app.grid/relation
-                    -   title : Editable
-                        path : grid/demo:api.mgr_app.grid/editable
-                    -   title : Hidden
-                        path : grid/demo:api.mgr_app.grid/hidden
+                    -   title : 列渲染
+                        path : grid/demo:api.mgr_app.grid/display
+                    -   title : 渲染编辑
+                        path : grid/demo:api.mgr_app.grid/display-editable
+                    -   title : 渲染隐藏
+                        path : grid/demo:api.mgr_app.grid/display-hidden
             -   title : Table
                 children :
                     -   title : Simple

@@ -13,8 +13,8 @@ use Poppy\Framework\Helper\UtilHelper;
 use Poppy\MgrApp\Classes\Contracts\Structable;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\DownloadRender;
+use Poppy\MgrApp\Classes\Grid\Column\Render\EditableRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\HiddenRender;
-use Poppy\MgrApp\Classes\Grid\Column\Render\HtmlRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ImageRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\LinkRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
@@ -27,6 +27,8 @@ use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
  * @property-read string $label       标签
  * @method Column image($server = '', $width = 200, $height = 200)   // todo 需要完成图片的缩略图约定
  * @method Column link($href = '', $target = '_blank')
+ * @method Column editable(Closure $callback = null, string $query = '', string $field = '')    将文本渲染为 Text 可编辑模式
+ * @method Column switchable()                    将文本渲染为可切换的开关模式
  * @method Column download($server = '')
  * @method Column hidden(Closure $callback = null, string $query = '', string $field = '') 隐藏数据并支持自定义查询
  */
@@ -42,11 +44,11 @@ class Column implements Structable
      * @var array
      */
     public static array $renderers = [
-        'html'     => HtmlRender::class,
         'image'    => ImageRender::class,
         'link'     => LinkRender::class,
         'hidden'   => HiddenRender::class,
         'download' => DownloadRender::class,
+        'editable' => EditableRender::class,
     ];
 
     /**
@@ -134,12 +136,6 @@ class Column implements Structable
     private string $type = 'text';
 
     /**
-     * todo 可编辑的
-     * @var bool
-     */
-    private bool $editable = false;
-
-    /**
      * 列固定
      * @var string
      */
@@ -157,6 +153,7 @@ class Column implements Structable
      */
     private bool $relationMany = false;
 
+
     /**
      * @param string $name
      * @param string $label
@@ -165,13 +162,6 @@ class Column implements Structable
     {
         $this->name  = $name;
         $this->label = $label ?: ucfirst($name);
-    }
-
-
-    public function editable(): self
-    {
-        $this->editable = true;
-        return $this;
     }
 
     /**
@@ -223,7 +213,7 @@ class Column implements Structable
     /**
      * 设置列宽度, 单个按钮 最优宽度 60(图标), 每个按钮增加 45 宽度
      * Datetime 最优宽度 170
-     * @param int $width 宽度
+     * @param int $width  宽度
      * @param bool $fixed 是否是固定宽度
      * @return $this
      */
@@ -358,9 +348,6 @@ class Column implements Structable
         }
         if ($this->fixed) {
             $defines += ['fixed' => $this->fixed];
-        }
-        if ($this->editable) {
-            $defines += ['edit' => 'text'];
         }
         return $defines;
     }

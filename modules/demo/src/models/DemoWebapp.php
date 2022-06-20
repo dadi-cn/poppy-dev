@@ -17,6 +17,7 @@ use Poppy\System\Models\PamAccount;
  * @property Carbon|null $updated_at
  * @property string $style
  * @property int $uid
+ * @property int $sort
  * @property int|null $status
  * @property string|null $desc
  * @property string|null $email
@@ -64,7 +65,7 @@ class DemoWebapp extends Model
     ];
 
     protected $casts = [
-        'setting'
+        'setting',
     ];
 
     public function user()

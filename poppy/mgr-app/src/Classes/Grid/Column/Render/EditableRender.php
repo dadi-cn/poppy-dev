@@ -6,31 +6,29 @@ use Closure;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Fluent;
 
-/**
- * 将表格设为隐藏模式
- */
-class HiddenRender extends Render
+class EditableRender extends Render
 {
 
-    protected string $type = 'hidden';
+    protected string $type = 'editable';
 
     /**
-     * @param ?Closure $callback 展示的内容
-     * @param string $query      自定义查询的Url
-     * @param string $field      自定义查询字段
+     * 自定义编辑地址
+     * @param Closure|null $callback
+     * @param string $query 自定义编辑地址
+     * @param string $field 自定义编辑字段
      * @return Jsonable
      */
     public function render(Closure $callback = null, string $query = '', string $field = ''): Jsonable
     {
-        $value = '';
+        $value = $this->value;
         if ($callback instanceof Closure) {
             $callback = $callback->bindTo($this->row);
             $value    = call_user_func_array($callback, [$this->row]);
         }
         return new Fluent([
-            'query' => $query,
-            'field' => $field ?: $this->field,
             'value' => $value,
+            'query' => $query,
+            'field' => $field,
         ]);
     }
 }

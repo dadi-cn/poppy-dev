@@ -20,7 +20,7 @@ class GridLayout extends GridBase
     {
         // 自定义样式
         $table->add('id', 'ID')->quickId()->sortable();
-        $table->add('title', '标题')->quickTitle();
+        $table->add('title', '标题');
         $table->add('user.nickname', 'Nickname(联合查询)')->quickTitle();
         $table->add('created_at')->quickDatetime();
         $table->action(function (ActionsRender $actions) {

@@ -2,9 +2,9 @@
 
 namespace Demo\App\Grid;
 
+use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Classes\Grid\GridBase;
 
 class GridIdDefault extends GridBase
 {
@@ -15,9 +15,7 @@ class GridIdDefault extends GridBase
      */
     public function table(TableWidget $table)
     {
-        // 自定义样式
         $table->add('title', '标题')->quickTitle();
-        $table->add('user.nickname', 'Nickname(联合查询)')->quickTitle();
         $table->add('created_at')->quickDatetime();
     }
 
