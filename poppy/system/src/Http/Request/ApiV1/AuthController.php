@@ -162,8 +162,9 @@ class AuthController extends JwtApiController
         }
 
         return Resp::success('登录成功', [
-            'token' => $token,
-            'type'  => $pam->type,
+            'token'       => $token,
+            'type'        => $pam->type,
+            'is_register' => $Pam->getIsRegister() ? 'Y' : 'N',
         ]);
     }
 
