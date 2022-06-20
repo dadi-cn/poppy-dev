@@ -20,6 +20,8 @@ Route::group([
         ->name('demo:api.mgr_app.form');
     $route->any('grid/{grid}', 'MgrAppController@grid')
         ->name('demo:api.mgr_app.grid');
+    $route->any('grid-npk/{grid}', 'MgrAppController@gridNoPk')
+        ->name('demo:api.mgr_app.grid-npk');
     $route->any('filter/{filter}', 'MgrAppController@filter')
         ->name('demo:api.mgr_app.filter');
     $route->any('table/{table}', 'TableController@index')

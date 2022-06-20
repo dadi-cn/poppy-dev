@@ -18,6 +18,7 @@ use Poppy\MgrApp\Classes\Grid\Column\Render\HiddenRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ImageRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\LinkRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
+use Poppy\MgrApp\Classes\Grid\Column\Render\SwitchRender;
 
 /**
  * 列展示以及渲染, 当前的目的是使用前端方式渲染, 而不是依靠于 v-html 或者是后端生成
@@ -28,7 +29,7 @@ use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
  * @method Column image($server = '', $width = 200, $height = 200)   // todo 需要完成图片的缩略图约定
  * @method Column link($href = '', $target = '_blank')
  * @method Column editable(Closure $callback = null, string $query = '', string $field = '')    将文本渲染为 Text 可编辑模式
- * @method Column switchable()                    将文本渲染为可切换的开关模式
+ * @method Column switchable(Closure $callback = null, string $query = '', string $field = '')  将文本渲染为可切换的开关模式
  * @method Column download($server = '')
  * @method Column hidden(Closure $callback = null, string $query = '', string $field = '') 隐藏数据并支持自定义查询
  */
@@ -44,11 +45,12 @@ class Column implements Structable
      * @var array
      */
     public static array $renderers = [
-        'image'    => ImageRender::class,
-        'link'     => LinkRender::class,
-        'hidden'   => HiddenRender::class,
-        'download' => DownloadRender::class,
-        'editable' => EditableRender::class,
+        'image'      => ImageRender::class,
+        'link'       => LinkRender::class,
+        'hidden'     => HiddenRender::class,
+        'download'   => DownloadRender::class,
+        'editable'   => EditableRender::class,
+        'switchable' => SwitchRender::class,
     ];
 
     /**

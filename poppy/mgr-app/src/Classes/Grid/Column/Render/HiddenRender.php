@@ -15,9 +15,9 @@ class HiddenRender extends Render
     protected string $type = 'hidden';
 
     /**
-     * @param ?Closure $callback 展示的内容
-     * @param string $query      自定义查询的Url
-     * @param string $field      自定义查询字段
+     * @param Closure|null $callback 展示的内容
+     * @param string $query          自定义查询的Url
+     * @param string $field          自定义查询字段
      * @return Jsonable
      */
     public function render(Closure $callback = null, string $query = '', string $field = ''): Jsonable

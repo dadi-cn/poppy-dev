@@ -22,9 +22,12 @@ class GridDisplayEditable extends GridBase
     {
         $table->add('id', 'ID')->quickId();
         $table->add('sort', '行内编辑')->editable();
-        $table->add('sort-custom', '行内编辑(自定义地址)')->editable(function () {
+        $table->add('sort-custom', '行内编辑(自定义|错误)')->editable(function () {
             return $this->sort;
         }, route('demo:api.mgr_app.grid_request', ['error']), 'custom-sort-field');
-        $table->add('is_open', 'SwitchEdit')->switchable();
+        $table->add('is_open', 'Switch')->switchable();
+        $table->add('is_open-custom', 'Switch(自定义|错误)')->switchable(function () {
+            return $this->is_open;
+        }, route('demo:api.mgr_app.grid_request', ['error']), 'custom-is_open-field');
     }
 }
