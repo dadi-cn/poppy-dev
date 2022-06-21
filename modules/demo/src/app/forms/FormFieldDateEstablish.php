@@ -20,13 +20,15 @@ class FormFieldDateEstablish extends FormWidget
     {
         return [
             'id'                  => 5,
-            'default'             => '',
-            'year-code'          => <<<CODE
+            'year'                => '2022',
+            'year-code'           => <<<CODE
 \$this->year('year', '年份');
 CODE,
+            'month'               => '2022-03',
             'month-code'          => <<<CODE
 \$this->month('month', '月份');
 CODE,
+            'default'             => '2022-03-05',
             'default-code'        => <<<CODE
 \$this->date('default', 'Date:默认');
 CODE,

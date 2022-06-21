@@ -166,7 +166,7 @@ abstract class FormWidget
      */
     public function disableReset(): self
     {
-        ArrayHelper::delete($this->buttons, 'reset');
+        $this->buttons = ArrayHelper::delete($this->buttons, 'reset');
         return $this;
     }
 
@@ -177,7 +177,7 @@ abstract class FormWidget
      */
     public function disableSubmit(): self
     {
-        ArrayHelper::delete($this->buttons, 'submit');
+        $this->buttons = ArrayHelper::delete($this->buttons, 'submit');
         return $this;
     }
 
@@ -329,7 +329,7 @@ abstract class FormWidget
         return [
             'type'    => 'form',
             'title'   => $this->title,
-            'buttons' => $this->buttons,
+            'buttons' => collect($this->buttons)->values(),
             'attr'    => (object) $this->attrs->toArray(),
             'items'   => $items->toArray(),
         ];

@@ -33,6 +33,8 @@ backend :
                         path : form/demo:api.mgr_app.form/field-editor
                     -   title : Dynamic
                         path : form/demo:api.mgr_app.form/field-dynamic
+                    -   title : Button(禁用按钮)
+                        path : form/demo:api.mgr_app.form/field-button
             -   title : Rule
                 children :
                     -   title : Text

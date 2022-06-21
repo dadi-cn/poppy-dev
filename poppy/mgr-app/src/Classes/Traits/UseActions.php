@@ -7,6 +7,7 @@ use Poppy\MgrApp\Classes\Action\CopyAction;
 use Poppy\MgrApp\Classes\Action\PageAction;
 use Poppy\MgrApp\Classes\Action\ProgressAction;
 use Poppy\MgrApp\Classes\Action\RequestAction;
+use Poppy\MgrApp\Classes\Action\TargetAction;
 
 trait UseActions
 {
@@ -98,6 +99,20 @@ trait UseActions
         return $this;
     }
 
+    /**
+     * 请求
+     * @param string $title
+     * @param string $url
+     * @return TargetAction
+     */
+    public function target(string $title, string $url): TargetAction
+    {
+        $action = new TargetAction($title, $url);
+        $action = $this->useDefaultStyle($action);
+        return tap($action, function () use ($action) {
+            $this->add($action);
+        });
+    }
 
     /**
      * 请求
