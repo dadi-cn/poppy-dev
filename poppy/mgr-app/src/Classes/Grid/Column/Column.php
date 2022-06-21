@@ -35,7 +35,6 @@ use Poppy\MgrApp\Classes\Grid\Column\Show\AsText;
  * @method Column link($href = '', $target = '_blank')
  * @method Column download($server = '')
  * @method Column onOff()
- * @method Column hidden(Closure $callback = null, string $query = '', string $field = '') 隐藏数据并支持自定义查询
  */
 class Column implements Structable
 {
@@ -53,9 +52,7 @@ class Column implements Structable
     public static array $renderers = [
         'image'    => ImageRender::class,
         'link'     => LinkRender::class,
-        'hidden'   => HiddenRender::class,
         'download' => DownloadRender::class,
-        'onOff'    => DownloadRender::class,
     ];
 
     /**
