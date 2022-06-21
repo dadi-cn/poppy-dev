@@ -32,19 +32,5 @@ class GridEditAsText extends GridBase
         $table->add('sort-error', '行内编辑(请求错误)')->copyable()->editAsText(function () {
             return $this->sort;
         })->query('sort', route('demo:api.mgr_app.grid_request', ['error']));
-
-        //        $table->add('sort-custom', '行内编辑(自定义|错误)')->asEditable();
-
-
-        //        $table->add('is_open', 'Switch')->switchable();
-        //        $table->add('is_open-custom', 'Switch(自定义|错误)')->switchable(function () {
-        //            return $this->is_open;
-        //        }, route('demo:api.mgr_app.grid_request', ['error']), 'custom-is_open-field');
-        //        $table->add('status', 'Select')->selectable([
-        //            'options' => [
-        //                1 => '启用',
-        //                2 => '禁用',
-        //            ],
-        //        ]);
     }
 }

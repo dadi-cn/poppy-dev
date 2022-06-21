@@ -12,7 +12,8 @@ trait AsSelect
      */
     public function editAsSelect(Closure $cb = null, Closure $disableCb = null): SelectOption
     {
-        $this->editable = 'text';
+        $this->type     = 'select';
+        $this->editable = 'select';
         return tap(new SelectOption(), function ($option) use ($cb, $disableCb) {
             $this->setEditAttr($option);
             $this->asDefaultDisabled($cb, $disableCb);

@@ -93,6 +93,8 @@ backend :
                         path : grid/demo:api.mgr_app.grid/edit-as-text
                     -   title : 编辑(OnOff)
                         path : grid/demo:api.mgr_app.grid/edit-as-on-off
+                    -   title : 编辑(Select)
+                        path : grid/demo:api.mgr_app.grid/edit-as-select
                     -   title : 渲染隐藏
                         path : grid/demo:api.mgr_app.grid/display-hidden
             -   title : GridNoPk
