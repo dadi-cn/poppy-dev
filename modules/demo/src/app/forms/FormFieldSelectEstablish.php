@@ -209,7 +209,7 @@ CODE,
             ],
 
         ])->rules([
-            Rule::max(1)
+            Rule::max(1),
         ]);
         $this->code('multi-group-code');
 
@@ -242,7 +242,7 @@ CODE,
             ],
 
         ])->rules([
-            Rule::max(1)
+            Rule::max(1),
         ]);
         $this->code('tags-group-code');
 

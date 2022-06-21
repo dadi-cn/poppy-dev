@@ -30,5 +30,6 @@ class GridDisplay extends GridBase
         })->quickTitle(true);
         $table->add('link', '链接')->link()->ellipsis();
         $table->add('pdf', 'Pdf')->download();
+        $table->add('loading', 'Loading')->asOnOff();
     }
 }

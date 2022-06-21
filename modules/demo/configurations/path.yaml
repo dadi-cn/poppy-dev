@@ -89,15 +89,17 @@ backend :
                         path : grid/demo:api.mgr_app.grid/relation
                     -   title : 列渲染
                         path : grid/demo:api.mgr_app.grid/display
-                    -   title : 渲染编辑
-                        path : grid/demo:api.mgr_app.grid/display-editable
+                    -   title : 编辑(Text)
+                        path : grid/demo:api.mgr_app.grid/edit-as-text
+                    -   title : 编辑(OnOff)
+                        path : grid/demo:api.mgr_app.grid/edit-as-on-off
                     -   title : 渲染隐藏
                         path : grid/demo:api.mgr_app.grid/display-hidden
             -   title : GridNoPk
                 children :
                     -   title : 批量操作(禁用)
                         path : grid/demo:api.mgr_app.grid-npk/batch-actions
-                    -   title : 渲染编辑(禁用)
+                    -   title : 渲染编辑(Text)
                         path : grid/demo:api.mgr_app.grid-npk/display-editable
             -   title : Table
                 children :

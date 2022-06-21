@@ -98,7 +98,7 @@ HTML,
         $this->code('prefix-icon-code');
         $this->text('suffix-icon', '带有Icon(尾部)')->suffixIcon('Calendar');
         $this->code('suffix-icon-code');
-        $this->divider('divider', '分割线');
+        $this->divider('divider');
         $this->code('divider-code');
         $this->text('max-length', '最大长度')->rules([
             Rule::max(20),

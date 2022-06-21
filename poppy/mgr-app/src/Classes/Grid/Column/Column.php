@@ -9,16 +9,21 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Poppy\Framework\Helper\UtilHelper;
 use Poppy\MgrApp\Classes\Contracts\Structable;
+use Poppy\MgrApp\Classes\Grid\Column\Option\Option;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\DownloadRender;
-use Poppy\MgrApp\Classes\Grid\Column\Render\EditableRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\HiddenRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ImageRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\LinkRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
-use Poppy\MgrApp\Classes\Grid\Column\Render\SwitchRender;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsDate;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsDefault;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsMath;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsOnOff;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsQuick;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsSelect;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsText;
 
 /**
  * 列展示以及渲染, 当前的目的是使用前端方式渲染, 而不是依靠于 v-html 或者是后端生成
@@ -28,14 +33,15 @@ use Poppy\MgrApp\Classes\Grid\Column\Render\SwitchRender;
  * @property-read string $label       标签
  * @method Column image($server = '', $width = 200, $height = 200)   // todo 需要完成图片的缩略图约定
  * @method Column link($href = '', $target = '_blank')
- * @method Column editable(Closure $callback = null, string $query = '', string $field = '')    将文本渲染为 Text 可编辑模式
- * @method Column switchable(Closure $callback = null, string $query = '', string $field = '')  将文本渲染为可切换的开关模式
  * @method Column download($server = '')
+ * @method Column onOff()
  * @method Column hidden(Closure $callback = null, string $query = '', string $field = '') 隐藏数据并支持自定义查询
  */
 class Column implements Structable
 {
     use HasHeader;
+
+    use AsText, AsSelect, AsOnOff, AsMath, AsDate, AsQuick, AsDefault;
 
     public const NAME_ACTION = '_action';     // 用于定义列操作, 可以在导出时候移除
 
@@ -45,12 +51,11 @@ class Column implements Structable
      * @var array
      */
     public static array $renderers = [
-        'image'      => ImageRender::class,
-        'link'       => LinkRender::class,
-        'hidden'     => HiddenRender::class,
-        'download'   => DownloadRender::class,
-        'editable'   => EditableRender::class,
-        'switchable' => SwitchRender::class,
+        'image'    => ImageRender::class,
+        'link'     => LinkRender::class,
+        'hidden'   => HiddenRender::class,
+        'download' => DownloadRender::class,
+        'onOff'    => DownloadRender::class,
     ];
 
     /**
@@ -93,25 +98,14 @@ class Column implements Structable
     protected string $relationColumn = '';
 
     /**
-     * @var []Closure
+     * @var Closure[]
      */
-    protected $renderCallbacks = [];
+    protected array $renderCallbacks = [];
 
     /**
      * @var bool 是否启用排序
      */
     protected bool $sortable = false;
-
-    /**
-     * @var bool 是否进行文字隐藏展示
-     */
-    protected bool $ellipsis = false;
-
-    /**
-     * 可复制的
-     * @var bool
-     */
-    protected bool $copyable = false;
 
     /**
      * todo 可搜索的
@@ -157,6 +151,19 @@ class Column implements Structable
 
 
     /**
+     * 是否支持编辑模式
+     * @var string
+     */
+    private string $editable = '';
+
+    /**
+     * 编辑属性
+     * @var Option
+     */
+    private Option $editAttr;
+
+
+    /**
      * @param string $name
      * @param string $label
      */
@@ -166,51 +173,6 @@ class Column implements Structable
         $this->label = $label ?: ucfirst($name);
     }
 
-    /**
-     * 渲染为ID
-     * @return $this
-     */
-    public function quickId($large = false): self
-    {
-        $width = $large ? 110 : 90;
-        $this->width($width, true)->align('center');
-        return $this;
-    }
-
-    /**
-     * 渲染为标题, 默认显示 15个汉字, large 模式显示 20个汉字左右
-     * @return $this
-     */
-    public function quickTitle($large = false): self
-    {
-        $width = $large ? 320 : 250;
-        $this->ellipsis()->width($width, true)->copyable();
-        return $this;
-    }
-
-    /**
-     * 渲染为 Datetime 时间
-     * @return $this
-     */
-    public function quickDatetime(): self
-    {
-        $this->width(170, true)->align('center');
-        return $this;
-    }
-
-    /**
-     * 定义快捷样式
-     * @return $this
-     */
-    public function quickIcon($num = 3, $fixed = true): self
-    {
-        $width = 16 + $num * 44;
-        $this->width($width, true)->align('center');
-        if ($fixed) {
-            $this->fixed();
-        }
-        return $this;
-    }
 
     /**
      * 设置列宽度, 单个按钮 最优宽度 60(图标), 每个按钮增加 45 宽度
@@ -248,26 +210,6 @@ class Column implements Structable
     public function sortable(): self
     {
         $this->sortable = true;
-        return $this;
-    }
-
-    /**
-     * 隐藏字符展示
-     * @return Column
-     */
-    public function ellipsis(): self
-    {
-        $this->ellipsis = true;
-        return $this;
-    }
-
-    /**
-     * 可复制
-     * @return Column
-     */
-    public function copyable(): self
-    {
-        $this->copyable = true;
         return $this;
     }
 
@@ -312,6 +254,16 @@ class Column implements Structable
     }
 
     /**
+     * 设置编辑属性
+     * @param $attr
+     * @return void
+     */
+    public function setEditAttr($attr)
+    {
+        $this->editAttr = $attr;
+    }
+
+    /**
      * 设置 Name 值
      * @param $name
      * @return $this
@@ -351,14 +303,15 @@ class Column implements Structable
         if ($this->fixed) {
             $defines += ['fixed' => $this->fixed];
         }
+        if ($this->editable) {
+            $defines += [
+                'editable'  => $this->editable,
+                'edit-attr' => $this->editAttr->struct(),
+            ];
+        }
         return $defines;
     }
 
-    public function html(Closure $closure): self
-    {
-        $this->type = 'html';
-        return $this->display($closure);
-    }
 
     /**
      * 定义回调
@@ -387,83 +340,6 @@ class Column implements Structable
         });
     }
 
-    /**
-     * 使用KV进行替换输出, 并可以指定默认值
-     * @param array $values
-     * @param string $default
-     * @return $this
-     */
-    public function usingKv(array $values, string $default = ''): self
-    {
-        return $this->display(function ($value) use ($values, $default) {
-            if (is_null($value)) {
-                return $default;
-            }
-
-            return Arr::get($values, $value, $default);
-        });
-    }
-
-
-    /**
-     * 显示为友好的文件大小
-     * @return $this
-     */
-    public function filesize(): self
-    {
-        return $this->display(function ($value) {
-            return UtilHelper::formatBytes($value);
-        });
-    }
-
-    /**
-     * 使用 gravatar 来显示头像图
-     * @param int $size
-     * @return $this
-     */
-    public function gravatar($size = 25): self
-    {
-        return $this->display(function ($value) use ($size) {
-            $src = sprintf(
-                'https://www.gravatar.com/avatar/%s?s=%d',
-                md5(strtolower($value)),
-                $size
-            );
-            return "<img src='$src' alt='{$value}' class='img img-circle'/>";
-        });
-    }
-
-    /**
-     * Return a human readable format time.
-     *
-     * @param null $locale
-     *
-     * @return $this
-     */
-    public function diffForHumans($locale = null): self
-    {
-        if ($locale) {
-            Carbon::setLocale($locale);
-        }
-
-        return $this->display(function ($value) {
-            return Carbon::parse($value)->diffForHumans();
-        });
-    }
-
-    /**
-     * Returns a string formatted according to the given format string.
-     *
-     * @param string $format
-     *
-     * @return $this
-     */
-    public function date(string $format): self
-    {
-        return $this->display(function ($value) use ($format) {
-            return date($format, strtotime($value));
-        });
-    }
 
     /**
      * @throws Exception
@@ -581,7 +457,7 @@ class Column implements Structable
      *
      * @return bool
      */
-    protected function hasRenderCallbacks()
+    protected function hasRenderCallbacks(): bool
     {
         return !empty($this->renderCallbacks);
     }
@@ -604,9 +480,7 @@ class Column implements Structable
 
             $value = call_user_func_array($callback, [$value, $this]);
 
-            if (($value instanceof static) &&
-                ($last = array_pop($this->renderCallbacks))
-            ) {
+            if (($value instanceof static) && ($last = array_pop($this->renderCallbacks))) {
                 $last  = $last->bindTo($row);
                 $value = call_user_func($last, $previous);
             }
@@ -712,10 +586,11 @@ class Column implements Structable
         if (class_exists($abstract) && is_subclass_of($abstract, Render::class)) {
             $column = $this;
             $name   = $this->name;
-            return $this->display(function ($value) use ($abstract, $column, $arguments, $name) {
+            $type   = $this->type;
+            return $this->display(function ($value) use ($abstract, $column, $arguments, $name, $type) {
                 /** @var Render $render */
                 $render       = new $abstract($value, $this, $name);
-                $column->type = $render->getType();
+                $column->type = $render->getType() ?: $type;
                 return $render->render(...$arguments);
             });
         }
