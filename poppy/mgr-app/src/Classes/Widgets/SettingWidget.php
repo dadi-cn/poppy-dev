@@ -29,17 +29,18 @@ class SettingWidget
             if (!($form instanceof SettingBase)) {
                 throw new ApplicationException('设置表单需要继承 `SettingBase` Class');
             }
-            $forms->put($form->getGroup(), $form);
+
+            $forms->put(md5($form_class), $form);
         });
 
 
         if ($this->queryHas('submit')) {
-            $group = input('_group');
-            if (!$group) {
-                return Resp::error('请传递分组标识');
+            $key = input('_key');
+            if (!$key) {
+                return Resp::error('请传递标识');
             }
             /** @var SettingBase $cur */
-            $cur = $forms->offsetGet($group);
+            $cur = $forms->offsetGet($key);
             return $cur->resp();
         }
 
@@ -48,11 +49,12 @@ class SettingWidget
         $models = collect();
         collect($forms)->each(function (SettingBase $form) use ($fms, $models) {
             $form->form();
+            $formKey = md5(get_class($form));
             if ($this->queryHas('data')) {
-                $models->put($form->getGroup(), $form->queryData());
+                $models->put($formKey, $form->queryData());
             }
             if ($this->queryHas('struct')) {
-                $fms->put($form->getGroup(), $form->queryStruct());
+                $fms->put($formKey, $form->queryStruct());
             }
         });
 
