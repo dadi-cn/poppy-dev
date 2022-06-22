@@ -17,7 +17,7 @@ class GridButtonDropdown extends GridBase
     public function table(TableWidget $table)
     {
         $table->add('id')->quickId();
-        $table->action(function (ActionsRender $actions) {
+        $table->add('handle', '操作')->asAction(function (ActionsRender $actions) {
             $row = $actions->getRow();
             $actions->styleDropdown(3);
             $actions->request('错误', route_url('demo:api.mgr_app.grid_request', ['error'], ['id' => data_get($row, 'id')]));

@@ -4,7 +4,7 @@ namespace Poppy\MgrApp\Classes\Grid\Column\Option;
 
 use Poppy\MgrApp\Classes\Form\Traits\UsePlaceholder;
 
-class EditOption extends Option
+class EditOption extends QueryOption
 {
     use UsePlaceholder;
 }

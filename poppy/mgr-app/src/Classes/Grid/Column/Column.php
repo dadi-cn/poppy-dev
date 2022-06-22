@@ -11,19 +11,17 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Poppy\MgrApp\Classes\Contracts\Structable;
 use Poppy\MgrApp\Classes\Grid\Column\Option\Option;
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
-use Poppy\MgrApp\Classes\Grid\Column\Render\DownloadRender;
-use Poppy\MgrApp\Classes\Grid\Column\Render\HiddenRender;
-use Poppy\MgrApp\Classes\Grid\Column\Render\ImageRender;
-use Poppy\MgrApp\Classes\Grid\Column\Render\LinkRender;
 use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsAction;
 use Poppy\MgrApp\Classes\Grid\Column\Show\AsDate;
 use Poppy\MgrApp\Classes\Grid\Column\Show\AsDefault;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsImage;
 use Poppy\MgrApp\Classes\Grid\Column\Show\AsMath;
 use Poppy\MgrApp\Classes\Grid\Column\Show\AsOnOff;
 use Poppy\MgrApp\Classes\Grid\Column\Show\AsQuick;
 use Poppy\MgrApp\Classes\Grid\Column\Show\AsSelect;
 use Poppy\MgrApp\Classes\Grid\Column\Show\AsText;
+use Poppy\MgrApp\Classes\Grid\Column\Show\AsUrl;
 
 /**
  * 列展示以及渲染, 当前的目的是使用前端方式渲染, 而不是依靠于 v-html 或者是后端生成
@@ -31,16 +29,12 @@ use Poppy\MgrApp\Classes\Grid\Column\Show\AsText;
  * @property-read string $relation    当前关系
  * @property-read bool $relationMany  是否是一对多关系
  * @property-read string $label       标签
- * @method Column image($server = '', $width = 200, $height = 200)   // todo 需要完成图片的缩略图约定
- * @method Column link($href = '', $target = '_blank')
- * @method Column download($server = '')
- * @method Column onOff()
  */
 class Column implements Structable
 {
     use HasHeader;
 
-    use AsText, AsSelect, AsOnOff, AsMath, AsDate, AsQuick, AsDefault;
+    use AsText, AsSelect, AsOnOff, AsMath, AsDate, AsQuick, AsDefault, AsUrl, AsImage, AsAction;
 
     public const NAME_ACTION = '_action';     // 用于定义列操作, 可以在导出时候移除
 
@@ -50,9 +44,6 @@ class Column implements Structable
      * @var array
      */
     public static array $renderers = [
-        'image'    => ImageRender::class,
-        'link'     => LinkRender::class,
-        'download' => DownloadRender::class,
     ];
 
     /**
@@ -320,23 +311,6 @@ class Column implements Structable
         $this->renderCallbacks[] = $callback;
         return $this;
     }
-
-
-    /**
-     * 调用 Actions 预览定义的操作
-     * @return $this
-     */
-    public function actions(Closure $closure): self
-    {
-        $column = $this;
-        $name   = $this->name;
-        return $this->display(function ($value) use ($column, $closure, $name) {
-            $render = new ActionsRender($value, $this, $name);
-            $column->setType('actions');
-            return $render->render($closure);
-        });
-    }
-
 
     /**
      * @throws Exception

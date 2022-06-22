@@ -28,8 +28,10 @@ class GridDisplay extends GridBase
         $table->add('color', 'Html')->asHtml(function () {
             return "<div style='{$this->style}'>$this->title</div>";
         })->quickTitle(true);
-        $table->add('link', '链接')->link()->ellipsis();
-        $table->add('pdf', 'Pdf')->download();
+        $table->add('link', '链接')->asLink()->ellipsis();
+        $table->add('image', '图片')->asImage();
+        $table->add('images', '多图')->asImage();
+        $table->add('pdf', 'Pdf')->asDownload();
         $table->add('loading', 'Loading')->asOnOff();
     }
 }

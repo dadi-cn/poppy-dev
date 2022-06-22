@@ -2,12 +2,14 @@
 
 namespace Demo\App\Grid;
 
+use Demo\Models\DemoWebapp;
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Widgets\TableWidget;
 
 /**
  * 按钮
+ * @mixin DemoWebapp
  */
 class GridButton extends GridBase
 {
@@ -17,7 +19,11 @@ class GridButton extends GridBase
     public function table(TableWidget $table)
     {
         $table->add('id')->quickId();
-        $table->action(function (ActionsRender $actions) {
+        $table->add('title', '标题(Link模式, 支持Action)')->width(100)->asAction(function (ActionsRender $actions) {
+            $row = $actions->getRow();
+            $actions->page($row->title, route('demo:api.mgr_app.grid_form', ['detail']), 'form')->link();
+        });
+        $table->add('handle', '操作')->asAction(function (ActionsRender $actions) {
             $actions->request('成功', route('demo:api.mgr_app.grid_request', ['success']));
             $actions->request('错误', route('demo:api.mgr_app.grid_request', ['error']));
             $actions->request('确认', route('demo:api.mgr_app.grid_request', ['success']))->confirm();

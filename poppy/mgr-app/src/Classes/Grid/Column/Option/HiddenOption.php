@@ -2,7 +2,7 @@
 
 namespace Poppy\MgrApp\Classes\Grid\Column\Option;
 
-class HiddenOption extends Option
+class HiddenOption extends QueryOption
 {
 
 }

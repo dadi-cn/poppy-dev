@@ -33,7 +33,7 @@ abstract class SettingBase extends FormWidget
     protected string $group = '';
 
     /**
-     * @return ?Response|JsonResponse|RedirectResponse|Resp
+     * @return ?JsonResponse|RedirectResponse|Response
      * @throws FormException
      */
     public function handle()

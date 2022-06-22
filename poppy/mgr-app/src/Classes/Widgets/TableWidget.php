@@ -84,14 +84,16 @@ final class TableWidget
     }
 
     /**
-     * 添加列操作
+     * 添加列操作, 这种列操作的写法无法在列表中写两列, 使用一下这种方式编写
+     * $table->add('handle', '操作')->asAction(function(){})
      * @param Closure $closure
      * @param string $title
      * @return Column
+     * @deprecated
      */
     public function action(Closure $closure, string $title = '操作'): Column
     {
-        return $this->add(self::NAME_ACTION, $title)->actions($closure);
+        return $this->add(self::NAME_ACTION, $title)->asAction($closure);
     }
 
     /**

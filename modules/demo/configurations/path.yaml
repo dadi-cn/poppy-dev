@@ -17,6 +17,8 @@ backend :
                         path : form/demo:api.mgr_app.form/field-text
                     -   title : Number
                         path : form/demo:api.mgr_app.form/field-number
+                    -   title : 切换填写框
+                        path : form/demo:api.mgr_app.form/field-display
                     -   title : Color
                         path : form/demo:api.mgr_app.form/field-color
                     -   title : Date
