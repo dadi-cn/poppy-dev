@@ -16,11 +16,9 @@ class AliyunSmsProvider extends BaseSms implements SmsContract
 
     /**
      * AliyunSms constructor.
-     * @throws SmsException
      */
     public function __construct()
     {
-        $this->initClient();
     }
 
     /**
@@ -42,6 +40,9 @@ class AliyunSmsProvider extends BaseSms implements SmsContract
             if (!class_exists('AlibabaCloud\Dysmsapi\Dysmsapi')) {
                 throw new SmsException('你需要手动安装 `alibabacloud/dysmsapi` 组件');
             }
+
+            $this->initClient();
+
             /**
              * @url https://help.aliyun.com/document_detail/101414.htm
              */
