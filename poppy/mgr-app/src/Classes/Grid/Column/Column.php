@@ -251,17 +251,6 @@ class Column implements Structable
         $this->editAttr = $attr;
     }
 
-    /**
-     * 设置 Name 值
-     * @param $name
-     * @return $this
-     */
-    public function setName($name): self
-    {
-        $this->name = $name;
-        return $this;
-    }
-
     public function struct(): array
     {
         $defines = [

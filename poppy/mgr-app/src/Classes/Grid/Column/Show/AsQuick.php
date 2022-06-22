@@ -21,8 +21,8 @@ trait AsQuick
     }
 
     /**
-     * 渲染为标题, 默认显示 15个汉字, large 模式显示 20个汉字左右
-     * @return $this
+     *
+     * @return $this渲染为标题, 默认显示 15个汉字, large 模式显示 20个汉字左右
      */
     public function quickTitle($large = false): self
     {
