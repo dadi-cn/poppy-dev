@@ -12,7 +12,7 @@ use Poppy\MgrApp\Classes\Widgets\TableWidget;
  * 快捷列表
  * @mixin DemoWebapp
  */
-class GridHidden extends GridBase
+class GridDisplayHidden extends GridBase
 {
     public string $title = '隐藏数据';
 
@@ -22,10 +22,14 @@ class GridHidden extends GridBase
     public function table(TableWidget $table)
     {
         $table->add('id', 'QuickId')->quickId();
-        $table->add('title', 'Hide')->hidden(null, route('demo:api.mgr_app.grid_view'));
-        $table->add('title-custom', 'Hide')->hidden(function () {
+        $table->add('title', 'Hide')->asHidden();
+        $table->add('title-alt', 'Hide(自定义显示)')->asHidden(function () {
             /** @var $this DemoWebapp */
             return StrHelper::hideContact($this->title);
-        }, route('demo:api.mgr_app.grid_view'), 'title');
+        })->query('title', route('demo:api.mgr_app.grid_view'));
+        $table->add('title-error', 'Hide(查找错误)')->asHidden(function () {
+            /** @var $this DemoWebapp */
+            return StrHelper::hideContact($this->title);
+        })->query('title', route('demo:api.mgr_app.grid_request', ['error']));
     }
 }

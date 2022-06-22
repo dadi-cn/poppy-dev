@@ -117,14 +117,16 @@ class GridWidget
         /** @var GridBase $List */
         $List = new $grid_class();
 
-        /* 设置标题和描述
+        /* 设置标题
          * ---------------------------------------- */
         $this->title = $List->title;
         $List->table($this->table);
+
         // 为请求添加默认列
         if ($this->query->getPrimaryKey()) {
-            $this->table->add($this->query->getPrimaryKey());
+            $this->table->add($this->query->getPrimaryKey(), 'ID', false)->quickId();
         }
+
         $List->quick($this->quick);
         $List->filter($this->filter);
         $List->batch($this->batch);

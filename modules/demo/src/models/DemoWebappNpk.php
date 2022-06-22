@@ -11,7 +11,6 @@ use Poppy\System\Models\PamAccount;
 /**
  * \Poppy\PoppyCoreDemo
  *
- * @property int $id
  * @property int $is_open 是否开启
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -48,17 +47,19 @@ use Poppy\System\Models\PamAccount;
  * @property string|null $prefix
  * @property string|null $suffix
  * @property-read PamAccount|null $pam
- * @method static Builder|DemoWebapp newModelQuery()
- * @method static Builder|DemoWebapp newQuery()
- * @method static Builder|DemoWebapp query()
+ * @method static Builder|DemoWebappNpk newModelQuery()
+ * @method static Builder|DemoWebappNpk newQuery()
+ * @method static Builder|DemoWebappNpk query()
  * @mixin Eloquent
  */
-class DemoWebapp extends Model
+class DemoWebappNpk extends Model
 {
     // change tablename
     public $timestamps = false;
 
-    protected $table = 'demo_webapp';
+    protected $primaryKey = '';
+
+    protected $table = 'demo_webapp_npk';
 
     protected $fillable = [
         // fillable

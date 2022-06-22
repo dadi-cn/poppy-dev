@@ -29,7 +29,7 @@ final class CopyAction extends Action
     {
         return array_merge(parent::struct(), [
             'method'  => 'copy',
-            'content' => $this->content
+            'content' => $this->content,
         ]);
     }
 }

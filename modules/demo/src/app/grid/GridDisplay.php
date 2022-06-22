@@ -4,9 +4,8 @@
 namespace Demo\App\Grid;
 
 use Demo\Models\DemoWebapp;
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
 use Poppy\MgrApp\Classes\Grid\GridBase;
+use Poppy\MgrApp\Classes\Widgets\TableWidget;
 
 /**
  * 快捷列表
@@ -22,16 +21,15 @@ class GridDisplay extends GridBase
     public function table(TableWidget $table)
     {
         $table->add('id', 'QuickId')->quickId();
-        $table->add('status', 'Status')->usingKv(DemoWebapp::kvStatus());
-        $table->add('title-large', 'QuickTitleLarge')->display(function () {
-            return $this->title;
+        $table->add('status', 'usingKv')->asKv(DemoWebapp::kvStatus())->width(100, true);
+        $table->add('title-large', 'display(自定义组合数据)')->display(function () {
+            return $this->title . '|' . $this->id;
         })->quickTitle(true);
-        $table->add('color', 'QuickTitleLarge')->html(function () {
+        $table->add('color', 'Html')->asHtml(function () {
             return "<div style='{$this->style}'>$this->title</div>";
         })->quickTitle(true);
-        $table->add('post_at', 'QuickDatetime')->quickDatetime();
-        $table->action(function (ActionsRender $actions) {
-            $actions->request('错误', route('demo:api.mgr_app.grid_request', ['error']));
-        });
+        $table->add('link', '链接')->link()->ellipsis();
+        $table->add('pdf', 'Pdf')->download();
+        $table->add('loading', 'Loading')->asOnOff();
     }
 }

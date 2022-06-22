@@ -33,6 +33,8 @@ backend :
                         path : form/demo:api.mgr_app.form/field-editor
                     -   title : Dynamic
                         path : form/demo:api.mgr_app.form/field-dynamic
+                    -   title : Button(禁用按钮)
+                        path : form/demo:api.mgr_app.form/field-button
             -   title : Rule
                 children :
                     -   title : Text
@@ -81,20 +83,28 @@ backend :
                         path : grid/demo:api.mgr_app.grid/button-icon-dropdown
                     -   title : Quick
                         path : grid/demo:api.mgr_app.grid/quick
-                    -   title : Display
-                        path : grid/demo:api.mgr_app.grid/display
-                    -   title : QuickActions
-                        path : grid/demo:api.mgr_app.grid/quick-actions
                     -   title : BatchAction
                         path : grid/demo:api.mgr_app.grid/batch-actions
-                    -   title : Id Default
+                    -   title : ID列默认返回
                         path : grid/demo:api.mgr_app.grid/id-default
-                    -   title : Relation
+                    -   title : 关联获取
                         path : grid/demo:api.mgr_app.grid/relation
-                    -   title : Editable
-                        path : grid/demo:api.mgr_app.grid/editable
-                    -   title : Hidden
-                        path : grid/demo:api.mgr_app.grid/hidden
+                    -   title : 列渲染
+                        path : grid/demo:api.mgr_app.grid/display
+                    -   title : 编辑(Text)
+                        path : grid/demo:api.mgr_app.grid/edit-as-text
+                    -   title : 编辑(OnOff)
+                        path : grid/demo:api.mgr_app.grid/edit-as-on-off
+                    -   title : 编辑(Select)
+                        path : grid/demo:api.mgr_app.grid/edit-as-select
+                    -   title : 渲染隐藏
+                        path : grid/demo:api.mgr_app.grid/display-hidden
+            -   title : GridNoPk
+                children :
+                    -   title : 批量操作(禁用)
+                        path : grid/demo:api.mgr_app.grid-npk/batch-actions
+                    -   title : 渲染编辑(Text)
+                        path : grid/demo:api.mgr_app.grid-npk/display-editable
             -   title : Table
                 children :
                     -   title : Simple

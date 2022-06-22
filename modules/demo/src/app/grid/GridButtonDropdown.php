@@ -3,8 +3,8 @@
 namespace Demo\App\Grid;
 
 use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
 use Poppy\MgrApp\Classes\Grid\GridBase;
+use Poppy\MgrApp\Classes\Widgets\TableWidget;
 
 /**
  * 按钮
@@ -16,7 +16,7 @@ class GridButtonDropdown extends GridBase
      */
     public function table(TableWidget $table)
     {
-        $table->add('id');
+        $table->add('id')->quickId();
         $table->action(function (ActionsRender $actions) {
             $row = $actions->getRow();
             $actions->styleDropdown(3);

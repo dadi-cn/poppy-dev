@@ -4,6 +4,7 @@ namespace Demo\Http\Request\Api\Web;
 
 use Demo\App\Forms\FormGridPoppyEstablish;
 use Demo\Models\DemoWebapp;
+use Demo\Models\DemoWebappNpk;
 use Illuminate\Support\Str;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Widgets\FormWidget;
@@ -47,6 +48,22 @@ class MgrAppController extends WebApiController
         return $grid->resp();
     }
 
+    /**
+     * @api                    {get} api/demo/grid-no-pk/:type   Grid(无主键)
+     * @apiVersion             1.0.0
+     * @apiName                GridNoPk
+     * @apiQuery               {string} auto 查询名称
+     * @apiGroup               MgrApp
+     */
+    public function gridNoPk($type)
+    {
+        // 第一列显示id字段，并将这一列设置为可排序列
+        $grid = new GridWidget(new DemoWebappNpk());
+        $grid->setTitle('Title');
+        $classname = '\Demo\App\GridNpk\Grid' . Str::studly($type);
+        $grid->setLists($classname);
+        return $grid->resp();
+    }
 
     /**
      * @api                    {get} api/demo/filter/:auto   [Demo]Filter

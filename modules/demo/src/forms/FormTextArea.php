@@ -6,8 +6,6 @@ use Poppy\Framework\Validation\Rule;
 
 class FormTextArea extends FormBaseWidget
 {
-
-
     /**
      * 表单标题
      * @var string
