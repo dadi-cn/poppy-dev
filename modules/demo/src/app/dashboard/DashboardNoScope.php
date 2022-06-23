@@ -20,12 +20,6 @@ class DashboardNoScope extends DashboardWidget
         parent::__construct();
     }
 
-
-    public function handle(string $key = '', array $input = [])
-    {
-        return Resp::success('');
-    }
-
     public function panels(): array
     {
         $form1 = (new PanelForm('site', 12))->form(function (FormPlugin $form) {

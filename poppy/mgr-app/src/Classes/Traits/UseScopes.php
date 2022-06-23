@@ -12,7 +12,7 @@ trait UseScopes
      * 全局范围
      * @var Collection
      */
-    private Collection $scopes;
+    protected Collection $scopes;
 
     /**
      * 添加全局范围, 在添加全局范围之后, 如果不传入 Scope, 则默认为第一个 Scope

@@ -22,12 +22,6 @@ class DashboardForm extends DashboardWidget
         $this->scope('mark', 'Mark');
     }
 
-
-    public function handle(string $key = '', array $input = [])
-    {
-        return Resp::success('');
-    }
-
     public function panels(): array
     {
         $scope = $this->getCurrentScope();

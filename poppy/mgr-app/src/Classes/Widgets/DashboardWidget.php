@@ -25,8 +25,6 @@ abstract class DashboardWidget
         $this->scopes = collect();
     }
 
-    abstract public function handle(string $key = '', array $input = []);
-
     abstract public function panels(): array;
 
 
