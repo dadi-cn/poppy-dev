@@ -6,7 +6,7 @@ use Poppy\Core\Classes\Traits\CoreTrait;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\MgrApp\Classes\Form\SettingBase;
-use Poppy\MgrApp\Classes\Traits\UseWidgetUtil;
+use Poppy\MgrApp\Classes\Traits\UseQuery;
 
 /**
  * 设置
@@ -14,12 +14,12 @@ use Poppy\MgrApp\Classes\Traits\UseWidgetUtil;
 class SettingWidget
 {
 
-    use CoreTrait;
-    use UseWidgetUtil;
+    use CoreTrait, UseQuery;
 
     public function resp(string $path)
     {
         $id       = 'poppy.mgr-app.settings';
+        $query = input('_query');
         $service  = $this->coreModule()->services()->get($id);
         $hooks    = sys_hook($id);
         $strForms = $hooks[$path]['forms'] ?? [];
@@ -34,7 +34,7 @@ class SettingWidget
         });
 
 
-        if ($this->queryHas('submit')) {
+        if ($this->queryHas($query, 'submit')) {
             $key = input('_key');
             if (!$key) {
                 return Resp::error('请传递标识');
@@ -47,29 +47,29 @@ class SettingWidget
         // 当前的所有表单
         $fms    = collect();
         $models = collect();
-        collect($forms)->each(function (SettingBase $form) use ($fms, $models) {
-            $form->form();
+        collect($forms)->each(function (SettingBase $form) use ($fms, $models, $query) {
+            $form->initWidget();
             $formKey = md5(get_class($form));
-            if ($this->queryHas('data')) {
-                $models->put($formKey, $form->queryData());
+            if ($this->queryHas($query, 'data')) {
+                $models->put($formKey, $form->model());
             }
-            if ($this->queryHas('struct')) {
-                $fms->put($formKey, $form->queryStruct());
+            if ($this->queryHas($query, 'struct')) {
+                $fms->put($formKey, $form->frame());
             }
         });
 
         $struct = [];
-        if ($this->queryHas('data')) {
+        if ($this->queryHas($query, 'data')) {
             $struct = array_merge($struct, [
-                'models' => $models->toArray()
+                'models' => $models->toArray(),
             ]);
         }
-        if ($this->queryHas('struct')) {
+        if ($this->queryHas($query, 'frame')) {
             $groups = collect();
             collect($hooks)->map(function ($item, $key) use ($groups) {
                 $groups->push([
                     'path'  => route_url('py-mgr-app:api.home.setting', [$key], [], false),
-                    'title' => $item['title']
+                    'title' => $item['title'],
                 ]);
             });
             $struct = array_merge($struct, [

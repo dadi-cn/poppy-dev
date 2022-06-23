@@ -45,6 +45,12 @@ backend :
                         path : form/demo:api.mgr_app.form/rule-required
                     -   title : Date
                         path : form/demo:api.mgr_app.form/rule-date
+            -   title : DashBoard(多面板, 支持Scope)
+                children :
+                    -   title : Form
+                        path : dashboard/demo:api.mgr_app.dashboard/form
+                    -   title : NoScope(没有范围)
+                        path : dashboard/demo:api.mgr_app.dashboard/no-scope
             -   title : Filter
                 children :
                     -   title : Between
