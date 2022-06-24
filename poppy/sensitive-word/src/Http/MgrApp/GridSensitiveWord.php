@@ -4,8 +4,8 @@ namespace Poppy\SensitiveWord\Http\MgrApp;
 
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 use Poppy\MgrApp\Classes\Table\Render\Render;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use function route;
@@ -22,7 +22,7 @@ class GridSensitiveWord extends GridBase
     {
         $table->add('id', "ID")->sortable()->quickId();
         $table->add('word', "敏感词");
-        $table->action(function (ActionsRender $actions) {
+        $table->add('handle', '操作')->asAction(function (GridActions $actions) {
             /** @var $this Render */
             $row = $this->getRow();
             $actions->quickIcon();
@@ -37,7 +37,7 @@ class GridSensitiveWord extends GridBase
         $filter->like('word', '敏感词');
     }
 
-    public function batch(Actions $actions)
+    public function batch(Interactions $actions)
     {
         $actions->request('删除', route('py-sensitive-word:api-backend.word.delete'))
             ->icon('Close')->danger()->confirm();

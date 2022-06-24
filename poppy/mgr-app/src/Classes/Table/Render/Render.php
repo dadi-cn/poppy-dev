@@ -3,8 +3,9 @@
 namespace Poppy\MgrApp\Classes\Table\Render;
 
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Renderable;
 
-abstract class Render
+abstract class Render implements Renderable
 {
     /**
      * @var object | array
@@ -16,12 +17,6 @@ abstract class Render
      * @var mixed
      */
     protected $value;
-
-    /**
-     * 渲染类型
-     * @var string
-     */
-    protected string $type = '';
 
     /**
      * 字段名称
@@ -48,15 +43,6 @@ abstract class Render
     public function getRow()
     {
         return $this->row;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     /**

@@ -4,7 +4,7 @@
 namespace Demo\App\Grid;
 
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
@@ -39,7 +39,7 @@ class GridBatchActions extends GridBase
     /**
      * @inheritDoc
      */
-    public function batch(Actions $actions)
+    public function batch(Interactions $actions)
     {
         $actions->request('批量删除', 'api/demo/grid_request/success')->confirm();
     }

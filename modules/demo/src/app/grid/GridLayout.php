@@ -5,8 +5,8 @@ namespace Demo\App\Grid;
 
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class GridLayout extends GridBase
@@ -23,8 +23,8 @@ class GridLayout extends GridBase
         $table->add('title', '标题');
         $table->add('user.nickname', 'Nickname(联合查询)')->quickTitle();
         $table->add('created_at')->quickDatetime();
-        $table->add('handle', '操作')->asAction(function (ActionsRender $actions) {
-            $actions->styleIcon();
+        $table->add('handle', '操作')->asAction(function (GridActions $actions) {
+            $actions->quickIcon();
             $row = $actions->getRow();
             $actions->request('错误', route('demo:api.mgr_app.grid_request', ['error']))->icon('Close')->danger();
             $actions->request('成功', route('demo:api.mgr_app.grid_request', ['success']))->icon('Check')->success();
@@ -45,12 +45,12 @@ class GridLayout extends GridBase
         $filter->like('title', '标题')->width(4);
     }
 
-    public function quick(Actions $actions)
+    public function quick(Interactions $actions)
     {
         $actions->page('快捷操作', route('demo:api.mgr_app.grid_form', ['detail']), 'form')->icon('Plus');
     }
 
-    public function batch(Actions $actions)
+    public function batch(Interactions $actions)
     {
         $actions->request('批量操作', route('demo:api.mgr_app.grid_request', ['success']));
     }

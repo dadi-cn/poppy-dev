@@ -5,8 +5,8 @@ namespace Poppy\Area\Http\MgrApp;
 use Poppy\Area\Models\SysArea;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 use Poppy\MgrApp\Classes\Table\Render\Render;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 
@@ -21,7 +21,7 @@ class GridArea extends GridBase
     {
         $table->add('id', "ID")->quickId();
         $table->add('title', "名称");
-        $table->action(function (ActionsRender $actions) {
+        $table->add('handle', '操作')->asAction(function (GridActions $actions) {
             /** @var Render $this */
             $item = $this->getRow();
             $actions->quickIcon();
@@ -37,7 +37,7 @@ class GridArea extends GridBase
         $filter->equal('parent_id', '上级地区')->asSelect(SysArea::cityMgrTree(), '选择地区', true);
     }
 
-    public function quick(Actions $actions)
+    public function quick(Interactions $actions)
     {
         $actions->page('新增地域', route('py-area:api-backend.content.establish'), 'form');
         $actions->progress('修复数据', route('py-area:api-backend.content.fix'));

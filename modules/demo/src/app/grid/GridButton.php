@@ -4,7 +4,7 @@ namespace Demo\App\Grid;
 
 use Demo\Models\DemoWebapp;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
@@ -19,12 +19,7 @@ class GridButton extends GridBase
     public function table(TablePlugin $table)
     {
         $table->add('id')->quickId();
-        $table->action()
-        $table->add('title', '标题(Link模式, 支持Action)')->width(100)->asAction(function (ActionsRender $actions) {
-            $row = $actions->getRow();
-            $actions->page($row->title, route('demo:api.mgr_app.grid_form', ['detail']), 'form')->link();
-        });
-        $table->add('handle', '操作')->asAction(function (ActionsRender $actions) {
+        $table->add('handle', '操作')->asAction(function (GridActions $actions) {
             $actions->request('成功', route('demo:api.mgr_app.grid_request', ['success']));
             $actions->request('错误', route('demo:api.mgr_app.grid_request', ['error']));
             $actions->request('确认', route('demo:api.mgr_app.grid_request', ['success']))->confirm();
@@ -34,6 +29,9 @@ class GridButton extends GridBase
             $actions->request('Primary Plain', route('demo:api.mgr_app.grid_request', ['success']))->primary()->plain();
             $actions->request('图文', route('demo:api.mgr_app.grid_request', ['success']))->icon('warning');
             $actions->request('仅图标', route('demo:api.mgr_app.grid_request', ['success']))->icon('warning')->only();
+            $actions->request('MU', route('demo:api.mgr_app.grid_request', ['success']))->icon('mu:view_kanban');
+            $actions->request('MU', route('demo:api.mgr_app.grid_request', ['success']))->icon('mu:view_kanban')->only();
+            $actions->request('MU', route('demo:api.mgr_app.grid_request', ['success']))->icon('mu:view_kanban')->only()->circle();
             $actions->request('圆形图标', route('demo:api.mgr_app.grid_request', ['success']))->icon('warning')->circle()->only();
             $actions->page('页面', route('demo:api.mgr_app.grid_form', ['detail']), 'form');
             $actions->target('Target(百度)', 'https://www.baidu.com');

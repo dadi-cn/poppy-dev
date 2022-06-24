@@ -6,8 +6,8 @@ use Illuminate\Support\Str;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamRole;
@@ -30,7 +30,7 @@ class GridPamAccount extends GridBase
         $table->add('login_times', "登录次数")->width(90, true)->align('center');
         $table->add('created_at', "操作时间")->width(170, true);
         $pam = $this->pam;
-        $table->add('handle', '操作')->asAction(function (ActionsRender $actions) use ($pam) {
+        $table->add('handle', '操作')->asAction(function (GridActions $actions) use ($pam) {
             $row = $actions->getRow();
             $actions->default(['plain', 'circle', 'only']);
             $actions->page('修改密码', route('py-mgr-app:api.pam.password', [data_get($row, 'id')]), 'form')->icon('Key');
@@ -75,7 +75,7 @@ class GridPamAccount extends GridBase
     }
 
 
-    public function quick(Actions $actions)
+    public function quick(Interactions $actions)
     {
         $actions->page('新增账号', route_url('py-mgr-app:api.pam.establish'), 'form')->icon('CirclePlus');
     }

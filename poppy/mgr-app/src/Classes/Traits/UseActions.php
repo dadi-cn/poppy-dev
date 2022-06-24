@@ -3,10 +3,7 @@
 namespace Poppy\MgrApp\Classes\Traits;
 
 use Poppy\MgrApp\Classes\Action\Action;
-use Poppy\MgrApp\Classes\Action\CopyAction;
-use Poppy\MgrApp\Classes\Action\PageAction;
-use Poppy\MgrApp\Classes\Action\ProgressAction;
-use Poppy\MgrApp\Classes\Action\RequestAction;
+use Poppy\MgrApp\Classes\Action\IframeAction;
 use Poppy\MgrApp\Classes\Action\TargetAction;
 
 trait UseActions
@@ -22,18 +19,6 @@ trait UseActions
      * @var array
      */
     protected array $defaultStyle = [];
-
-
-    /**
-     * 样式
-     * @var string
-     */
-    protected string $style = '';
-
-    /**
-     * @var int
-     */
-    protected int $length = 5;
 
 
     /**
@@ -61,15 +46,6 @@ trait UseActions
         return $this;
     }
 
-    /**
-     * 快捷ICON
-     * @return $this
-     */
-    public function styleIcon(): self
-    {
-        $this->default(['plain', 'circle', 'only']);
-        return $this;
-    }
 
     /**
      * 设置默认样式, 该样式需是可以调用的 Action 方法
@@ -82,20 +58,9 @@ trait UseActions
         return $this;
     }
 
-    /**
-     * 下拉样式
-     * @param int $length 长度
-     * @param bool $icon  图标
-     * @return self
-     */
-    public function styleDropdown(int $length = 5, bool $icon = false): self
+    public function quickIcon(): self
     {
-        $this->style  = 'dropdown';
-        $this->length = $length;
-        if ($icon) {
-            $this->dropdownIcon = $icon;
-        }
-
+        $this->defaultStyle = ['plain', 'only', 'circle'];
         return $this;
     }
 
@@ -118,64 +83,16 @@ trait UseActions
      * 请求
      * @param string $title
      * @param string $url
-     * @return RequestAction
+     * @return IframeAction
      */
-    public function request(string $title, string $url): RequestAction
+    public function iframe(string $title, string $url): IframeAction
     {
-        $action = new RequestAction($title, $url);
+        $action = new IframeAction($title, $url);
         $action = $this->useDefaultStyle($action);
         return tap($action, function () use ($action) {
             $this->add($action);
         });
     }
-
-    /**
-     * 复制内容
-     * @param string $title
-     * @param string $content
-     * @return CopyAction
-     */
-    public function copy(string $title, string $content): CopyAction
-    {
-        $action = new CopyAction($title, $content);
-        $action = $this->useDefaultStyle($action);
-        return tap($action, function () use ($action) {
-            $this->add($action);
-        });
-    }
-
-    /**
-     * 页面
-     * @param string $title
-     * @param string $url
-     * @param string $type
-     * @return PageAction
-     */
-    public function page(string $title, string $url, string $type): PageAction
-    {
-        $action = (new PageAction($title, $url))->type($type);
-        $action = $this->useDefaultStyle($action);
-        return tap($action, function () use ($action) {
-            $this->add($action);
-        });
-    }
-
-    /**
-     * 进度
-     * @param string $title
-     * @param string $url
-     * @return ProgressAction
-     */
-    public function progress(string $title, string $url): ProgressAction
-    {
-        $action = (new ProgressAction($title, $url));
-        $action->icon('WindPower');
-        $action = $this->useDefaultStyle($action);
-        return tap($action, function () use ($action) {
-            $this->add($action);
-        });
-    }
-
 
     /**
      * 调用默认的样式

@@ -224,7 +224,6 @@ class Column implements Structable
         return $this->addFilter(...func_get_args());
     }
 
-
     /**
      * Set column as searchable.
      *
@@ -478,12 +477,9 @@ class Column implements Structable
             throw new Exception("Invalid column definition [$class]");
         }
 
-        $column = $this;
-
-        $this->display(function ($value) use ($column, $class) {
+        $this->display(function ($value) use ($class) {
             /** @var Render $render */
             $render       = new $class($value, $this);
-            $column->type = $render->getType();
             return $render->render();
         });
     }
@@ -544,13 +540,10 @@ class Column implements Structable
         }
 
         if (class_exists($abstract) && is_subclass_of($abstract, Render::class)) {
-            $column = $this;
             $name   = $this->name;
-            $type   = $this->type;
-            return $this->display(function ($value) use ($abstract, $column, $arguments, $name, $type) {
+            return $this->display(function ($value) use ($abstract, $arguments, $name) {
                 /** @var Render $render */
                 $render       = new $abstract($value, $this, $name);
-                $column->type = $render->getType() ?: $type;
                 return $render->render(...$arguments);
             });
         }

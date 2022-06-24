@@ -4,8 +4,8 @@ namespace Poppy\Sms\Http\MgrApp;
 
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 use Poppy\MgrApp\Classes\Table\Render\Render;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use function collect;
@@ -28,7 +28,7 @@ class GridSms extends GridBase
             return $types->where('type', data_get($this, 'type'))->first()['title'] ?? '';
         });
         $table->add('code', "短信码/内容")->ellipsis();
-        $table->action(function (ActionsRender $actions) {
+        $table->add('handle')->asAction(function (GridActions $actions) {
             /** @var Render $this */
             $item = $this->getRow();
             $actions->quickIcon();
@@ -46,7 +46,7 @@ class GridSms extends GridBase
         }
     }
 
-    public function quick(Actions $actions)
+    public function quick(Interactions $actions)
     {
         $actions->page('新建模板', route('py-sms:api-backend.sms.establish'), 'form');
     }

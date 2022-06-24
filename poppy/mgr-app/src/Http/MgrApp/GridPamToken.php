@@ -3,7 +3,7 @@
 namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class GridPamToken extends GridBase
@@ -22,7 +22,7 @@ class GridPamToken extends GridBase
         $table->add('device_id', "设备ID")->width(320, false);
         $table->add('login_ip', "登录IP");
         $table->add('expired_at', "过期时间")->width(170, true);
-        $table->action(function (ActionsRender $actions) {
+        $table->add('handle', '操作')->asAction(function (GridActions $actions) {
             $row = $actions->getRow();
             $actions->default(['plain', 'circle', 'only']);
             $actions->request('禁用IP', route('py-mgr-app:api.pam.ban', [data_get($row, 'id'), 'ip']))->icon('MapLocation');

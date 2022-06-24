@@ -5,8 +5,8 @@ namespace Poppy\MgrApp\Http\MgrApp;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamBan;
@@ -28,7 +28,7 @@ class GridPamBan extends GridBase
         })->width(100, true)->align('center');
         $table->add('value', "限制值");
         $table->add('note', '备注');
-        $table->action(function (ActionsRender $actions) {
+        $table->add('handle', '操作')->asAction(function (GridActions $actions) {
             $row = $actions->getRow();
             $actions->default(['only', 'circle', 'plain']);
             $actions->request("删除", route_url('py-mgr-app:api.ban.delete', [data_get($row, 'id')]))->icon('Close')->danger();
@@ -43,7 +43,7 @@ class GridPamBan extends GridBase
         }
     }
 
-    public function quick(Actions $actions)
+    public function quick(Interactions $actions)
     {
         $type = input(Scope::QUERY_NAME, PamAccount::TYPE_USER);
 

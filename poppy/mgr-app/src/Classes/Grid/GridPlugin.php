@@ -5,7 +5,7 @@ namespace Poppy\MgrApp\Classes\Grid;
 use Closure;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
 use Poppy\MgrApp\Classes\Table\Column\Column;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\MgrApp\Classes\Traits\UseQuery;
@@ -33,15 +33,15 @@ class GridPlugin
 
     /**
      * 右上角快捷操作
-     * @var Actions
+     * @var Interactions
      */
-    protected Actions $quick;
+    protected Interactions $quick;
 
     /**
      * 左下角快捷操作
-     * @var Actions
+     * @var Interactions
      */
-    protected Actions $batch;
+    protected Interactions $batch;
 
     /**
      * 标题
@@ -55,8 +55,8 @@ class GridPlugin
     public function __construct()
     {
         $this->filter = new FilterPlugin();
-        $this->quick  = (new Actions())->default(['plain', 'primary']);
-        $this->batch  = (new Actions())->default(['info', 'plain']);
+        $this->quick  = (new Interactions())->default(['plain', 'primary']);
+        $this->batch  = (new Interactions())->default(['info', 'plain']);
         $this->table  = new TablePlugin();
     }
 

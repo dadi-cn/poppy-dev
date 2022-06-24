@@ -3,7 +3,7 @@
 namespace Demo\App\Grid;
 
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class GridIdDefault extends GridBase
@@ -19,7 +19,7 @@ class GridIdDefault extends GridBase
         $table->add('created_at')->quickDatetime();
     }
 
-    public function batch(Actions $actions)
+    public function batch(Interactions $actions)
     {
         $actions->request('批量操作', route('demo:api.mgr_app.grid_request', ['success']));
     }

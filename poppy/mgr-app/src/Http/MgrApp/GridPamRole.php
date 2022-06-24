@@ -4,8 +4,8 @@ namespace Poppy\MgrApp\Http\MgrApp;
 
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamRole;
@@ -23,7 +23,7 @@ class GridPamRole extends GridBase
         $pam = $this->pam;
         $table->add('id', "ID")->sortable()->width(80);
         $table->add('title', "名称");
-        $table->action(function (ActionsRender $actions) use ($pam) {
+        $table->add('handle', '操作')->asAction(function (GridActions $actions) use ($pam) {
             $row = $actions->getRow();
             $actions->default(['plain', 'circle', 'only']);
             $title = data_get($row, 'title');
@@ -55,7 +55,7 @@ class GridPamRole extends GridBase
     }
 
 
-    public function quick(Actions $actions)
+    public function quick(Interactions $actions)
     {
         $pam = $this->pam;
         if ($pam->can('create', PamRole::class)) {

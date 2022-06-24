@@ -4,6 +4,7 @@ namespace Poppy\MgrApp\Classes\Grid;
 
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
+use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\System\Models\PamAccount;
 
@@ -50,19 +51,19 @@ abstract class GridBase
 
     /**
      * 快捷操作栏
-     * @param Actions $actions
+     * @param Interactions $actions
      * @return void
      */
-    public function quick(Actions $actions)
+    public function quick(Interactions $actions)
     {
     }
 
     /**
      * 批量操作
-     * @param Actions $actions
+     * @param Interactions $actions
      * @return void
      */
-    public function batch(Actions $actions)
+    public function batch(Interactions $actions)
     {
     }
 

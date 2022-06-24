@@ -3,7 +3,7 @@
 namespace Poppy\MgrApp\Classes\Table\Show;
 
 use Closure;
-use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\Render\GridActions;
 
 trait AsAction
 {
@@ -15,7 +15,7 @@ trait AsAction
         $name       = $this->name;
         $this->type = 'actions';
         return $this->display(function ($value) use ($cb, $name) {
-            $render = new ActionsRender($value, $this, $name);
+            $render = new GridActions($value, $this, $name);
             return $render->render($cb);
         });
     }

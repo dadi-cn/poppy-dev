@@ -2,7 +2,7 @@ backend :
     # 这里的KEY 作为注入项目 module.demo/backend||default, 可以将配置注入到这个地方
     default :
         title : Demo
-        icon : picture-rounded
+        icon : mu:newspaper
         children :
             -   title : Form
                 children :
@@ -87,10 +87,8 @@ backend :
                         path : grid/demo:api.mgr_app.grid/layout
                     -   title : Button
                         path : grid/demo:api.mgr_app.grid/button
-                    -   title : Button-dropdown
+                    -   title : ButtonDropdown/Link
                         path : grid/demo:api.mgr_app.grid/button-dropdown
-                    -   title : Button-icon-dropdown
-                        path : grid/demo:api.mgr_app.grid/button-icon-dropdown
                     -   title : Quick
                         path : grid/demo:api.mgr_app.grid/quick
                     -   title : BatchAction
