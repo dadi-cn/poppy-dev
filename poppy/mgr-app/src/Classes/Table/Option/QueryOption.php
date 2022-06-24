@@ -2,7 +2,7 @@
 
 namespace Poppy\MgrApp\Classes\Table\Option;
 
-abstract class QueryOption extends Option
+ class QueryOption extends Option
 {
 
     /**

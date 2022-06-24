@@ -5,7 +5,7 @@ namespace Poppy\MgrApp\Classes\Table\Option;
 use Poppy\MgrApp\Classes\Contracts\Structable;
 use Poppy\MgrApp\Classes\Form\Traits\UseFieldAttr;
 
-abstract class Option implements Structable
+class Option implements Structable
 {
 
     use UseFieldAttr;

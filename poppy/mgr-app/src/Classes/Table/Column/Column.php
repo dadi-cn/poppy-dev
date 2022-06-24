@@ -140,9 +140,9 @@ class Column implements Structable
 
     /**
      * 是否支持编辑模式
-     * @var string
+     * @var string|array
      */
-    private string $editable = '';
+    private $editable = '';
 
     /**
      * 编辑属性
@@ -157,15 +157,16 @@ class Column implements Structable
      */
     public function __construct(string $name, string $label = '')
     {
-        $this->name  = $name;
-        $this->label = $label ?: ucfirst($name);
+        $this->name     = $name;
+        $this->label    = $label ?: ucfirst($name);
+        $this->editAttr = new Option();
     }
 
 
     /**
      * 设置列宽度, 单个按钮 最优宽度 60(图标), 每个按钮增加 45 宽度
      * Datetime 最优宽度 170
-     * @param int $width  宽度
+     * @param int $width 宽度
      * @param bool $fixed 是否是固定宽度
      * @return $this
      */
@@ -479,7 +480,7 @@ class Column implements Structable
 
         $this->display(function ($value) use ($class) {
             /** @var Render $render */
-            $render       = new $class($value, $this);
+            $render = new $class($value, $this);
             return $render->render();
         });
     }
@@ -540,10 +541,10 @@ class Column implements Structable
         }
 
         if (class_exists($abstract) && is_subclass_of($abstract, Render::class)) {
-            $name   = $this->name;
+            $name = $this->name;
             return $this->display(function ($value) use ($abstract, $arguments, $name) {
                 /** @var Render $render */
-                $render       = new $abstract($value, $this, $name);
+                $render = new $abstract($value, $this, $name);
                 return $render->render(...$arguments);
             });
         }

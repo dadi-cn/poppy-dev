@@ -37,8 +37,9 @@ class FormFieldTableEstablish extends FormWidget
     public function form()
     {
         $this->table('table', '表格')->cols(function (TablePlugin $table) {
-            $table->add('id', 'ID');
+            $table->add('id', 'ID')->asModifyText();
             $table->add('name', '用户名');
+            $table->add('action', '操作')->asTableAction();
         });
     }
 }

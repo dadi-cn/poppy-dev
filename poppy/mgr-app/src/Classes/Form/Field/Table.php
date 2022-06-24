@@ -21,4 +21,13 @@ class Table extends FormItem
         $closure->call($this, $this->table);
         $this->setAttribute('cols', $this->table->struct());
     }
+
+    /**
+     * 获取定义的表格, 用来数据重新回写格式化
+     * @return TablePlugin
+     */
+    public function getTable(): TablePlugin
+    {
+        return $this->table;
+    }
 }

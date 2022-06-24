@@ -46,6 +46,7 @@ use Poppy\MgrApp\Classes\Form\Field\Time;
 use Poppy\MgrApp\Classes\Form\Field\TimeRange;
 use Poppy\MgrApp\Classes\Form\Field\Url;
 use Poppy\MgrApp\Classes\Form\Field\Year;
+use Poppy\MgrApp\Classes\Table\Column\Column;
 use Poppy\MgrApp\Classes\Traits\UseQuery;
 use function tap;
 
@@ -219,7 +220,7 @@ class FormPlugin
 
     /**
      * Generate items and append to form list
-     * @param string $method   类型
+     * @param string $method 类型
      * @param array $arguments 传入的参数
      *
      * @return FormItem|$this
@@ -311,11 +312,28 @@ class FormPlugin
     /**
      * 返回结构化的数据
      * @return array
+     * @throws \Exception
      */
     public function frame(): array
     {
         $items = new Collection();
         $this->items->each(function (FormItem $item) use ($items) {
+
+            // 对数据进行回写, 格式化 Table 数据, 给到客户端用
+            if ($item instanceof Table) {
+                $tableValues = data_get($this->model(), $item->name);
+                $rows        = collect($tableValues)->map(function ($row) use ($item) {
+                    $newRow = collect();
+                    $item->getTable()->visibleCols()->each(function (Column $column) use ($row, $newRow) {
+                        $newRow->put(
+                            $column->name,
+                            $column->fillVal($row)
+                        );
+                    });
+                    return $newRow->toArray();
+                });
+                data_set($this->model, $item->name, $rows);
+            }
             $struct = $item->struct();
             $items->push($struct);
         });
