@@ -101,6 +101,8 @@ class HomeController extends BackendController
     {
         Auth::guard(PamAccount::GUARD_BACKEND)->logout();
 
+        app('session.store')->flush();
+
         return Resp::success('退出登录', '_location|' . route('py-mgr-page:backend.home.login'));
     }
 
