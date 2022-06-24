@@ -38,6 +38,7 @@ use Poppy\MgrApp\Classes\Form\Field\OnOff;
 use Poppy\MgrApp\Classes\Form\Field\Password;
 use Poppy\MgrApp\Classes\Form\Field\Radio;
 use Poppy\MgrApp\Classes\Form\Field\Select;
+use Poppy\MgrApp\Classes\Form\Field\Table;
 use Poppy\MgrApp\Classes\Form\Field\Tags;
 use Poppy\MgrApp\Classes\Form\Field\Text;
 use Poppy\MgrApp\Classes\Form\Field\Textarea;
@@ -51,6 +52,7 @@ use function tap;
 /**
  * Form Widget
  * @url https://element-plus.gitee.io/zh-CN/component/form.html#form-attributes
+ * @method Table table($name, $label = '')
  * @method Text text($name, $label = '')
  * @method Textarea textarea($name, $label = '')
  * @method Url url($name, $label = '')

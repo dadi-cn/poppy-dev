@@ -2,9 +2,9 @@
 
 namespace Poppy\MgrApp\Classes\Grid;
 
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\System\Models\PamAccount;
 
 /**
@@ -32,19 +32,19 @@ abstract class GridBase
 
     /**
      * 表格定义
-     * @param TableWidget $table
+     * @param TablePlugin $table
      * @return void
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
     }
 
     /**
      * 搜索项
-     * @param FilterWidget $filter
+     * @param FilterPlugin $filter
      * @return void
      */
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
     }
 

@@ -4,9 +4,8 @@ namespace Poppy\MgrApp\Http\Request\ApiMgrApp;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
+use Illuminate\Http\Response;
 use Poppy\Framework\Classes\Resp;
-use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\MgrApp\Classes\Widgets\GridWidget;
 use Poppy\MgrApp\Http\MgrApp\FormPamDisable;
 use Poppy\MgrApp\Http\MgrApp\FormPamEnable;
@@ -20,7 +19,6 @@ use Poppy\System\Events\PamTokenBanEvent;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamLog;
 use Poppy\System\Models\PamToken;
-use Response;
 use Throwable;
 use function event;
 
@@ -41,7 +39,6 @@ class PamController extends BackendController
 
     /**
      * Display a listing of the resource.
-     * @throws ApplicationException|Throwable
      */
     public function index()
     {
@@ -52,7 +49,6 @@ class PamController extends BackendController
 
     /**
      * Show the form for creating a new resource.
-     * @throws Throwable
      */
     public function establish()
     {
@@ -91,9 +87,7 @@ class PamController extends BackendController
     }
 
     /**
-     * @return array|\Illuminate\Http\Response|JsonResponse|Redirector|RedirectResponse|Resp|Response
-     * @throws ApplicationException
-     * @throws Throwable
+     * @return Response|JsonResponse|RedirectResponse
      */
     public function log()
     {
@@ -103,8 +97,7 @@ class PamController extends BackendController
     }
 
     /**
-     * @return \Illuminate\Http\Response|JsonResponse|RedirectResponse|Resp
-     * @throws ApplicationException
+     * @return Response|JsonResponse|RedirectResponse
      * @throws Throwable
      */
     public function token()

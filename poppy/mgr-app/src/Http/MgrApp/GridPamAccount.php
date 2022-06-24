@@ -3,12 +3,12 @@
 namespace Poppy\MgrApp\Http\MgrApp;
 
 use Illuminate\Support\Str;
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
-use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
+use Poppy\MgrApp\Classes\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamRole;
 use Poppy\System\Models\PamRoleAccount;
@@ -21,7 +21,7 @@ class GridPamAccount extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', "ID")->sortable()->width(90, true)->align('center');
         $table->add('username', "用户名");
@@ -30,7 +30,7 @@ class GridPamAccount extends GridBase
         $table->add('login_times', "登录次数")->width(90, true)->align('center');
         $table->add('created_at', "操作时间")->width(170, true);
         $pam = $this->pam;
-        $table->action(function (ActionsRender $actions) use ($pam) {
+        $table->add('handle', '操作')->asAction(function (ActionsRender $actions) use ($pam) {
             $row = $actions->getRow();
             $actions->default(['plain', 'circle', 'only']);
             $actions->page('修改密码', route('py-mgr-app:api.pam.password', [data_get($row, 'id')]), 'form')->icon('Key');
@@ -47,7 +47,7 @@ class GridPamAccount extends GridBase
     /**
      * @inheritDoc
      */
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $types = PamAccount::kvType();
         $type  = input(Scope::QUERY_NAME);

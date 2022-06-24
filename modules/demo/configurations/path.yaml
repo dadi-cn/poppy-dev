@@ -27,6 +27,8 @@ backend :
                         path : form/demo:api.mgr_app.form/field-select
                     -   title : Switch
                         path : form/demo:api.mgr_app.form/field-switch
+                    -   title : Table
+                        path : form/demo:api.mgr_app.form/field-table
                     -   title : File
                         path : form/demo:api.mgr_app.form/field-file
                     -   title : Image

@@ -6,7 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Validation\Rule;
-use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
+use Poppy\MgrApp\Classes\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Widgets\FormWidget;
 use Poppy\System\Action\Ban;
 use Poppy\System\Models\PamBan;

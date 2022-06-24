@@ -3,10 +3,10 @@
 namespace Poppy\MgrApp\Classes\Grid;
 
 use Poppy\MgrApp\Classes\Contracts\Query;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\Exporters\AbstractExporter;
 use Poppy\MgrApp\Classes\Grid\Exporters\CsvExporter;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * 导出工具
@@ -35,9 +35,9 @@ class Exporter
 
     protected Query $model;
 
-    protected FilterWidget $filter;
+    protected FilterPlugin $filter;
 
-    protected TableWidget $column;
+    protected TablePlugin $column;
 
     /**
      * @var string
@@ -47,7 +47,7 @@ class Exporter
     /**
      * 扩展新实例
      */
-    public function __construct(Query $model, FilterWidget $filterWidget, TableWidget $columnWidget, $title = '')
+    public function __construct(Query $model, FilterPlugin $filterWidget, TablePlugin $columnWidget, $title = '')
     {
         $this->model  = $model;
         $this->filter = $filterWidget;

@@ -4,9 +4,9 @@ namespace Poppy\MgrApp\Classes\Grid\Query;
 
 use Closure;
 use Illuminate\Support\Collection;
-use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
+use Poppy\MgrApp\Classes\Filter\Query\Scope;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class QueryCustom extends Query
 {
@@ -19,15 +19,15 @@ class QueryCustom extends Query
 
     /**
      * 过滤器
-     * @var FilterWidget
+     * @var FilterPlugin
      */
-    protected FilterWidget $filter;
+    protected FilterPlugin $filter;
 
     /**
      * 表格
-     * @var TableWidget
+     * @var TablePlugin
      */
-    protected TableWidget $table;
+    protected TablePlugin $table;
 
     /**
      * @return Collection
@@ -69,11 +69,11 @@ class QueryCustom extends Query
 
     /**
      * 用户筛选查询
-     * @param FilterWidget $filter
-     * @param TableWidget $table
+     * @param FilterPlugin $filter
+     * @param TablePlugin $table
      * @return $this
      */
-    public function prepare(FilterWidget $filter, TableWidget $table): Query
+    public function prepare(FilterPlugin $filter, TablePlugin $table): Query
     {
         $this->filter = $filter;
         $this->table  = $table;

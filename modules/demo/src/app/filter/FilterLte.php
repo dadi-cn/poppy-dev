@@ -3,9 +3,9 @@
 namespace Demo\App\Filter;
 
 use Demo\Models\DemoUser;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class FilterLte extends GridBase
 {
@@ -14,7 +14,7 @@ class FilterLte extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', 'ID')->quickId()->sortable();
         $table->add('user.id', 'UID')->quickId()->align('center');
@@ -29,7 +29,7 @@ class FilterLte extends GridBase
     /**
      * @inheritDoc
      */
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $filter->action();
         $filter->lte('id', 'ID')->asText();

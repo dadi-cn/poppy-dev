@@ -5,7 +5,7 @@ namespace Demo\App\Grid;
 
 use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * 按钮
@@ -19,7 +19,7 @@ class GridBatchActions extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', 'ID')->quickId()->sortable();
         $table->add('title', '标题')->width(200)->ellipsis();

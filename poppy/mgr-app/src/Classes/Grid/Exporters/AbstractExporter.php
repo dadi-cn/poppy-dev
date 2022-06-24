@@ -8,9 +8,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Poppy\MgrApp\Classes\Contracts\Exportable;
 use Poppy\MgrApp\Classes\Contracts\Query;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\Exporter;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * Exporter 类
@@ -34,14 +34,14 @@ abstract class AbstractExporter implements Exportable
 
     protected Query $query;
 
-    protected FilterWidget $filter;
+    protected FilterPlugin $filter;
 
-    protected TableWidget $table;
+    protected TablePlugin $table;
 
     /**
      * 扩展新实例
      */
-    public function __construct(Query $model, FilterWidget $filterWidget, TableWidget $columnWidget, $title)
+    public function __construct(Query $model, FilterPlugin $filterWidget, TablePlugin $columnWidget, $title)
     {
         $this->query  = $model;
         $this->filter = $filterWidget;
@@ -82,7 +82,7 @@ abstract class AbstractExporter implements Exportable
         }
 
         if ($scope == Exporter::SCOPE_SELECT) {
-            $selected = input(TableWidget::NAME_BATCH);
+            $selected = input(TablePlugin::NAME_BATCH);
             if (is_string($selected)) {
                 $selected = explode(',', $selected);
             }

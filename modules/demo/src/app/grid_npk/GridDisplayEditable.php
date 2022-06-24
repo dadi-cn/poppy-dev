@@ -5,7 +5,7 @@ namespace Demo\App\GridNpk;
 
 use Demo\Models\DemoWebappNpk;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * 快捷编辑
@@ -18,7 +18,7 @@ class GridDisplayEditable extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('sort', '行内编辑')->editable();
         $table->add('is_open', 'Switch')->switchable();

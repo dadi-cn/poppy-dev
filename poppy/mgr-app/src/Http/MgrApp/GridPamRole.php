@@ -2,11 +2,11 @@
 
 namespace Poppy\MgrApp\Http\MgrApp;
 
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamRole;
 
@@ -18,7 +18,7 @@ class GridPamRole extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $pam = $this->pam;
         $table->add('id', "ID")->sortable()->width(80);
@@ -42,10 +42,10 @@ class GridPamRole extends GridBase
     }
 
     /**
-     * @param FilterWidget $filter
+     * @param FilterPlugin $filter
      * @return void
      */
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $types = PamAccount::kvType();
         $filter->scope('all', '全部');

@@ -2,12 +2,12 @@
 
 namespace Poppy\SensitiveWord\Http\MgrApp;
 
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
-use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
+use Poppy\MgrApp\Classes\Grid\Tools\Actions;
+use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\Render\Render;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 use function route;
 use function route_url;
 
@@ -18,7 +18,7 @@ class GridSensitiveWord extends GridBase
 
     /**
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', "ID")->sortable()->quickId();
         $table->add('word', "敏感词");
@@ -32,7 +32,7 @@ class GridSensitiveWord extends GridBase
     }
 
 
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $filter->like('word', '敏感词');
     }

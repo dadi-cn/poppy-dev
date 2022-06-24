@@ -2,9 +2,9 @@
 
 namespace Poppy\MgrApp\Http\MgrApp;
 
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * 列表 PamLog
@@ -16,7 +16,7 @@ class GridPamLog extends GridBase
 
     /**
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', "ID")->sortable()->width(80);
         $table->add('pam.username', "用户名");
@@ -27,7 +27,7 @@ class GridPamLog extends GridBase
     }
 
 
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $filter->equal('account_id', '用户ID')->asText('用户ID');
         $filter->equal('ip', 'IP地址')->asText('用户IP');

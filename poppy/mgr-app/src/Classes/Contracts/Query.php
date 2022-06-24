@@ -4,8 +4,8 @@ namespace Poppy\MgrApp\Classes\Contracts;
 
 use Closure;
 use Illuminate\Support\Collection;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 interface Query
 {
@@ -40,11 +40,11 @@ interface Query
 
     /**
      * 数据预处理
-     * @param FilterWidget $filter
-     * @param TableWidget $table
+     * @param FilterPlugin $filter
+     * @param TablePlugin $table
      * @return $this
      */
-    public function prepare(FilterWidget $filter, TableWidget $table): self;
+    public function prepare(FilterPlugin $filter, TablePlugin $table): self;
 
     /**
      * 对当前查询条件进行编辑

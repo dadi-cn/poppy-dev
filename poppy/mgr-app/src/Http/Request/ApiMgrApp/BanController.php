@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Poppy\Framework\Classes\Resp;
-use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
+use Poppy\MgrApp\Classes\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Widgets\GridWidget;
 use Poppy\MgrApp\Http\MgrApp\FormBanEstablish;
 use Poppy\MgrApp\Http\MgrApp\GridPamBan;

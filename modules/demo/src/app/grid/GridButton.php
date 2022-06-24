@@ -3,9 +3,9 @@
 namespace Demo\App\Grid;
 
 use Demo\Models\DemoWebapp;
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * 按钮
@@ -16,9 +16,10 @@ class GridButton extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id')->quickId();
+        $table->action()
         $table->add('title', '标题(Link模式, 支持Action)')->width(100)->asAction(function (ActionsRender $actions) {
             $row = $actions->getRow();
             $actions->page($row->title, route('demo:api.mgr_app.grid_form', ['detail']), 'form')->link();

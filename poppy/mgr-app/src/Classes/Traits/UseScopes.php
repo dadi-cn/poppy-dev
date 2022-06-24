@@ -3,7 +3,7 @@
 namespace Poppy\MgrApp\Classes\Traits;
 
 use Illuminate\Support\Collection;
-use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
+use Poppy\MgrApp\Classes\Filter\Query\Scope;
 
 trait UseScopes
 {

@@ -5,7 +5,7 @@ namespace Demo\App\Grid;
 
 use Demo\Models\DemoWebapp;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * 快捷列表
@@ -18,7 +18,7 @@ class GridDisplay extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', 'QuickId')->quickId();
         $table->add('status', 'usingKv')->asKv(DemoWebapp::kvStatus())->width(100, true);

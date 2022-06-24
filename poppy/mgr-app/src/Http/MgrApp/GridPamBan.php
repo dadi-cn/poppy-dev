@@ -2,12 +2,12 @@
 
 namespace Poppy\MgrApp\Http\MgrApp;
 
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
-use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
+use Poppy\MgrApp\Classes\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\PamBan;
 use Poppy\System\Models\SysConfig;
@@ -20,7 +20,7 @@ class GridPamBan extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', "ID")->sortable()->width(90, true)->align('center');
         $table->add('type', "类型")->display(function ($type) {
@@ -35,7 +35,7 @@ class GridPamBan extends GridBase
         })->width(60, true);
     }
 
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $types = PamAccount::kvType();
         foreach ($types as $t => $v) {

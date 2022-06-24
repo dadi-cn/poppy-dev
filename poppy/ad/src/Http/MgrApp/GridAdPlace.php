@@ -3,12 +3,12 @@
 namespace Poppy\Ad\Http\MgrApp;
 
 use Poppy\Ad\Models\AdPlace;
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
-use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\Render\Render;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 use function collect;
 use function data_get;
 use function route;
@@ -20,7 +20,7 @@ class GridAdPlace extends GridBase
 
     /**
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', "类型")->quickId();
         $table->add('title', "名称")->quickId();
@@ -46,7 +46,7 @@ class GridAdPlace extends GridBase
     }
 
 
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $filter->like('title', '标题');
     }

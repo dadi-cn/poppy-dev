@@ -2,12 +2,12 @@
 
 namespace Poppy\Sms\Http\MgrApp;
 
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
-use Poppy\MgrApp\Classes\Grid\Column\Render\Render;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
+use Poppy\MgrApp\Classes\Grid\Tools\Actions;
+use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\Render\Render;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 use function collect;
 use function data_get;
 use function route;
@@ -20,7 +20,7 @@ class GridSms extends GridBase
 
     /**
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('type', "类型")->quickTitle();
         $table->add('description', '描述')->quickTitle()->display(function () {
@@ -38,7 +38,7 @@ class GridSms extends GridBase
     }
 
 
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $sendTypes = sys_hook('poppy.sms.send_type');
         foreach ($sendTypes as $type => $def) {

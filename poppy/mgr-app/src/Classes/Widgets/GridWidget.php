@@ -8,37 +8,19 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Poppy\Framework\Classes\Resp;
-use Poppy\Framework\Classes\Traits\PoppyTrait;
-use Poppy\MgrApp\Classes\Grid\Column\Column;
 use Poppy\MgrApp\Classes\Grid\Exporter;
 use Poppy\MgrApp\Classes\Grid\Exporters\AbstractExporter;
 use Poppy\MgrApp\Classes\Grid\GridBase;
+use Poppy\MgrApp\Classes\Grid\GridPlugin;
 use Poppy\MgrApp\Classes\Grid\Query\Query;
 use Poppy\MgrApp\Classes\Grid\Query\QueryFactory;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Traits\UseQuery;
-use function collect;
 use function input;
 
 /**
- * @property-read string $title 标题
+ * Grid 插件
  */
-class GridWidget
+final class GridWidget extends GridPlugin
 {
-    use PoppyTrait;
-    use UseQuery;
-
-    /**
-     * @var FilterWidget
-     */
-    protected FilterWidget $filter;
-
-    /**
-     * Export driver.
-     *
-     * @var string
-     */
-    protected string $exporter = 'csv';
 
     /**
      * 列表模型实例
@@ -48,28 +30,11 @@ class GridWidget
     protected Query $query;
 
     /**
-     * 列组件
-     * @var TableWidget
-     */
-    protected TableWidget $table;
-
-    /**
-     * 右上角快捷操作
-     * @var Actions
-     */
-    private Actions $quick;
-
-    /**
-     * 左下角快捷操作
-     * @var Actions
-     */
-    private Actions $batch;
-
-    /**
-     * 标题
+     * Export driver.
+     *
      * @var string
      */
-    private string $title = '';
+    protected string $exporter = 'csv';
 
     /**
      * Create a new grid instance.
@@ -78,22 +43,8 @@ class GridWidget
      */
     public function __construct($model)
     {
-        $this->query  = QueryFactory::create($model);
-        $this->filter = new FilterWidget();
-        $this->quick  = (new Actions())->default(['plain', 'primary']);
-        $this->batch  = (new Actions())->default(['info', 'plain']);
-        $this->table  = new TableWidget();
-    }
-
-    /**
-     * 设置 Grid 的导出方式, 支持 csv, excel , 并可以通过 Extend 进行自定义
-     * @param $exporter
-     * @return $this
-     */
-    public function exporter($exporter): self
-    {
-        $this->exporter = $exporter;
-        return $this;
+        $this->query = QueryFactory::create($model);
+        parent::__construct();
     }
 
     /**
@@ -107,8 +58,9 @@ class GridWidget
 
     /**
      * @param string $grid_class
+     * @return GridWidget
      */
-    public function setLists(string $grid_class)
+    public function setLists(string $grid_class):self
     {
         if (!class_exists($grid_class)) {
             sys_error('mgr-app', __CLASS__, 'Grid Class `' . $grid_class . '` Not Exists.');
@@ -120,6 +72,7 @@ class GridWidget
         /* 设置标题
          * ---------------------------------------- */
         $this->title = $List->title;
+
         $List->table($this->table);
 
         // 为请求添加默认列
@@ -130,16 +83,6 @@ class GridWidget
         $List->quick($this->quick);
         $List->filter($this->filter);
         $List->batch($this->batch);
-    }
-
-    /**
-     * 设置标题
-     * @param string $title
-     * @return $this
-     */
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
         return $this;
     }
 
@@ -162,38 +105,28 @@ class GridWidget
 
         $resp = [];
         if ($this->queryHas($query, 'data')) {
-            $resp = array_merge($resp, $this->queryData());
+            $resp = array_merge($resp, $this->structData());
         }
         if ($this->queryHas($query, 'frame')) {
-            $resp = array_merge($resp, $this->queryStruct());
-            $resp = array_merge($resp, $this->queryFilter());
+            $resp = array_merge($resp, $this->structQuery());
+            $resp = array_merge($resp, $this->structFilter());
         }
         if ($this->queryHas($query, 'filter')) {
-            $resp = array_merge($resp, $this->queryFilter());
+            $resp = array_merge($resp, $this->structFilter());
         }
 
         return Resp::success(input('_query') ?: '', $resp);
     }
 
-    public function __get($attr)
-    {
-        return $this->{$attr} ?? '';
-    }
-
     /**
-     * 导出请求
-     * @param string $scope
+     * 设置 Grid 的导出方式, 支持 csv, excel , 并可以通过 Extend 进行自定义
+     * @param $exporter
+     * @return $this
      */
-    protected function queryExport(string $scope = 'page')
+    public function exporter($exporter): self
     {
-        // clear output buffer.
-        if (ob_get_length()) {
-            ob_end_clean();
-        }
-
-        $this->query->usePaginate(false);
-
-        $this->getExporter($scope)->export();
+        $this->exporter = $exporter;
+        return $this;
     }
 
     /**
@@ -205,46 +138,20 @@ class GridWidget
         return (new Exporter($this->query, $this->filter, $this->table, $this->title))->resolve($this->exporter)->withScope($scope);
     }
 
-    private function queryStruct(): array
+    /**
+     * 导出请求
+     * @param string $scope
+     */
+    private function queryExport(string $scope = 'page')
     {
-        $columns = [];
-        $this->table->visibleCols()->each(function (Column $column) use (&$columns) {
-            $columns[] = $column->struct();
-        });
-
-        // if batchAction => selection True
-        // if exportable => selection True
-        // if selection & !pk => Selection Disable
-        // 支持批处理, 开启选择器
-        if (count($this->batch->struct())) {
-            $this->table->enableSelection();
-        }
-        if ($this->filter->getEnableExport()) {
-            $this->table->enableSelection();
+        // clear output buffer.
+        if (ob_get_length()) {
+            ob_end_clean();
         }
 
-        return [
-            'type'    => 'grid',
-            'url'     => $this->pyRequest()->url(),
-            'title'   => $this->title ?: '-',
-            'batch'   => $this->batch->struct(),
-            'scopes'  => $this->filter->getScopesStruct(),
-            'scope'   => $this->filter->getCurrentScope() ? $this->filter->getCurrentScope()->value : '',
-            'options' => [
-                'page_sizes' => $this->table->pagesizeOptions,
-                'selection'  => $this->table->enableSelection,
-            ],
-            'cols'    => $columns,
-            'pk'      => $this->query->getPrimaryKey(),
-        ];
-    }
+        $this->query->usePaginate(false);
 
-    private function queryFilter(): array
-    {
-        return [
-            'actions' => $this->quick->struct(),
-            'filter'  => $this->filter->struct(),
-        ];
+        $this->getExporter($scope)->export();
     }
 
     private function queryEdit()
@@ -256,31 +163,5 @@ class GridWidget
             return Resp::error('修改失败');
         }
         return Resp::success('修改成功');
-    }
-
-    /**
-     * 查询并返回数据
-     */
-    private function queryData(): array
-    {
-        // 获取模型数据
-        $collection = $this->query->prepare($this->filter, $this->table)->get();
-
-
-        $rows = $collection->map(function ($row) {
-            $newRow = collect();
-            $this->table->visibleCols()->each(function (Column $column) use ($row, $newRow) {
-                $newRow->put(
-                    $column->name,
-                    $column->fillVal($row)
-                );
-            });
-            return $newRow->toArray();
-        });
-
-        return [
-            'list'  => $rows->toArray(),
-            'total' => $this->query->total(),
-        ];
     }
 }

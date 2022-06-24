@@ -6,7 +6,7 @@ namespace Demo\App\Grid;
 use Demo\Models\DemoWebapp;
 use Poppy\Framework\Helper\StrHelper;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * 快捷列表
@@ -19,7 +19,7 @@ class GridDisplayHidden extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', 'QuickId')->quickId();
         $table->add('title', 'Hide')->asHidden();

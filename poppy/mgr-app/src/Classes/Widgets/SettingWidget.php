@@ -11,7 +11,7 @@ use Poppy\MgrApp\Classes\Traits\UseQuery;
 /**
  * 设置
  */
-class SettingWidget
+final class SettingWidget
 {
 
     use CoreTrait, UseQuery;
@@ -19,7 +19,7 @@ class SettingWidget
     public function resp(string $path)
     {
         $id       = 'poppy.mgr-app.settings';
-        $query = input('_query');
+        $query    = input('_query');
         $service  = $this->coreModule()->services()->get($id);
         $hooks    = sys_hook($id);
         $strForms = $hooks[$path]['forms'] ?? [];

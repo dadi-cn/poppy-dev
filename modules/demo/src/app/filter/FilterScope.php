@@ -3,9 +3,9 @@
 
 namespace Demo\App\Filter;
 
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * 按钮
@@ -19,7 +19,7 @@ class FilterScope extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', 'ID')->width(150)->sortable();
         $table->add('title', '标题')->width(200)->ellipsis();
@@ -39,7 +39,7 @@ class FilterScope extends GridBase
     /**
      * @inheritDoc
      */
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $filter->like('title', '标题');
         $filter->scope('none', '未发布')->where('status', 1);

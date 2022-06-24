@@ -45,7 +45,7 @@ abstract class FormWidget extends FormPlugin
     {
         $request = app('request');
         // 组建 Form 表单
-        $this->form();
+        $this->initWidget();
 
         $query = input('_query');
         if ($this->queryHas($query, 'submit')) {

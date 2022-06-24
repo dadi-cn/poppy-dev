@@ -4,7 +4,7 @@ namespace Poppy\MgrApp\Classes\Grid\Exporters;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Poppy\MgrApp\Classes\Grid\Column\Column;
+use Poppy\MgrApp\Classes\Table\Column\Column;
 use function collect;
 use function response;
 

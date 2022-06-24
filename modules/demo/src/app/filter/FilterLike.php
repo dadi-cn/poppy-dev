@@ -2,9 +2,9 @@
 
 namespace Demo\App\Filter;
 
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class FilterLike extends GridBase
 {
@@ -13,7 +13,7 @@ class FilterLike extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', 'ID')->quickId();
         $table->add('title', '标题')->quickTitle();
@@ -25,7 +25,7 @@ class FilterLike extends GridBase
     /**
      * @inheritDoc
      */
-    public function filter(FilterWidget $filter)
+    public function filter(FilterPlugin $filter)
     {
         $filter->action();
         $filter->startsWith('title', '标题(开始匹配)');

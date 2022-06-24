@@ -4,7 +4,7 @@ namespace Demo\App\Grid;
 
 use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class GridIdDefault extends GridBase
 {
@@ -13,7 +13,7 @@ class GridIdDefault extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('title', '标题')->quickTitle();
         $table->add('created_at')->quickDatetime();

@@ -2,8 +2,8 @@
 
 namespace Demo\App\Grid;
 
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
 use Poppy\MgrApp\Classes\Grid\GridBase;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class GridRelation extends GridBase
 {
@@ -12,7 +12,7 @@ class GridRelation extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         // 自定义样式
         $table->add('title', '标题')->quickTitle();

@@ -2,9 +2,9 @@
 
 namespace Demo\App\Grid;
 
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 /**
  * 按钮
@@ -14,7 +14,7 @@ class GridButtonDropdown extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id')->quickId();
         $table->add('handle', '操作')->asAction(function (ActionsRender $actions) {

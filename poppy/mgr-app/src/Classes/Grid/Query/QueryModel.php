@@ -20,9 +20,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Helper\UtilHelper;
-use Poppy\MgrApp\Classes\Grid\Column\Column;
-use Poppy\MgrApp\Classes\Widgets\FilterWidget;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Filter\FilterPlugin;
+use Poppy\MgrApp\Classes\Table\Column\Column;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 use function collect;
 use function request;
 
@@ -129,12 +129,12 @@ class QueryModel extends Query
 
     /**
      * 查询条件预取
-     * @param FilterWidget $filter
-     * @param TableWidget $table
+     * @param FilterPlugin $filter
+     * @param TablePlugin $table
      * @return $this
      * @throws ApplicationException
      */
-    public function prepare(FilterWidget $filter, TableWidget $table): self
+    public function prepare(FilterPlugin $filter, TablePlugin $table): self
     {
         $this->addConditions($filter->conditions())->prepareTable($table);
         return $this;
@@ -298,7 +298,7 @@ class QueryModel extends Query
      */
     protected function setSort()
     {
-        $this->sort = request(TableWidget::NAME_SORT, []);
+        $this->sort = request(TablePlugin::NAME_SORT, []);
 
         if (!is_array($this->sort)) {
 
@@ -470,10 +470,10 @@ class QueryModel extends Query
 
     /**
      * 检查定义并加入 with 查询
-     * @param TableWidget $table
+     * @param TablePlugin $table
      * @throws ApplicationException
      */
-    private function prepareTable(TableWidget $table)
+    private function prepareTable(TablePlugin $table)
     {
         // 验证添加 relation
         // mutator | json 可以使用 data_get 从对象中获取数据

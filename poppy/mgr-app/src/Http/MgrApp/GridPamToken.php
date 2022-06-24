@@ -2,9 +2,9 @@
 
 namespace Poppy\MgrApp\Http\MgrApp;
 
-use Poppy\MgrApp\Classes\Grid\Column\Render\ActionsRender;
 use Poppy\MgrApp\Classes\Grid\GridBase;
-use Poppy\MgrApp\Classes\Widgets\TableWidget;
+use Poppy\MgrApp\Classes\Table\Render\ActionsRender;
+use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class GridPamToken extends GridBase
 {
@@ -14,7 +14,7 @@ class GridPamToken extends GridBase
     /**
      * @inheritDoc
      */
-    public function table(TableWidget $table)
+    public function table(TablePlugin $table)
     {
         $table->add('id', "ID")->sortable()->width(90, true)->align('center');
         $table->add('account_id', "用户ID")->width(90, true)->align('center');
