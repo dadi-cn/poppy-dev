@@ -35,6 +35,7 @@ class GridButton extends GridBase
             $actions->request('圆形图标', route('demo:api.mgr_app.grid_request', ['success']))->icon('warning')->circle()->only();
             $actions->page('页面', route('demo:api.mgr_app.grid_form', ['detail']), 'form');
             $actions->target('Target(百度)', 'https://www.baidu.com');
+            $actions->iframe('Iframe(百度)', 'https://poppy-framework.com/');
             $actions->page('Table', route('demo:api.table.index', ['simple']), 'table');
         });
     }
