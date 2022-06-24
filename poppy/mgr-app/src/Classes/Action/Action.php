@@ -7,6 +7,7 @@ use Poppy\MgrApp\Classes\Contracts\Structable;
 
 /**
  * @method self primary()       主要按钮
+ * @method self link()          链接按钮
  * @method self default()       默认样式
  * @method self success()       成功
  * @method self info()          信息
@@ -60,6 +61,12 @@ abstract class Action implements Structable
      * @var bool
      */
     protected bool $only = false;
+
+    /**
+     * 文字模式
+     * @var bool
+     */
+    protected bool $link = false;
 
     /**
      * 是否进行请求前确认
@@ -131,14 +138,14 @@ abstract class Action implements Structable
     public function __call($method, $args)
     {
         if (in_array($method, [
-            'primary', 'success', 'info', 'warning', 'danger'
+            'primary', 'success', 'info', 'warning', 'danger',
         ])) {
             $this->type = $method;
             return $this;
         }
 
         if (in_array($method, [
-            'disabled', 'plain', 'circle', 'only'
+            'disabled', 'plain', 'circle', 'only', 'link',
         ])) {
             $this->$method = true;
             return $this;
@@ -158,7 +165,7 @@ abstract class Action implements Structable
             'url'   => $this->url,
             'title' => $this->title,
         ];
-        foreach (['type', 'plain', 'only', 'circle', 'icon', 'disabled', 'confirm'] as $value) {
+        foreach (['type', 'plain', 'only', 'circle', 'icon', 'disabled', 'confirm', 'link'] as $value) {
             if ($this->{$value}) {
                 $params[$value] = $this->{$value};
             }

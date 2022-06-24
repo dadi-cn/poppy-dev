@@ -21,9 +21,9 @@ use Poppy\MgrApp\Classes\Grid\Filter\Query\Lt;
 use Poppy\MgrApp\Classes\Grid\Filter\Query\Lte;
 use Poppy\MgrApp\Classes\Grid\Filter\Query\NotEqual;
 use Poppy\MgrApp\Classes\Grid\Filter\Query\NotIn;
-use Poppy\MgrApp\Classes\Grid\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Grid\Filter\Query\StartsWith;
 use Poppy\MgrApp\Classes\Grid\Filter\Query\Where;
+use Poppy\MgrApp\Classes\Traits\UseScopes;
 use ReflectionException;
 
 /**
@@ -44,6 +44,8 @@ use ReflectionException;
 final class FilterWidget implements Structable
 {
 
+    use UseScopes;
+
     /**
      * 表单内的表单条目集合
      * @var Collection
@@ -54,12 +56,6 @@ final class FilterWidget implements Structable
     private int $actionWidth = 4;
 
     private bool $enableExport = false;
-
-    /**
-     * 全局范围
-     * @var Collection
-     */
-    private Collection $scopes;
 
 
     public function __construct()
@@ -203,59 +199,6 @@ final class FilterWidget implements Structable
         }
 
         return array_filter($conditions);
-    }
-
-
-    /**
-     * 添加全局范围, 在添加全局范围之后, 如果不传入 Scope, 则默认为第一个 Scope
-     * @param string $key
-     * @param string $label
-     *
-     * @return mixed
-     */
-    public function scope(string $key, string $label)
-    {
-        return tap(new Scope($key, $label), function (Scope $scope) {
-            return $this->scopes->push($scope);
-        });
-    }
-
-    /**
-     * Get all filter scopes.
-     *
-     * @return Collection
-     */
-    public function getScopes(): Collection
-    {
-        return $this->scopes;
-    }
-
-    /**
-     * 范围结构
-     * @return Collection
-     */
-    public function getScopesStruct(): Collection
-    {
-        return $this->scopes->map(function (Scope $scope) {
-            return $scope->struct();
-        });
-    }
-
-    /**
-     * 获取当前的Scope,
-     * 支持未传入
-     * @return Scope|null
-     */
-    public function getCurrentScope(): ?Scope
-    {
-        $key = request(Scope::QUERY_NAME);
-        if ($key) {
-            return $this->scopes->first(function ($scope) use ($key) {
-                return $scope->value == $key;
-            });
-        } else {
-            return $this->scopes->first();
-        }
     }
 
     /**

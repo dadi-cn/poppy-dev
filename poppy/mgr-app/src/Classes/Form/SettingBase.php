@@ -33,7 +33,7 @@ abstract class SettingBase extends FormWidget
     protected string $group = '';
 
     /**
-     * @return ?Response|JsonResponse|RedirectResponse|Resp
+     * @return ?JsonResponse|RedirectResponse|Response
      * @throws FormException
      */
     public function handle()
@@ -63,9 +63,9 @@ abstract class SettingBase extends FormWidget
     public function data(): array
     {
         $Setting = app(SettingContract::class);
-        $data    = [
-            // 分组, 用于获取分组
-            '_group' => $this->group
+        $class = get_called_class();
+        $data  = [
+            '_key' => md5($class),
         ];
         foreach ($this->items('model') as $field) {
             $data[$field->name] = $Setting->get($this->group . '.' . $field->name);

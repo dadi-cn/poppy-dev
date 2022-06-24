@@ -3,6 +3,7 @@
 namespace Demo\Http\Request\Api\Web;
 
 use Demo\App\Forms\FormGridPoppyEstablish;
+use Demo\App\PageConf\DashboardForm;
 use Demo\Models\DemoWebapp;
 use Demo\Models\DemoWebappNpk;
 use Illuminate\Support\Str;
@@ -97,6 +98,20 @@ class MgrAppController extends WebApiController
         else {
             return Resp::success('请求成功', input());
         }
+    }
+
+
+    /**
+     * @api                    {get} api/demo/dashboard/:type   Dashboard
+     * @apiVersion             1.0.0
+     * @apiName                Dashboard
+     * @apiGroup               MgrApp
+     */
+    public function dashboard($type)
+    {
+        $classname = '\Demo\App\Dashboard\Dashboard' . Str::studly($type);
+        $pageConf = new $classname;
+        return $pageConf->resp();
     }
 
     /**

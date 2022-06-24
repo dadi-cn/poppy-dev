@@ -32,6 +32,10 @@ Route::group([
         ->name('demo:api.mgr_app.grid_view');
     $route->any('grid_form/{type}', 'MgrAppController@gridForm')
         ->name('demo:api.mgr_app.grid_form');
+
+    // 单页面配置
+    $route->any('dashboard/{type}', 'MgrAppController@dashboard')
+        ->name('demo:api.mgr_app.dashboard');
 });
 
 Route::group([

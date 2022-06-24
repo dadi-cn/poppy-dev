@@ -23,7 +23,7 @@ class GridLayout extends GridBase
         $table->add('title', '标题');
         $table->add('user.nickname', 'Nickname(联合查询)')->quickTitle();
         $table->add('created_at')->quickDatetime();
-        $table->action(function (ActionsRender $actions) {
+        $table->add('handle', '操作')->asAction(function (ActionsRender $actions) {
             $actions->styleIcon();
             $row = $actions->getRow();
             $actions->request('错误', route('demo:api.mgr_app.grid_request', ['error']))->icon('Close')->danger();

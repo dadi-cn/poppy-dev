@@ -16,7 +16,7 @@ use Poppy\MgrApp\Classes\Grid\GridBase;
 use Poppy\MgrApp\Classes\Grid\Query\Query;
 use Poppy\MgrApp\Classes\Grid\Query\QueryFactory;
 use Poppy\MgrApp\Classes\Grid\Tools\Actions;
-use Poppy\MgrApp\Classes\Traits\UseWidgetUtil;
+use Poppy\MgrApp\Classes\Traits\UseQuery;
 use function collect;
 use function input;
 
@@ -26,7 +26,7 @@ use function input;
 class GridWidget
 {
     use PoppyTrait;
-    use UseWidgetUtil;
+    use UseQuery;
 
     /**
      * @var FilterWidget
@@ -150,24 +150,25 @@ class GridWidget
      */
     public function resp()
     {
-        if ($this->queryHas('export')) {
-            $type = $this->queryAfter('export');
+        $query = input('_query');
+        if ($this->queryHas($query, 'export')) {
+            $type = $this->queryAfter($query, 'export');
             $this->queryExport($type);
         }
 
-        if ($this->queryHas('edit')) {
+        if ($this->queryHas($query, 'edit')) {
             return $this->queryEdit();
         }
 
         $resp = [];
-        if ($this->queryHas('data')) {
+        if ($this->queryHas($query, 'data')) {
             $resp = array_merge($resp, $this->queryData());
         }
-        if ($this->queryHas('struct')) {
+        if ($this->queryHas($query, 'frame')) {
             $resp = array_merge($resp, $this->queryStruct());
             $resp = array_merge($resp, $this->queryFilter());
         }
-        if ($this->queryHas('filter')) {
+        if ($this->queryHas($query, 'filter')) {
             $resp = array_merge($resp, $this->queryFilter());
         }
 

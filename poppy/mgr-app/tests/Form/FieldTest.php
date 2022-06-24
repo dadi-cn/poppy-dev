@@ -26,6 +26,6 @@ class FieldTest extends SystemTestCase
     {
         $form = new FormWidget();
         $form->text('my', 'o');
-        $form->struct();
+        $form->frame();
     }
 }
