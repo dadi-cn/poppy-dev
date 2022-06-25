@@ -312,7 +312,6 @@ class FormPlugin
     /**
      * 返回结构化的数据
      * @return array
-     * @throws \Exception
      */
     public function frame(): array
     {

@@ -302,7 +302,6 @@ class Column implements Structable
     }
 
     /**
-     * @throws Exception
      */
     public function fillVal($row)
     {
@@ -460,7 +459,6 @@ class Column implements Structable
 
     /**
      * 使用全局列定义
-     * @throws Exception
      */
     protected function useDefinedColumn()
     {
@@ -475,7 +473,7 @@ class Column implements Structable
         }
 
         if (!class_exists($class) || !is_subclass_of($class, Render::class)) {
-            throw new Exception("Invalid column definition [$class]");
+            sys_error('mgr-app', __CLASS__, "Invalid column render definition [$class]");
         }
 
         $this->display(function ($value) use ($class) {

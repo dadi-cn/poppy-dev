@@ -53,7 +53,7 @@ final class SettingWidget
             if ($this->queryHas($query, 'data')) {
                 $models->put($formKey, $form->model());
             }
-            if ($this->queryHas($query, 'struct')) {
+            if ($this->queryHas($query, 'frame')) {
                 $fms->put($formKey, $form->frame());
             }
         });
