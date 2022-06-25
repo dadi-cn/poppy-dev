@@ -3,6 +3,7 @@
 namespace Poppy\MgrApp\Classes\Grid;
 
 use Closure;
+use Illuminate\Support\Collection;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
@@ -12,6 +13,7 @@ use Poppy\MgrApp\Classes\Traits\UseQuery;
 use function collect;
 
 /**
+ * todo 可能需要和 widget 再进行合并
  * @property-read string $title 标题
  */
 class GridPlugin
@@ -132,7 +134,6 @@ class GridPlugin
                 'selection'  => $this->table->enableSelection,
             ],
             'cols'    => $this->table->struct(),
-            'pk'      => $this->query->getPrimaryKey(),
         ];
     }
 
@@ -145,30 +146,24 @@ class GridPlugin
     }
 
     /**
-     * 查询并返回数据
+     * 填充结构化的数据
+     * @param Collection $collection
+     * @param int $total
+     * @return array
      */
-    protected function structData(): array
+    protected function structData(Collection $collection, int $total): array
     {
-        // 获取模型数据
-        // todo 查询的灵活使用方式, 并不一定需要定义 Query
-        // see GridWidget
-        $collection = $this->query->prepare($this->filter, $this->table)->get();
-
-
         $rows = $collection->map(function ($row) {
             $newRow = collect();
             $this->table->visibleCols()->each(function (Column $column) use ($row, $newRow) {
-                $newRow->put(
-                    $column->name,
-                    $column->fillVal($row)
-                );
+                $newRow->put($column->name, $column->fillVal($row));
             });
             return $newRow->toArray();
         });
 
         return [
             'list'  => $rows->toArray(),
-            'total' => $this->query->total(),
+            'total' => $total,
         ];
     }
 }

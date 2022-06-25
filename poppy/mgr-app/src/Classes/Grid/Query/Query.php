@@ -3,7 +3,7 @@
 namespace Poppy\MgrApp\Classes\Grid\Query;
 
 use Closure;
-use Poppy\MgrApp\Classes\Contracts\Query as QueryContract;
+use Poppy\MgrApp\Classes\Contracts\Queryable as QueryContract;
 
 /**
  * @property integer $usePaginate 是否使用分页
@@ -12,8 +12,9 @@ use Poppy\MgrApp\Classes\Contracts\Query as QueryContract;
 abstract class Query implements QueryContract
 {
 
-    protected const  NAME_PAGESIZE = 'pagesize';       // 页数
-    protected const  OBJECT_MASK   = '--wb--';
+    protected const NAME_PAGESIZE = 'pagesize';       // 页数
+    protected const NAME_PAGE     = 'page';           // 页码
+    protected const OBJECT_MASK   = '--wb--';
 
     /*
      * 15 items per page as default.
@@ -26,7 +27,6 @@ abstract class Query implements QueryContract
      * @var bool
      */
     protected bool $usePaginate = true;
-
 
     /**
      * 分页总长度
@@ -44,13 +44,19 @@ abstract class Query implements QueryContract
     /**
      * 启用或者禁用分页
      * @param bool $paginate
+     * @return Query
      */
-    public function usePaginate(bool $paginate = true)
+    public function usePaginate(bool $paginate = true): self
     {
         $this->usePaginate = $paginate;
+        return $this;
     }
 
 
+    /**
+     * 获取当前模型的总数
+     * @return int
+     */
     public function total(): int
     {
         return $this->total;

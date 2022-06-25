@@ -5,23 +5,10 @@ namespace Poppy\MgrApp\Classes\Grid\Query;
 use Closure;
 use Illuminate\Support\Collection;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
-use Poppy\MgrApp\Classes\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 
 class QueryCustom extends Query
 {
-
-    /**
-     * 全局范围
-     * @var Scope|null
-     */
-    protected ?Scope $scope;
-
-    /**
-     * 过滤器
-     * @var FilterPlugin
-     */
-    protected FilterPlugin $filter;
 
     /**
      * 表格
@@ -30,6 +17,25 @@ class QueryCustom extends Query
     protected TablePlugin $table;
 
     /**
+     * 当前的页码
+     * @var int
+     */
+    protected int $page;
+
+    /**
+     * 页码偏移量
+     * @var int
+     */
+    protected int $pageOffset;
+
+    /**
+     * 查询条件, 包含Scope
+     * @var array
+     */
+    protected array $params = [];
+
+    /**
+     * 实现 Get 方法来获取数据
      * @return Collection
      */
     public function get(): Collection
@@ -38,33 +44,14 @@ class QueryCustom extends Query
     }
 
     /**
-     * 对于返回的列表数据进行回调调用
-     * @param Closure|null $callback
-     * @return $this
-     */
-    public function collection(Closure $callback = null): Query
-    {
-        return $this;
-    }
-
-    /**
      * 用于批量查询
      * @param Closure $closure
      * @param int $amount
-     * @return mixed|bool
+     * @return bool
      */
     public function chunk(Closure $closure, int $amount = 100)
     {
         return false;
-    }
-
-    /**
-     * 查询所有数据
-     * @return int
-     */
-    public function total(): int
-    {
-        return 0;
     }
 
     /**
@@ -75,9 +62,11 @@ class QueryCustom extends Query
      */
     public function prepare(FilterPlugin $filter, TablePlugin $table): Query
     {
-        $this->filter = $filter;
-        $this->table  = $table;
-        $this->scope  = $filter->getCurrentScope();
+        $page             = (int) input(self::NAME_PAGE);
+        $this->params     = $filter->prepare();
+        $this->table      = $table;
+        $this->page       = max($page, 1);
+        $this->pageOffset = $this->page * $this->pagesize;
         return $this;
     }
 
@@ -91,16 +80,6 @@ class QueryCustom extends Query
     public function edit($id, string $field, $value): bool
     {
         return false;
-    }
-
-    /**
-     * 使用分页
-     * @param bool $paginate
-     * @return mixed
-     */
-    public function usePaginate(bool $paginate = false): Query
-    {
-        return $this;
     }
 
     /**

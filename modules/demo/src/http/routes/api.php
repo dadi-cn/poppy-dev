@@ -18,16 +18,24 @@ Route::group([
     // form 数据
     $route->any('form/{field}', 'MgrAppController@form')
         ->name('demo:api.mgr_app.form');
-    $route->any('grid/{grid}', 'MgrAppController@grid')
-        ->name('demo:api.mgr_app.grid');
     $route->any('grid-npk/{grid}', 'MgrAppController@gridNoPk')
         ->name('demo:api.mgr_app.grid-npk');
-    $route->any('filter/{filter}', 'MgrAppController@filter')
-        ->name('demo:api.mgr_app.filter');
+
+    // table
     $route->any('table/{table}', 'TableController@index')
         ->name('demo:api.table.index');
+
+    // grid
+    $route->any('filter/{filter}', 'MgrAppController@filter')
+        ->name('demo:api.mgr_app.filter');
+    $route->any('grid/{grid}', 'MgrAppController@grid')
+        ->name('demo:api.mgr_app.grid');
     $route->any('grid_request/{type}', 'MgrAppController@gridRequest')
         ->name('demo:api.mgr_app.grid_request');
+    $route->any('grid-plugin', 'MgrAppController@gridPlugin')
+        ->name('demo:api.mgr_app.grid_plugin');
+    $route->any('grid-model', 'MgrAppController@gridModel')
+        ->name('demo:api.mgr_app.grid_model');
     $route->any('grid-view', 'MgrAppController@gridView')
         ->name('demo:api.mgr_app.grid_view');
     $route->any('grid_form/{type}', 'MgrAppController@gridForm')

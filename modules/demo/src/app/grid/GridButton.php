@@ -33,6 +33,8 @@ class GridButton extends GridBase
             $actions->request('MU', route('demo:api.mgr_app.grid_request', ['success']))->icon('mu:view_kanban')->only();
             $actions->request('MU', route('demo:api.mgr_app.grid_request', ['success']))->icon('mu:view_kanban')->only()->circle();
             $actions->request('圆形图标', route('demo:api.mgr_app.grid_request', ['success']))->icon('warning')->circle()->only();
+            $actions->request('圆形图标', route('demo:api.mgr_app.grid_request', ['success']))->icon('warning')->circle()->only();
+            $actions->copy('复制', '可以复制的内容')->icon('mu:content_copy')->circle()->only();
             $actions->page('页面', route('demo:api.mgr_app.grid_form', ['detail']), 'form');
             $actions->target('Target(百度)', 'https://www.baidu.com');
             $actions->iframe('Iframe', 'https://poppy-framework.com/');

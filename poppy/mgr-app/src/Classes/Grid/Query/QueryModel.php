@@ -81,15 +81,6 @@ class QueryModel extends Query
     }
 
     /**
-     * 启用或者禁用分页
-     * @param bool $paginate
-     */
-    public function usePaginate(bool $paginate = true)
-    {
-        $this->usePaginate = $paginate;
-    }
-
-    /**
      * 组建数据
      * @throws Exception
      */
@@ -136,7 +127,7 @@ class QueryModel extends Query
      */
     public function prepare(FilterPlugin $filter, TablePlugin $table): self
     {
-        $this->addConditions($filter->conditions())->prepareTable($table);
+        $this->addConditions($filter->prepare('condition'))->prepareTable($table);
         return $this;
     }
 
@@ -156,11 +147,6 @@ class QueryModel extends Query
             $field => $value,
         ]);
         return true;
-    }
-
-    public function total(): int
-    {
-        return $this->total;
     }
 
     /**
@@ -318,7 +304,8 @@ class QueryModel extends Query
 
         if (Str::contains($this->sort['column'], '.')) {
             $this->setRelationSort($this->sort['column']);
-        } else {
+        }
+        else {
             $this->resetOrderBy();
             $column    = $this->sort['column'];
             $method    = 'orderBy';
@@ -498,7 +485,8 @@ class QueryModel extends Query
             ) {
                 if (!$column->relationMany) {
                     $this->with($method);
-                } else {
+                }
+                else {
                     throw new ApplicationException("Relationship [{$method}] on model [{$class}] is Many.");
                 }
             }
@@ -506,7 +494,8 @@ class QueryModel extends Query
             if ($relation instanceof HasMany || $relation instanceof HasManyThrough || $relation instanceof BelongsToMany) {
                 if ($column->relationMany) {
                     $this->with($method);
-                } else {
+                }
+                else {
                     throw new ApplicationException("Relationship [{$method}] on model [{$class}] is One To One.");
                 }
             }

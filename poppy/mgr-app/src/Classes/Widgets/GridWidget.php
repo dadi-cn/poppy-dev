@@ -60,7 +60,7 @@ final class GridWidget extends GridPlugin
      * @param string $grid_class
      * @return GridWidget
      */
-    public function setLists(string $grid_class):self
+    public function setLists(string $grid_class): self
     {
         if (!class_exists($grid_class)) {
             sys_error('mgr-app', __CLASS__, 'Grid Class `' . $grid_class . '` Not Exists.');
@@ -105,11 +105,13 @@ final class GridWidget extends GridPlugin
 
         $resp = [];
         if ($this->queryHas($query, 'data')) {
-            $resp = array_merge($resp, $this->structData());
+            // 应用模型数据并格式化返回
+            $collection = $this->query->prepare($this->filter, $this->table)->get();
+            $total      = $this->query->total();
+            $resp       = array_merge($resp, $this->structData($collection, $total));
         }
         if ($this->queryHas($query, 'frame')) {
-            $resp = array_merge($resp, $this->structQuery());
-            $resp = array_merge($resp, $this->structFilter());
+            $resp = array_merge($resp, $this->structQuery(), $this->structFilter(), $this->structPk());
         }
         if ($this->queryHas($query, 'filter')) {
             $resp = array_merge($resp, $this->structFilter());
@@ -127,6 +129,17 @@ final class GridWidget extends GridPlugin
     {
         $this->exporter = $exporter;
         return $this;
+    }
+
+    /**
+     * 获取PK
+     * @return array
+     */
+    protected function structPk(): array
+    {
+        return [
+            'pk' => $this->query->getPrimaryKey(),
+        ];
     }
 
     /**

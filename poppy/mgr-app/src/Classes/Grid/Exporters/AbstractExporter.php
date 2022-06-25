@@ -7,7 +7,7 @@ use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Poppy\MgrApp\Classes\Contracts\Exportable;
-use Poppy\MgrApp\Classes\Contracts\Query;
+use Poppy\MgrApp\Classes\Contracts\Queryable;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\Exporter;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
@@ -32,7 +32,7 @@ abstract class AbstractExporter implements Exportable
     protected string $title = '';
 
 
-    protected Query $query;
+    protected Queryable $query;
 
     protected FilterPlugin $filter;
 
@@ -41,7 +41,7 @@ abstract class AbstractExporter implements Exportable
     /**
      * 扩展新实例
      */
-    public function __construct(Query $model, FilterPlugin $filterWidget, TablePlugin $columnWidget, $title)
+    public function __construct(Queryable $model, FilterPlugin $filterWidget, TablePlugin $columnWidget, $title)
     {
         $this->query  = $model;
         $this->filter = $filterWidget;

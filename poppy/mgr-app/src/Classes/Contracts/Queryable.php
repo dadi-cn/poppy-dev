@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 
-interface Query
+interface Queryable
 {
 
     /**
@@ -57,11 +57,11 @@ interface Query
 
 
     /**
-     * 是否使用分页使用分页
+     * 是否使用分页
      * @param bool $paginate
-     * @return mixed
+     * @return self
      */
-    public function usePaginate(bool $paginate = false);
+    public function usePaginate(bool $paginate = false): self;
 
     /**
      * 使用主键, 用于导出时候选择导出

@@ -107,6 +107,8 @@ backend :
                         path : grid/demo:api.mgr_app.grid/edit-as-select
                     -   title : 渲染隐藏
                         path : grid/demo:api.mgr_app.grid/display-hidden
+                    -   title : 自定义查询(CustomQuery)
+                        path : grid/demo:api.mgr_app.grid_model
             -   title : GridNoPk
                 children :
                     -   title : 批量操作(禁用)

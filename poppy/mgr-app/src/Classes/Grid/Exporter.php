@@ -2,7 +2,7 @@
 
 namespace Poppy\MgrApp\Classes\Grid;
 
-use Poppy\MgrApp\Classes\Contracts\Query;
+use Poppy\MgrApp\Classes\Contracts\Queryable;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\Exporters\AbstractExporter;
 use Poppy\MgrApp\Classes\Grid\Exporters\CsvExporter;
@@ -33,7 +33,7 @@ class Exporter
     ];
 
 
-    protected Query $model;
+    protected Queryable $model;
 
     protected FilterPlugin $filter;
 
@@ -47,7 +47,7 @@ class Exporter
     /**
      * 扩展新实例
      */
-    public function __construct(Query $model, FilterPlugin $filterWidget, TablePlugin $columnWidget, $title = '')
+    public function __construct(Queryable $model, FilterPlugin $filterWidget, TablePlugin $columnWidget, $title = '')
     {
         $this->model  = $model;
         $this->filter = $filterWidget;

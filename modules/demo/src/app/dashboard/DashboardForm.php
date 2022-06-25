@@ -29,8 +29,8 @@ class DashboardForm extends DashboardWidget
             $form->text($scope->value . ':Title', $scope->label . '标题')->rules([
                 Rule::required(),
             ]);
-        })->handle(function ($data) {
-            return Resp::success('返回成功' . var_export($data, true));
+        })->handle(function ($data) use ($scope) {
+            return Resp::success('返回成功' . var_export([$data, $scope->value], true));
         });
         return [$form1];
     }

@@ -19,6 +19,7 @@ use Poppy\MgrApp\Classes\Filter\Query\Lt;
 use Poppy\MgrApp\Classes\Filter\Query\Lte;
 use Poppy\MgrApp\Classes\Filter\Query\NotEqual;
 use Poppy\MgrApp\Classes\Filter\Query\NotIn;
+use Poppy\MgrApp\Classes\Filter\Query\Scope;
 use Poppy\MgrApp\Classes\Filter\Query\StartsWith;
 use Poppy\MgrApp\Classes\Filter\Query\Where;
 use Poppy\MgrApp\Classes\Form\FormItem;
@@ -59,7 +60,7 @@ class FilterPlugin implements Structable
 
     public function __construct()
     {
-        $this->items = collect();
+        $this->items  = collect();
         $this->scopes = new Collection();
     }
 
@@ -85,8 +86,8 @@ class FilterPlugin implements Structable
 
     /**
      * Generate items and append to filter list
-     * @param string $method    类型
-     * @param array  $arguments 传入的参数
+     * @param string $method 类型
+     * @param array $arguments 传入的参数
      *
      * @return FormItem|$this
      * @throws ApplicationException
@@ -113,19 +114,6 @@ class FilterPlugin implements Structable
 
 
     /**
-     * 查询条件
-     * @return array
-     */
-    public function conditions(): array
-    {
-        return array_merge(
-            $this->filterConditions(),
-            $this->scopeConditions()
-        );
-    }
-
-
-    /**
      * 返回结构
      * 规则解析参考 : https://github.com/yiminghe/async-validator
      */
@@ -139,7 +127,7 @@ class FilterPlugin implements Structable
         return [
             'action' => [
                 'width'  => $this->actionWidth,
-                'export' => $this->enableExport
+                'export' => $this->enableExport,
             ],
             'items'  => $items->toArray(),
         ];
@@ -147,7 +135,7 @@ class FilterPlugin implements Structable
 
     /**
      * 按钮的宽度(默认 4), 这里不会处理按钮的位置
-     * @param int  $width  宽度
+     * @param int $width 宽度
      * @param bool $export 是否允许导出
      * @return void
      */
@@ -169,11 +157,33 @@ class FilterPlugin implements Structable
 
 
     /**
+     * 根据不同的类型返回不同的查询条件
+     * @param string $type
+     * @return array
+     */
+    public function prepare(string $type = 'params'): array
+    {
+        if ($type === 'condition') {
+            return array_merge(
+                $this->filterConditions(),
+                $this->scopeConditions()
+            );
+        }
+        else {
+            return array_merge(
+                $this->filterParams(),
+                $this->scopeParams()
+            );
+        }
+    }
+
+
+    /**
      * Get all conditions of the filters.
      *
      * @return array
      */
-    public function filterConditions(): array
+    private function filterParams(): array
     {
         $inputs = Arr::dot(request()->all());
 
@@ -191,6 +201,18 @@ class FilterPlugin implements Structable
             Arr::set($params, $key, $value);
         }
 
+        return $params;
+    }
+
+    /**
+     * Get all conditions of the filters.
+     *
+     * @return array
+     */
+    private function filterConditions(): array
+    {
+        $params = $this->filterParams();
+
         $conditions = [];
         foreach ($this->items as $filter) {
             /** @var FilterItem $filter */
@@ -198,6 +220,20 @@ class FilterPlugin implements Structable
         }
 
         return array_filter($conditions);
+    }
+
+    /**
+     * Get scope conditions.
+     * @return array
+     */
+    private function scopeParams(): array
+    {
+        if ($scope = $this->getCurrentScope()) {
+            return [
+                Scope::QUERY_NAME => $scope->value,
+            ];
+        }
+        return [];
     }
 
     /**
