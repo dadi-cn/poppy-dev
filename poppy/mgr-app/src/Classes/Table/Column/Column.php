@@ -14,7 +14,7 @@ use Poppy\MgrApp\Classes\Table\Option\Option;
 use Poppy\MgrApp\Classes\Table\Render\Render;
 use Poppy\MgrApp\Classes\Table\Show\AsAction;
 use Poppy\MgrApp\Classes\Table\Show\AsDate;
-use Poppy\MgrApp\Classes\Table\Show\AsDefault;
+use Poppy\MgrApp\Classes\Table\Show\WithDefault;
 use Poppy\MgrApp\Classes\Table\Show\AsImage;
 use Poppy\MgrApp\Classes\Table\Show\AsMath;
 use Poppy\MgrApp\Classes\Table\Show\AsOnOff;
@@ -34,7 +34,7 @@ class Column implements Structable
 {
     use HasHeader;
 
-    use AsText, AsSelect, AsOnOff, AsMath, AsDate, AsQuick, AsDefault, AsUrl, AsImage, AsAction;
+    use AsText, AsSelect, AsOnOff, AsMath, AsDate, AsQuick, WithDefault, AsUrl, AsImage, AsAction;
 
     public const NAME_ACTION = '_action';     // 用于定义列操作, 可以在导出时候移除
 

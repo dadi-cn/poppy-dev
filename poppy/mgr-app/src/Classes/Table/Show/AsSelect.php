@@ -17,20 +17,20 @@ trait AsSelect
         $this->editable = 'inline-save';
         return tap(new SelectQueryOption(), function ($option) use ($cb, $disableCb) {
             $this->setEditAttr($option);
-            $this->asDefaultDisabled($cb, $disableCb);
+            $this->withInlineSaveDisabled($cb, $disableCb);
         });
     }
 
     /**
      * 追加编辑模式
      */
-    public function asModifySelect(Closure $cb = null, Closure $disableCb = null): SelectOption
+    public function asModifySelect(Closure $disableCb = null): SelectOption
     {
         $this->type     = 'select';
         $this->editable = 'modify';
-        return tap(new SelectOption(), function ($option) use ($cb, $disableCb) {
+        return tap(new SelectOption(), function ($option) use ($disableCb) {
             $this->setEditAttr($option);
-            $this->asDefaultDisabled($cb, $disableCb);
+            $this->withModifyDisabled($disableCb);
         });
     }
 

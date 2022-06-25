@@ -28,13 +28,13 @@ trait AsOnOff
     /**
      * 编辑模式(非行内请求)
      */
-    public function AsModifyOnOff(Closure $cb = null, Closure $disableCb = null): OnOffOption
+    public function asModifyOnOff(Closure $disableCb = null): OnOffOption
     {
         $this->type     = 'on-off';
         $this->editable = 'modify';
-        return tap(new OnOffOption(), function ($option) use ($cb, $disableCb) {
+        return tap(new OnOffOption(), function ($option) use ($disableCb) {
             $this->setEditAttr($option);
-            $this->asDefaultDisabled($cb, $disableCb);
+            $this->withModifyDisabled($disableCb);
         });
     }
 
@@ -47,7 +47,7 @@ trait AsOnOff
         $this->editable = 'inline-save';
         return tap(new OnOffQueryOption(), function ($option) use ($cb, $disableCb) {
             $this->setEditAttr($option);
-            $this->asDefaultDisabled($cb, $disableCb);
+            $this->withInlineSaveDisabled($cb, $disableCb);
         });
     }
 

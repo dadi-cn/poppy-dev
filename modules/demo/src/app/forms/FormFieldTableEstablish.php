@@ -2,6 +2,7 @@
 
 namespace Demo\App\Forms;
 
+use Demo\Models\DemoWebapp;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\MgrApp\Classes\Widgets\FormWidget;
@@ -38,8 +39,10 @@ class FormFieldTableEstablish extends FormWidget
     {
         $this->table('table', '表格')->cols(function (TablePlugin $table) {
             $table->add('id', 'ID')->asModifyText();
+            $table->add('status', '状态')->asModifySelect()->options(DemoWebapp::kvStatus());
+            $table->add('is_open', '开关')->asModifyOnOff();
             $table->add('name', '用户名');
-            $table->add('action', '操作')->asTableAction();
+            $table->add('action', '操作')->width(160, true)->asTableAction();
         });
     }
 }

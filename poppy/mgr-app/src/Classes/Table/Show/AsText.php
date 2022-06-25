@@ -128,13 +128,13 @@ trait AsText
     /**
      * 行内编辑
      */
-    public function asModifyText(Closure $cb = null, Closure $disableCb = null): TextOption
+    public function asModifyText(Closure $disableCb = null): TextOption
     {
         $this->type     = 'text';
         $this->editable = 'modify';
-        return tap(new TextOption(), function ($option) use ($cb, $disableCb) {
+        return tap(new TextOption(), function ($option) use ($disableCb) {
             $this->setEditAttr($option);
-            $this->asDefaultDisabled($cb, $disableCb);
+            $this->withModifyDisabled($disableCb);
         });
     }
 
@@ -147,7 +147,7 @@ trait AsText
         $this->editable = 'inline-save';
         return tap(new TextQueryOption(), function ($option) use ($cb, $disableCb) {
             $this->setEditAttr($option);
-            $this->asDefaultDisabled($cb, $disableCb);
+            $this->withInlineSaveDisabled($cb, $disableCb);
         });
     }
 }
