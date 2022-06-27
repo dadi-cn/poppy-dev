@@ -31,6 +31,6 @@ class GridEditAsOnOff extends GridBase
         })->query('loading');
         $table->add('loading-error', '行内编辑(请求错误)')->asInlineSaveOnOff(function () {
             return $this->loading;
-        })->query('loading', route('demo:api.mgr_app.grid_request', ['error']));
+        })->query('loading', route('demo:api.grid.request', ['error']));
     }
 }

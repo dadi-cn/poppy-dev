@@ -31,8 +31,8 @@ class GridEditAsText extends GridBase
         })->query('sort');
         $table->add('sort-error', '行内编辑(请求错误)')->copyable()->asInlineSaveText(function () {
             return $this->sort;
-        })->query('sort', route('demo:api.mgr_app.grid_request', ['error']));
-        $table->add('sort-error', '输入状态')->copyable()->asModifyText(function () {
+        })->query('sort', route('demo:api.grid.request', ['error']));
+        $table->add('sort-error', '输入状态')->copyable()->asInlineSaveText(function () {
             return $this->sort;
         });
     }

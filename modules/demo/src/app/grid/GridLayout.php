@@ -26,11 +26,11 @@ class GridLayout extends GridBase
         $table->add('handle', '操作')->asAction(function (GridActions $actions) {
             $actions->quickIcon();
             $row = $actions->getRow();
-            $actions->request('错误', route('demo:api.mgr_app.grid_request', ['error']))->icon('Close')->danger();
-            $actions->request('成功', route('demo:api.mgr_app.grid_request', ['success']))->icon('Check')->success();
-            $actions->request('确认', route('demo:api.mgr_app.grid_request', ['success']))->confirm()->icon('QuestionFilled')->warning();
-            $actions->request('Disabled', route('demo:api.mgr_app.grid_request', ['success']))->disabled()->icon('Minus');
-            $actions->page('页面', route('demo:api.mgr_app.grid_form', ['detail']), 'form')->icon('Edit')->info();
+            $actions->request('错误', route('demo:api.grid.request', ['error']))->icon('Close')->danger();
+            $actions->request('成功', route('demo:api.grid.request', ['success']))->icon('Check')->success();
+            $actions->request('确认', route('demo:api.grid.request', ['success']))->confirm()->icon('QuestionFilled')->warning();
+            $actions->request('Disabled', route('demo:api.grid.request', ['success']))->disabled()->icon('Minus');
+            $actions->page('页面', route('demo:api.form.auto', ['field-color']), 'form')->icon('Edit')->info();
             $actions->copy('复制', '复制自定义的内容' . $row['id']);
         })->quickIcon(6);
     }
@@ -47,11 +47,11 @@ class GridLayout extends GridBase
 
     public function quick(Interactions $actions)
     {
-        $actions->page('快捷操作', route('demo:api.mgr_app.grid_form', ['detail']), 'form')->icon('Plus');
+        $actions->page('快捷操作', route('demo:api.form.auto', ['field-color']), 'form')->icon('Plus');
     }
 
     public function batch(Interactions $actions)
     {
-        $actions->request('批量操作', route('demo:api.mgr_app.grid_request', ['success']));
+        $actions->request('批量操作', route('demo:api.grid.request', ['success']));
     }
 }

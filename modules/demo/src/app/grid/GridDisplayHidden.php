@@ -30,6 +30,6 @@ class GridDisplayHidden extends GridBase
         $table->add('title-error', 'Hide(查找错误)')->asHidden(function () {
             /** @var $this DemoWebapp */
             return StrHelper::hideContact($this->title);
-        })->query('title', route('demo:api.mgr_app.grid_request', ['error']));
+        })->query('title', route('demo:api.grid.request', ['error']));
     }
 }

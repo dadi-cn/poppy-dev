@@ -32,6 +32,6 @@ class GridEditAsSelect extends GridBase
         })->query('status')->options(DemoWebapp::kvStatus());
         $table->add('status-error', '行内编辑(请求错误)')->asInlineSaveSelect(function () {
             return $this->status;
-        })->query('status', route('demo:api.mgr_app.grid_request', ['error']))->options(DemoWebapp::kvStatus());
+        })->query('status', route('demo:api.grid.request', ['error']))->options(DemoWebapp::kvStatus());
     }
 }

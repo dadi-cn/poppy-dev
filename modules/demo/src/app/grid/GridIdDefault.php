@@ -21,6 +21,6 @@ class GridIdDefault extends GridBase
 
     public function batch(Interactions $actions)
     {
-        $actions->request('批量操作', route('demo:api.mgr_app.grid_request', ['success']));
+        $actions->request('批量操作', route('demo:api.grid.request', ['success']));
     }
 }

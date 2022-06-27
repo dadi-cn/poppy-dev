@@ -84,29 +84,31 @@ backend :
             -   title : Grid
                 children :
                     -   title : Layout
-                        path : grid/demo:api.mgr_app.grid/layout
+                        path : grid/demo:api.grid.auto/layout
+                    -   title : Button Style
+                        path : grid/demo:api.grid.auto/button-style
                     -   title : Button
-                        path : grid/demo:api.mgr_app.grid/button
+                        path : grid/demo:api.grid.auto/button
                     -   title : ButtonDropdown/Link
-                        path : grid/demo:api.mgr_app.grid/button-dropdown
+                        path : grid/demo:api.grid.auto/button-dropdown
                     -   title : Quick
-                        path : grid/demo:api.mgr_app.grid/quick
+                        path : grid/demo:api.grid.auto/quick
                     -   title : BatchAction
-                        path : grid/demo:api.mgr_app.grid/batch-actions
+                        path : grid/demo:api.grid.auto/batch-actions
                     -   title : ID列默认返回
-                        path : grid/demo:api.mgr_app.grid/id-default
+                        path : grid/demo:api.grid.auto/id-default
                     -   title : 关联获取
-                        path : grid/demo:api.mgr_app.grid/relation
+                        path : grid/demo:api.grid.auto/relation
                     -   title : 列渲染
-                        path : grid/demo:api.mgr_app.grid/display
+                        path : grid/demo:api.grid.auto/display
                     -   title : 编辑(Text)
-                        path : grid/demo:api.mgr_app.grid/edit-as-text
+                        path : grid/demo:api.grid.auto/edit-as-text
                     -   title : 编辑(OnOff)
-                        path : grid/demo:api.mgr_app.grid/edit-as-on-off
+                        path : grid/demo:api.grid.auto/edit-as-on-off
                     -   title : 编辑(Select)
-                        path : grid/demo:api.mgr_app.grid/edit-as-select
+                        path : grid/demo:api.grid.auto/edit-as-select
                     -   title : 渲染隐藏
-                        path : grid/demo:api.mgr_app.grid/display-hidden
+                        path : grid/demo:api.grid.auto/display-hidden
                     -   title : 自定义查询(CustomQuery)
                         path : grid/demo:api.mgr_app.grid_model
             -   title : GridNoPk
