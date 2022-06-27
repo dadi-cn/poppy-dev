@@ -21,8 +21,8 @@ class FormFieldTableEstablish extends FormWidget
     public function data(): array
     {
         return [
-            'id'    => 5,
-            'table' => [
+            'id'       => 5,
+            'table'    => [
                 [
                     'id'   => 1,
                     'name' => '多厘',
@@ -44,5 +44,10 @@ class FormFieldTableEstablish extends FormWidget
             $table->add('name', '用户名');
             $table->add('action', '操作')->width(160, true)->asTableAction();
         });
+        $this->table('ez-table', '表格')->easy([
+            ['Header', 'Title', 'Value'],
+            ['网站', '地址', 'https://www.baidu.com'],
+            ['网站', '名称', '百度'],
+        ]);
     }
 }

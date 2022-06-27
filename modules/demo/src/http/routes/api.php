@@ -15,9 +15,7 @@ Route::group([
     $route->get('resp/validator', 'RespController@validator');
     $route->get('resp/401', 'RespController@unAuth');
     $route->get('resp/header', 'RespController@header');
-    // form 数据
-    $route->any('form/{field}', 'MgrAppController@form')
-        ->name('demo:api.mgr_app.form');
+
     $route->any('grid-npk/{grid}', 'MgrAppController@gridNoPk')
         ->name('demo:api.mgr_app.grid-npk');
 
@@ -38,6 +36,8 @@ Route::group([
     // form
     $route->any('form/auto/{type}', 'FormController@auto')
         ->name('demo:api.form.auto');
+    $route->any('form/cascader', 'FormController@cascader')
+        ->name('demo:api.form.cascader');
 
 
     $route->any('grid-plugin', 'MgrAppController@gridPlugin')

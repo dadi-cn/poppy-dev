@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Poppy\Area\Classes\PyAreaDef;
 use Poppy\Core\Classes\PyCoreDef;
 use Poppy\Framework\Helper\TreeHelper;
+use Poppy\Framework\Helper\UtilHelper;
 use Poppy\Framework\Http\Pagination\PageInfo;
 use Poppy\System\Classes\Traits\FilterTrait;
 
@@ -77,10 +78,29 @@ class SysArea extends Model
             foreach ($treeArr as $key => $value) {
                 $options[] = [
                     'label' => $value,
-                    'value' => (string) $key
+                    'value' => (string) $key,
                 ];
             }
             return $options;
+        });
+    }
+
+    /**
+     * 地区选择
+     * @param string $type 类型, 支持 province,city,area
+     * @return array
+     */
+    public static function cascader(string $type = 'province'): array
+    {
+        $levels = [
+            'province' => 1,
+            'city'     => 2,
+            'area'     => 4,
+        ];
+        $level  = $levels[$type] ?? 2;
+        return sys_cache('py-area')->remember(PyAreaDef::ckArea('cascader-' . $level), PyCoreDef::MIN_ONE_MONTH * 60, function () use ($level) {
+            $items = SysArea::selectRaw("id as value,title as label,parent_id, if(level<4, 0, 1) as leaf")->where('level', '<=', $level)->get()->toArray();
+            return UtilHelper::genTree($items, 'value', 'parent_id', 'children', false);
         });
     }
 

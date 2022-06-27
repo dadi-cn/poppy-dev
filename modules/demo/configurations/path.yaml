@@ -8,45 +8,47 @@ backend :
                 children :
                     -   title : TextArea
                         # {type}/{route}/{route_params|explode by ,}/{query|gen_key}
-                        path : form/demo:api.mgr_app.form/field-textarea
+                        path : form/demo:api.form.auto/field-textarea
                     -   title : Radio
-                        path : form/demo:api.mgr_app.form/field-radio
+                        path : form/demo:api.form.auto/field-radio
                     -   title : Checkbox
-                        path : form/demo:api.mgr_app.form/field-checkbox
+                        path : form/demo:api.form.auto/field-checkbox
                     -   title : Text
-                        path : form/demo:api.mgr_app.form/field-text
+                        path : form/demo:api.form.auto/field-text
                     -   title : Number
-                        path : form/demo:api.mgr_app.form/field-number
+                        path : form/demo:api.form.auto/field-number
                     -   title : 切换填写框
-                        path : form/demo:api.mgr_app.form/field-display
+                        path : form/demo:api.form.auto/field-display
                     -   title : Color
-                        path : form/demo:api.mgr_app.form/field-color
+                        path : form/demo:api.form.auto/field-color
                     -   title : Date
-                        path : form/demo:api.mgr_app.form/field-date
+                        path : form/demo:api.form.auto/field-date
                     -   title : Select
-                        path : form/demo:api.mgr_app.form/field-select
+                        path : form/demo:api.form.auto/field-select
                     -   title : Switch
-                        path : form/demo:api.mgr_app.form/field-switch
+                        path : form/demo:api.form.auto/field-switch
                     -   title : Table
-                        path : form/demo:api.mgr_app.form/field-table
+                        path : form/demo:api.form.auto/field-table
                     -   title : File
-                        path : form/demo:api.mgr_app.form/field-file
+                        path : form/demo:api.form.auto/field-file
                     -   title : Image
-                        path : form/demo:api.mgr_app.form/field-image
+                        path : form/demo:api.form.auto/field-image
                     -   title : Editor
-                        path : form/demo:api.mgr_app.form/field-editor
+                        path : form/demo:api.form.auto/field-editor
                     -   title : Dynamic
-                        path : form/demo:api.mgr_app.form/field-dynamic
+                        path : form/demo:api.form.auto/field-dynamic
+                    -   title : Cascader
+                        path : form/demo:api.form.auto/field-cascader
                     -   title : Button(禁用按钮)
-                        path : form/demo:api.mgr_app.form/field-button
+                        path : form/demo:api.form.auto/field-button
             -   title : Rule
                 children :
                     -   title : Text
-                        path : form/demo:api.mgr_app.form/rule-text
+                        path : form/demo:api.form.auto/rule-text
                     -   title : Required
-                        path : form/demo:api.mgr_app.form/rule-required
+                        path : form/demo:api.form.auto/rule-required
                     -   title : Date
-                        path : form/demo:api.mgr_app.form/rule-date
+                        path : form/demo:api.form.auto/rule-date
             -   title : DashBoard(多面板, 支持Scope)
                 children :
                     -   title : Form

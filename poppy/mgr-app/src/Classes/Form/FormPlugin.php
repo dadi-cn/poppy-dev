@@ -11,6 +11,7 @@ use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Exceptions\ApplicationException;
 use Poppy\Framework\Helper\ArrayHelper;
 use Poppy\MgrApp\Classes\Form\Field\Actions;
+use Poppy\MgrApp\Classes\Form\Field\Cascader;
 use Poppy\MgrApp\Classes\Form\Field\Checkbox;
 use Poppy\MgrApp\Classes\Form\Field\Code;
 use Poppy\MgrApp\Classes\Form\Field\Color;
@@ -61,6 +62,7 @@ use function tap;
  * @method Mobile mobile($name, $label = '')
  * @method Ip ip($name, $label = '')
  * @method Decimal decimal($name, $label = '')
+ * @method Cascader cascader($name, $label = '')
  * @method Currency currency($name, $label = '')
  * @method Email email($name, $label = '')
  * @method Number number($name, $label = '')

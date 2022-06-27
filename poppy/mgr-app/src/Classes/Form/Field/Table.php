@@ -30,4 +30,24 @@ class Table extends FormItem
     {
         return $this->table;
     }
+
+
+    /**
+     * Easy Table 的数据
+     * @param array $data
+     * @return $this
+     */
+    public function easy(array $data): self
+    {
+        $rows = collect($data)->map(function ($row) {
+            $newItem = [];
+            foreach ($row as $k => $v) {
+                $newItem['k' . $k] = $v;
+            }
+            return $newItem;
+        });
+        $this->setAttribute('is-easy', true);
+        $this->setAttribute('easy-data', $rows);
+        return $this;
+    }
 }
