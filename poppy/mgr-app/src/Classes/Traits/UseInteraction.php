@@ -3,6 +3,7 @@
 namespace Poppy\MgrApp\Classes\Traits;
 
 use Poppy\MgrApp\Classes\Action\CopyAction;
+use Poppy\MgrApp\Classes\Action\DialogAction;
 use Poppy\MgrApp\Classes\Action\PageAction;
 use Poppy\MgrApp\Classes\Action\ProgressAction;
 use Poppy\MgrApp\Classes\Action\RequestAction;
@@ -64,6 +65,23 @@ trait UseInteraction
     public function page(string $title, string $url, string $type): PageAction
     {
         $action = (new PageAction($title, $url))->type($type);
+        $action = $this->useDefaultStyle($action);
+        return tap($action, function () use ($action) {
+            $this->add($action);
+        });
+    }
+
+
+    /**
+     * 对话框
+     * @param string $title
+     * @param string $url
+     * @param string $type
+     * @return DialogAction
+     */
+    public function dialog(string $title, string $url, string $type): DialogAction
+    {
+        $action = (new DialogAction($title, $url))->type($type);
         $action = $this->useDefaultStyle($action);
         return tap($action, function () use ($action) {
             $this->add($action);
