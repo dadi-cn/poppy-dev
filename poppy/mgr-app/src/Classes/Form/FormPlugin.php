@@ -25,6 +25,7 @@ use Poppy\MgrApp\Classes\Form\Field\Divider;
 use Poppy\MgrApp\Classes\Form\Field\Dynamic;
 use Poppy\MgrApp\Classes\Form\Field\Editor;
 use Poppy\MgrApp\Classes\Form\Field\Email;
+use Poppy\MgrApp\Classes\Form\Field\EzTable;
 use Poppy\MgrApp\Classes\Form\Field\File;
 use Poppy\MgrApp\Classes\Form\Field\Image;
 use Poppy\MgrApp\Classes\Form\Field\Ip;
@@ -55,6 +56,7 @@ use function tap;
  * Form Widget
  * @url https://element-plus.gitee.io/zh-CN/component/form.html#form-attributes
  * @method Table table($name, $label = '')
+ * @method EzTable ezTable($name, $label = '')
  * @method Text text($name, $label = '')
  * @method Textarea textarea($name, $label = '')
  * @method Url url($name, $label = '')

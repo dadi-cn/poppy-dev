@@ -33,21 +33,13 @@ class Table extends FormItem
 
 
     /**
-     * Easy Table 的数据
+     * 不起作用, 使用 ezTable
      * @param array $data
      * @return $this
+     * @deprecated  4.0-dev
      */
     public function easy(array $data): self
     {
-        $rows = collect($data)->map(function ($row) {
-            $newItem = [];
-            foreach ($row as $k => $v) {
-                $newItem['k' . $k] = $v;
-            }
-            return $newItem;
-        });
-        $this->setAttribute('is-easy', true);
-        $this->setAttribute('easy-data', $rows);
         return $this;
     }
 }
