@@ -29,6 +29,14 @@ class FormWidget extends FormPlugin
 
     }
 
+    public function with($data = []): self
+    {
+        if ($data) {
+            $this->data = array_merge($this->data, $data);
+        }
+        return $this;
+    }
+
     public function on(Closure $cb): self
     {
         $this->cb = $cb;
@@ -43,12 +51,12 @@ class FormWidget extends FormPlugin
         return Resp::success('默认请求');
     }
 
-    public function data($data = []): array
+    public function data(): array
     {
-        if ($data) {
-            $this->data = array_merge($this->data, $data);
+        if ($this->data) {
+            return $this->data;
         }
-        return $this->data;
+        return [];
     }
 
     /**

@@ -34,7 +34,7 @@ class FormController extends WebApiController
     {
         $form = new FormWidget();
         $form->text('name', '姓名');
-        $form->data([
+        $form->with([
             'name' => '多厘',
         ]);
         $form->on(function () {
