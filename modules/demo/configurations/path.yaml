@@ -11,6 +11,8 @@ backend :
                         path : form/demo:api.form.auto/field-textarea
                     -   title : Radio
                         path : form/demo:api.form.auto/field-radio
+                    -   title : Group/Array
+                        path : form/demo:api.form.auto/field-group
                     -   title : Checkbox
                         path : form/demo:api.form.auto/field-checkbox
                     -   title : Text

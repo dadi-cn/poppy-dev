@@ -81,6 +81,9 @@ HTML,
 \$this->currency('currency', '人民币');
 HTML,
             'disabled'         => py_faker()->text(20),
+            'group' => [
+                1 => 'hahah'
+            ]
         ];
     }
 
