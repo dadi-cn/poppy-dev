@@ -128,4 +128,4 @@ backend :
             -   title : Table
                 children :
                     -   title : Ez Table
-                        path : table/demo:api.table.index/ez
+                        path : table/demo:api.table.ez

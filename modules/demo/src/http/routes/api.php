@@ -36,6 +36,8 @@ Route::group([
         ->name('demo:api.grid.custom_query');
     $route->any('grid/ctrl', 'GridController@ctrl')
         ->name('demo:api.grid.ctrl');
+    $route->any('grid/motion', 'GridController@motion')
+        ->name('demo:api.grid.motion');
 
     // form
     $route->any('form/auto/{type}', 'FormController@auto')

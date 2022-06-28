@@ -8,10 +8,12 @@ use Demo\Models\Queries\QueryDemoWebapp;
 use Illuminate\Support\Str;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
+use Poppy\MgrApp\Classes\Grid\Motion;
 use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\MgrApp\Classes\Widgets\GridWidget;
 use Poppy\System\Http\Request\ApiV1\WebApiController;
+use Route;
 
 class GridController extends WebApiController
 {
@@ -91,5 +93,35 @@ class GridController extends WebApiController
             $filter->gt('status', '状态')->asText();
         });
         return $grid->resp();
+    }
+
+    /**
+     * @api                    {get} api/demo/grid/motion   Motion
+     * @apiVersion             1.0.0
+     * @apiName                GridMotion
+     * @apiGroup               Grid
+     */
+    public function motion()
+    {
+        $type   = input('type');
+        $action = input('action');
+
+        $motion = [];
+        $path   = route(Route::currentRouteName(), null, false);
+        switch ($type . ':' . $action) {
+            case 'grid:filter';
+                $motion = Motion::gridFilter();
+                break;
+            case 'grid:reload';
+                $motion = Motion::gridReload();
+                break;
+            case 'grid:reset';
+                $motion = Motion::gridReset($path);
+                break;
+            case 'window:reload';
+                $motion = Motion::windowReload();
+                break;
+        }
+        return Resp::success('操作成功', $motion);
     }
 }
