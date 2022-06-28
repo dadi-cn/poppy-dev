@@ -22,8 +22,24 @@ class FormController extends WebApiController
 
     public function cascader()
     {
-        $node = input('node');
-        return Resp::success('cascader', []);
+        return Resp::success('cascader', [
+            [
+                'label' => '接口数据',
+                'value' => 'gen',
+            ],
+        ]);
+    }
 
+    public function ctrl()
+    {
+        $form = new FormWidget();
+        $form->text('name', '姓名');
+        $form->data([
+            'name' => '多厘',
+        ]);
+        $form->on(function () {
+            return Resp::error(var_export(input(), true));
+        });
+        return $form->resp();
     }
 }

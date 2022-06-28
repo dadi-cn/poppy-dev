@@ -2,6 +2,7 @@
 
 namespace Poppy\MgrApp\Classes\Widgets;
 
+use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -13,16 +14,41 @@ use function app;
 /**
  * Form 表单
  */
-abstract class FormWidget extends FormPlugin
+class FormWidget extends FormPlugin
 {
 
-    public abstract function form();
+    /**
+     * @var array
+     */
+    private array $data = [];
 
-    public abstract function handle();
+    private ?Closure $cb;
 
-    public function data(): array
+    public function form()
     {
-        return [];
+
+    }
+
+    public function on(Closure $cb): self
+    {
+        $this->cb = $cb;
+        return $this;
+    }
+
+    public function handle()
+    {
+        if ($this->cb) {
+            return $this->cb->call($this);
+        }
+        return Resp::success('默认请求');
+    }
+
+    public function data($data = []): array
+    {
+        if ($data) {
+            $this->data = array_merge($this->data, $data);
+        }
+        return $this->data;
     }
 
     /**

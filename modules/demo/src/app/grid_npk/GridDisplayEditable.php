@@ -20,7 +20,7 @@ class GridDisplayEditable extends GridBase
      */
     public function table(TablePlugin $table)
     {
-        $table->add('sort', '行内编辑')->editable();
-        $table->add('is_open', 'Switch')->switchable();
+        $table->add('sort', '行内编辑')->asInlineSaveText();
+        $table->add('is_open', 'Switch')->asInlineSaveOnOff();
     }
 }

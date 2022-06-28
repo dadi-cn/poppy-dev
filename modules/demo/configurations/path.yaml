@@ -43,6 +43,8 @@ backend :
                         path : form/demo:api.form.auto/field-cascader
                     -   title : Button(禁用按钮)
                         path : form/demo:api.form.auto/field-button
+                    -   title : 控制器渲染
+                        path : form/demo:api.form.ctrl
             -   title : Rule
                 children :
                     -   title : Text
@@ -114,7 +116,9 @@ backend :
                     -   title : 渲染隐藏
                         path : grid/demo:api.grid.auto/display-hidden
                     -   title : 自定义查询(CustomQuery)
-                        path : grid/demo:api.mgr_app.grid_model
+                        path : grid/demo:api.grid.custom_query
+                    -   title : 控制器模式
+                        path : grid/demo:api.grid.ctrl
             -   title : GridNoPk
                 children :
                     -   title : 批量操作(禁用)

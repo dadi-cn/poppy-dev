@@ -16,9 +16,7 @@ class GridCustomQuery extends GridBase
     {
         // 自定义样式
         $table->add('title', '标题')->quickTitle();
-        $table->add('user.nickname', 'Nickname(User)')->quickTitle();
-        $table->add('user.id', 'ID(User)')->quickId()->sortable();
-        $table->add('comment:id', '评论(Comment)')->quickTitle();
+        $table->add('is_loading', '开关')->asOnOff();
         $table->add('created_at')->quickDatetime();
     }
 }

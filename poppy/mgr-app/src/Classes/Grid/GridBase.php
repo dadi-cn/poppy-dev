@@ -3,7 +3,6 @@
 namespace Poppy\MgrApp\Classes\Grid;
 
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
-use Poppy\MgrApp\Classes\Grid\Tools\Actions;
 use Poppy\MgrApp\Classes\Grid\Tools\Interactions;
 use Poppy\MgrApp\Classes\Table\TablePlugin;
 use Poppy\System\Models\PamAccount;

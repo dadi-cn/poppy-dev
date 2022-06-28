@@ -32,12 +32,18 @@ Route::group([
         ->name('demo:api.grid.auto');
     $route->any('grid/request/{type}', 'GridController@request')
         ->name('demo:api.grid.request');
+    $route->any('grid/custom_query', 'GridController@customQuery')
+        ->name('demo:api.grid.custom_query');
+    $route->any('grid/ctrl', 'GridController@ctrl')
+        ->name('demo:api.grid.ctrl');
 
     // form
     $route->any('form/auto/{type}', 'FormController@auto')
         ->name('demo:api.form.auto');
     $route->any('form/cascader', 'FormController@cascader')
         ->name('demo:api.form.cascader');
+    $route->any('form/ctrl', 'FormController@ctrl')
+        ->name('demo:api.form.ctrl');
 
 
     $route->any('grid-plugin', 'MgrAppController@gridPlugin')

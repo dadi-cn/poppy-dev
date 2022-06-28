@@ -66,7 +66,7 @@ class QueryCustom extends Query
         $this->params     = $filter->prepare();
         $this->table      = $table;
         $this->page       = max($page, 1);
-        $this->pageOffset = $this->page * $this->pagesize;
+        $this->pageOffset = ($this->page - 1) * $this->pagesize;
         return $this;
     }
 
