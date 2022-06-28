@@ -5,7 +5,7 @@ namespace Poppy\MgrApp\Classes\Widgets;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Contracts\Respable;
 
-class SimpleTableWidget implements Respable
+class EzTableWidget implements Respable
 {
 
     private string $title = '';

@@ -20,8 +20,8 @@ Route::group([
         ->name('demo:api.mgr_app.grid-npk');
 
     // table
-    $route->any('table/{table}', 'TableController@index')
-        ->name('demo:api.table.index');
+    $route->any('table/ez', 'TableController@ez')
+        ->name('demo:api.table.ez');
 
     // grid
     $route->any('filter/{filter}', 'MgrAppController@filter')

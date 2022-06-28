@@ -127,5 +127,5 @@ backend :
                         path : grid/demo:api.mgr_app.grid-npk/display-editable
             -   title : Table
                 children :
-                    -   title : Simple
-                        path : table/demo:api.table.index/simple
+                    -   title : Ez Table
+                        path : table/demo:api.table.index/ez

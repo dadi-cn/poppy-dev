@@ -2,19 +2,19 @@
 
 namespace Demo\Http\Request\Api\Web;
 
-use Poppy\MgrApp\Classes\Widgets\SimpleTableWidget;
+use Poppy\MgrApp\Classes\Widgets\EzTableWidget;
 use Poppy\System\Http\Request\ApiV1\WebApiController;
 
 class TableController extends WebApiController
 {
 
     /**
-     * @api                    {get} api/demo/table/{:type}   [Demo]Table
+     * @api                    {get} api/demo/table/ez   Ez
      * @apiVersion             1.0.0
-     * @apiName                Table
-     * @apiGroup               MgrApp
+     * @apiName                TableEz
+     * @apiGroup               Table
      */
-    public function index($auto)
+    public function ez()
     {
         $headers = ['Id', 'Email', 'Name', 'Company'];
         $rows    = [
@@ -24,7 +24,7 @@ class TableController extends WebApiController
             [4, 'xet@yahoo.com', 'William Koss', 'Becker-Raynor'],
             [5, 'ipsa.aut@gmail.com', 'Ms. Antonietta Kozey Jr.', 'woso'],
         ];
-        $form    = new SimpleTableWidget($headers, $rows);
+        $form    = new EzTableWidget($headers, $rows);
         $form->setTitle('简单Table');
         return $form->resp();
     }
