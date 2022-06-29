@@ -48,7 +48,8 @@ class GridButton extends GridBase
             }
             else if ($row->id % 8 === 2) {
                 $actions->page('Page & Form', route('demo:api.form.auto', ['field-text']), 'form');
-                $actions->page('Page & Grid', route('demo:api.grid.auto', ['layout']), 'grid');
+                $actions->page('Page & Grid Layout', route('demo:api.grid.auto', ['layout']), 'grid');
+                $actions->page('Page & Grid Quick', route('demo:api.grid.auto', ['quick']), 'grid');
                 $actions->page('Table', route('demo:api.table.ez'), 'table');
             }
             else if ($row->id % 8 === 3) {
