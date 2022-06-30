@@ -2,7 +2,6 @@
 
 namespace Poppy\MgrApp\Classes\Filter\Query;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Poppy\MgrApp\Classes\Filter\Traits\AsDatetime;
 use Poppy\MgrApp\Classes\Filter\Traits\AsSelect;

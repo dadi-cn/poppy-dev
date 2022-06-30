@@ -26,12 +26,13 @@ class Gte extends FilterItem
     public function condition(array $inputs)
     {
         $this->defaultValue($inputs);
-        if (!$this->value) {
+
+        $value = (string) $this->value;
+        if ($value === '') {
             return null;
         }
 
         $value = $this->value;
-
 
         switch ($this->type) {
             case 'datetime':

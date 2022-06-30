@@ -2,7 +2,6 @@
 
 namespace Poppy\MgrApp\Classes\Filter\Query;
 
-use Illuminate\Support\Arr;
 use Poppy\MgrApp\Classes\Filter\Traits\AsSelect;
 use Poppy\MgrApp\Classes\Filter\Traits\AsText;
 use Poppy\MgrApp\Classes\Form\Traits\UseOptions;
@@ -13,13 +12,16 @@ class NotEqual extends FilterItem
     use AsSelect, AsText,
         UsePlaceholder,
         UseOptions;
+
     /**
      * @inheritDoc
      */
     public function condition(array $inputs)
     {
         $this->defaultValue($inputs);
-        if (!$this->value) {
+
+        $value = (string) $this->value;
+        if ($value === '') {
             return null;
         }
 

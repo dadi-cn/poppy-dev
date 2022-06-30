@@ -2,7 +2,6 @@
 
 namespace Poppy\MgrApp\Classes\Filter\Query;
 
-use Illuminate\Support\Arr;
 use Poppy\MgrApp\Classes\Filter\Traits\AsDatetime;
 use Poppy\MgrApp\Classes\Filter\Traits\AsSelect;
 use Poppy\MgrApp\Classes\Filter\Traits\AsText;
@@ -25,7 +24,7 @@ class Lte extends FilterItem
     public function condition(array $inputs)
     {
         $this->defaultValue($inputs);
-        if (!$this->value) {
+        if (!($this->value)) {
             return null;
         }
 
@@ -50,7 +49,7 @@ class Lte extends FilterItem
         $struct            = parent::struct();
         $struct['options'] = array_merge(
             $struct['options'] ?? [], [
-                'prepend' => '小于等于'
+                'prepend' => '小于等于',
             ]
         );
         return $struct;

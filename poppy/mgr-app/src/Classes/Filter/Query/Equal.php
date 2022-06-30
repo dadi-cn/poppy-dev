@@ -26,11 +26,12 @@ class Equal extends FilterItem
     public function condition(array $inputs): ?array
     {
         $this->defaultValue($inputs);
-        if (!$this->value) {
+
+        $value = (string) $this->value;
+        if ($value === '') {
             return null;
         }
 
-        $value = $this->value;
 
         switch ($this->type) {
             case 'datetime':

@@ -2,7 +2,6 @@
 
 namespace Poppy\MgrApp\Classes\Filter\Query;
 
-use Illuminate\Support\Arr;
 use Poppy\MgrApp\Classes\Filter\Traits\AsText;
 use Poppy\MgrApp\Classes\Form\Traits\UsePlaceholder;
 
