@@ -16,10 +16,27 @@ class DialogAction extends Action
      */
     private string $render = '';
 
+    /**
+     * 宽度
+     * @var int
+     */
+    private int $width = 600;
+
     public function type($type): self
     {
         $this->render = strtolower($type);
         return $this;
+    }
+
+
+    /**
+     * 宽度
+     * @param int $width
+     * @return void
+     */
+    public function width(int $width)
+    {
+        $this->width = $width;
     }
 
     /**
@@ -31,6 +48,7 @@ class DialogAction extends Action
         return array_merge(parent::struct(), [
             'method' => 'dialog',
             'render' => $this->render,
+            'width'  => $this->width,
         ]);
     }
 }
