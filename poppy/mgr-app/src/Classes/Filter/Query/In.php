@@ -24,14 +24,6 @@ class In extends FilterItem
      */
     public function condition(array $inputs)
     {
-        $value = Arr::get($inputs, $this->name);
-
-        if (empty($value)) {
-            return null;
-        }
-
-        $this->value = (array) $value;
-
-        return $this->buildCondition($this->name, $this->value);
+        return $this->buildCondition($this->name, (array) $this->value);
     }
 }

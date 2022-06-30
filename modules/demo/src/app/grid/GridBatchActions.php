@@ -41,6 +41,7 @@ class GridBatchActions extends GridBase
      */
     public function batch(Interactions $actions)
     {
-        $actions->request('批量删除', 'api/demo/grid_request/success')->confirm();
+        $actions->request('批量删除', route('demo:api.grid.request', ['batch']))->confirm();
+        $actions->page('批量调整', route('demo:api.form.auto', ['field-table']), 'form');
     }
 }

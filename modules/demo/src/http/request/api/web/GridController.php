@@ -6,6 +6,7 @@ use Demo\App\Grid\GridCustomQuery;
 use Demo\Models\DemoWebapp;
 use Demo\Models\Queries\QueryDemoWebapp;
 use Illuminate\Support\Str;
+use Log;
 use Poppy\Framework\Classes\Resp;
 use Poppy\MgrApp\Classes\Filter\FilterPlugin;
 use Poppy\MgrApp\Classes\Grid\Motion;
@@ -49,6 +50,9 @@ class GridController extends WebApiController
             return Resp::error('请求错误');
         }
         else {
+            if ($type === 'batch') {
+                Log::debug(input('batch'));
+            }
             return Resp::success('请求成功', input());
         }
     }
@@ -90,7 +94,7 @@ class GridController extends WebApiController
             $actions->page('添加', '', 'form');
         });
         $grid->filter(function (FilterPlugin $filter) {
-            $filter->gt('status', '状态')->asText();
+            $filter->gt('status', '状态')->asText()->default();
         });
         return $grid->resp();
     }

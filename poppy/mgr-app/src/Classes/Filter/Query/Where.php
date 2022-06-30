@@ -29,8 +29,8 @@ class Where extends FilterItem
     /**
      * Where constructor.
      *
-     * @param Closure     $query
-     * @param string      $label
+     * @param Closure $query
+     * @param string $label
      * @param string|null $column
      * @throws ReflectionException
      */
@@ -47,7 +47,7 @@ class Where extends FilterItem
      * Get the hash string of query closure.
      *
      * @param Closure $closure
-     * @param string  $label
+     * @param string $label
      *
      * @return string
      * @throws ReflectionException

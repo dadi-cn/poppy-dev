@@ -2,7 +2,6 @@
 
 namespace Poppy\MgrApp\Classes\Filter\Query;
 
-use Illuminate\Support\Arr;
 use Poppy\MgrApp\Classes\Filter\Traits\AsDatetime;
 use Poppy\MgrApp\Classes\Filter\Traits\AsSelect;
 use Poppy\MgrApp\Classes\Filter\Traits\AsText;
@@ -25,19 +24,18 @@ class Gt extends FilterItem
      */
     public function condition(array $inputs)
     {
-        $value = Arr::get($inputs, $this->name);
-
-        if (is_null($value)) {
-            return;
+        $this->defaultValue($inputs);
+        if (!$this->value) {
+            return null;
         }
 
-        $this->value = $value;
+        $value = $this->value;
 
 
         switch ($this->type) {
             case 'datetime':
                 // 获取格式化属性中的类型
-                $type = $this->attr['type'] ?? 'datetime';
+                $type  = $this->attr['type'] ?? 'datetime';
                 $start = $this->getEndFrom($value, $type);
                 return $this->buildCondition([
                     [$this->name, '>', trim($start)],
@@ -55,7 +53,7 @@ class Gt extends FilterItem
         $struct            = parent::struct();
         $struct['options'] = array_merge(
             $struct['options'] ?? [], [
-                'prepend' => '大于'
+                'prepend' => '大于',
             ]
         );
         return $struct;

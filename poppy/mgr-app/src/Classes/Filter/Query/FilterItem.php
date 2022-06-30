@@ -43,9 +43,10 @@ abstract class FilterItem implements Structable
     protected $value;
 
     /**
-     * @var array|string
+     * 默认值
+     * @var array|string|null
      */
-    protected $defaultValue;
+    protected $defaultValue = null;
 
 
     /**
@@ -70,7 +71,7 @@ abstract class FilterItem implements Structable
      * AbstractFilter constructor.
      *
      * @param string|Closure $column
-     * @param string         $label
+     * @param string $label
      */
     public function __construct($column = '', string $label = '')
     {
@@ -106,11 +107,12 @@ abstract class FilterItem implements Structable
     {
         $value = Arr::get($inputs, $this->name);
 
-        if (!isset($value)) {
-            return null;
+        if (is_null($value)) {
+            $this->value = $this->defaultValue;
         }
-
-        $this->value = $value;
+        else {
+            $this->value = $value;
+        }
 
         return $this->buildCondition($this->name, $this->value);
     }
@@ -126,7 +128,7 @@ abstract class FilterItem implements Structable
             'value'   => $this->value ?: $this->defaultValue,
             'query'   => $query,
             'type'    => $this->type,
-            'options' => $this->attr ?: []
+            'options' => $this->attr ?: [],
         ]);
     }
 
@@ -143,10 +145,9 @@ abstract class FilterItem implements Structable
      * Set default value for filter.
      *
      * @param null $default
-     *
      * @return $this
      */
-    public function default($default = null)
+    public function default($default = null): self
     {
         if ($default) {
             $this->defaultValue = $default;
@@ -154,7 +155,6 @@ abstract class FilterItem implements Structable
 
         return $this;
     }
-
 
     /**
      * Get value of current filter.
@@ -167,11 +167,26 @@ abstract class FilterItem implements Structable
     }
 
     /**
+     * 默认值
+     * @param array $inputs
+     * @return void
+     */
+    protected function defaultValue(array $inputs)
+    {
+        $value = Arr::get($inputs, $this->name);
+        if (is_null($value) && !is_null($this->defaultValue)) {
+            $this->value = $this->defaultValue;
+        }
+        else {
+            $this->value = $value;
+        }
+    }
+
+    /**
      * @param $inputs
-     *
      * @return array
      */
-    protected function sanitizeInputs(&$inputs)
+    protected function sanitizeInputs(&$inputs): array
     {
         if (!$this->name) {
             return $inputs;
@@ -183,6 +198,7 @@ abstract class FilterItem implements Structable
             $key = str_replace("{$this->name}_", '', $key);
             return [$key => $val];
         })->toArray();
+        return $inputs;
     }
 
 
@@ -238,7 +254,7 @@ abstract class FilterItem implements Structable
     /**
      * 字段属性
      * @param string|array $attr
-     * @param mixed        $value
+     * @param mixed $value
      * @return $this
      */
     protected function setAttribute($attr, $value = ''): self
@@ -247,7 +263,8 @@ abstract class FilterItem implements Structable
             foreach ($attr as $att => $val) {
                 $this->attr[$att] = $val;
             }
-        } else {
+        }
+        else {
             $this->attr[$attr] = $value;
         }
         return $this;

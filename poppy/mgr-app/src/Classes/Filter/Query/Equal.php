@@ -2,7 +2,6 @@
 
 namespace Poppy\MgrApp\Classes\Filter\Query;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Poppy\MgrApp\Classes\Filter\Traits\AsDatetime;
 use Poppy\MgrApp\Classes\Filter\Traits\AsSelect;
@@ -26,13 +25,12 @@ class Equal extends FilterItem
      */
     public function condition(array $inputs): ?array
     {
-        if (!Arr::has($inputs, $this->name)) {
+        $this->defaultValue($inputs);
+        if (!$this->value) {
             return null;
         }
 
-        $value = trim(Arr::get($inputs, $this->name));
-
-        $this->value = $value;
+        $value = $this->value;
 
         switch ($this->type) {
             case 'datetime':

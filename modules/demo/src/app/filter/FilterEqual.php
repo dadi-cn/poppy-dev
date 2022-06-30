@@ -35,14 +35,14 @@ class FilterEqual extends GridBase
     public function filter(FilterPlugin $filter)
     {
         $filter->action();
-        $filter->equal('id', 'ID')->asText();
+        $filter->equal('id', 'ID')->asText()->default(1);
         $filter->equal('account_id', 'Uid(Select)')->asSelect(DemoUser::where('id', '<', 20)->pluck('nickname', 'id')->toArray(), '选择用户');
         $filter->equal('birth_at', '出生年月(年)')->asYear('按年查询');
         $filter->equal('post_at', '发布时间(天)')->asDate('按天查询');
         $filter->equal('created_at', '创建时间(月份)')->asMonth('按月查询');
         $filter->equal('is_open', '是否启用')->width(2)->asSelect([
             0 => '未启用',
-            1 => '启用'
+            1 => '启用',
         ], '启用禁用');
         $filter->equal('modify_at', '修改时间(日期/时间)')->asDatetime('按日期时间查询');
         $filter->equal('modify_at', '修改时间(日期/时间)')->asDatetime('按日期时间查询');

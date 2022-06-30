@@ -33,7 +33,7 @@ class Scope implements Structable
      * Scope constructor.
      *
      * @param string|int $value
-     * @param string     $label
+     * @param string $label
      */
     public function __construct($value, string $label)
     {
@@ -64,7 +64,7 @@ class Scope implements Structable
     /**
      * 将模型查询条件存储
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return $this
      */

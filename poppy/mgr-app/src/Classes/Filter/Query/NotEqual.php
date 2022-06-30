@@ -18,13 +18,10 @@ class NotEqual extends FilterItem
      */
     public function condition(array $inputs)
     {
-        $value = Arr::get($inputs, $this->name);
-
-        if (!isset($value)) {
-            return;
+        $this->defaultValue($inputs);
+        if (!$this->value) {
+            return null;
         }
-
-        $this->value = $value;
 
         return $this->buildCondition($this->name, '!=', $this->value);
     }

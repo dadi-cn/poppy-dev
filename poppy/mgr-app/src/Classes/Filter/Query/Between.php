@@ -33,13 +33,12 @@ class Between extends FilterItem
      */
     public function condition(array $inputs): ?array
     {
-        if (!Arr::has($inputs, $this->name)) {
+        $this->defaultValue($inputs);
+        if (!$this->value) {
             return null;
         }
 
-        $this->value = (array) Arr::get($inputs, $this->name);
-
-        $value = array_filter($this->value, function ($val) {
+        $value = array_filter((array) $this->value, function ($val) {
             return $val !== '';
         });
 

@@ -186,22 +186,11 @@ class FilterPlugin implements Structable
     private function filterParams(): array
     {
         $inputs = Arr::dot(request()->all());
+        $inputs = collect($inputs)->except([
+            '_query', 'page', 'pagesize', 'timestamp', 'sign',
+        ]);
 
-        $inputs = array_filter($inputs, function ($input) {
-            return $input !== '' && !is_null($input);
-        });
-
-        if (empty($inputs)) {
-            return [];
-        }
-
-        $params = [];
-
-        foreach ($inputs as $key => $value) {
-            Arr::set($params, $key, $value);
-        }
-
-        return $params;
+        return $inputs->toArray();
     }
 
     /**

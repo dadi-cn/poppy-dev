@@ -24,13 +24,12 @@ class Lte extends FilterItem
      */
     public function condition(array $inputs)
     {
-        $value = Arr::get($inputs, $this->name);
-
-        if (is_null($value)) {
-            return;
+        $this->defaultValue($inputs);
+        if (!$this->value) {
+            return null;
         }
 
-        $this->value = $value;
+        $value = $this->value;
 
         switch ($this->type) {
             case 'datetime':

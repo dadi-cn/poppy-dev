@@ -29,13 +29,10 @@ class Like extends FilterItem
      */
     public function condition(array $inputs)
     {
-        $value = Arr::get($inputs, $this->name);
-
-        if (empty($value)) {
-            return;
+        $this->defaultValue($inputs);
+        if (!$this->value) {
+            return null;
         }
-
-        $this->value = $value;
 
         $expr = str_replace('{value}', $this->value, $this->exprFormat);
 
