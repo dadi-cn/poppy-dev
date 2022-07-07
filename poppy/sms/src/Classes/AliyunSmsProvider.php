@@ -15,13 +15,6 @@ class AliyunSmsProvider extends BaseSms implements SmsContract
     use AppTrait;
 
     /**
-     * AliyunSms constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @inheritDoc
      */
     public function send(string $type, $mobile, array $params = [], $sign = ''): bool
