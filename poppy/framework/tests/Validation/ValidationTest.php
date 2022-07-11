@@ -30,7 +30,7 @@ class ValidationTest extends TestCase
 
     public function testIn(): void
     {
-        $v    = 'a';
+        $v         = 'a';
         $validator = Validator::make([
             'v' => $v,
         ], [
@@ -149,7 +149,7 @@ class ValidationTest extends TestCase
             $this->assertTrue(true, $validator->messages()->toJson(JSON_UNESCAPED_UNICODE));
         }
         else {
-            $this->assertTrue(true);
+            $this->fail('该验证不应通过');
         }
     }
 

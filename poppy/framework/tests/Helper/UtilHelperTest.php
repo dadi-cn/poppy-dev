@@ -21,7 +21,7 @@ class UtilHelperTest extends TestCase
 
     public function testSizeToBytes()
     {
-        $size = '3.22 K';
+        $size  = '3.22 K';
         $bytes = UtilHelper::sizeToBytes($size);
         $this->assertEquals(3297, $bytes);
     }
