@@ -141,7 +141,7 @@ class Pam
             $type      => [
                 Rule::required(),
                 Rule::string(),
-                Rule::between(6, 30),
+                Rule::between(6, 50),
                 // 唯一性认证
                 Rule::unique($this->pamTable, $type),
             ],
