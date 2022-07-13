@@ -12,9 +12,6 @@ use Poppy\Version\Models\SysAppVersion;
 class SysAppVersionTest extends SystemTestCase
 {
 
-    protected $enableDb = true;
-
-
     public function setUp():void
     {
         parent::setUp();
