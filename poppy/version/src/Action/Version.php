@@ -110,7 +110,7 @@ class Version
             $this->item = $appVersion;
         }
 
-        if (!$this->copyTo()){
+        if (!$this->copyTo()) {
             return false;
         }
 
@@ -176,5 +176,6 @@ class Version
     private function clearCache($platform)
     {
         RdsDb::instance()->hDel(PyVersionDef::ckTagMaxVersion(), $platform);
+        RdsDb::instance()->hDel(PyVersionDef::ckTagVersions(), $platform);
     }
 }
