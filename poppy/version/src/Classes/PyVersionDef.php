@@ -14,4 +14,14 @@ class PyVersionDef
     {
         return 'tag:py-version:max-version';
     }
+
+
+    /**
+     * 当前所有版本
+     * @return string
+     */
+    public static function ckTagVersions(): string
+    {
+        return 'tag:py-version:versions';
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Poppy\Version\Models;
 
@@ -14,12 +14,12 @@ use Poppy\Version\Classes\PyVersionDef;
 /**
  * User\Models\AppVersion
  *
- * @property int         $id
- * @property string      $title        版本号
- * @property string      $description  描述
- * @property string      $download_url 下载地址
- * @property int         $is_upgrade   是否强制升级当前版本
- * @property string      $platform     操作平台 android ios
+ * @property int $id
+ * @property string $title        版本号
+ * @property string $description  描述
+ * @property string $download_url 下载地址
+ * @property int $is_upgrade   是否强制升级当前版本
+ * @property string $platform     操作平台 android ios
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @method static Builder|SysAppVersion newModelQuery()
@@ -45,7 +45,7 @@ class SysAppVersion extends Model
 
     /**
      * @param null|string $key
-     * @param bool        $check_key
+     * @param bool $check_key
      * @return array|string
      */
     public static function kvType(string $key = null, bool $check_key = false)
@@ -67,13 +67,9 @@ class SysAppVersion extends Model
     {
         $version = RdsDb::instance()->hGet(PyVersionDef::ckTagMaxVersion(), $platform);
         if (!$version) {
-            $versions = self::where('platform', $platform)->orderBy('created_at', 'desc')->get();
-            if ($versions->count()) {
-                $version = $versions->toArray();
-                usort($version, function ($v1, $v2) {
-                    return version_compare($v1['title'], $v2['title']);
-                });
-                $version = array_pop($version);
+            $versions = self::versions($platform);
+            if (count($versions)) {
+                $version = array_pop($versions);
             }
             else {
                 $version = [
@@ -84,6 +80,33 @@ class SysAppVersion extends Model
             RdsDb::instance()->hSet(PyVersionDef::ckTagMaxVersion(), $platform, $version);
         }
         return $version;
+    }
+
+    /**
+     * 是否进行强制更新
+     * @param string $platform 操作平台
+     * @param string $version
+     * @return bool
+     */
+    public static function isUpgrade(string $platform, string $version): bool
+    {
+        $versions = RdsDb::instance()->hGet(PyVersionDef::ckTagVersions(), $platform);
+        if (!$versions) {
+            $versions = self::versions($platform);
+            RdsDb::instance()->hSet(PyVersionDef::ckTagVersions(), $platform, $versions);
+        }
+        $isUpgrade = false;
+        if (count($versions)) {
+            foreach ($versions as $ver) {
+                if ($isUpgrade) {
+                    continue;
+                }
+                if (version_compare($ver['title'], $version, '>') && $ver['is_upgrade']) {
+                    $isUpgrade = true;
+                }
+            }
+        }
+        return $isUpgrade;
     }
 
     /**
@@ -103,7 +126,6 @@ class SysAppVersion extends Model
             trim(sys_setting('py-version::setting.latest_name', 'latest')) . '.' . $extension;
     }
 
-
     /**
      * 平台 Url
      * @param string $type 类型
@@ -121,5 +143,23 @@ class SysAppVersion extends Model
             return Uploader::prefix() . self::path($type);
         }
         return sys_setting('py-version:setting.ios_store_url');
+    }
+
+    /**
+     * 获取数据库的版本
+     * @param string $platform
+     * @return array
+     */
+    protected static function versions(string $platform = self::PLATFORM_ANDROID): array
+    {
+        $versions = self::query()->where('platform', $platform)->get();
+        if ($versions->count()) {
+            $arrVersions = $versions->toArray();
+            usort($arrVersions, function ($v1, $v2) {
+                return version_compare($v1['title'], $v2['title']);
+            });
+            return $arrVersions;
+        }
+        return [];
     }
 }
