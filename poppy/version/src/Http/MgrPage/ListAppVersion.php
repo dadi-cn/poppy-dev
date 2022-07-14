@@ -87,7 +87,7 @@ class ListAppVersion extends ListBase
             ]),
             new BaseButton('<i class="fa fa-download"></i> 最新包地址', SysAppVersion::platformUrl($platform), [
                 'title' => "最新包地址, 这里仅仅放置地址, 可能会出现地址无法访问的情况",
-                'class' => 'layui-btn layui-btn-sm',
+                'class' => 'layui-btn layui-btn-sm J_ignore',
             ]),
         ];
     }

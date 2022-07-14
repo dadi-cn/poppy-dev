@@ -34,7 +34,6 @@ class FormSettingVersion extends FormSettingBase
             Rule::required(),
         ])->help('最新版文件名称, 每次更新版本的时候选中更新最新文件则会自动覆盖此文件, 默认 `latest`, 仅允许英文字母数字, 下划线');
         $this->switch('is_upload', '启用Apk/Ipa上传')->help('启用后可以在编辑/新增的时候直接上传文件, 此项受服务端接收最大文件大小有关系');
-        $this->switch('ios_is_prod', '是否启用苹果链接')->help('[WIP]启用官方链接后, 所有的IOS返回均为最新的线上链接');
         $this->text('ios_store_url', 'AppStore链接')->rules([
             Rule::nullable(),
             Rule::url(),

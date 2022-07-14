@@ -133,16 +133,10 @@ class SysAppVersion extends Model
      */
     public static function platformUrl(string $type = self::PLATFORM_ANDROID)
     {
-        if (
-            // android
-            $type === self::PLATFORM_ANDROID
-            ||
-            // 开发状态下的IOS
-            ($type === self::PLATFORM_IOS && !sys_setting('py-version:setting.ios_is_prod'))
-        ) {
+        if ($type === self::PLATFORM_ANDROID) {
             return Uploader::prefix() . self::path($type);
         }
-        return sys_setting('py-version:setting.ios_store_url');
+        return sys_setting('py-version::setting.ios_store_url');
     }
 
     /**
