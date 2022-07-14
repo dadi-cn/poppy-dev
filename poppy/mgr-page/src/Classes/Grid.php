@@ -1,4 +1,3 @@
-
 <?php
 
 namespace Poppy\MgrPage\Classes;
@@ -39,6 +38,13 @@ class Grid
         \Poppy\MgrPage\Classes\Grid\Concerns\CanHidesColumns,
         \Poppy\MgrPage\Classes\Grid\Concerns\LayDefines,
         \Poppy\MgrPage\Classes\Grid\Concerns\HasQuickButton;
+
+    /**
+     * Initialization closure array.
+     *
+     * @var []Closure
+     */
+    protected static $initCallbacks = [];
 
     /**
      * All column names of the grid.
@@ -126,7 +132,6 @@ class Grid
      */
     protected $keyName = 'id';
 
-
     /**
      * View for grid to render.
      *
@@ -138,6 +143,7 @@ class Grid
      * @var []callable
      */
     protected $renderingCallbacks = [];
+
     /**
      * Options for grid.
      *
@@ -148,18 +154,12 @@ class Grid
         'show_exporter'     => false,
         'show_row_selector' => true,
     ];
-    /**
-     * Initialization closure array.
-     *
-     * @var []Closure
-     */
-    protected static $initCallbacks = [];
 
     /**
      * Create a new grid instance.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @param Closure|null                                 $builder
+     * @param Closure|null $builder
      */
     public function __construct($model, Closure $builder = null)
     {
@@ -226,7 +226,7 @@ class Grid
      * Get or set option for grid.
      *
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this|mixed
      */
@@ -354,7 +354,7 @@ class Grid
      * Set a view to render.
      *
      * @param string $view
-     * @param array  $variables
+     * @param array $variables
      */
     public function setView(string $view, $variables = [])
     {
