@@ -45,6 +45,7 @@ class SettingRepository implements SettingContract
         $record = $this->findRecord($key);
         if ($record) {
             try {
+                self::$rds->hSet(PySystemDef::ckSetting(), $this->convertKey($key), $record->value);
                 $record->delete();
             } catch (Exception $e) {
                 return false;
